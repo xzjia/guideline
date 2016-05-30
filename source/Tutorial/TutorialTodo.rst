@@ -2685,6 +2685,8 @@ CSSファイルを適用すると、以下のようなレイアウトになる�
 
 本チュートリアルでは、データベースのセットアップの手間を省くため、H2 Databaseを使用する。
 
+ただし本セットアップは、後述の\ :ref:`using_MyBatis3`\および\ :ref:`using_SpringDataJPA`\において、プロジェクト作成し直したあとに実施すること。
+
 todo-infra.propertiesの修正
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
@@ -2741,6 +2743,8 @@ MyBatis3を使用したインフラストラクチャ層の作成
 
 まずは\ :ref:`TutorialCreateMyBatis3BlankProject`\ でプロジェクト作成し直し、\ :ref:`Tutorial_Setup_Database`\ までで作成した\ :file:`src`\ フォルダ以下のうち、
 \ **TodoRepositoryImplクラス以外のファイルを新規作成したプロジェクトにコピーすること**\ 。
+
+\ **ただし、コピーするファイルは新規作成したファイル・変更を加えたファイルに限り、修正を加えていないファイルはコピーしないこと**\ 。
 
 Spring Data JPAを使用する場合は、本節を読み飛ばして、\ :ref:`using_SpringDataJPA`\ に進んでよい。
 
@@ -2966,6 +2970,8 @@ Spring Data JPAを使用したインフラストラクチャ層の作成
 まずは\ :ref:`TutorialCreateJPABlankProject`\ でプロジェクト作成し直し、\ :ref:`Tutorial_Setup_Database`\ までで作成した\ :file:`src`\ フォルダ以下のうち、
 \ **TodoRepositoryImplクラス以外のファイルを新規作成したプロジェクトにコピーすること**\ 。
 
+\ **ただし、コピーするファイルは新規作成したファイル・変更を加えたファイルに限り、修正を加えていないファイルはコピーしないこと**\ 。
+
 Entityの修正
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
@@ -3173,7 +3179,7 @@ Service及びアプリケーション層を作成後にAPサーバーを起動�
 
 * プロパティ(未完了TODOの上限数)を外部化する → :doc:`../ArchitectureInDetail/GeneralFuncDetail/PropertyManagement`
 * メッセージを外部化する → :doc:`../ArchitectureInDetail/WebApplicationDetail/MessageManagement`
-* ページング処理を追加する → :doc:`../ArchitectureInDetail/WebApplicationDetail/Pagination`
+* ページネーション機能を追加する → :doc:`../ArchitectureInDetail/WebApplicationDetail/Pagination`
 * 例外ハンドリングを加える → :doc:`../ArchitectureInDetail/WebApplicationDetail/ExceptionHandling`
 * 二重送信を防止する(トランザクショントークンチェックを追加する) → :doc:`../ArchitectureInDetail/WebApplicationDetail/DoubleSubmitProtection`
 * システム日時の取得元を変更する → :doc:`../ArchitectureInDetail/GeneralFuncDetail/SystemDate`
