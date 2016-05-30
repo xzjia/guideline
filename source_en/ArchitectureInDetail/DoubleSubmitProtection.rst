@@ -632,7 +632,7 @@ Using PRG (Post-Redirect-Get) pattern
     <h1>Create User</h1>
     <div id="prgForm">
       <form:form 
-        action="${pageContext.request.contextPath}/rpgExample/create"
+        action="${pageContext.request.contextPath}/prgExample/create"
         method="post" modelAttribute="postRedirectGetForm">
         <form:label path="firstName">FirstName</form:label>
         <form:input path="firstName" /><br>
@@ -650,7 +650,7 @@ Using PRG (Post-Redirect-Get) pattern
     <h1>Confirm Create User</h1>
     <div id="prgForm">
       <form:form
-        action="${pageContext.request.contextPath}/rpgExample/create"
+        action="${pageContext.request.contextPath}/prgExample/create"
         method="post"
         modelAttribute="postRedirectGetForm">
         FirstName:${f:h(postRedirectGetForm.firstName)}<br>
@@ -679,7 +679,7 @@ Using PRG (Post-Redirect-Get) pattern
     <h1>Successful Create User Completion</h1>
     <div id="prgForm">
       <form:form
-        action="${pageContext.request.contextPath}/rpgExample/create"
+        action="${pageContext.request.contextPath}/prgExample/create"
         method="get" modelAttribute="postRedirectGetForm">
         output:${f:h(output)}<br> <%-- (7) --%>
         <form:button name="backToTop">Top</form:button>
