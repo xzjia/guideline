@@ -178,8 +178,7 @@ How to use
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 
 | 以降に説明する :ref:`StringProcessingHowToUseFullHalfConverter` や :ref:`StringProcessingHowToUseCodePoints` は共通ライブラリの適用が必要である。
-| :ref:`StringProcessingHowToUseFullHalfConverter` で \ ``org.terasoluna.gfw.common.fullhalf.FullHalfConverter``\ クラス等を使う場合は、
-| 以下の通り依存ライブラリを追加する。
+| これらのクラスを使用する場合は、以下の通り依存ライブラリを追加する。
 
 .. code-block:: xml
 
