@@ -174,24 +174,6 @@ How to use
         // Java SE 8 => {A, B, C}
 
 
-共通ライブラリの適用方法
-""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
-
-| 以降に説明する :ref:`StringProcessingHowToUseFullHalfConverter` や :ref:`StringProcessingHowToUseCodePoints` は共通ライブラリの適用が必要である。
-| これらのクラスを使用する場合は、以下の通り依存ライブラリを追加する。
-
-.. code-block:: xml
-
-   <dependencies>
-       <dependency>
-           <groupId>org.terasoluna.gfw</groupId>
-           <artifactId>terasoluna-gfw-string</artifactId>
-       </dependency>
-   </dependencies>
-
-| :ref:`StringProcessingHowToUseCodePoints` を使う場合は、 :ref:`StringProcessingHowToUseCodePointsClasses` 等を依存ライブラリとして追加する。
-
-
 .. _StringProcessingHowToUseFullHalfConverter:
 
 全角・半角文字列変換
@@ -209,6 +191,24 @@ How to use
     共通ライブラリが提供しているデフォルトのペア定義で変換要件が満たせない場合は、独自のペア定義を登録した\ ``FullHalfConverter``\ オブジェクトを作成すればよい。
     具体的な作成方法については、:ref:`StringOperationsHowToUseCustomFullHalfConverter` を参照されたい。
 
+
+
+共通ライブラリの適用方法
+''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''
+
+| 以降に説明する :ref:`StringProcessingHowToUseFullHalfConverter` や :ref:`StringProcessingHowToUseCodePoints` は共通ライブラリの適用が必要である。
+| これらのクラスを使用する場合は、以下の通り依存ライブラリを追加する。
+
+.. code-block:: xml
+
+   <dependencies>
+       <dependency>
+           <groupId>org.terasoluna.gfw</groupId>
+           <artifactId>terasoluna-gfw-string</artifactId>
+       </dependency>
+   </dependencies>
+
+| :ref:`StringProcessingHowToUseCodePoints` を使う場合は、 :ref:`StringProcessingHowToUseCodePointsClasses` 等を依存ライブラリとして追加する。
 
 全角文字列に変換
 ''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''
