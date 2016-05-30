@@ -28,7 +28,6 @@ DIコンテナ
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 DIコンテナとしてSpring Frameworkを利用する。
 
-
 * `Spring Framework 4.2 <http://docs.spring.io/spring/docs/4.2.4.RELEASE/spring-framework-reference/html/beans.html>`_
 
 MVCフレームワーク
@@ -113,6 +112,8 @@ Viewのレイアウトを共通化する場合は、
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 * \ `https://github.com/terasolunaorg/terasoluna-gfw <https://github.com/terasolunaorg/terasoluna-gfw>`_\
 * 詳細は\ :ref:`frameworkstack_common_library`\ を参照されたい。
+
+.. _frameworkstack_using_oss_version:
 
 利用するOSSのバージョン
 --------------------------------------------------------------------------------

@@ -1800,7 +1800,9 @@ Maven Archetypeで作成したプロジェクトのプロジェクト階層の�
 
         を行っている。
 
-        なお、Spring IO Platform経由で依存ライブラリのバージョンを管理するために、本プロジェクトの\ ``<dependencyManagement>``\ に「io.spring.platform:platform-bom:1.1.3.RELEASE」をインポートしている。
+        なお、Spring IO Platform経由で依存ライブラリのバージョンを管理するために、本プロジェクトの\ ``<dependencyManagement>``\ に「Spring IO Platform」をインポートしている。
+        
+        利用しているSpring IO Platformのバージョンは\ :ref:`frameworkstack_using_oss_version`\参照のこと。
     * - | (3)
       - Spring IO Platformプロジェクト。
 
