@@ -208,8 +208,6 @@ How to use
        </dependency>
    </dependencies>
 
-| :ref:`StringProcessingHowToUseCodePoints` を使う場合は、 :ref:`StringProcessingHowToUseCodePointsClasses` 等を依存ライブラリとして追加する。
-
 全角文字列に変換
 ''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''
 
@@ -419,6 +417,11 @@ How to use
 * :ref:`StringProcessingHowToUseCodePointsValidator`
 * :ref:`StringProcessingHowToUseCodePointsClassCreation`
 
+
+共通ライブラリの適用方法
+''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''
+
+| :ref:`StringProcessingHowToUseCodePoints` を使う場合は、 :ref:`StringProcessingHowToUseCodePointsClasses` 等を依存ライブラリとして追加する必要がある。
 
 .. _StringProcessingHowToUseCodePointsConstruction:
 
