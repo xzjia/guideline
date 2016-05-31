@@ -71,7 +71,7 @@ Spring Framework Comprehension Check
 #. Fill (1)-(3) of the following Bean definition such that contents in \ ``com.example.domain``\  package becomes target of component scan.
 
 
-    .. code-block:: xml
+    .. code-block:: rest
     
         <context:(1) (2)="(3)" />
         
@@ -102,9 +102,9 @@ Spring Framework Comprehension Check
         @Service
         @Transactional
         public class XxxServiceImpl implements XxxService {
-          @(2)("${emails.min.count}")
+          @xxx("${emails.min.count}") // (2)
           protected int emailsMinCount;
-          @(2)("${emails.max.count}")
+          @xxx("${emails.max.count}") // (2)
           protected int emailsMaxCount;
           // omitted
         }
@@ -127,7 +127,7 @@ Spring Framework Comprehension Check
 
 #. Insert (*) of following Bean definition for performing transaction management using  \ ``@Transactional``\  annotation.
 
-    .. code-block:: xml
+    .. code-block:: rest
 
         <tx:(*) />
 
