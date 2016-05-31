@@ -196,8 +196,7 @@ How to use
 共通ライブラリの適用方法
 ''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''
 
-| 以降に説明する :ref:`StringProcessingHowToUseFullHalfConverter` や :ref:`StringProcessingHowToUseCodePoints` は共通ライブラリの適用が必要である。
-| これらのクラスを使用する場合は、以下の通り依存ライブラリを追加する。
+| :ref:`StringProcessingHowToUseFullHalfConverter` を使う場合は、共通ライブラリを依存ライブラリとして以下の通り追加する必要がある。
 
 .. code-block:: xml
 
