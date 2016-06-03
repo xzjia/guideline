@@ -40,6 +40,9 @@ Please create a new issue from [here](https://github.com/terasolunaorg/guideline
  ## Issue Links
  * #999
  * http://terasolunaorg.github.io/guideline/5.0.0.RELEASE/en/ImplementationAtEachLayer/DomainLayer.html
+
+ ## ChangeLog
+ (To be written later by project member)
  ```
 
 ## Fork a repository
