@@ -13,3 +13,6 @@
 
 ## Issue Links
 * #XXX
+
+## ChangeLog
+(To be written later by project member)
