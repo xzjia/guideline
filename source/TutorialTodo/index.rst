@@ -365,51 +365,6 @@ Root Directoryに \ ``C:\work\todo``\ を設定し、Projectsにtodoのpom.xml�
 
 |
 
-**[MyBatis3用のブランクプロジェクトを作成した場合の構成]**
-
-.. code-block:: console
-
-    src
-      └main
-          ├java
-          │  └todo
-          │    ├ app
-          │    │   └todo
-          │    └domain
-          │        ├model
-          │        ├repository
-          │        │   └todo
-          │        └service
-          │            └todo
-          ├resources
-          │  ├META-INF
-          │  │  ├mybatis ... (8)
-          │  │  └spring
-          │  └todo
-          │    └domain
-          │        └repository ... (9)
-          │             └todo
-          └wepapp
-              └WEB-INF
-                  └views
-
-
-.. tabularcolumns:: |p{0.10\linewidth}|p{0.90\linewidth}|
-.. list-table::
-    :header-rows: 1
-    :widths: 10 90
-
-    * - 項番
-      - 説明
-    * - | (8)
-      - MyBatis関連の設定ファイルを格納するディレクトリ。
-    * - | (9)
-      - SQLを記述するMyBatisのMapperファイルを格納するディレクトリ。
-
-        本チュートリアルでは、Todoオブジェクト用のRepositoryのMapperファイルを格納するためのディレクトリを作成する。
-
-|
-
 **[O/R Mapperに依存しないブランクプロジェクト、JPA用のブランクプロジェクト用を作成した場合の構成]**
 
 .. code-block:: console
@@ -460,6 +415,51 @@ Root Directoryに \ ``C:\work\todo``\ を設定し、Projectsにtodoのpom.xml�
       - spring関連の設定ファイルを格納するディレクトリ。
     * - | (7)
       - jspを格納するディレクトリ。
+
+|
+
+**[MyBatis3用のブランクプロジェクトを作成した場合の構成]**
+
+.. code-block:: console
+
+    src
+      └main
+          ├java
+          │  └todo
+          │    ├ app
+          │    │   └todo
+          │    └domain
+          │        ├model
+          │        ├repository
+          │        │   └todo
+          │        └service
+          │            └todo
+          ├resources
+          │  ├META-INF
+          │  │  ├mybatis ... (8)
+          │  │  └spring
+          │  └todo
+          │    └domain
+          │        └repository ... (9)
+          │             └todo
+          └wepapp
+              └WEB-INF
+                  └views
+
+
+.. tabularcolumns:: |p{0.10\linewidth}|p{0.90\linewidth}|
+.. list-table::
+    :header-rows: 1
+    :widths: 10 90
+
+    * - 項番
+      - 説明
+    * - | (8)
+      - MyBatis関連の設定ファイルを格納するディレクトリ。
+    * - | (9)
+      - SQLを記述するMyBatisのMapperファイルを格納するディレクトリ。
+
+        本チュートリアルでは、Todoオブジェクト用のRepositoryのMapperファイルを格納するためのディレクトリを作成する。
 
 |
 
