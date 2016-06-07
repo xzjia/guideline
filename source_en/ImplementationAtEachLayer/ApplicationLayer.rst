@@ -1075,7 +1075,7 @@ however, as a principle rule, the following should not be fetched using argument
 * org.springframework.ui.ModelMap
 
 .. note::
-    When generalized values like ``HttpServletRequest`` , getAttribute/setAttribute of ``HttpSession`` and get/put of Map are allowed, liberal use of these can degrade the maintainability of
+    When generalized values like getAttribute/setAttribute of ``HttpServletRequest`` and get/put of ``Map`` are allowed, liberal use of these can degrade the maintainability of
     the project with an increase in project size. 
 
     For the above reason, using ``HttpSession``  is not reccomended in the case when there are alternatives.

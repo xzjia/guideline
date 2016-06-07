@@ -1079,7 +1079,7 @@ Backボタン押下時の動作については、 :ref:`controller-mapping-polic
 * org.springframework.ui.ModelMap
 
 .. note::
-    ``HttpServletRequest`` や ``HttpSession`` のgetAttribute/setAttribute
+    ``HttpServletRequest`` のgetAttribute/setAttribute
     や ``Map`` のget/putのような汎用的なメソッドの利用を許可すると自由な値の受け渡しができてしまい、
     プロジェクトの規模が大きくなると保守性を著しく低下させる可能性がある。
 
