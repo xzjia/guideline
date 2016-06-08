@@ -80,7 +80,7 @@ Overview
      - | 例外発生時間、システムエラーに対応するメッセージID
        | ツールを用いて監視することを考慮し、出力内容は最低限とすること
 
-| デバックログ、アクセスログ、通信ログ、業務エラーログ、システムエラーログは、同一のファイルに出力する。
+| デバックログ、アクセスログ、外部通信ログ、業務エラーログ、システムエラーログは、同一のファイルに出力する。
 | 本ガイドラインでは、上記を出力するログファイルを、アプリケーションログと呼ぶこととする。
 
 .. note::
@@ -486,7 +486,7 @@ SLF4Jのロガー(\ ``org.slf4j.Logger``\ )の各ログレベルに応じたメ�
 
 ログの出力結果を、以下に示す。このcom.example.sampleのログレベルは、DEBUGなので、TRACEログは出力されない。
 
-.. code-block:: xml
+.. code-block:: console
 
     date:2013-11-06 20:13:05    thread:tomcat-http--3 X-Track:5844f073b7434b67a875cb85b131e686    level:DEBUG logger:com.example.sample.app.welcome.HomeController    message:This log is debug log.
     date:2013-11-06 20:13:05    thread:tomcat-http--3 X-Track:5844f073b7434b67a875cb85b131e686    level:INFO  logger:com.example.sample.app.welcome.HomeController    message:This log is info log.
@@ -505,7 +505,7 @@ SLF4Jのロガー(\ ``org.slf4j.Logger``\ )の各ログレベルに応じたメ�
 以下のようなログが出力される。
 
 
-.. code-block:: xml
+.. code-block:: console
 
     date:2013-11-06 20:32:45    thread:tomcat-http--3   X-Track:853aa701a401404a87342a574c69efbc    level:DEBUG logger:com.example.sample.app.welcome.HomeController    message:a=1
     date:2013-11-06 20:32:45    thread:tomcat-http--3   X-Track:853aa701a401404a87342a574c69efbc    level:DEBUG logger:com.example.sample.app.welcome.HomeController    message:a=1, b=bbb
@@ -537,7 +537,7 @@ SLF4Jのロガー(\ ``org.slf4j.Logger``\ )の各ログレベルに応じたメ�
 
 これにより、起因例外のスタックトレースが出力され、エラーの原因を解析しやすくなる。
 
-.. code-block:: xml
+.. code-block:: console
 
     date:2013-11-06 20:38:04    thread:tomcat-http--5   X-Track:11d7dbdf64e44782822c5aea4fc4bb4f    level:ERROR logger:com.example.sample.app.welcome.HomeController    message:Exception happend!
     java.lang.Exception: Test Exception!
@@ -618,7 +618,330 @@ SLF4JのLoggerは、内部でログレベルのチェックを行い、必要な
             logger.debug("xxx={}", foo.getXxx());
         }
 
-|
+
+
+How to extend
+--------------------------------------------------------------------------------
+ログ出力仕様は監視製品や要件等で独自の規定があるケースが多く、個別に拡張するケースが想定される。ここでは、拡張例として以下の2例を説明する。
+
+#. ログメッセージの一元管理
+#. ログメッセージの出力フォーマットの統一
+
+ログメッセージの一元管理
+^^^^^^^^^^^^^^^^^^^^^^^^^
+| ログメッセージの一元管理によるメンテナンス性向上等を目的とした拡張例を紹介する。
+| ログメッセージの一元管理は、ログメッセージをプロパティファイル等の別ファイルにまとめ、ログ出力時にメッセージ解決を行うことで実現できる。
+| ここでは実装例として、ログ出力メソッドの引数にログIDを設定できるようにし、プロパティファイルの中のログIDに対応するメッセージを出力する方法を説明する。
+
+ .. note::
+
+     ログIDとログメッセージの管理方法は、Javaのenumを用いてまとめる方法も存在するが、本ガイドラインでは一般的なプロパティファイルを用いた方法を紹介する。
+
+本実装例では
+
+#. 拡張Logger
+#. プロパティファイル
+
+を作成することで実現する。
+
+- 拡張Logger
+
+.. code-block:: java
+
+    package com.example.sample.common.logger;
+
+    import java.util.Locale;
+
+    import org.slf4j.Logger;
+    import org.slf4j.LoggerFactory;
+    import org.springframework.context.NoSuchMessageException;
+    import org.springframework.context.support.ReloadableResourceBundleMessageSource;
+
+    public class LogIdBasedLogger  {
+
+        private static final String UNDEFINED_MESSAGE = "UNDEFINED-MESSAGE";    // (1)
+
+        private static ReloadableResourceBundleMessageSource messageSource =
+            new ReloadableResourceBundleMessageSource();   // (2)
+
+        static {    // (3)
+            messageSource.setCacheSeconds(5);
+            messageSource.setDefaultEncoding("UTF-8");
+            messageSource.setBasenames("classpath:i18n/log-messages");
+        }
+
+        private Logger logger = null;
+
+        private LogIdBasedLogger(Class<?> clazz) {
+            logger = LoggerFactory.getLogger(clazz); // (4)
+        }
+
+        public static LogIdBasedLogger getLogger(Class<?> clazz) {
+            return new LogIdBasedLogger(clazz);
+        }
+
+        public void debug(String message) {
+            if (logger.isDebugEnabled()) {
+                logger.debug(message);  // (5)
+            }
+        }
+
+        public void info(String id, String... args) {
+            if (logger.isInfoEnabled()) {
+                logger.info(createLogMessage(id, args));    // (6)
+            }
+        }
+
+        public void warn(String id, String... args) {
+            if (logger.isWarnEnabled()) {
+                logger.warn(createLogMessage(id, args));    // (6)
+            }
+        }
+
+        public void error(String id, String... args) {
+            if (logger.isErrorEnabled()) {
+                logger.error(createLogMessage(id, args));   // (6)
+            }
+        }
+
+        public void trace(String id, String... args) {
+            if (logger.isTraceEnabled()) {
+                logger.trace(createLogMessage(id, args));    // (6)
+            }
+        }
+
+        private String createLogMessage(String id, String... args) {
+            return getMessage(id, args);
+        }
+        
+        private String getMessage(String id, String... args) { 
+            String message;
+            try {
+                message = messageSource.getMessage(id, args, Locale.getDefault());
+            } catch (NoSuchMessageException e) {    // (7)
+                message = UNDEFINED_MESSAGE;
+            }
+            return message;
+        }
+    }
+
+.. tabularcolumns:: |p{0.10\linewidth}|p{0.90\linewidth}|
+.. list-table::
+   :header-rows: 1
+   :widths: 10 90
+
+   * - 項番
+     - 説明
+   * - | (1)
+     - | ログID未定義時のログメッセージ。ここでは例として \ ``org.terasoluna.gfw.common.exception.ExceptionLogger``\ と同じメッセージを使用する。
+   * - | (2)
+     - | \ ``MessageSource``\ でログメッセージを取得する実装例。
+       | メッセージデータを管理する \ ``MessageSource``\ は、汎用性を高めるため\ ``static``\ 領域に格納している。
+       | このような実装をすることでDIコンテナへのアクセス可否に依存しなくなるため、拡張ロガーをいつでも使用することができるようになる。
+   * - | (3)
+     - | staticイニシャライザにて\ ``MessageSource``\ を生成する。
+       | \ ``i18n/log-messages.properties``\ を読み込む。
+   * - | (4)
+     - | 拡張ロガーにおいても、SLF4Jを使用する。ロギングライブラリの実装を直接使用しない。
+   * - | (5)
+     - | 本実装例ではDEBUGレベルのログにはログIDを使わない。引数のログメッセージをそのまま、ログ出力する。
+   * - | (6)
+     - | TRACE/INFO/WARN/ERRORレベルのログはログIDを付与して、ログ出力する。
+   * - | (7)
+     - | 指定したログIDに該当するメッセージがない場合、デフォルトログメッセージとする。
+
+- プロパティファイル
+
+ .. warning::
+
+     ここで定義するプロパティファイルは、メッセージ管理に記載されている画面や帳票に出力するためのプロパティファイルとは異なるファイルにすること
+
+
+.. code-block:: console
+
+    i.ab.cd.1001 = This message is Info-Level. {0}
+    w.ab.cd.2001 = This message is Warn-Level. {0}
+    e.ab.cd.3001 = This message is Error-Level. {0}
+    t.ab.cd.4001 = This message is Trace-Level. {0}
+
+実行結果は、以下のようになる。
+
+
+- 呼び出しサンプル
+
+.. code-block:: java
+
+    package com.example.sample.app.welcome;
+
+    import org.springframework.stereotype.Controller;
+    import org.springframework.ui.Model;
+    import org.springframework.web.bind.annotation.RequestMapping;
+    import org.springframework.web.bind.annotation.RequestMethod;
+
+    import com.example.sample.common.logger.LogIdBasedLogger;
+
+    @Controller
+    public class HomeController {
+
+        private static final LogIdBasedLogger logger = LogIdBasedLogger
+                .getLogger(HomeController.class);
+
+        @RequestMapping(value = "/", method = { RequestMethod.GET,
+                RequestMethod.POST })
+        public String home(Model model) {
+            logger.debug("debug log");
+            logger.info("i.ab.cd.1001","replace_value_1");
+            logger.warn("w.ab.cd.2001","replace_value_2");
+            logger.error("e.ab.cd.3001","replace_value_3");
+            logger.trace("t.ab.cd.4001","replace_value_4");
+            logger.info("i.ab.cd.1002","replace_value_5");
+            return "welcome/home";
+        }
+    }
+
+
+- ログ出力
+
+.. code-block:: console
+
+    date:2016-05-30 17:34:18.590  thread:http-bio-8080-exec-3  X-Track:e2a65cd9160b48d6aaeb63fe6e751c6b  level:DEBUG  logger:com.example.sample.app.welcome.HomeController   message:debug log
+    date:2016-05-30 17:34:18.590  thread:http-bio-8080-exec-3  X-Track:e2a65cd9160b48d6aaeb63fe6e751c6b  level:INFO   logger:com.example.sample.app.welcome.HomeController   message:This message is Info-Level. replace_value_1
+    date:2016-05-30 17:34:18.590  thread:http-bio-8080-exec-3  X-Track:e2a65cd9160b48d6aaeb63fe6e751c6b  level:WARN   logger:com.example.sample.app.welcome.HomeController   message:This message is Warn-Level. replace_value_2
+    date:2016-05-30 17:34:18.590  thread:http-bio-8080-exec-3  X-Track:e2a65cd9160b48d6aaeb63fe6e751c6b  level:ERROR  logger:com.example.sample.app.welcome.HomeController   message:This message is Error-Level. replace_value_3
+    date:2016-05-30 17:34:18.590  thread:http-bio-8080-exec-3  X-Track:e2a65cd9160b48d6aaeb63fe6e751c6b  level:TRACE  logger:com.example.sample.app.welcome.HomeController   message:This message is Trace-Level. replace_value_4
+    date:2016-05-30 17:34:18.590  thread:http-bio-8080-exec-3  X-Track:e2a65cd9160b48d6aaeb63fe6e751c6b  level:INFO   logger:com.example.sample.app.welcome.HomeController   message:UNDEFINED-MESSAGE
+
+
+ログメッセージの出力フォーマットの統一
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+| ログメッセージの出力フォーマットは、下表のとおりログ出力の方式ごとで異なる。
+
+.. tabularcolumns:: |p{0.10\linewidth}|p{0.90\linewidth}|
+.. list-table::
+   :header-rows: 1
+   :widths: 10 65 50 50
+
+   * - 項番
+     - ログ出力方式
+     - 該当ログ
+     - デフォルトフォーマット
+   * - | (1)
+     - | フレームワークが例外を検知して暗黙的にログを出力
+     - | 業務エラーログ・システムエラーログなど
+     - | [{exceptionCode}], {exceptionMessage}
+   * - | (2)
+     - | 業務ロジックで明示的にログを出力
+     - | アクセスログ・外部通信ログなど
+     - | なし
+
+
+.. note::
+
+     \ :ref:`共通ライブラリ<\exception-handling-about-classes-of-library-label>` の例外ハンドリングの仕組みにより、例外発生時に出力される「業務エラーログ」および「システムエラーログ」は上記の表のデフォルトフォーマットで出力される。
+
+| そのため出力ログフォーマットの統一には、ログ出力フォーマットをもう一方のフォーマットに合わせる、または、両方とも独自のフォーマットに統一する必要がある。
+| 本ガイドラインでは、両方とも独自のフォーマット（[{exceptionCodeまたはログID}], {exceptionMessageまたはログメッセージ}）に統一する例を説明する。
+
+.. warning::
+    フォーマットを統一したとしても、ID部分のコード体系やメッセージを定義するプロパティファイルは下記のとおり別になることに注意すること。
+    
+    - フレームワークの機能で出力されるログは、画面メッセージ（メッセージID）は application-messages.propertiesで定義。
+    - 拡張Loggerから出力されるログは、ログメッセージ（ログID）は log-messages.propertiesで定義。
+
+業務ロジックで出力するログにフォーマットを定める
+"""""""""""""""""""""""""""""""""""""""""""""""""
+
+| 業務ロジックで出力するログを前述のフォーマットで出力する例を示す。
+| 本ガイドラインでは拡張ロガー(LogIdBasedLogger)を更に拡張して実現する。
+
+.. code-block:: java
+
+    package com.example.sample.common.logger;
+
+    import java.text.MessageFormat; // (1)
+
+    // omitted
+
+    public class LogIdBasedLogger {
+
+        private static final String LOG_MESSAGE_FORMAT = "[{0}], {1}"; // (2)
+
+        // omitted
+
+        private String createLogMessage(String id, String... args) {
+            return MessageFormat.format(LOG_MESSAGE_FORMAT, id, getMessage(id,
+                    args)); // (1)
+        }
+
+        // omitted
+
+    }
+
+
+.. tabularcolumns:: |p{0.10\linewidth}|p{0.90\linewidth}|
+.. list-table::
+   :header-rows: 1
+   :widths: 10 90
+
+   * - 項番
+     - 説明
+   * - | (1)
+     - | ログメッセージフォーマットを元にログメッセージを作成する処理を追加する
+   * - | (2)
+     - | フォーマットを定義する。
+       | \ ``{0}``\ はログID、\ ``{1}``\ はログメッセージがリプレースされる。
+
+
+実行結果は、以下のようになる。
+
+.. code-block:: console
+
+  date:2016-05-30 16:32:33.239  thread:http-bio-8080-exec-4  X-Track:4f61314a51524ab3a41832b0ceae7119  level:DEBUG  logger:com.example.sample.app.welcome.HomeController   message:debug log
+  date:2016-05-30 16:32:33.239  thread:http-bio-8080-exec-4  X-Track:4f61314a51524ab3a41832b0ceae7119  level:INFO   logger:com.example.sample.app.welcome.HomeController   message:[i.ab.cd.1001], This message is Info-Level. replace_value_1
+  date:2016-05-30 16:32:33.239  thread:http-bio-8080-exec-4  X-Track:4f61314a51524ab3a41832b0ceae7119  level:WARN   logger:com.example.sample.app.welcome.HomeController   message:[w.ab.cd.2001], This message is Warn-Level. replace_value_2
+  date:2016-05-30 16:32:33.239  thread:http-bio-8080-exec-4  X-Track:4f61314a51524ab3a41832b0ceae7119  level:ERROR  logger:com.example.sample.app.welcome.HomeController   message:[e.ab.cd.3001], This message is Error-Level. replace_value_3
+  date:2016-05-30 17:34:18.590  thread:http-bio-8080-exec-3  X-Track:4f61314a51524ab3a41832b0ceae7119  level:TRACE  logger:com.example.sample.app.welcome.HomeController   message:[t.ab.cd.4001], This message is Trace-Level. replace_value_4
+  date:2016-05-30 16:32:33.239  thread:http-bio-8080-exec-4  X-Track:4f61314a51524ab3a41832b0ceae7119  level:INFO   logger:com.example.sample.app.welcome.HomeController   message:[i.ab.cd.1002], UNDEFINED-MESSAGE
+
+
+フレームワークが出力するログのフォーマットを変更する
+""""""""""""""""""""""""""""""""""""""""""""""""""""""
+
+| フレームワークが出力するログを前述のフォーマットで出力する例を示す。、
+| 業務エラーログやシステムエラーログのフォーマットを変更するには、\ ``applicationContext.xml``\ の\ ``<bean id="exceptionLogger>``\ の定義を変更する。
+| 以下に、\ ``<bean id="exceptionLogger>``\ の定義の例を挙げる。
+
+- **applicationContext.xml**
+
+.. code-block:: xml
+
+    <!-- Exception Logger. -->
+    <bean id="exceptionLogger"
+        class="org.terasoluna.gfw.common.exception.ExceptionLogger">
+        <property name="exceptionCodeResolver" ref="exceptionCodeResolver" />
+        <property name="logMessageFormat" value="[{0}], {1}" />    <!-- (1) -->
+    </bean>
+
+
+.. tabularcolumns:: |p{0.10\linewidth}|p{0.90\linewidth}|
+.. list-table::
+   :header-rows: 1
+   :widths: 10 90
+
+   * - 項番
+     - 説明
+   * - | (1)
+     - | \ ``logMessageFormat``\ にフォーマットを定義する。
+       | \ ``{0}``\ は例外コード(メッセージID)、\ ``{1}``\ はメッセージがリプレースされる。
+
+実行結果は、以下のようになる。
+
+.. code-block:: console
+
+    date:2013-09-19 21:03:06   thread:tomcat-http--3   X-Track:c19eec546b054d54a13658f94292b24f    level:ERROR logger:o.t.gfw.common.exception.ExceptionLogger         message:[e.ad.od.9012],not found item entity. item code [10-123456].
+    ...
+    // stackTarace omitted
+
 
 Appendix
 --------------------------------------------------------------------------------
@@ -680,7 +1003,7 @@ MDCに追加した値をログに出力できる。
 
 実行結果は、以下のようになる、
 
-.. code-block:: xml
+.. code-block:: console
 
     date:2013-11-08 17:45:48    thread:main mdcSample:sample    level:DEBUG     message:debug log
     date:2013-11-08 17:45:48    thread:main mdcSample:sample    level:INFO      message:info log
