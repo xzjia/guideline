@@ -931,7 +931,7 @@ GET Todosの実装
    * - | (3)
      - | \ ``TodoService``\ の\ ``findAll``\ メソッドから返却された\ ``Todo``\ オブジェクトを、応答するJSONを表現する\ ``TodoResource``\ 型のオブジェクトに変換する。
        | \ ``Todo``\ と\ ``TodoResource``\ の変換処理は、Dozerの\ ``org.dozer.Mapper``\ インタフェースを使うと便利である。
-   * - | (3)
+   * - | (4)
      - | \ ``List<TodoResource>``\ オブジェクトを返却することで、\ ``spring-mvc-rest.xml``\ に定義した\ ``MappingJackson2HttpMessageConverter``\ によってJSONにシリアライズされる。
 
 |
