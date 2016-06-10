@@ -114,6 +114,8 @@ Common Library
 * \ `https://github.com/terasolunaorg/terasoluna-gfw <https://github.com/terasolunaorg/terasoluna-gfw>`_\
 * Refer to \ :ref:`frameworkstack_common_library`\  for details.
 
+.. _frameworkstack_using_oss_version:
+
 OSS Versions
 --------------------------------------------------------------------------------
 
