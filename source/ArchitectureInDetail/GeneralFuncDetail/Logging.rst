@@ -662,18 +662,18 @@ How to extend
         private static final String UNDEFINED_MESSAGE = "UNDEFINED-MESSAGE";    // (1)
 
         private static ReloadableResourceBundleMessageSource messageSource =
-            new ReloadableResourceBundleMessageSource();   // (2)
+            new ReloadableResourceBundleMessageSource();    // (2)
 
         static {    // (3)
-            messageSource.setCacheSeconds(5);
-            messageSource.setDefaultEncoding("UTF-8");
-            messageSource.setBasenames("classpath:i18n/log-messages");
+            messageSource.setCacheSeconds(5);    // (4)
+            messageSource.setDefaultEncoding("UTF-8");    // (5)
+            messageSource.setBasenames("classpath:i18n/log-messages");    // (6)
         }
 
         private Logger logger = null;
 
         private LogIdBasedLogger(Class<?> clazz) {
-            logger = LoggerFactory.getLogger(clazz); // (4)
+            logger = LoggerFactory.getLogger(clazz);    // (7)
         }
 
         public static LogIdBasedLogger getLogger(Class<?> clazz) {
@@ -682,31 +682,31 @@ How to extend
 
         public void debug(String message) {
             if (logger.isDebugEnabled()) {
-                logger.debug(message);  // (5)
+                logger.debug(message);    // (8)
             }
         }
 
         public void info(String id, String... args) {
             if (logger.isInfoEnabled()) {
-                logger.info(createLogMessage(id, args));    // (6)
+                logger.info(createLogMessage(id, args));    // (9)
             }
         }
 
         public void warn(String id, String... args) {
             if (logger.isWarnEnabled()) {
-                logger.warn(createLogMessage(id, args));    // (6)
+                logger.warn(createLogMessage(id, args));    // (9)
             }
         }
 
         public void error(String id, String... args) {
             if (logger.isErrorEnabled()) {
-                logger.error(createLogMessage(id, args));   // (6)
+                logger.error(createLogMessage(id, args));    // (9)
             }
         }
 
         public void trace(String id, String... args) {
             if (logger.isTraceEnabled()) {
-                logger.trace(createLogMessage(id, args));    // (6)
+                logger.trace(createLogMessage(id, args));    // (9)
             }
         }
 
@@ -718,7 +718,7 @@ How to extend
             String message;
             try {
                 message = messageSource.getMessage(id, args, Locale.getDefault());
-            } catch (NoSuchMessageException e) {    // (7)
+            } catch (NoSuchMessageException e) {    // (10)
                 message = UNDEFINED_MESSAGE;
             }
             return message;
@@ -742,13 +742,24 @@ How to extend
      - | staticイニシャライザにて\ ``MessageSource``\ を生成する。
        | \ ``i18n/log-messages.properties``\ を読み込む。
    * - | (4)
-     - | 拡張ロガーにおいても、SLF4Jを使用する。ロギングライブラリの実装を直接使用しない。
+     - | プロパティファイルをキャッシュにロードしておく時間を設定する。
+       | この値を適切に設定することで、プロパティファイル更新後に再起動することなく変更を反映できる。詳細は\ `ReloadableResourceBundleMessageSourceクラスのsetCacheSecondsのJavaDoc <http://docs.spring.io/spring/docs/4.2.4.RELEASE/javadoc-api/org/springframework/context/support/ReloadableResourceBundleMessageSource.html#setCacheSeconds-int->`_\を参照。
    * - | (5)
-     - | 本実装例ではDEBUGレベルのログにはログIDを使わない。引数のログメッセージをそのまま、ログ出力する。
+     - | プロパティファイルをパースする際に使用する文字コードを設定する。
+       | 本実装ではプロパティファイルはUTF-8エンコードとしたのでUTF-8を指定する。
    * - | (6)
-     - | TRACE/INFO/WARN/ERRORレベルのログはログIDを付与して、ログ出力する。
+     - | 国際化を考慮しsetBasenamesメソッドを使用してプロパティファイルを指定する。
+       | setBasenamesの詳細は\ `ReloadableResourceBundleMessageSourceクラスのsetBasenamesのJavaDoc <http://docs.spring.io/spring/docs/4.2.4.RELEASE/javadoc-api/org/springframework/context/support/ReloadableResourceBundleMessageSource.html#setBasenames-java.lang.String...->`_\を参照。
    * - | (7)
-     - | 指定したログIDに該当するメッセージがない場合、デフォルトログメッセージとする。
+     - | 拡張ロガーにおいても、SLF4Jを使用する。ロギングライブラリの実装を直接使用しない。
+   * - | (8)
+     - | 本実装例ではDEBUGレベルのログにはログIDを使わない。引数のログメッセージをそのまま、ログ出力する。
+   * - | (9)
+     - | TRACE/INFO/WARN/ERRORレベルのログはログIDを付与して、ログ出力する。
+   * - | (10)
+     - | getMessageを呼び出す際にプロパティファイルにログIDが記載されていないと例外:\ ``NoSuchMessageException``\ が発生する。
+       | そのため\ ``NoSuchMessageException``\ をcatchし、ログIDがプロパティファイルに定義されていない旨のログメッセージを出力する。
+       | なお、本実装では指定したログIDに該当するメッセージがない場合、デフォルトログメッセージとする。
 
 - プロパティファイル
 
