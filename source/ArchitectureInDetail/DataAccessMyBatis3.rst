@@ -1243,7 +1243,7 @@ Entity毎にRepositoryインタフェースを作成する。
     * - (1)
       - JavaのインタフェースとしてRepositoryインタフェースを作成する。
       
-        上記例では、\ ``Todo``\というEntityに対するRepositoryインタエースを作成している。
+        上記例では、\ ``Todo``\というEntityに対するRepositoryインタフェースを作成している。
 
 |
 
