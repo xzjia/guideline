@@ -1794,7 +1794,9 @@ The hierarchical structure of the project indicated below which is created in Ma
 
         are performed.
 
-        Furthermore, in order to version management of the dependent libraries via Spring IO Platform, imported the [io.spring.platform:platform-bom:1.1.3.RELEASE] into \ ``<dependencyManagement>`` \ of the current project.
+        Furthermore, in order to version management of the dependent libraries via Spring IO Platform, imported the [Spring IO Platform] into \ ``<dependencyManagement>`` \ of the project.
+        
+        Spring IO Platform Version (the current project using) is described in \ :ref:`frameworkstack_using_oss_version`\.
     * - | (3)
       - Spring IO Platform project.
 

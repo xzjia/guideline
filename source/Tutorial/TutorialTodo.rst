@@ -1,4 +1,4 @@
-チュートリアル(Todoアプリケーション)
+﻿チュートリアル(Todoアプリケーション)
 ********************************************************************************
 
 .. only:: html
@@ -365,51 +365,6 @@ Root Directoryに \ ``C:\work\todo``\ を設定し、Projectsにtodoのpom.xml�
 
 |
 
-**[MyBatis3用のブランクプロジェクトを作成した場合の構成]**
-
-.. code-block:: console
-
-    src
-      └main
-          ├java
-          │  └todo
-          │    ├ app
-          │    │   └todo
-          │    └domain
-          │        ├model
-          │        ├repository
-          │        │   └todo
-          │        └service
-          │            └todo
-          ├resources
-          │  ├META-INF
-          │  │  ├mybatis ... (8)
-          │  │  └spring
-          │  └todo
-          │    └domain
-          │        └repository ... (9)
-          │             └todo
-          └wepapp
-              └WEB-INF
-                  └views
-
-
-.. tabularcolumns:: |p{0.10\linewidth}|p{0.90\linewidth}|
-.. list-table::
-    :header-rows: 1
-    :widths: 10 90
-
-    * - 項番
-      - 説明
-    * - | (8)
-      - MyBatis関連の設定ファイルを格納するディレクトリ。
-    * - | (9)
-      - SQLを記述するMyBatisのMapperファイルを格納するディレクトリ。
-
-        本チュートリアルでは、Todoオブジェクト用のRepositoryのMapperファイルを格納するためのディレクトリを作成する。
-
-|
-
 **[O/R Mapperに依存しないブランクプロジェクト、JPA用のブランクプロジェクト用を作成した場合の構成]**
 
 .. code-block:: console
@@ -460,6 +415,51 @@ Root Directoryに \ ``C:\work\todo``\ を設定し、Projectsにtodoのpom.xml�
       - spring関連の設定ファイルを格納するディレクトリ。
     * - | (7)
       - jspを格納するディレクトリ。
+
+|
+
+**[MyBatis3用のブランクプロジェクトを作成した場合の構成]**
+
+.. code-block:: console
+
+    src
+      └main
+          ├java
+          │  └todo
+          │    ├ app
+          │    │   └todo
+          │    └domain
+          │        ├model
+          │        ├repository
+          │        │   └todo
+          │        └service
+          │            └todo
+          ├resources
+          │  ├META-INF
+          │  │  ├mybatis ... (8)
+          │  │  └spring
+          │  └todo
+          │    └domain
+          │        └repository ... (9)
+          │             └todo
+          └wepapp
+              └WEB-INF
+                  └views
+
+
+.. tabularcolumns:: |p{0.10\linewidth}|p{0.90\linewidth}|
+.. list-table::
+    :header-rows: 1
+    :widths: 10 90
+
+    * - 項番
+      - 説明
+    * - | (8)
+      - MyBatis関連の設定ファイルを格納するディレクトリ。
+    * - | (9)
+      - SQLを記述するMyBatisのMapperファイルを格納するディレクトリ。
+
+        本チュートリアルでは、Todoオブジェクト用のRepositoryのMapperファイルを格納するためのディレクトリを作成する。
 
 |
 
@@ -2676,12 +2676,31 @@ CSSファイルを適用すると、以下のようなレイアウトになる�
 
 |
 
+.. _TutorialCreateORMapperBlankProject:
+
+O/R Mapperに依存したブランクプロジェクトの作成
+--------------------------------------------------------------------------------
+
+ここでは、O/R Mapperに依存したブランクプロジェクトの作成を行う。
+
+まず、使用するO/R Mapperに応じてプロジェクトを作成し直す。
+
+* \ :ref:`TutorialCreateMyBatis3BlankProject`\
+* \ :ref:`TutorialCreateJPABlankProject`\
+
+次に、\ :ref:`tutorial-todo_infra`\ までで作成した\ :file:`src`\ フォルダ以下のうち、
+\ **TodoRepositoryImplクラス以外のファイルを新規作成したプロジェクトにコピーする**\ 。
+
+\ **ただし、コピーするファイルは新規作成したファイル・変更を加えたファイルに限り、修正を加えていないファイルはコピーしないこと**\ 。
+
+|
+
 .. _Tutorial_Setup_Database:
 
 データベースのセットアップ
 --------------------------------------------------------------------------------
 
-まず、データベースのセットアップを行う。
+ここでは、データベースのセットアップを行う。
 
 本チュートリアルでは、データベースのセットアップの手間を省くため、H2 Databaseを使用する。
 
@@ -2738,9 +2757,6 @@ MyBatis3を使用したインフラストラクチャ層の作成
 --------------------------------------------------------------------------------
 
 ここでは、MyBatis3を使用してインフラストラクチャ層のRepositoryImplを作成する方法について説明する。
-
-まずは\ :ref:`TutorialCreateMyBatis3BlankProject`\ でプロジェクト作成し直し、\ :ref:`Tutorial_Setup_Database`\ までで作成した\ :file:`src`\ フォルダ以下のうち、
-\ **TodoRepositoryImplクラス以外のファイルを新規作成したプロジェクトにコピーすること**\ 。
 
 Spring Data JPAを使用する場合は、本節を読み飛ばして、\ :ref:`using_SpringDataJPA`\ に進んでよい。
 
@@ -2963,9 +2979,6 @@ Spring Data JPAを使用したインフラストラクチャ層の作成
 
 ここでは、\ `Spring Data JPA <http://www.springsource.org/spring-data/jpa>`_\ を使用してインフラストラクチャ層のRepositoryImplを作成する方法について説明する。
 
-まずは\ :ref:`TutorialCreateJPABlankProject`\ でプロジェクト作成し直し、\ :ref:`Tutorial_Setup_Database`\ までで作成した\ :file:`src`\ フォルダ以下のうち、
-\ **TodoRepositoryImplクラス以外のファイルを新規作成したプロジェクトにコピーすること**\ 。
-
 Entityの修正
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
@@ -3173,7 +3186,7 @@ Service及びアプリケーション層を作成後にAPサーバーを起動�
 
 * プロパティ(未完了TODOの上限数)を外部化する → :doc:`../ArchitectureInDetail/GeneralFuncDetail/PropertyManagement`
 * メッセージを外部化する → :doc:`../ArchitectureInDetail/WebApplicationDetail/MessageManagement`
-* ページング処理を追加する → :doc:`../ArchitectureInDetail/WebApplicationDetail/Pagination`
+* ページネーション機能を追加する → :doc:`../ArchitectureInDetail/WebApplicationDetail/Pagination`
 * 例外ハンドリングを加える → :doc:`../ArchitectureInDetail/WebApplicationDetail/ExceptionHandling`
 * 二重送信を防止する(トランザクショントークンチェックを追加する) → :doc:`../ArchitectureInDetail/WebApplicationDetail/DoubleSubmitProtection`
 * システム日時の取得元を変更する → :doc:`../ArchitectureInDetail/GeneralFuncDetail/SystemDate`
