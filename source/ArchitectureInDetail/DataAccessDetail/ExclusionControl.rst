@@ -1650,9 +1650,10 @@ Controllerで適切にハンドリングする必要がある。
             OptimisticLockingFailureException e) {
         // (2)
         ExtendedModelMap modelMap = new ExtendedModelMap();
-        ResultMessages resultMessages = ResultMessages.warn();
+        ResultMessages resultMessages = ResultMessages.warning();
         resultMessages.add(ResultMessage.fromText("Other user updated!!"));
         modelMap.addAttribute(setUpForm());
+        modelMap.addAttribute(resultMessages);
         String viewName = top(modelMap);
         return new ModelAndView(viewName, modelMap);
     }
@@ -1723,9 +1724,10 @@ Controllerで適切にハンドリングする必要がある。
             PessimisticLockingFailureException e) {
         // (2)
         ExtendedModelMap modelMap = new ExtendedModelMap();
-        ResultMessages resultMessages = ResultMessages.warn();
+        ResultMessages resultMessages = ResultMessages.warning();
         resultMessages.add(ResultMessage.fromText("Other user updated!!"));
         modelMap.addAttribute(setUpForm());
+        modelMap.addAttribute(resultMessages);
         String viewName = top(modelMap);
         return new ModelAndView(viewName, modelMap);
     }
