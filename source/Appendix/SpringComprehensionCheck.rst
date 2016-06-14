@@ -71,7 +71,7 @@ Spring Framework理解度チェックテスト
 #. \ ``com.example.domain``\ パッケージ以下がcomponent scanの対象となるように以下のBean定義の(1)～(3)を埋めてください。
 
 
-    .. code-block:: rest
+    .. code-block:: text
     
         <context:(1) (2)="(3)" />
         
@@ -127,7 +127,7 @@ Spring Framework理解度チェックテスト
 
 #. \ ``@Transactional``\ アノテーションによるトランザクション管理を行うために以下のBean定義の(*)を埋めてください。
 
-    .. code-block:: rest
+    .. code-block:: text
 
         <tx:(*) />
 

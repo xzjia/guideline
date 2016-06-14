@@ -71,7 +71,7 @@ Spring Framework Comprehension Check
 #. Fill (1)-(3) of the following Bean definition such that contents in \ ``com.example.domain``\  package becomes target of component scan.
 
 
-    .. code-block:: rest
+    .. code-block:: text
     
         <context:(1) (2)="(3)" />
         
@@ -127,7 +127,7 @@ Spring Framework Comprehension Check
 
 #. Insert (*) of following Bean definition for performing transaction management using  \ ``@Transactional``\  annotation.
 
-    .. code-block:: rest
+    .. code-block:: text
 
         <tx:(*) />
 
