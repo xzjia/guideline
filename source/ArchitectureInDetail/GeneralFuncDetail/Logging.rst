@@ -639,13 +639,13 @@ How to extend
 
 本実装例では
 
-#. 拡張Logger
+#. Loggerラッパークラス
 #. プロパティファイル
 
 | を作成することで実現する。
-| ここでは拡張Loggerを\ ``LogIdBasedLogger``\とし、プロパティファイルを\ ``log-messages.properties``\とする。
+| ここではLoggerラッパークラスを\ ``LogIdBasedLogger``\とし、プロパティファイルを\ ``log-messages.properties``\とする。
 
-- `LogIdBasedLogger`  (拡張Logger)
+- `LogIdBasedLogger`  (Loggerラッパークラス)
 
 .. code-block:: java
 
@@ -738,7 +738,7 @@ How to extend
    * - | (2)
      - | \ ``MessageSource``\ でログメッセージを取得する実装例。
        | メッセージデータを管理する \ ``MessageSource``\ は、汎用性を高めるため\ ``static``\ 領域に格納している。
-       | このような実装をすることでDIコンテナへのアクセス可否に依存しなくなるため、拡張ロガーをいつでも使用することができるようになる。
+       | このような実装をすることでDIコンテナへのアクセス可否に依存しなくなるため、Loggerラッパークラスをいつでも使用することができるようになる。
    * - | (3)
      - | staticイニシャライザにて\ ``MessageSource``\ を生成する。
        | 本実装では\ ``i18n``\に配置した\ ``log-messages.properties``\ を読み込む。
@@ -752,7 +752,7 @@ How to extend
      - | 国際化を考慮しsetBasenamesメソッドを使用してプロパティファイルを指定する。
        | setBasenamesの詳細は\ `ReloadableResourceBundleMessageSourceクラスのsetBasenamesのJavaDoc <http://docs.spring.io/spring/docs/4.2.4.RELEASE/javadoc-api/org/springframework/context/support/ReloadableResourceBundleMessageSource.html#setBasenames-java.lang.String...->`_\を参照。
    * - | (7)
-     - | 拡張ロガーにおいても、SLF4Jを使用する。ロギングライブラリの実装を直接使用しない。
+     - | Loggerラッパークラスにおいても、SLF4Jを使用する。ロギングライブラリの実装を直接使用しない。
    * - | (8)
      - | 本実装例ではDEBUGレベルのログにはログIDを使わない。引数のログメッセージをそのまま、ログ出力する。
    * - | (9)
@@ -857,13 +857,13 @@ How to extend
     フォーマットを統一したとしても、ID部分のコード体系やメッセージを定義するプロパティファイルは下記のとおり別になることに注意すること。
     
     - フレームワークの機能で出力されるログは、画面メッセージ（メッセージID）は application-messages.propertiesで定義。
-    - 拡張Loggerから出力されるログは、ログメッセージ（ログID）は log-messages.propertiesで定義。
+    - Loggerラッパークラスから出力されるログは、ログメッセージ（ログID）は log-messages.propertiesで定義。
 
 業務ロジックで出力するログにフォーマットを定める
 """""""""""""""""""""""""""""""""""""""""""""""""
 
 | 業務ロジックで出力するログを前述のフォーマットで出力する例を示す。
-| 本ガイドラインでは拡張ロガー(LogIdBasedLogger)を更に拡張して実現する。
+| 本ガイドラインではLoggerラッパークラス(LogIdBasedLogger)を更に拡張して実現する。
 
 .. code-block:: java
 
