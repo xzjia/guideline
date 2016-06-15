@@ -1639,9 +1639,10 @@ When there is no need to change the operation at request level, it is handled by
             OptimisticLockingFailureException e) {
         // (2)
         ExtendedModelMap modelMap = new ExtendedModelMap();
-        ResultMessages resultMessages = ResultMessages.warn();
+        ResultMessages resultMessages = ResultMessages.warning();
         resultMessages.add(ResultMessage.fromText("Other user updated!!"));
         modelMap.addAttribute(setUpForm());
+        modelMap.addAttribute(resultMessages);
         String viewName = top(modelMap);
         return new ModelAndView(viewName, modelMap);
     }
@@ -1712,9 +1713,10 @@ If there is no need to change the operation at request level, it is handled usin
             PessimisticLockingFailureException e) {
         // (2)
         ExtendedModelMap modelMap = new ExtendedModelMap();
-        ResultMessages resultMessages = ResultMessages.warn();
+        ResultMessages resultMessages = ResultMessages.warning();
         resultMessages.add(ResultMessage.fromText("Other user updated!!"));
         modelMap.addAttribute(setUpForm());
+        modelMap.addAttribute(resultMessages);
         String viewName = top(modelMap);
         return new ModelAndView(viewName, modelMap);
     }
