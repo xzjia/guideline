@@ -642,9 +642,10 @@ How to extend
 #. 拡張Logger
 #. プロパティファイル
 
-を作成することで実現する。
+| を作成することで実現する。
+| ここでは拡張Loggerを\ ``LogIdBasedLogger``\とし、プロパティファイルを\ ``log-messages.properties``\とする。
 
-- 拡張Logger
+- `LogIdBasedLogger`  (拡張Logger)
 
 .. code-block:: java
 
@@ -740,7 +741,7 @@ How to extend
        | このような実装をすることでDIコンテナへのアクセス可否に依存しなくなるため、拡張ロガーをいつでも使用することができるようになる。
    * - | (3)
      - | staticイニシャライザにて\ ``MessageSource``\ を生成する。
-       | \ ``i18n/log-messages.properties``\ を読み込む。
+       | 本実装では\ ``i18n``\に配置した\ ``log-messages.properties``\ を読み込む。
    * - | (4)
      - | プロパティファイルをキャッシュにロードしておく時間を設定する。
        | この値を適切に設定することで、プロパティファイル更新後に再起動することなく変更を反映できる。詳細は\ `ReloadableResourceBundleMessageSourceクラスのsetCacheSecondsのJavaDoc <http://docs.spring.io/spring/docs/4.2.4.RELEASE/javadoc-api/org/springframework/context/support/ReloadableResourceBundleMessageSource.html#setCacheSeconds-int->`_\を参照。
@@ -761,12 +762,7 @@ How to extend
        | そのため\ ``NoSuchMessageException``\ をcatchし、ログIDがプロパティファイルに定義されていない旨のログメッセージを出力する。
        | なお、本実装では指定したログIDに該当するメッセージがない場合、デフォルトログメッセージとする。
 
-- プロパティファイル
-
- .. warning::
-
-     ここで定義するプロパティファイルは、メッセージ管理に記載されている画面や帳票に出力するためのプロパティファイルとは異なるファイルにすること
-
+- `log-messages.properties`  (プロパティファイル)
 
 .. code-block:: console
 
@@ -774,6 +770,11 @@ How to extend
     w.ab.cd.2001 = This message is Warn-Level. {0}
     e.ab.cd.3001 = This message is Error-Level. {0}
     t.ab.cd.4001 = This message is Trace-Level. {0}
+\
+ .. warning::
+
+     ここで定義するプロパティファイルは、メッセージ管理に記載されている画面や帳票に出力するためのプロパティファイルとは異なるファイルにすること
+
 
 実行結果は、以下のようになる。
 
