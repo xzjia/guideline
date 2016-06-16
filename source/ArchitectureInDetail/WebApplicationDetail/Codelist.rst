@@ -1152,6 +1152,10 @@ JSPからコードリストを参照する場合は、 ``java.util.Map`` イン�
 
 BeanValidationや、メッセージ出力方法の詳細については、 :doc:`../WebApplicationDetail/Validation` を参照されたい。
 
+
+複数選択可能な画面項目（チェックボックスや複数選択ドロップダウンなど）に対応した\ ``@ExistInCodeList``\ アノテーションは
+:ref:`Validation_for_string_object_in_collection`\ で紹介している。
+
 \ ``@ExistInCodeList``\ アノテーションを使用して入力チェックを行う場合は、
 \ ``@ExistInCodeList``\ 用の「:ref:`Validation_message_def`」を行う必要がある。
 
