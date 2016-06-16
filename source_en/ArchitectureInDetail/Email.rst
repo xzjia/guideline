@@ -867,7 +867,7 @@ In this guideline, a method that uses \ `FreeMarker <http://freemarker.org/>`_\ 
 
     **Configuration example of template file**
     
-    .. code-block:: html
+    .. code-block:: text
     
        <#escape x as x?html> <#-- (1) -->
        <html>
