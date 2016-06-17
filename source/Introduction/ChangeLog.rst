@@ -9,6 +9,11 @@
     * - 更新日付
       - 更新箇所
       - 更新内容
+    * -
+      - :doc:`../ArchitectureInDetail/GeneralFuncDetail/Logging`
+      - 記載内容の追加
+        
+        * ID付きログメッセージを出力するための拡張方法を記載 (\ `guideline#1928 <https://github.com/terasolunaorg/guideline/issues/1928>`_\ )
     * - 2016-05-19
       - \-
       - 章立てを全面見直し
