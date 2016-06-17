@@ -1,4 +1,4 @@
-Summary - Architecture of TERASOLUNA Server Framework for Java (5.x)
+Architecture Overview
 ================================================================================
 
 The architecture adopted in this guideline is explained here.
@@ -10,7 +10,6 @@ The architecture adopted in this guideline is explained here.
    SpringMVCOverview
    FirstApplication
    ApplicationLayering
-
 
 .. raw:: latex
 

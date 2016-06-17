@@ -11,7 +11,6 @@ In the Beginning
    CriteriaBasedMapping
    ChangeLog
 
-
 .. raw:: latex
 
    \newpage
