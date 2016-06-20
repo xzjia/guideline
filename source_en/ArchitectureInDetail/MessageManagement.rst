@@ -617,7 +617,7 @@ Display of messages set in properties
 
         When supporting internationalization,
 
-        .. code-block:: properties
+        .. code-block:: text
 
             src/main/resources/i18n
                                 ├ application-messages.properties (English message)

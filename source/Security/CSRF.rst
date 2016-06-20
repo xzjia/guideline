@@ -241,7 +241,7 @@ HTMLフォームを使ってリクエストを送信する場合は、HTMLフォ
 
 * JSPの実装例
 
-.. code-block:: jsp
+.. code-block:: text
 
     <%@ taglib prefix="sec" uri="http://www.springframework.org/security/tags" %>
 
