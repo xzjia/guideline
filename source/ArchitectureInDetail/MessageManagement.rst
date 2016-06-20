@@ -622,7 +622,7 @@ How to use
 
         国際化に対応する場合は、
 
-        .. code-block:: properties
+        .. code-block:: text
 
             src/main/resources/i18n
                                 ├ application-messages.properties (英語メッセージ)
