@@ -906,7 +906,7 @@ Bean Validationと連携した文字列チェック
     \ ``JIS_X_0208_SpecialChars``\コードポイント集合クラスはJIS漢字(JIS X 0208)の01-02区に該当する特殊文字集合である。
     JIS漢字の全角ダッシュ(―)はEM DASHであり、対応するUCS(ISO/IEC 10646-1, JIS X 0221, Unicode)のコードポイン トは\ ``U+2014``\である。
     しかし、Unicodeコンソーシアムが提供する変換表では、Unicodeで対応する文字がEM DASHでなく\ `HORINZONTAL BAR (U+2015) <http://www.unicode.org/Public/MAPPINGS/OBSOLETE/EASTASIA/JIS/JIS0208.TXT>`_\になっている。
-    これはUnicodeの変換表の間違いである。そのため、\ ``JIS_X_0208_SpecialChars``\コードポイント集合クラスではHORINZONTAL BAR (\ ``U+2015``\)を\ `EM DASH (U+2014) <https://github.com/terasolunaorg/terasoluna-gfw/blob/5.1.0.RELEASE/terasoluna-gfw-codepoints/catalog/terasoluna-gfw-codepoints-jisx0208/src/main/java/org/terasoluna/gfw/common/codepoints/catalog/JIS_X_0208_SpecialChars.java#L44>`_\で変更する。
+    実用されている一般的な変換ルールと、Unicode変換表が異なっているため、Unicode変換表通りにコードポイント集合を定義してしまうと実用上問題が出るケースが発生する可能性がある。そのため、\ ``JIS_X_0208_SpecialChars``\コードポイント集合クラスではHORINZONTAL BAR (\ ``U+2015``\)をEM DASH (\ ``U+2014``\)に変更してコードポイント集合を定義している。
 
 .. raw:: latex
 
