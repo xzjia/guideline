@@ -1,37 +1,19 @@
-Architecture in Detail - TERASOLUNA Server Framework for Java (5.x)
+:orphan:
+
+Feature Details
 ================================================================================
 
-The architecture adopted in this guideline is explained in detail here.
+The architecture adopted in this guideline is explained in detail.
 
 .. toctree::
    :maxdepth: 1
 
-   DataAccessCommon
-   DataAccessMyBatis3
-   DataAccessJpa
-   ExclusionControl
-   Validation
-   Logging
-   ExceptionHandling
-   SessionManagement
-   MessageManagement
-   PropertyManagement
-   Pagination
-   DoubleSubmitProtection
-   Internationalization
-   Codelist
-   Ajax
-   REST
-   RestClient
-   SOAP
-   FileUpload
-   FileDownload
-   Email
-   TilesLayout
-   SystemDate
-   Utilities/index
+   ./WebApplicationDetail/index
+   ./WebServiceDetail/index
+   ./DataAccessDetail/index
+   ./GeneralFuncDetail/index
+   ./MessagingDetail/index
 
 .. raw:: latex
 
    \newpage
-
