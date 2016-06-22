@@ -2174,6 +2174,9 @@ Spring MVCによるBean Validationのエラーメッセージは、以下の順�
 
 ValidationMessages.propertiesを用意しない場合は、\ :ref:`Hibernate Validatorが用意するデフォルトメッセージ <Validation_default_message_in_hibernate_validator>`\ が使用される。
 
+\ ``MessageSource``\ と連携することで、日本語メッセージをNative to Asciiせずに直接扱うことができる。
+詳細は、\ :ref:`Validation_without_native2ascii`\ を参照されたい。
+
 
 .. _Validation_message_in_validationmessages:
 
@@ -4355,6 +4358,75 @@ application-messages.propertiesに以下の定義を行った場合、
 
 | この設定を行った場合は、フォームオブジェクトの文字列フィールドに設定される空文字がすべて\ ``null``\ になる。
 | したがって、必須チェックに、かならず\ ``@NotNull``\ が必要であることに注意しないといけない。
+
+
+.. _Validation_without_native2ascii:
+
+Native to Asciiを行わないメッセージの読み込み
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+Native to Asciiを行わずにBean Validationのメッセージ（\ ``ValidationMessage.properties``\ ）を読み込む方法紹介する。
+
+日本語メッセージをNative to Asciiせずに直接扱いたい場合、Springの \ ``MessageSource``\ と連携すると簡単に実装することができる。
+
+
+以下のように定義すると、\ ``MessageSource``\ の機能で読み込まれたメッセージが\ ``Hibernate Validator``\ の中で
+使用されるようになる。
+
+* Bean定義
+
+ applicationContext.xml
+
+ .. code-block:: xml
+
+     <!-- (1) -->
+     <bean id="beanValidator" class="org.springframework.validation.beanvalidation.LocalValidatorFactoryBean">
+         <property name="validationMessageSource">
+             <!-- (2) -->
+             <bean class="org.springframework.context.support.ResourceBundleMessageSource">
+                 <property name="basenames">
+                     <list>
+                         <value>ValidationMessages</value> <!-- (3) -->
+                     </list>
+                 </property>
+                 <property name="defaultEncoding" value="UTF-8" />
+             </bean>
+         </property>
+     </bean>
+
+
+ spring-mvc.xml
+
+ .. code-block:: xml
+
+     <!-- (4) -->
+     <mvc:annotation-driven validator="beanValidator">
+         <!-- ommited -->
+     </mvc:annotation-driven>
+
+
+ .. tabularcolumns:: |p{0.10\linewidth}|p{0.90\linewidth}|
+ .. list-table::
+     :header-rows: 1
+     :widths: 10 90
+
+     * - 項番
+       - 説明
+     * - | (1)
+       - \ ``LocalValidatorFactoryBean``\ をBean定義する。
+     * - | (2)
+       - \ ``MessageSource``\ の定義。ここでは\ ``ResourceBundleMessageSource``\ を使用する。
+     * - | (3)
+       - \ ``ApplicationContext``\ に読み込ませるリソースバンドルを指定する。
+     * - | (4)
+       - \ ``<mvc:annotation-driven>``\ 要素の\ ``validator``\ 属性に、(1)で定義したBeanを指定する。
+         この設定がない場合は(1)で作成したものとは異なる\ ``Validator``\ インスタンスが生成されてしまう。
+
+ .. note::
+
+     \ ``MessageSource``\ の機能を利用することで、
+     プロパティファイルの配置先がクラスパス直下に制限されなくなる。また、複数のプロパティファイルを指定することもできるようになる。
+
 
 .. raw:: latex
 
