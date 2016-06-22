@@ -10,10 +10,10 @@
       - 更新箇所
       - 更新内容
     * - 2016-06-31
-      - :doc:`../ArchitectureInDetail/GeneralFuncDetail/StringProcessing`
+      - :doc:`../ArchitectureInDetail/Utilities/StringProcessing`
       - 記載内容の追加
       
-        * JIS漢字U+2014(EM DASH)のUCS(Unicode)文字対応について記載を追加(\ `guideline#1914 <https://github.com/terasolunaorg/guideline/issues/1914>`_\ )
+        * JIS漢字\ ``U+2014``\(EM DASH)のUCS(Unicode)文字対応について記載を追加(\ `guideline#1914 <https://github.com/terasolunaorg/guideline/issues/1914>`_\ )
       
     * - 2016-05-19
       - \-
