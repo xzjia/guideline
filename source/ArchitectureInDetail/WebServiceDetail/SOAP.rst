@@ -1498,11 +1498,11 @@ WebServiceインターフェースを実装したプロキシクラスを生成�
 
     <bean id="todoWebService"
         class="org.springframework.remoting.jaxws.JaxWsPortProxyFactoryBean"><!-- (1) -->
-        <property name="serviceInterface" value="${webservice.todoWebService.serviceInterface}" /><!-- (2) -->
+        <property name="serviceInterface" value="com.example.ws.todo.TodoWebService" /><!-- (2) -->
         <!-- (3) -->
-        <property name="serviceName" value="${webservice.todoWebService.serviceName}" />
-        <property name="portName" value="${webservice.todoWebService.portName}" />
-        <property name="namespaceUri" value="${webservice.todoWebService.namespaceUri}" />
+        <property name="serviceName" value="TodoWebService" />
+        <property name="portName" value="TodoWebPort" />
+        <property name="namespaceUri" value="http://example.com/todo" />
         <property name="wsdlDocumentResource" value="${webservice.todoWebService.wsdlDocumentResource}" /><!-- (4) -->
     </bean>
 
@@ -1511,10 +1511,6 @@ WebServiceインターフェースを実装したプロキシクラスを生成�
 .. code-block:: properties
 
     # (5)
-    webservice.todoWebService.serviceInterface=com.example.ws.todo.TodoWebService
-    webservice.todoWebService.serviceName=TodoWebService
-    webservice.todoWebService.portName=TodoWebPort
-    webservice.todoWebService.namespaceUri=http://example.com/todo
     webservice.todoWebService.wsdlDocumentResource=http://AAA.BBB.CCC.DDD:XXXX/[server projectName]-web/ws/TodoWebService?wsdl
 
 .. tabularcolumns:: |p{0.10\linewidth}|p{0.90\linewidth}|
@@ -1528,15 +1524,13 @@ WebServiceインターフェースを実装したプロキシクラスを生成�
       - | \ ``org.springframework.remoting.jaxws.JaxWsPortProxyFactoryBean``\ を定義する。このクラスが生成するプロキシクラスを経由してSOAPサーバにアクセスできる。
     * - | (2)
       - | \ ``serviceInterface``\ プロパティに本来このWebサービスが実装すべきインターフェースを定義する。
-        | ここでは後述するプロパティファイルにインターフェースを記述するため、プロパティのキーを指定している。
     * - | (3)
       - | \ ``serviceName``\ 、\ ``portName``\ 、\ ``namespaceUri``\ プロパティにそれぞれSOAPサーバ側で定義している同じ内容を定義する必要がある。
-        | ここでは後述するプロパティファイルに\ ``serviceName``\ 、\ ``portName``\ 、\ ``namespaceUri``\を記述するため、プロパティのキーを指定している。
     * - | (4)
       - | \ ``wsdlDocumentResource``\ プロパティに公開されているWDSLのURLを設定する。
         | ここでは後述するプロパティファイルにURLを記述するため、プロパティのキーを指定している。
     * - | (5)
-      - | \ ``[client projectName]-env.xml``\ で定義したプロパティのキーの値を設定する。Webサービスが実装すべきインターフェース、serviceName、portName、namespaceUri、WSDLのURLを記述する。
+      - | \ ``[client projectName]-domain.xml``\ で定義したプロパティのキーの値を設定する。WSDLのURLを記述する。
 
         .. Note:: **wsdlDocumentResourceへのWSDLファイルのURL以外の指定**
 
@@ -1557,10 +1551,10 @@ WebServiceインターフェースを実装したプロキシクラスを生成�
 
          <bean id="todoWebService"
              class="org.springframework.remoting.jaxws.JaxWsPortProxyFactoryBean">
-             <property name="serviceInterface" value="${webservice.todoWebService.serviceInterface}" />
-             <property name="serviceName" value="${webservice.todoWebService.serviceName}" />
-             <property name="portName" value="${webservice.todoWebService.portName}" />
-             <property name="namespaceUri" value="${webservice.todoWebService.namespaceUri}" />
+             <property name="serviceInterface" value="com.example.ws.todo.TodoWebService" />
+             <property name="serviceName" value="TodoWebService" />
+             <property name="portName" value="TodoWebPort" />
+             <property name="namespaceUri" value="http://example.com/todo" />
              <property name="wsdlDocumentResource" value="${webservice.todoWebService.wsdlDocumentResource}" />
              <property name="endpointAddress" value="${webservice.todoWebService.endpointAddress}" /><!-- (1) -->
          </bean>
@@ -1677,10 +1671,10 @@ WebServiceインターフェースを実装したプロキシクラスを生成�
 
     <bean id="todoWebService"
         class="org.springframework.remoting.jaxws.JaxWsPortProxyFactoryBean">
-        <property name="serviceInterface" value="${webservice.todoWebService.serviceInterface}" />
-        <property name="serviceName" value="${webservice.todoWebService.serviceName}" />
-        <property name="portName" value="${webservice.todoWebService.portName}" />
-        <property name="namespaceUri" value="${webservice.todoWebService.namespaceUri}" />
+        <property name="serviceInterface" value="com.example.ws.todo.TodoWebService" />
+        <property name="serviceName" value="TodoWebService" />
+        <property name="portName" value="TodoWebPort" />
+        <property name="namespaceUri" value="http://example.com/todo" />
         <property name="wsdlDocumentResource" value="${webservice.todoWebService.wsdlDocumentResource}" />
         <!-- (1) -->
         <property name="username" value="${webservice.todoWebService.username}" />
@@ -1706,7 +1700,7 @@ WebServiceインターフェースを実装したプロキシクラスを生成�
       - | \ ``org.springframework.remoting.jaxws.JaxWsPortProxyFactoryBean``\のbean定義にusernameとpasswordを加えることでBasic認証における、認証情報を送信することができる。
         | ユーザ名とパスワードをプロパティファイルに切り出した場合のサンプルである。
     * - | (2)
-      - | \ ``[client projectName]-env.xml``\ で定義したプロパティのキーの値を設定する。認証に使用するユーザ名とパスワードを記述する。
+      - | \ ``[client projectName]-domain.xml``\ で定義したプロパティのキーの値を設定する。認証に使用するユーザ名とパスワードを記述する。
 
 |
 
@@ -1774,10 +1768,10 @@ WebServiceインターフェースを実装したプロキシクラスを生成�
 
     <bean id="todoWebService"
         class="org.springframework.remoting.jaxws.JaxWsPortProxyFactoryBean">
-        <property name="serviceInterface" value="${webservice.todoWebService.serviceInterface}" />
-        <property name="serviceName" value="${webservice.todoWebService.serviceName}" />
-        <property name="portName" value="${webservice.todoWebService.portName}" />
-        <property name="namespaceUri" value="${webservice.todoWebService.namespaceUri}" />
+        <property name="serviceInterface" value="com.example.ws.todo.TodoWebService" />
+        <property name="serviceName" value="TodoWebService" />
+        <property name="portName" value="TodoWebPort" />
+        <property name="namespaceUri" value="http://example.com/todo" />
         <property name="wsdlDocumentResource" value="${webservice.todoWebService.wsdlDocumentResource}" />
         <!-- (1) -->
         <property name="customProperties">
@@ -1816,7 +1810,7 @@ WebServiceインターフェースを実装したプロキシクラスを生成�
             詳細は\ `JAX_WS-1166 Standardize timeout settings <https://java.net/jira/browse/JAX_WS-1166>`_\を参照されたい。
 
     * - | (3)
-      - | \ ``[client projectName]-env.xml``\ で定義したプロパティのキーの値を設定する。コネクションタイムアウトとリクエストタイムアウトを記述する。
+      - | \ ``[client projectName]-domain.xml``\ で定義したプロパティのキーの値を設定する。コネクションタイムアウトとリクエストタイムアウトを記述する。
 
 
 |
