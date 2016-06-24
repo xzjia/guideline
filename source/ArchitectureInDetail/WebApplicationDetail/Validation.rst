@@ -2686,12 +2686,175 @@ Bean Validationは標準で用意されているチェックルール以外に�
 コレクション型のStringに対する入力チェック
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
-複数選択可能な画面項目（チェックボックスや複数選択ドロップダウンなど）に対応した\ ``@ExistInCodeList``\ アノテーションの実装例を示す。
+ここでは、コレクション型のStringに対する入力チェックについて説明する。
 
-ここでは、Controller及びJSPの実装で特別な実装が必要ない2つの実装例を紹介する。
+共通ライブラリでは、入力値がコードリスト内に定義されたKey値であるかどうかチェックするアノテーション、
+\ ``org.terasoluna.gfw.common.codelist.ExistInCodeList``\ を提供している。
 
-* :ref:`Validation_exist_in_codelist_converter`\ 
-* :ref:`Validation_exist_in_codelist_jdk8`\ 
+しかし、\ ``@ExistInCodeList``\ の入力チェックでサポートしている型は、\ ``String``\ または\ ``Character``\ のみである。
+そのままでは、\ ``String``\ の\ ``List``\ には\ ``@ExistInCodeList``\ を付加することはできない。
+
+Controller及びJSPで特別な実装を行うことなく、
+複数選択可能な画面項目（チェックボックスや複数選択ドロップダウンなど）に\ ``@ExistInCodeList``\ アノテーションを対応させるための実装例を示す。
+
+* :ref:`Validation_exist_in_codelist_javase8`\
+    Java SE8とHibernate Validatorを利用し、\ ``String``\ の\ ``List``\ に付加できる独自のアノテーションを実装する方式。
+    **後者と比べて簡単に実現できるので、Java SE8が使用できる環境ではこちらの方式を推奨する。**
+
+* :ref:`Validation_exist_in_codelist_converter`\
+    Java Beanクラスでラップしたプロパティに対して \ ``@ExistInCodeList``\ アノテーションを設定する方式。
+    Java SE7以下ユーザ向け。Java SE8が使用できる環境では* :ref:`Validation_exist_in_codelist_javase8`\を推奨する。
+
+.. tip::
+
+    Java Beanの\ ``List``\ を使用することで、
+    Java Beanの\ ``String``\ プロパティに\ ``@ExistInCodeList``\ を付加することで出来るようになるが、
+    その場合、Controller及びJSPでJava Beanの\ ``List``\ に対応した実装を行う必要がある。
+
+    Java Beanの\ ``List``\ を使用した実装例を以下に示す。
+
+    * JSP
+
+      \ ``<form:checkbox>``\ だと表現できないため、\ ``<c:forEach>``\ + \ ``<form:checkbox>``\ で実装する必要がある。
+
+      .. code-block:: jsp
+
+        <form:form modelAttribute="sampleForm">
+            <c:forEach var="roleEntry" items="${CL_ROLE}" varStatus="status">
+                <form:checkbox path="roles[${status.index}].value"
+                            value="${roleEntry.key}" label="${roleEntry.value}" />
+            </c:forEach>
+            <form:button>Submit</form:button>
+        </form:form>
+
+    この方法で実装すると、チェックボックスの選択の有無に関係なくコードリストの要素数だけJava Beanオブジェクトがリストに追加される。
+    Java Beanオブジェクトの\ ``value``\プロパティの値は、
+    チェックボックスにチェックすると対応するコード値が、チェックしないと\ ``null`` \が設定される。
+    チェックボックスでチェックした値を取得するためには、ロジックで\ ``null``\ 値以外を取得するようにフィルタリングする必要がある。
+
+|
+
+
+.. _Validation_exist_in_codelist_javase8:
+
+Java SE8とHibernate Validator 5.2による実装
+""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+
+Java SE8に対応したHibernate Validator 5.2を導入し、
+Java SE8から追加された\ ``java.lang.annotation.ElementType.TYPE_USE``\ を使用することで実装が可能である。
+
+共通ライブラリから標準で提供される\ ``@ExistInCodeList``\は、Java SE7互換のため\ ``TYPE_USE``\に対応していない。
+
+\ ``TYPE_USE``\に対応するためには、独自にアノテーションを作成する必要がある。
+
+主な手順は以下の通り。
+
+* 「TYPE_USE」を使用し、型使用箇所に付加できる\ ``@ExistInCodeList``\ アノテーションを実装する。
+
+* チェック対象にアノテーションを設定する。
+
+実装例
+
+* 型使用箇所に付加できる\ ``@ExistInCodeListForCollection``\ の実装例
+
+  .. code-block:: java
+    :emphasize-lines: 18,23,31
+
+    package com.example.common.validation;
+
+    import static java.lang.annotation.ElementType.ANNOTATION_TYPE;
+    import static java.lang.annotation.ElementType.FIELD;
+    import static java.lang.annotation.ElementType.METHOD;
+    import static java.lang.annotation.ElementType.PARAMETER;
+    import static java.lang.annotation.ElementType.TYPE_USE;
+    import static java.lang.annotation.RetentionPolicy.RUNTIME;
+    import java.lang.annotation.Documented;
+    import java.lang.annotation.Retention;
+    import java.lang.annotation.Target;
+    import javax.validation.Constraint;
+    import javax.validation.Payload;
+    import org.terasoluna.gfw.common.codelist.validator.ExistInCodeListValidatorForCharSequence;
+    import org.terasoluna.gfw.common.codelist.validator.ExistInCodeListValidatorForCharacter;
+
+    @Documented
+    @Target({ METHOD, FIELD, ANNOTATION_TYPE, PARAMETER, TYPE_USE }) // (1)
+    @Retention(RUNTIME)
+    @Constraint(validatedBy = { ExistInCodeListValidatorForCharSequence.class,
+            ExistInCodeListValidatorForCharacter.class })
+    public @interface ExistInCodeListForCollection {
+        String message() default "{com.example.common.validation.ExistInCodeListForCollection.message}"; // (2)
+
+        String codeListId();
+
+        Class<?>[] groups() default {};
+
+        Class<? extends Payload>[] payload() default {};
+
+        @Target({ METHOD, FIELD, ANNOTATION_TYPE, PARAMETER, TYPE_USE }) // (3)
+        @Retention(RUNTIME)
+        @Documented
+        @interface List {
+            ExistInCodeListForCollection[] value();
+        }
+    }
+
+
+  .. tabularcolumns:: |p{0.10\linewidth}|p{0.90\linewidth}|
+  .. list-table::
+     :header-rows: 1
+     :widths: 10 90
+
+     * - 項番
+       - 説明
+     * - | (1)
+       - | \ ``TYPE_USE``\ を設定し、このアノテーションが型使用箇所で付加できるようにする。
+     * - | (2)
+       - | エラーメッセージのデフォルト値を定義する。
+     * - | (3)
+       - | \ ``TYPE_USE``\ を設定し、このアノテーションが型使用箇所で付加できるようにする。
+
+|
+
+* フォームクラス
+
+  .. code-block:: java
+    :emphasize-lines: 9
+
+    package com.example.common.validation;
+
+    import java.util.List;
+
+    import javax.validation.constraints.NotNull;
+
+    public class SampleForm {
+        private List<@ExistInCodeListForCollection(codeListId = "CL_XXX") String> roles; // (1)
+
+        public List<String> getRoles() {
+            return roles;
+        }
+
+        public void setRoles(List<String> roles) {
+            this.roles = roles;
+        }
+    }
+
+
+  .. tabularcolumns:: |p{0.10\linewidth}|p{0.90\linewidth}|
+  .. list-table::
+     :header-rows: 1
+     :widths: 10 90
+
+     * - 項番
+       - 説明
+     * - | (1)
+       - | 入力チェックを行いたいプロパティに対して\ ``@ExistInCodeListForCollection``\ アノテーションを設定し、\ ``codeListId``\ にチェック元となるコードリストを指定する。
+
+.. tip::
+
+  \ ``java.lang.annotation.ElementType.TYPE_USE``\ を使用することで、宣言に限らず型全般（ローカル変数の型等）にアノテーションを付加できるようになる。
+  \ ``java.lang.annotation.ElementType.TYPE_USE``\ **はJava SE8から追加された機能なので、Java SE7以下では利用できない。**
+
+|
 
 
 .. _Validation_exist_in_codelist_converter:
@@ -2699,8 +2862,14 @@ Bean Validationは標準で用意されているチェックルール以外に�
 Springの型変換(Converter + ConversionService)による実装
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 
-`Springが提供している型変換の仕組み <http://docs.spring.io/spring/docs/current/spring-framework-reference/htmlsingle/#core-convert>`_
+`Springが提供している型変換の仕組み <http://docs.spring.io/spring/docs/4.2.4.RELEASE/spring-framework-reference/htmlsingle/#core-convert>`_
 を利用して実装を行う。
+
+前述のとおり、\ ``String``\ の\ ``List``\ には\ ``@ExistInCodeList``\ を付加することはできない。
+
+Java Beanの\ ``List``\ を使用し、ネストしたBeanのプロパティに対して\ ``@ExistInCodeList``\ を付加することによって入力チェックを行う。
+
+\ ``String``\ から\ ``Role``\ 、\ ``Object``\ から\ ``String``\ への型変換を追加することで、入力チェックを行わない場合と同様に\ ``<form:checkboxes>``\ を使用した実装ができる。
 
 主な手順は以下の通り。
 
@@ -2712,10 +2881,41 @@ Springの型変換(Converter + ConversionService)による実装
 
 実装例
 
+* JSP
+
+  .. code-block:: jsp
+
+    <form:form modelAttribute="sampleForm">
+        <!-- (1) -->
+        <form:checkboxes path="roles" items="${CL_ROLE}"/>
+        <form:button>Submit</form:button>
+    </form:form>
+
+
+  .. tabularcolumns:: |p{0.10\linewidth}|p{0.90\linewidth}|
+  .. list-table::
+     :header-rows: 1
+     :widths: 10 90
+
+     * - 項番
+       - 説明
+     * - | (1)
+       - |  \ ``<form:checkboxes>``\ を使用して実装する。
+
+.. note::
+
+    Java Beanの\ ``List``\ を使用した場合、\ ``<c:forEach>``\ + \ ``<form:checkbox>``\ で実装する必要がある。  
+    しかし、Springの型変換(Converter + ConversionService)の仕組みを利用することで、
+    入力チェックを行わない場合と同じように \ ``<form:checkboxes>``\ を使用して実装できる。
+
+
+|
+
 * フォームクラス
 
   .. code-block:: java
-
+    :emphasize-lines: 10
+    
     package com.example.common.validation;
 
     import java.util.List;
@@ -2725,8 +2925,7 @@ Springの型変換(Converter + ConversionService)による実装
 
     public class SampleForm {
         @Valid // (1)
-        @NotNull // (2)
-        private List<Role> roles;
+        private List<Role> roles; // (2)
 
         public List<Role> getRoles() {
             return roles;
@@ -2746,9 +2945,9 @@ Springの型変換(Converter + ConversionService)による実装
      * - 項番
        - 説明
      * - | (1)
-       - | BeanのBean Validationを有効にするために、\ ``javax.validation.Valid``\ アノテーションを付与する。
+       - | ネストしたBeanのBean Validationを有効にするために、\ ``javax.validation.Valid``\ アノテーションを付与する。
      * - | (2)
-       - | 要素の入力を必須とする。
+       - | Java Beanの\ ``List``\ を使用することで、ネストしたBeanの\ ``String``\ プロパティに対して\ ``@ExistInCodeList``\ を付加することが出来るようになる。
 
 |
 
@@ -2786,11 +2985,14 @@ Springの型変換(Converter + ConversionService)による実装
      * - 項番
        - 説明
      * - | (1)
-       - | 入力チェックを行いたいフィールドに対して、 \ ``@ExistInCodeList``\ アノテーションを設定し、codeListIdにチェック元となるコードリストを指定する。
+       - | 入力チェックを行うために\ ``Role``\ クラスにラップしたフィールドに対して \ ``@ExistInCodeList``\ アノテーションを設定し、\ ``codeListId``\ にチェック元となるコードリストを指定する。
 
 |
 
 型変換を行うConverterクラスを実装し、Springに登録する。
+
+\ ``String``\ から\ ``Role``\ 、\ ``Object``\ から\ ``String``\への型変換を追加することで、
+Controller側では\ ``Role``\、JSP側では\ ``String``\ として扱えるようになり、JSPでは \ ``<form:checkboxes>``\ を使用した実装が可能になる。
 
 * Converterクラス
 
@@ -2842,7 +3044,7 @@ Springの型変換(Converter + ConversionService)による実装
 
 |
 
-* bean定義の設定
+* 独自のConverterを適用するためのBean定義
 
   .. code-block:: xml
 
@@ -2852,8 +3054,8 @@ Springの型変換(Converter + ConversionService)による実装
         <!-- (2) -->
         <property name="converters">
             <list>
-                <bean class="com.example.common.validation.SampleForm$StringToRoleConverter"/>
-                <bean class="com.example.common.validation.SampleForm$ToStringConverter"/>
+                <bean class="com.example.common.validation.StringToRoleConverter"/>
+                <bean class="com.example.common.validation.ToStringConverter"/>
             </list>
         </property>
     </bean>
@@ -2879,157 +3081,8 @@ Springの型変換(Converter + ConversionService)による実装
      * - | (2)
        - | 作成したConverterを設定する。
      * - | (3)
-       - | conversion-service属性にConversionServiceを指定する。
-
-
-|
-
-* JSP
-
-  .. code-block:: jsp
-
-    <form:form modelAttribute="sampleForm">
-        <!-- (1) -->
-        <form:checkboxes path="roles" items="${CL_ROLE}"/>
-        <!-- (2) -->
-        <form:errors path="roles*"/>
-        <form:button>Submit</form:button>
-    </form:form>
-
-
-  .. tabularcolumns:: |p{0.10\linewidth}|p{0.90\linewidth}|
-  .. list-table::
-     :header-rows: 1
-     :widths: 10 90
-
-     * - 項番
-       - 説明
-     * - | (1)
-       - |  <form:checkboxes> を使用して実装する。
-     * - | (2)
-       - | 入力チェックエラーの表示（※通常発生しない）。
-
-
-|
-
-
-.. _Validation_exist_in_codelist_jdk8:
-
-JDK8とHibernate Validator 5.2による実装
-""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
-
-Java8に対応したHibernate Validator 5.2を導入し、
-Java8から追加された\ ``java.lang.annotation.ElementType.TYPE_USE``\ を使用することで実装が可能である。
-
-主な手順は以下の通り。
-
-* 「TYPE_USE」を使用し、型使用箇所に付加できるExistInCodeListアノテーションを実装する。
-
-* チェック対象にアノテーションを設定する。
-
-実装例
-
-* 型使用箇所に付加できる\ ``@ExistInCodeList8``\ の実装例
-
-  .. code-block:: java
-    :emphasize-lines: 18,23,31
-
-    package com.example.common.validation;
-
-    import static java.lang.annotation.ElementType.ANNOTATION_TYPE;
-    import static java.lang.annotation.ElementType.FIELD;
-    import static java.lang.annotation.ElementType.METHOD;
-    import static java.lang.annotation.ElementType.PARAMETER;
-    import static java.lang.annotation.ElementType.TYPE_USE;
-    import static java.lang.annotation.RetentionPolicy.RUNTIME;
-    import java.lang.annotation.Documented;
-    import java.lang.annotation.Retention;
-    import java.lang.annotation.Target;
-    import javax.validation.Constraint;
-    import javax.validation.Payload;
-    import org.terasoluna.gfw.common.codelist.validator.ExistInCodeListValidatorForCharSequence;
-    import org.terasoluna.gfw.common.codelist.validator.ExistInCodeListValidatorForCharacter;
-
-    @Documented
-    @Target({ METHOD, FIELD, ANNOTATION_TYPE, PARAMETER, TYPE_USE }) // (1)
-    @Retention(RUNTIME)
-    @Constraint(validatedBy = { ExistInCodeListValidatorForCharSequence.class,
-            ExistInCodeListValidatorForCharacter.class })
-    public @interface ExistInCodeList8 {
-        String message() default "{com.example.common.validation.ExistInCodeList8.message}"; // (2)
-
-        String codeListId();
-
-        Class<?>[] groups() default {};
-
-        Class<? extends Payload>[] payload() default {};
-
-        @Target({ METHOD, FIELD, ANNOTATION_TYPE, PARAMETER, TYPE_USE }) // (3)
-        @Retention(RUNTIME)
-        @Documented
-        @interface List {
-            ExistInCodeList8[] value();
-        }
-    }
-
-
-  .. tabularcolumns:: |p{0.10\linewidth}|p{0.90\linewidth}|
-  .. list-table::
-     :header-rows: 1
-     :widths: 10 90
-
-     * - 項番
-       - 説明
-     * - | (1)
-       - | \ ``TYPE_USE``\ を設定し、このアノテーションが型使用箇所で付加できるようにする。
-     * - | (2)
-       - | エラーメッセージのデフォルト値を定義する。
-     * - | (3)
-       - | \ ``TYPE_USE``\ を設定し、このアノテーションが型使用箇所で付加できるようにする。
-
-|
-
-* フォームクラス
-
-  .. code-block:: java
-    :emphasize-lines: 9
-
-    package com.example.common.validation;
-
-    import java.util.List;
-
-    import javax.validation.constraints.NotNull;
-
-    public class SampleForm {
-        @NotNull // (1)
-        private List<@ExistInCodeList8(codeListId = "CL_XXX") String> roles; // (2)
-
-        public List<String> getRoles() {
-            return roles;
-        }
-
-        public void setRoles(List<String> roles) {
-            this.roles = roles;
-        }
-    }
-
-
-  .. tabularcolumns:: |p{0.10\linewidth}|p{0.90\linewidth}|
-  .. list-table::
-     :header-rows: 1
-     :widths: 10 90
-
-     * - 項番
-       - 説明
-     * - | (1)
-       - | 要素の入力を必須とする。
-     * - | (2)
-       - | 入力チェックを行いたいフィールドに対して\ ``@ExistInCodeList8``\ アノテーションを設定し、codeListIdにチェック元となるコードリストを指定する。
-
-.. tip::
-
-  \ ``java.lang.annotation.ElementType.TYPE_USE``\ を使用することで、宣言に限らず型全般（ローカル変数の型等）にアノテーションを付加できるようになる。
-  **Java8から追加された機能なので、下位互換性がなくなることに注意が必要である。**
+       - | \ ``org.springframework.format.support.FormattingConversionServiceFactoryBean``\ がデフォルトで提供するConversionServiceを、\ ``mvc:annotation-driven``\ の\ ``conersion-service``\ 属性で上書きすることができる。
+         | カスタマイズした型変換を使用するためには、この\ ``conversion-service``\ 属性に(1)で追加したConversionServiceを設定する必要がある。
 
 |
 
