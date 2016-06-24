@@ -867,7 +867,7 @@ FreeMarkerを使用したメール本文の作成
 
     **テンプレートファイルの設定例**
     
-    .. code-block:: html
+    .. code-block:: text
     
        <#escape x as x?html> <#-- (1) -->
        <html>

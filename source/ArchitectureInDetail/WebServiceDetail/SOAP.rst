@@ -1458,6 +1458,7 @@ MTOMを利用した大容量のバイナリデータを扱う方法
     * - | (2)
       - | domainプロジェクト
       - | Serviceクラスからwebserviceプロジェクトで用意されたWebServeインターフェースを使用してWebサービスを呼び出す。
+        | SOAPサーバと通信する際に使用するWebServiceインターフェースを実装したプロキシクラスを定義する。
     * - | (3)
       - | webserviceプロジェクト
       - | SOAPサーバと同じ資材を配置する。
@@ -1468,8 +1469,8 @@ MTOMを利用した大容量のバイナリデータを扱う方法
         | SOAPサーバに渡す入力値や返却結果はこのプロジェクト内のクラスを使用する。
     * - | (5)
       - | envプロジェクト
-      - | SOAPサーバと通信する際に使用するWebServiceインターフェースを実装したプロキシクラスを定義する。
-        | プロキシクラスの定義は環境依存することが多いため、envプロジェクトで定義している。
+      - | domainプロジェクトで定義したプロキシクラスの環境依存する値を定義する。
+        | プロキシクラスの定義から環境依存する値をプロパティファイルに集約し、プロパティファイルのみenvプロジェクトに配置する。
 
 |
 
@@ -1491,7 +1492,7 @@ Webサービス クライアントの実装
 
 WebServiceインターフェースを実装したプロキシクラスを生成する\ ``org.springframework.remoting.jaxws.JaxWsPortProxyFactoryBean``\の定義を行う。
 
-*[client projectName]-env/src/main/resources/META-INF/spring/[client projectName]-env.xml*
+*[client projectName]-domain/src/main/resources/META-INF/spring/[client projectName]-domain.xml*
 
 .. code-block:: xml
 
@@ -1529,7 +1530,7 @@ WebServiceインターフェースを実装したプロキシクラスを生成�
       - | \ ``wsdlDocumentResource``\ プロパティに公開されているWDSLのURLを設定する。
         | ここでは後述するプロパティファイルにURLを記述するため、プロパティのキーを指定している。
     * - | (5)
-      - | \ ``[client projectName]-env.xml``\ で定義したプロパティのキーの値を設定する。WSDLのURLを記述する。
+      - | \ ``[client projectName]-domain.xml``\ で定義したプロパティのキーの値を設定する。WSDLのURLを記述する。
 
         .. Note:: **wsdlDocumentResourceへのWSDLファイルのURL以外の指定**
 
@@ -1543,7 +1544,7 @@ WebServiceインターフェースを実装したプロキシクラスを生成�
     テストなどで、環境を切り替える場合に使用するとよい。
     以下はその設定例である。
 
-    *[client projectName]-env/src/main/resources/META-INF/spring/[client projectName]-env.xml*
+    *[client projectName]-domain/src/main/resources/META-INF/spring/[client projectName]-domain.xml*
 
      .. code-block:: xml
          :emphasize-lines: 8
@@ -1577,7 +1578,7 @@ WebServiceインターフェースを実装したプロキシクラスを生成�
            - | エンドポイントアドレスを設定する。
              | ここでは後述するプロパティファイルにURLを記述するため、プロパティのキーを指定している。
          * - | (2)
-           - | \ ``[client projectName]-env.xml``\ で定義したプロパティのキーの値を設定する。エンドポイントアドレスを記述する。
+           - | \ ``[client projectName]-domain.xml``\ で定義したプロパティのキーの値を設定する。エンドポイントアドレスを記述する。
 
 |
 
@@ -1637,7 +1638,7 @@ WebServiceインターフェースを実装したプロキシクラスを生成�
 
 .. note:: **プロキシクラスの定義ついて**
 
-    プロキシクラスの定義はenvプロジェクトで行うことを推奨する。
+    プロキシクラスの定義はdomainプロジェクトで行う。ただし、環境依存する値はプロパティファイルに集約し、プロパティファイルのみenvプロジェクトに配置ことを推奨する。
     mavenのprofileを切り替えることで、Webサービスの実装クラスを切り替えられるようにするためである。
     試験用のSOAPサーバへ通信先を変える場合や、そもそもSOAPサーバが準備できない場合に
     スタブクラスを作成することで他のソースを変えることなく試験を行うことができるためである。
@@ -1663,7 +1664,7 @@ WebServiceインターフェースを実装したプロキシクラスを生成�
 
 \ ``org.springframework.remoting.jaxws.JaxWsPortProxyFactoryBean``\を使用している場合でBasic認証を使用しているSOAPサーバと通信をする場合には、bean定義にユーザ名とパスワードを追加するだけで認証を行うことができる。
 
-*[client projectName]-env/src/main/resources/META-INF/spring/[client projectName]-env.xml*
+*[client projectName]-domain/src/main/resources/META-INF/spring/[client projectName]-domain.xml*
 
 .. code-block:: xml
     :emphasize-lines: 8-10
@@ -1699,7 +1700,7 @@ WebServiceインターフェースを実装したプロキシクラスを生成�
       - | \ ``org.springframework.remoting.jaxws.JaxWsPortProxyFactoryBean``\のbean定義にusernameとpasswordを加えることでBasic認証における、認証情報を送信することができる。
         | ユーザ名とパスワードをプロパティファイルに切り出した場合のサンプルである。
     * - | (2)
-      - | \ ``[client projectName]-env.xml``\ で定義したプロパティのキーの値を設定する。認証に使用するユーザ名とパスワードを記述する。
+      - | \ ``[client projectName]-domain.xml``\ で定義したプロパティのキーの値を設定する。認証に使用するユーザ名とパスワードを記述する。
 
 |
 
@@ -1760,7 +1761,7 @@ WebServiceインターフェースを実装したプロキシクラスを生成�
 | どちらの設定も、\ ``org.springframework.remoting.jaxws.JaxWsPortProxyFactoryBean``\ のカスタムプロパティに指定する必要がある。
 | 設定の方法は以下の通りである。
 
-*[client projectName]-env/src/main/resources/META-INF/spring/[client projectName]-env.xml*
+*[client projectName]-domain/src/main/resources/META-INF/spring/[client projectName]-domain.xml*
 
 .. code-block:: xml
     :emphasize-lines: 9-16
@@ -1809,7 +1810,7 @@ WebServiceインターフェースを実装したプロキシクラスを生成�
             詳細は\ `JAX_WS-1166 Standardize timeout settings <https://java.net/jira/browse/JAX_WS-1166>`_\を参照されたい。
 
     * - | (3)
-      - | \ ``[client projectName]-env.xml``\ で定義したプロパティのキーの値を設定する。コネクションタイムアウトとリクエストタイムアウトを記述する。
+      - | \ ``[client projectName]-domain.xml``\ で定義したプロパティのキーの値を設定する。コネクションタイムアウトとリクエストタイムアウトを記述する。
 
 
 |
@@ -2312,7 +2313,6 @@ SOAPサーバから提供される[server projectName]-webserviceの依存関係
       - | ローカル開発環境用の設定ファイルを管理するためのディレクトリ。
     * - | (5)
       - | ローカル開発環境用のBean定義を行う。
-        | このファイルにWebサービスのプロキシクラスを指定する。
     * - | (6)
       - | ローカル開発環境用のプロパティを定義する。
         | WSDLのURLなど環境ごとに変更の可能性がある値を設定する。

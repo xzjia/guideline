@@ -4152,6 +4152,15 @@ Bean Validationの標準アノテーション(\ ``javax.validation.*``\ )を以�
      \ ``inclusive``\ 属性のデフォルト値には \ ``true``\ (指定した閾値と同じ値を許容する)が指定されており、
      Bean Validation 1.0 との互換性が保たれている。
 
+.. warning::
+
+     \ ``@Size``\ アノテーションでは、サロゲートペアと呼ばれるchar型2つ（32ビット）で表される文字に対する考慮がされていない。
+
+     サロゲートペアを含む文字列をチェック対象とした場合、カウントした文字数が実際の入力文字数より多くカウントされる可能性があるため注意すること。
+
+     サロゲートペアを含む文字列の文字列長については、 :ref:`StringProcessingHowToGetSurrogatePairStringLength` を参照されたい。
+
+
 .. _Validation_validator_list:
 
 Hibernate Validatorのチェックルール

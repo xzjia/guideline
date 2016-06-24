@@ -241,7 +241,7 @@ If you want to send a request using HTML form, output the CSRF token value as a 
 
 * Implementation example of JSP
 
-.. code-block:: jsp
+.. code-block:: text
 
     <%@ taglib prefix="sec" uri="http://www.springframework.org/security/tags" %>
 
