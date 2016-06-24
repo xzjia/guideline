@@ -2703,7 +2703,7 @@ Controller及びJSPで特別な実装を行うことなく、
 
 * :ref:`Validation_exist_in_codelist_converter`\
     Java Beanクラスでラップしたプロパティに対して \ ``@ExistInCodeList``\ アノテーションを設定する方式。
-    Java SE7以下ユーザ向け。Java SE8が使用できる環境では* :ref:`Validation_exist_in_codelist_javase8`\を推奨する。
+    Java SE7以下ユーザ向け。Java SE8が使用できる環境では :ref:`Validation_exist_in_codelist_javase8`\を推奨する。
 
 .. tip::
 
@@ -2753,7 +2753,7 @@ Java SE8から追加された\ ``java.lang.annotation.ElementType.TYPE_USE``\ �
 
 * チェック対象にアノテーションを設定する。
 
-実装例
+複数項目設定可能なRole(\ ``String``\ の\ ``List``\ )に対する入力チェックを例に用いて説明する。
 
 * 型使用箇所に付加できる\ ``@ExistInCodeListForCollection``\ の実装例
 
@@ -2879,7 +2879,7 @@ Java Beanの\ ``List``\ を使用し、ネストしたBeanのプロパティに�
 
 * ConversionServiceFactoryBeanを使用し、Springに作成したConverterを登録する。
 
-実装例
+複数項目設定可能なRole(Java Bean の\ ``List``\ )に対する入力チェックを例に用いて説明する。
 
 * JSP
 
