@@ -96,11 +96,11 @@ Spring FrameworkのJAX-WS連携機能について
       - | [クライアント] ServiceがSOAPサーバ提供側が用意したWebServiceインターフェースを呼び出す。
         | この図では、ServiceがWebServiceインターフェースを呼び出しているが、要件に応じてControllerから直接WebServiceインターフェースを呼び出してもよい。
     * - | (3)
-      - | [クライアント] WebServiceインターフェースが呼び出されると実体として動的プロキシ(Dynamic Proxy)が呼び出される。
-        | この動的プロキシは\ ``org.springframework.remoting.jaxws.JaxWsPortProxyFactoryBean``\ が生成したWebServiceインターフェースの実装クラスである。
+      - | [クライアント] WebServiceインターフェースが呼び出されると実体として「動的プロキシ(Dynamic Proxy)」(以下「プロキシ」)が呼び出される。
+        | このプロキシは\ ``org.springframework.remoting.jaxws.JaxWsPortProxyFactoryBean``\ が生成したWebServiceインターフェースの実装クラスである。
         | この実装クラスがServiceにインジェクションされ、ServiceはWebServiceインターフェースのメソッドを呼び出すだけで、SOAP Web Serviceを利用した処理を行うことができる。
     * - | (4)
-      - | 動的プロキシが、SOAPサーバのWebServiceインターフェースを呼び出す。
+      - | プロキシが、SOAPサーバのWebServiceインターフェースを呼び出す。
         | SOAPサーバとクライアントでの値のやり取りはDomain Objectを使用して行う。
       
         .. Note::
@@ -1458,7 +1458,7 @@ MTOMを利用した大容量のバイナリデータを扱う方法
     * - | (2)
       - | domainプロジェクト
       - | Serviceクラスからwebserviceプロジェクトで用意されたWebServeインターフェースを使用してWebサービスを呼び出す。
-        | SOAPサーバと通信する際に使用するWebServiceインターフェースを実装した動的プロキシを定義する。
+        | SOAPサーバと通信する際に使用するWebServiceインターフェースを実装したプロキシを定義する。
     * - | (3)
       - | webserviceプロジェクト
       - | SOAPサーバと同じ資材を配置する。
@@ -1469,8 +1469,8 @@ MTOMを利用した大容量のバイナリデータを扱う方法
         | SOAPサーバに渡す入力値や返却結果はこのプロジェクト内のクラスを使用する。
     * - | (5)
       - | envプロジェクト
-      - | domainプロジェクトで定義した動的プロキシの環境依存する値を定義する。
-        | 動的プロキシの定義から環境依存する値をプロパティファイルに集約し、プロパティファイルのみenvプロジェクトに配置する。
+      - | domainプロジェクトで定義したプロキシの環境依存する値を定義する。
+        | プロキシの定義から環境依存する値をプロパティファイルに集約し、プロパティファイルのみenvプロジェクトに配置する。
 
 |
 
@@ -1480,7 +1480,7 @@ Webサービス クライアントの実装
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 以下のクラスの実装を行う。
 
-- WebServiceインターフェースを実装した動的プロキシの定義
+- WebServiceインターフェースを実装したプロキシの定義
 - ServiceクラスからWebServiceインターフェース経由でWebサービスを呼び出す。
 
 .. figure:: images_SOAP/SOAPClientClass.png
@@ -1488,9 +1488,9 @@ Webサービス クライアントの実装
     :width: 80%
 
 
-**WebServiceインターフェースを実装した動的プロキシの作成**
+**WebServiceインターフェースを実装したプロキシの作成**
 
-WebServiceインターフェースを実装した動的プロキシを生成する\ ``org.springframework.remoting.jaxws.JaxWsPortProxyFactoryBean``\の定義を行う。
+WebServiceインターフェースを実装したプロキシを生成する\ ``org.springframework.remoting.jaxws.JaxWsPortProxyFactoryBean``\の定義を行う。
 
 *[client projectName]-domain/src/main/resources/META-INF/spring/[client projectName]-domain.xml*
 
@@ -1521,7 +1521,7 @@ WebServiceインターフェースを実装した動的プロキシを生成す�
     * - 項番
       - 説明
     * - | (1)
-      - | \ ``org.springframework.remoting.jaxws.JaxWsPortProxyFactoryBean``\ を定義する。このクラスが生成する動的プロキシを経由してSOAPサーバにアクセスできる。
+      - | \ ``org.springframework.remoting.jaxws.JaxWsPortProxyFactoryBean``\ を定義する。このクラスが生成するプロキシを経由してSOAPサーバにアクセスできる。
     * - | (2)
       - | \ ``serviceInterface``\ プロパティに本来このWebサービスが実装すべきインターフェースを定義する。
     * - | (3)
@@ -1636,9 +1636,9 @@ WebServiceインターフェースを実装した動的プロキシを生成す�
         | 内容に応じて処理を行う。
         | 例外処理の詳細は「:ref:`SOAPHowToUseExceptionHandler`」を参照されたい。
 
-.. note:: **動的プロキシの定義ついて**
+.. note:: **プロキシの定義ついて**
 
-    動的プロキシの定義はdomainプロジェクトで行う。ただし、環境依存する値はプロパティファイルに集約し、プロパティファイルのみenvプロジェクトに配置ことを推奨する。
+    プロキシの定義はdomainプロジェクトで行う。ただし、環境依存する値はプロパティファイルに集約し、プロパティファイルのみenvプロジェクトに配置ことを推奨する。
     mavenのprofileを切り替えることで、Webサービスの実装クラスを切り替えられるようにするためである。
     試験用のSOAPサーバへ通信先を変える場合や、そもそもSOAPサーバが準備できない場合に
     スタブクラスを作成することで他のソースを変えることなく試験を行うことができるためである。
@@ -1652,7 +1652,7 @@ WebServiceインターフェースを実装した動的プロキシを生成す�
          BindingProvider provider = (BindingProvider) todoWebService;
          int status = (int) provider.getResponseContext().get(MessageContext.HTTP_RESPONSE_CODE);
 
-    ただし、この場合Webサービス実行が動的プロキシに依存してしまう。そのため、テスト時にスタブを使用する場合にも、スタブに\ ``javax.xml.ws.BindingProvider``\を実装させる必要が発生する。
+    ただし、この場合Webサービス実行がプロキシに依存してしまう。そのため、テスト時にスタブを使用する場合にも、スタブに\ ``javax.xml.ws.BindingProvider``\を実装させる必要が発生する。
     この機能の利用は最小限に抑えることを推奨する。
 
 |
