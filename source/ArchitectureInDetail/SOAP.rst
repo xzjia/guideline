@@ -2395,7 +2395,7 @@ wsimportの使い方
 
 .. note::
 
-    出力されるJavaクラスは上記以外にも出力される。出力されたソースのみでクライアントを作成可能なソースである。ただし、本ガイドラインではクライアントは、\ ``org.springframework.remoting.jaxws.JaxWsPortProxyFFactoryBean``\ を使用する方針であるため、その他のJavaクラスは使用しないことを推奨する。
+    出力されるJavaクラスは上記以外にも出力される。出力されたソースのみでクライアントを作成可能なソースである。ただし、本ガイドラインではクライアントは、\ ``org.springframework.remoting.jaxws.JaxWsPortProxyFactoryBean``\ を使用する方針であるため、その他のJavaクラスは使用しないことを推奨する。
 
 |
 
