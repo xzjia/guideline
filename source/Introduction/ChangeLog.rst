@@ -15,6 +15,12 @@
       
         * JIS漢字\ ``U+2014``\(EM DASH)のUCS(Unicode)文字対応について記載を追加(\ `guideline#1914 <https://github.com/terasolunaorg/guideline/issues/1914>`_\ )
 
+    * - 
+      - :doc:`../ArchitectureInDetail/WebApplicationDetail/Validation`
+      - 記載内容の追加
+      
+        * OSコマンドインジェクションに関する記載を追加 (\ `guideline#1957 <https://github.com/terasolunaorg/guideline/issues/1957>`_\ )
+
     * -
       - :doc:`../ArchitectureInDetail/GeneralFuncDetail/Logging`
       - 記載内容の追加
