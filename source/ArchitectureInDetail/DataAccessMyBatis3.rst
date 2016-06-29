@@ -5212,8 +5212,8 @@ MyBatis3では、検索結果を1件単位で処理する仕組みを提供し�
         <where>
             <if test="title != null">
                 <bind name="titleContainingCondition"
-                      value="@org.terasoluna.gfw.common.query.QueryEscapeUtils@toContainingCondition()" />
-                todo_titile LIKE #{titleContainingCondition} ESCAPE '~'
+                      value="@org.terasoluna.gfw.common.query.QueryEscapeUtils@toContainingCondition(title)" />
+                todo_title LIKE #{titleContainingCondition} ESCAPE '~'
             </if>
             <if test="createdAt != null">
                 <![CDATA[
