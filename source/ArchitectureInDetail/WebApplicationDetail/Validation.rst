@@ -4429,14 +4429,12 @@ Native to Asciiを行わずにBean Validationのメッセージ（\ ``Validation
      * - | (3)
        - \ ``ApplicationContext``\ に読み込ませるリソースバンドルを指定する。
      * - | (4)
-       - \ ``MethodValidationPostProcessor``\ をBean定義する。  
-
-         \ :ref:`MethodValidation`\ を利用しない場合は設定不要。
+       - | \ :ref:`MethodValidation`\ を利用する際には、\ ``MethodValidationPostProcessor``\ の\ ``validator``\ プロパティに(1)で定義したBeanを指定する。  
+         | Method Validationを利用しない場合、このBean定義は不要である。
      * - | (5)
        - \ ``<mvc:annotation-driven>``\ 要素の\ ``validator``\ 属性に、(1)で定義したBeanを指定する。
      * - | (6)
-       - \ :ref:`MethodValidation`\ を利用する際には、\ ``MethodValidationPostProcessor``\ の\ ``validator``\ プロパティに
-         (1)で定義したBeanを指定する。
+       - \ (4)と同様である。
 
  .. note::
 
