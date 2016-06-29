@@ -15,12 +15,6 @@
       
         * JIS漢字\ ``U+2014``\(EM DASH)のUCS(Unicode)文字対応について記載を追加(\ `guideline#1914 <https://github.com/terasolunaorg/guideline/issues/1914>`_\ )
       
-    * - 2016-05-19
-      - \-
-      - 章立てを全面見直し
-      
-        * 更新内容の詳細は、\ `Optimize the order of chapters and sections #1683 <https://github.com/terasolunaorg/guideline/issues/1683>`_\ を参照されたい。
-      
     * - 2016-02-24
       - \-
       - 5.1.0 RELEASE版公開
