@@ -2814,6 +2814,32 @@ Java SE8から追加された\ ``java.lang.annotation.ElementType.TYPE_USE``\ �
      * - | (3)
        - | \ ``TYPE_USE``\ を設定し、このアノテーションが型使用箇所で付加できるようにする。
 
+
+|
+
+* JSP
+
+  .. code-block:: jsp
+
+    <form:form modelAttribute="sampleForm">
+        <!-- (1) -->
+        <form:checkboxes path="roles" items="${CL_ROLE}"/>
+        <form:errors path="roles*"/>
+        <form:button>Submit</form:button>
+    </form:form>
+
+
+  .. tabularcolumns:: |p{0.10\linewidth}|p{0.90\linewidth}|
+  .. list-table::
+     :header-rows: 1
+     :widths: 10 90
+
+     * - 項番
+       - 説明
+     * - | (1)
+       - |  入力チェックを行わない場合と同様に\ ``<form:checkboxes>``\ を使用することができる。
+
+
 |
 
 * フォームクラス
