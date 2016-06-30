@@ -4387,17 +4387,21 @@ Native to Asciiを行わずにBean Validationのメッセージ（\ ``Validation
          </property>
      </bean>
 
+     <!-- (4) -->
+     <bean class="org.springframework.validation.beanvalidation.MethodValidationPostProcessor">
+         <property name="validator" ref="validator" />
+     </bean>
 
  \ ``spring-mvc.xml``\ 
 
  .. code-block:: xml
 
-     <!-- (4) -->
+     <!-- (5) -->
      <mvc:annotation-driven validator="validator">
          <!-- ommited -->
      </mvc:annotation-driven>
 
-     <!-- (5) -->
+     <!-- (6) -->
      <bean class="org.springframework.validation.beanvalidation.MethodValidationPostProcessor">
          <property name="validator" ref="validator" />
      </bean>
@@ -4416,12 +4420,14 @@ Native to Asciiを行わずにBean Validationのメッセージ（\ ``Validation
      * - | (3)
        - \ ``ApplicationContext``\ に読み込ませるリソースバンドルを指定する。
      * - | (4)
-       - \ ``<mvc:annotation-driven>``\ 要素の\ ``validator``\ 属性に、(1)で定義したBeanを指定する。
-         この設定がない場合は(1)で作成したものとは異なる\ ``Validator``\ インスタンスが生成されてしまう。
+       - \ ``MethodValidationPostProcessor``\ をBean定義する。  
+
+         \ :ref:`MethodValidation`\ を利用しない場合は設定不要。
      * - | (5)
-       - \ :ref:`MethodValidation`\ を利用する際には、`MethodValidationPostProcessor``\ を定義する。
-         これにより、アプリケーション層のクラスのメソッドに対してMethod Validationが実行されるようなる。
-         \ ``validator``\ プロパティには、(1)で定義したBeanを指定する。
+       - \ ``<mvc:annotation-driven>``\ 要素の\ ``validator``\ 属性に、(1)で定義したBeanを指定する。
+     * - | (6)
+       - \ :ref:`MethodValidation`\ を利用する際には、\ ``MethodValidationPostProcessor``\ の\ ``validator``\ プロパティに
+         (1)で定義したBeanを指定する。
 
  .. note::
 
