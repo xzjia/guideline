@@ -2707,11 +2707,11 @@ Controller及びJSPで特別な実装を行うことなく、
 
 .. tip::
 
-    Java Beanの\ ``List``\ を使用することで、
+    Java Beanで\ ``String``\ をラップすることで、
     Java Beanの\ ``String``\ プロパティに\ ``@ExistInCodeList``\ を付加することで出来るようになるが、
     その場合、Controller及びJSPでJava Beanの\ ``List``\ に対応した実装を行う必要がある。
 
-    Java Beanの\ ``List``\ を使用した実装例を以下に示す。
+    Java Beanで\ ``String``\ をラップした実装例を以下に示す。
 
     * JSP
 
@@ -2729,18 +2729,19 @@ Controller及びJSPで特別な実装を行うことなく、
 
     この方法で実装すると、チェックボックスの選択の有無に関係なくコードリストの要素数だけJava Beanオブジェクトがリストに追加される。
     Java Beanオブジェクトの\ ``value``\プロパティの値は、
-    チェックボックスにチェックすると対応するコード値が、チェックしないと\ ``null`` \が設定される。
+    チェックボックスにチェックすると対応するコード値が、チェックしないと\ ``null``\ が設定される。
     チェックボックスでチェックした値を取得するためには、ロジックで\ ``null``\ 値以外を取得するようにフィルタリングする必要がある。
 
+    **上記理由に加え、JSPが煩雑になることから** \ ``<c:forEach>``\ **は使用せずに本説記載の方法を利用することを推奨する。**
 |
 
 
 .. _Validation_exist_in_codelist_javase8:
 
-Java SE8とHibernate Validator 5.2による実装
+Java SE8とHibernate Validator 5.2+による実装
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 
-Java SE8に対応したHibernate Validator 5.2を導入し、
+Java SE8に対応したHibernate Validator 5.2+を導入し、
 Java SE8から追加された\ ``java.lang.annotation.ElementType.TYPE_USE``\ を使用することで実装が可能である。
 
 共通ライブラリから標準で提供される\ ``@ExistInCodeList``\は、Java SE7互換のため\ ``TYPE_USE``\に対応していない。
@@ -2859,15 +2860,15 @@ Java SE8から追加された\ ``java.lang.annotation.ElementType.TYPE_USE``\ �
 
 .. _Validation_exist_in_codelist_converter:
 
-Springの型変換(Converter + ConversionService)による実装
+Java Beanを使ったStringのラッパークラスによる実装
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 
-`Springが提供している型変換の仕組み <http://docs.spring.io/spring/docs/4.2.4.RELEASE/spring-framework-reference/htmlsingle/#core-convert>`_
+`Springが提供している型変換の仕組み(Converter + ConversionService) <http://docs.spring.io/spring/docs/4.2.4.RELEASE/spring-framework-reference/htmlsingle/#core-convert>`_
 を利用して実装を行う。
 
 前述のとおり、\ ``String``\ の\ ``List``\ には\ ``@ExistInCodeList``\ を付加することはできない。
 
-Java Beanの\ ``List``\ を使用し、ネストしたBeanのプロパティに対して\ ``@ExistInCodeList``\ を付加することによって入力チェックを行う。
+Java Beanで\ ``String``\ をラップし、ネストしたBeanのプロパティに対して\ ``@ExistInCodeList``\ を付加することによって入力チェックを行う。
 
 \ ``String``\ から\ ``Role``\ 、\ ``Object``\ から\ ``String``\ への型変換を追加することで、入力チェックを行わない場合と同様に\ ``<form:checkboxes>``\ を使用した実装ができる。
 
@@ -2875,11 +2876,11 @@ Java Beanの\ ``List``\ を使用し、ネストしたBeanのプロパティに�
 
 * チェック対象に\ ``@ExistInCodeList``\ アノテーションを設定する。
 
-* 変換用インタフェースであるConverterクラスを実装したクラスを作成する。
+* 変換用インタフェースである\ ``Converter``\ クラスを実装したクラスを作成する。
 
-* ConversionServiceFactoryBeanを使用し、Springに作成したConverterを登録する。
+* \ ``ConversionServiceFactoryBean``\ を使用し、作成した\ ``Converter``\ をSpringに登録する。
 
-複数項目設定可能なRole(Java Bean の\ ``List``\ )に対する入力チェックを例に用いて説明する。
+複数項目設定可能な\ ``Role``\ (Java Bean の\ ``List``\ )に対する入力チェックを例に用いて説明する。
 
 * JSP
 
@@ -2888,6 +2889,7 @@ Java Beanの\ ``List``\ を使用し、ネストしたBeanのプロパティに�
     <form:form modelAttribute="sampleForm">
         <!-- (1) -->
         <form:checkboxes path="roles" items="${CL_ROLE}"/>
+        <form:errors path="roles*"/>
         <form:button>Submit</form:button>
     </form:form>
 
@@ -2900,13 +2902,7 @@ Java Beanの\ ``List``\ を使用し、ネストしたBeanのプロパティに�
      * - 項番
        - 説明
      * - | (1)
-       - |  \ ``<form:checkboxes>``\ を使用して実装する。
-
-.. note::
-
-    Java Beanの\ ``List``\ を使用した場合、\ ``<c:forEach>``\ + \ ``<form:checkbox>``\ で実装する必要がある。  
-    しかし、Springの型変換(Converter + ConversionService)の仕組みを利用することで、
-    入力チェックを行わない場合と同じように \ ``<form:checkboxes>``\ を使用して実装できる。
+       - |  入力チェックを行わない場合と同様に\ ``<form:checkboxes>``\ を使用することができる。
 
 
 |
@@ -2914,7 +2910,7 @@ Java Beanの\ ``List``\ を使用し、ネストしたBeanのプロパティに�
 * フォームクラス
 
   .. code-block:: java
-    :emphasize-lines: 10
+    :emphasize-lines: 11
     
     package com.example.common.validation;
 
@@ -2924,6 +2920,7 @@ Java Beanの\ ``List``\ を使用し、ネストしたBeanのプロパティに�
     import javax.validation.constraints.NotNull;
 
     public class SampleForm {
+        @NotNull
         @Valid // (1)
         private List<Role> roles; // (2)
 
@@ -2947,7 +2944,8 @@ Java Beanの\ ``List``\ を使用し、ネストしたBeanのプロパティに�
      * - | (1)
        - | ネストしたBeanのBean Validationを有効にするために、\ ``javax.validation.Valid``\ アノテーションを付与する。
      * - | (2)
-       - | Java Beanの\ ``List``\ を使用することで、ネストしたBeanの\ ``String``\ プロパティに対して\ ``@ExistInCodeList``\ を付加することが出来るようになる。
+       - | \ ``String``\ の\ ``List``\ には\ ``@ExistInCodeList``\ を付加することはできないが、
+           Java Beanで\ ``String``\ をラップすることで、ネストしたBeanの\ ``String``\ プロパティに対して\ ``@ExistInCodeList``\ を付加することが出来るようになる。
 
 |
 
@@ -2985,18 +2983,21 @@ Java Beanの\ ``List``\ を使用し、ネストしたBeanのプロパティに�
      * - 項番
        - 説明
      * - | (1)
-       - | 入力チェックを行うために\ ``Role``\ クラスにラップしたフィールドに対して \ ``@ExistInCodeList``\ アノテーションを設定し、\ ``codeListId``\ にチェック元となるコードリストを指定する。
+       - | 入力チェックを行うために\ ``Role``\ クラスにラップしたプロパティに対して \ ``@ExistInCodeList``\ アノテーションを設定し、\ ``codeListId``\ にチェック元となるコードリストを指定する。
 
 |
 
-型変換を行うConverterクラスを実装し、Springに登録する。
+型変換を行う\ ``Converter``\ クラスを実装し、Springに登録する。
 
-\ ``String``\ から\ ``Role``\ 、\ ``Object``\ から\ ``String``\への型変換を追加することで、
-Controller側では\ ``Role``\、JSP側では\ ``String``\ として扱えるようになり、JSPでは \ ``<form:checkboxes>``\ を使用した実装が可能になる。
+前述のとおり、入力チェックを行うために\ ``String``\ を\ ``Role``\ (Java Bean)でラップする必要がある。
+画面の入力（\ ``String``\ ）からラップした\ ``Role``\ への変換と、その逆変換を行うために、\ ``Converter``\ による型変換の実装を行う。
 
-* Converterクラス
+型変換を追加することで、\ ``String``\ と\ ``Role``\の相互変換が自動で行われる。
+Controller側では\ ``Role``\の\ ``List``\ 、JSP側では\ ``String``\ の\ ``List``\ として扱えるようになる。
 
-  StringからRoleに変換を行うConverterの実装
+* \ ``Converter``\ クラス
+
+  \ ``String``\ から\ ``Role``\ に変換を行う\ ``Converter``\ の実装
 
   .. code-block:: java
 
@@ -3014,7 +3015,7 @@ Controller側では\ ``Role``\、JSP側では\ ``String``\ として扱えるよ
     }
 
 
-  ObjectからStringに変換を行うConverterの実装
+  \ ``Object``\ から\ ``String``\ に変換を行う\ ``Converter``\ の実装
 
   .. code-block:: java
 
@@ -3038,13 +3039,13 @@ Controller側では\ ``Role``\、JSP側では\ ``String``\ として扱えるよ
      * - 項番
        - 説明
      * - | (1)
-       - | インタフェース\ ``org.springframework.core.convert.converter.Converter<T, V>``\ を実装する。ここではString型→Role型の変換を行う。
+       - | インタフェース\ ``org.springframework.core.convert.converter.Converter<T, V>``\ を実装する。ここでは\ ``String``\ 型→\ ``Role``\ 型の変換を行う。
      * - | (2)
-       - | インタフェース\ ``org.springframework.core.convert.converter.Converter<T, V>``\ を実装する。ここではObject型→String型の変換を行う。
+       - | インタフェース\ ``org.springframework.core.convert.converter.Converter<T, V>``\ を実装する。ここでは\ ``Object``\ 型→\ ``String``\ 型の変換を行う。
 
 |
 
-* 独自のConverterを適用するためのBean定義
+* 独自の\ ``Converter``\ を適用するためのBean定義
 
   .. code-block:: xml
 
@@ -3077,12 +3078,12 @@ Controller側では\ ``Role``\、JSP側では\ ``String``\ として扱えるよ
      * - 項番
        - 説明
      * - | (1)
-       - | ConversionServiceのBean定義を追加する。
+       - | \ ``ConversionService``\ のBean定義を追加する。
      * - | (2)
-       - | 作成したConverterを設定する。
+       - | 作成した\ ``Converter``\ を設定する。
      * - | (3)
-       - | \ ``org.springframework.format.support.FormattingConversionServiceFactoryBean``\ がデフォルトで提供するConversionServiceを、\ ``mvc:annotation-driven``\ の\ ``conersion-service``\ 属性で上書きすることができる。
-         | カスタマイズした型変換を使用するためには、この\ ``conversion-service``\ 属性に(1)で追加したConversionServiceを設定する必要がある。
+       - | \ ``org.springframework.format.support.FormattingConversionServiceFactoryBean``\ がデフォルトで提供する\ ``ConversionService``\ を、\ ``mvc:annotation-driven``\ の\ ``conersion-service``\ 属性で上書きすることができる。
+         | カスタマイズした型変換を使用するためには、この\ ``conversion-service``\ 属性に(1)で追加した\ ``ConversionService``\ を設定する必要がある。
 
 |
 
