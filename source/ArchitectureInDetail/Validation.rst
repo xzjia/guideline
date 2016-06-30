@@ -3163,6 +3163,8 @@ Bean Validationは標準で用意されているチェックルール以外に�
 
 |
 
+.. _MethodValidation:
+
 Method Validation 
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
@@ -4366,12 +4368,12 @@ Native to Asciiを行わずにBean Validationのメッセージ（\ ``Validation
 
 * Bean定義
 
- applicationContext.xml
+  \ ``*-domain.xml``\ 
 
  .. code-block:: xml
 
      <!-- (1) -->
-     <bean id="beanValidator" class="org.springframework.validation.beanvalidation.LocalValidatorFactoryBean">
+     <bean id="validator" class="org.springframework.validation.beanvalidation.LocalValidatorFactoryBean">
          <property name="validationMessageSource">
              <!-- (2) -->
              <bean class="org.springframework.context.support.ResourceBundleMessageSource">
@@ -4386,15 +4388,19 @@ Native to Asciiを行わずにBean Validationのメッセージ（\ ``Validation
      </bean>
 
 
- spring-mvc.xml
+ \ ``spring-mvc.xml``\ 
 
  .. code-block:: xml
 
      <!-- (4) -->
-     <mvc:annotation-driven validator="beanValidator">
+     <mvc:annotation-driven validator="validator">
          <!-- ommited -->
      </mvc:annotation-driven>
 
+     <!-- (5) -->
+     <bean class="org.springframework.validation.beanvalidation.MethodValidationPostProcessor">
+         <property name="validator" ref="validator" />
+     </bean>
 
  .. tabularcolumns:: |p{0.10\linewidth}|p{0.90\linewidth}|
  .. list-table::
@@ -4412,6 +4418,10 @@ Native to Asciiを行わずにBean Validationのメッセージ（\ ``Validation
      * - | (4)
        - \ ``<mvc:annotation-driven>``\ 要素の\ ``validator``\ 属性に、(1)で定義したBeanを指定する。
          この設定がない場合は(1)で作成したものとは異なる\ ``Validator``\ インスタンスが生成されてしまう。
+     * - | (5)
+       - \ :ref:`MethodValidation`\ を利用する際には、`MethodValidationPostProcessor``\ を定義する。
+         これにより、アプリケーション層のクラスのメソッドに対してMethod Validationが実行されるようなる。
+         \ ``validator``\ プロパティには、(1)で定義したBeanを指定する。
 
  .. note::
 
