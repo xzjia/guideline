@@ -2019,6 +2019,45 @@ Spring Validatorによる相関項目チェック実装
 
 .. note::
 
+   \ ``password``\ フィールドと、\ ``confirmPassword``\ フィールドの各フィールドにエラーメッセージ表示、エラー時のスタイル適用をさせる場合、
+   エラー情報の設定を各フィールドに対して実施するとよい。
+
+     .. code-block:: java
+
+       package com.example.sample.app.validation;
+
+       import org.springframework.stereotype.Component;
+       import org.springframework.validation.Errors;
+       import org.springframework.validation.Validator;
+
+       @Component
+       public class PasswordEqualsValidator implements Validator {
+
+           @Override
+           public boolean supports(Class<?> clazz) {
+               return PasswordResetForm.class.isAssignableFrom(clazz);
+           }
+
+           @Override
+           public void validate(Object target, Errors errors) {
+
+               // omitted
+               if (!password.equals(confirmPassword)) {
+                   // register a field error for password
+                   errors.rejectValue("password",
+                          "PasswordEqualsValidator.passwordResetForm.password",
+                          "password and confirm password must be same.");
+
+                   // register a field error for confirmPassword
+                   errors.rejectValue("confirmPassword",
+                          "PasswordEqualsValidator.passwordResetForm.confirmPassword",
+                          "password and confirm password must be same.");
+               }
+           }
+       }
+
+.. note::
+
    一つのControllerで複数のフォームを扱う場合は、Validatorの対象を限定するために、\ ``@InitBinder("xxx")``\ でモデル名を指定する必要がある。
 
      .. code-block:: java
@@ -2954,6 +2993,46 @@ Bean Validationは標準で用意されているチェックルール以外に�
     Bean Validation 1.0では \ ``ConstraintViolationBuilder.addNode``\ というメソッドを使用していたが、Bean Validation 1.1から非推奨のAPIとなっている。
 
     Bean Validationの非推奨APIについては、\ `Bean Validation API Document(Deprecated API) <http://docs.jboss.org/hibernate/beanvalidation/spec/1.1/api/deprecated-list.html>`_\ を参照されたい。
+
+.. note::
+
+   \ ``field``\ フィールドと、\ ``confirmField``\ フィールドの各フィールドにエラーメッセージ表示、エラー時のスタイル適用をさせる場合、
+   \ ``ConstraintViolation``\ オブジェクトの生成を各フィールドに対して実施するとよい。
+
+     .. code-block:: java
+
+       // omitted
+       public class ConfirmValidator implements ConstraintValidator<Confirm, Object> {
+           private String field;
+
+           private String confirmField;
+
+           private String message;
+
+           public void initialize(Confirm constraintAnnotation) {
+               // omitted
+           }
+
+           public boolean isValid(Object value, ConstraintValidatorContext context) {
+               // omitted
+               if (matched) {
+                   return true;
+               } else {
+                   context.disableDefaultConstraintViolation();
+
+                   //new ConstraintViolation to be generated for field
+                   context.buildConstraintViolationWithTemplate(message)
+                           .addPropertyNode(field).addConstraintViolation();
+
+                   //new ConstraintViolation to be generated for confirmField
+                   context.buildConstraintViolationWithTemplate(message)
+                           .addPropertyNode(confirmField).addConstraintViolation();
+
+                   return false;
+               }
+           }
+
+       }
 
 
 この\ ``@Confirm``\ アノテーションを使用して、前述の「パスワードリセット」処理を再実装すると、以下のようになる。
