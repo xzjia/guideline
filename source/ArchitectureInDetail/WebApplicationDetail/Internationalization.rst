@@ -288,7 +288,6 @@ LocaleChangeInterceptorの設定
       <mvc:exclude-mapping path="/**/*.html" />
       <bean
         class="org.springframework.web.servlet.i18n.LocaleChangeInterceptor">  <!-- (1) -->
-        <property name="paramName" value="lang"/>  <!-- (2) -->
       </bean>
       <!-- omitted -->
     </mvc:interceptor>
@@ -303,9 +302,28 @@ LocaleChangeInterceptorの設定
       - | 説明
     * - | (1)
       - | Spring MVCのインタセプターに、 ``org.springframework.web.servlet.i18n.LocaleChangeInterceptor`` を定義する。
-    * - | (2)
-      - | \ ``paramName``\ プロパティにリクエストパラメータ名を指定する。上記例では、"リクエストURL?lang=xx"となる。
-        | **paramNameプロパティを省略した場合、"locale"が設定される。** "リクエストURL?locale=xx"で :ref:`使用可能<i18n_set_locale_jsp>` となる。
+        | 本例ではparamNameプロパティを省略しているため、リクエストパラメータ名にはデフォルト値である"locale"が設定される。この設定により、"リクエストURL?locale=xx"で :ref:`使用可能<i18n_set_locale_jsp>` となる。
+
+.. note::
+
+    **Localeを指定するリクエストパラメータ名の変更方法**
+
+     .. code-block:: xml
+
+        <bean
+            class="org.springframework.web.servlet.i18n.LocaleChangeInterceptor">
+            <property name="paramName" value="lang"/>  <!-- (2) -->
+        </bean>
+
+     .. tabularcolumns:: |p{0.10\linewidth}|p{0.90\linewidth}|
+     .. list-table::
+        :header-rows: 1
+        :widths: 10 90
+
+        * - | 項番
+          - | 説明
+        * - | (2)
+          - | \ ``paramName``\ プロパティにリクエストパラメータ名を指定する。上記例では、"リクエストURL?lang=xx"となる。
 
 |
 
