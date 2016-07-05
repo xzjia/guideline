@@ -685,35 +685,41 @@ How to extend
             }
         }
 
-        public void info(String id, String... args) {
+        public void info(LogMessageId id, Object... args) {
             if (logger.isInfoEnabled()) {
                 logger.info(createLogMessage(id, args));    // (9)
             }
         }
 
-        public void warn(String id, String... args) {
+        public void warn(LogMessageId id, Object... args) {
             if (logger.isWarnEnabled()) {
                 logger.warn(createLogMessage(id, args));    // (9)
             }
         }
 
-        public void error(String id, String... args) {
+        public void error(LogMessageId id, Object... args) {
             if (logger.isErrorEnabled()) {
                 logger.error(createLogMessage(id, args));    // (9)
             }
         }
 
-        public void trace(String id, String... args) {
+        public void trace(LogMessageId id, Object... args) {
             if (logger.isTraceEnabled()) {
                 logger.trace(createLogMessage(id, args));    // (9)
             }
         }
 
-        private String createLogMessage(String id, String... args) {
+        public void error(LogMessageId id, Throwable t, Object... args) {
+            if (logger.isErrorEnabled()) {
+                logger.error(createLogMessage(id, args), t);    // (8)
+            }
+        }
+
+        private String createLogMessage(LogMessageId id, Object... args) {
             return getMessage(id, args);
         }
         
-        private String getMessage(String id, String... args) { 
+        private String getMessage(LogMessageId id, Object... args) {
             String message;
             try {
                 message = messageSource.getMessage(id, args, Locale.getDefault());
