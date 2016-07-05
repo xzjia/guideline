@@ -4539,7 +4539,7 @@ OSコマンドインジェクションを起こさないためには、可能な
 .. code-block:: properties
 
   Pattern.cmdForm.cmdStr = permit command name: batch00.sh - batch09.sh
-  Pattern.cmdForm.arg = permit parameter symbols: alphanumeric, =, _
+  Pattern.cmdForm.arg = permit parameter characters and symbols: alphanumeric, =, _
 
 .. figure:: ./images_Validation/validations-os-command-injection2.png
   :width: 60%
