@@ -705,7 +705,13 @@ How to extend
 
         public void trace(LogMessageId id, Object... args) {
             if (logger.isTraceEnabled()) {
-                logger.trace(createLogMessage(id, args));    // (9)
+                logger.trace(createLogMessage(id, args));       // (8)
+            }
+        }
+
+        public void warn(LogMessageId id, Throwable t, Object... args) {
+            if (logger.isWarnEnabled()) {
+                logger.warn(createLogMessage(id, args), t);     // (8)
             }
         }
 
