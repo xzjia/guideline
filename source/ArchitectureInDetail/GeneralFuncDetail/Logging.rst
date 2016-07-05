@@ -666,9 +666,8 @@ How to extend
             new ReloadableResourceBundleMessageSource();    // (2)
 
         static {    // (3)
-            messageSource.setCacheSeconds(5);    // (4)
-            messageSource.setDefaultEncoding("UTF-8");    // (5)
-            messageSource.setBasenames("classpath:i18n/log-messages");    // (6)
+            messageSource.setDefaultEncoding("UTF-8");          // (4)
+            messageSource.setBasenames("i18n/log-messages");    // (5)
         }
 
         private Logger logger = null;
@@ -743,9 +742,6 @@ How to extend
      - | staticイニシャライザにて\ ``MessageSource``\ を生成する。
        | 本実装では\ ``i18n``\に配置した\ ``log-messages.properties``\ を読み込む。
    * - | (4)
-     - | プロパティファイルをキャッシュにロードしておく時間を設定する。
-       | この値を適切に設定することで、プロパティファイル更新後に再起動することなく変更を反映できる。詳細は\ `ReloadableResourceBundleMessageSourceクラスのsetCacheSecondsのJavaDoc <http://docs.spring.io/spring/docs/4.2.4.RELEASE/javadoc-api/org/springframework/context/support/ReloadableResourceBundleMessageSource.html#setCacheSeconds-int->`_\を参照。
-   * - | (5)
      - | プロパティファイルをパースする際に使用する文字コードを設定する。
        | 本実装ではプロパティファイルはUTF-8エンコードとしたのでUTF-8を指定する。
    * - | (6)
