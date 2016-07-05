@@ -826,7 +826,7 @@ How to extend
     }
 
 
-- ログ出力
+- ログ出力例
 
 .. code-block:: console
 
