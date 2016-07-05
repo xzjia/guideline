@@ -919,7 +919,7 @@ How to extend
         // omitted
 
         private String createLogMessage(LogMessageId id, String... args) {
-            return MessageFormat.format(LOG_MESSAGE_FORMAT, id, getMessage(id,
+            return MessageFormat.format(LOG_MESSAGE_FORMAT, id.getCode(), getMessage(id,
                     args)); // (1)
         }
 
@@ -977,7 +977,7 @@ How to extend
         // omitted
 
         private String createLogMessage(LogMessageId id, String... args) {
-            return MessageFormat.format(LOG_MESSAGE_FORMAT, id, getMessage(id,
+            return MessageFormat.format(LOG_MESSAGE_FORMAT, id.getCode(), getMessage(id,
                     args)); // (1)
         }
 
