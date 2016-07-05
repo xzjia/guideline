@@ -1015,7 +1015,7 @@ How to extend
 
 .. code-block:: console
 
-    date:2013-09-19 21:03:06   thread:tomcat-http--3   X-Track:c19eec546b054d54a13658f94292b24f    level:ERROR logger:o.t.gfw.common.exception.ExceptionLogger         message:[e.ad.od.9012],not found item entity. item code [10-123456].
+    date:2013-09-19 21:03:06   thread:tomcat-http--3   X-Track:c19eec546b054d54a13658f94292b24f    level:ERROR logger:o.t.gfw.common.exception.ExceptionLogger         message:[e.ad.od.9012], not found item entity. item code [10-123456].
     ...
     // stackTarace omitted
 
