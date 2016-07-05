@@ -4481,7 +4481,7 @@ OSコマンドインジェクションが発生する可能性がある。
 .. warning:: **ScriptEngineやScriptTemplateViewResolverの利用について**
 
     Java SE 6より追加された\ ``ScriptEngine``\ や、Spring Framework 4.2より追加された\ ``ScriptTemplateViewResolver``\ では、
-    JavaVM上で別言語（\ ``Ruby``\ や\ ``Python``\ など）を使用することができる。
+    JVM上で別言語（\ ``Ruby``\ や\ ``Python``\ など）を使用することができる。
 
     これらの機能を利用して別言語のコードを実行する場合、コードの書き方によってはOSコマンドインジェクションが発生する可能性があるため、
     利用には十分注意すること。
