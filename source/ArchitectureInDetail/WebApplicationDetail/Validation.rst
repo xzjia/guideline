@@ -4453,7 +4453,7 @@ OSコマンドインジェクションとは、アプリケーション内でユ
 
     詳細は、OWASPの\ `解説ページ <https://www.owasp.org/index.php/OS_Command_Injection>`_\ などを参照されたい。
 
-Javaでは\ ``ProcessBuilder``\ や\ ``Runtime.exec``\ を用いて外部コマンドを実行する際に、実行するコマンドとして以下のものを利用する場合に、
+Javaでは\ ``ProcessBuilder``\ クラスや、\ ``Runtime``\ クラスの\ ``exec``\ メソッドを用いて外部コマンドを実行する際に、実行するコマンドとして以下のものを利用する場合に、
 OSコマンドインジェクションが発生する可能性がある。
 
 * \ ``/bin/sh``\ （Unix系の場合）や\ ``cmd.exe``\（Windowsの場合）
