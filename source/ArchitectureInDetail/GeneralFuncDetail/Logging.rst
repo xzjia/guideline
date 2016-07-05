@@ -640,10 +640,11 @@ How to extend
 本実装例では
 
 #. Loggerラッパークラス
+#. LogMessageId列挙型クラス
 #. プロパティファイル
 
 | を作成することで実現する。
-| ここではLoggerラッパークラスを\ ``LogIdBasedLogger``\とし、プロパティファイルを\ ``log-messages.properties``\とする。
+| ここではLoggerラッパークラスを\ ``LogIdBasedLogger``\、LogMessageId列挙型クラスを\ ``LogMessageId``\、プロパティファイルを\ ``log-messages.properties``\とする。
 
 - `LogIdBasedLogger`  (Loggerラッパークラス)
 
@@ -651,16 +652,19 @@ How to extend
 
     package com.example.sample.common.logger;
 
+    import java.text.MessageFormat;
+    import java.util.Arrays;
     import java.util.Locale;
 
     import org.slf4j.Logger;
     import org.slf4j.LoggerFactory;
+    import org.slf4j.Marker;
     import org.springframework.context.NoSuchMessageException;
     import org.springframework.context.support.ResourceBundleMessageSource;
 
-    public class LogIdBasedLogger  {
+    public class LogIdBasedLogger implements Logger {
 
-        private static final String UNDEFINED_MESSAGE = "UNDEFINED-MESSAGE";    // (1)
+        private static final String UNDEFINED_MESSAGE_FORMAT = "UNDEFINED-MESSAGE arg:{0}";          // (1)
 
         private static ResourceBundleMessageSource messageSource = new ResourceBundleMessageSource();// (2)
 
@@ -672,34 +676,36 @@ How to extend
         private Logger logger = null;
 
         private LogIdBasedLogger(Class<?> clazz) {
-            logger = LoggerFactory.getLogger(clazz);    // (7)
+            logger = LoggerFactory.getLogger(clazz);            // (6)
         }
 
         public static LogIdBasedLogger getLogger(Class<?> clazz) {
             return new LogIdBasedLogger(clazz);
         }
 
+        // omitted
+
         public void debug(String message) {
             if (logger.isDebugEnabled()) {
-                logger.debug(message);    // (8)
+                logger.debug(message);    // (7)
             }
         }
 
         public void info(LogMessageId id, Object... args) {
             if (logger.isInfoEnabled()) {
-                logger.info(createLogMessage(id, args));    // (9)
+                logger.info(createLogMessage(id, args));        // (8)
             }
         }
 
         public void warn(LogMessageId id, Object... args) {
             if (logger.isWarnEnabled()) {
-                logger.warn(createLogMessage(id, args));    // (9)
+                logger.warn(createLogMessage(id, args));        // (8)
             }
         }
 
         public void error(LogMessageId id, Object... args) {
             if (logger.isErrorEnabled()) {
-                logger.error(createLogMessage(id, args));    // (9)
+                logger.error(createLogMessage(id, args));       // (8)
             }
         }
 
@@ -758,18 +764,40 @@ How to extend
      - | プロパティファイルをパースする際に使用する文字コードを設定する。
        | 本実装ではプロパティファイルはUTF-8エンコードとしたのでUTF-8を指定する。
    * - | (6)
-     - | 国際化を考慮しsetBasenamesメソッドを使用してプロパティファイルを指定する。
-       | setBasenamesの詳細は\ `ReloadableResourceBundleMessageSourceクラスのsetBasenamesのJavaDoc <http://docs.spring.io/spring/docs/4.2.4.RELEASE/javadoc-api/org/springframework/context/support/ReloadableResourceBundleMessageSource.html#setBasenames-java.lang.String...->`_\を参照。
-   * - | (7)
      - | Loggerラッパークラスにおいても、SLF4Jを使用する。ロギングライブラリの実装を直接使用しない。
+   * - | (7)
+     - | 本実装例ではDEBUGレベルのログにはログIDを使わない。引数のログメッセージをそのまま、ログ出力する。
    * - | (8)
      - | 本実装例ではDEBUGレベルのログにはログIDを使わない。引数のログメッセージをそのまま、ログ出力する。
    * - | (9)
-     - | TRACE/INFO/WARN/ERRORレベルのログはログIDを付与して、ログ出力する。
-   * - | (10)
      - | getMessageを呼び出す際にプロパティファイルにログIDが記載されていないと例外:\ ``NoSuchMessageException``\ が発生する。
        | そのため\ ``NoSuchMessageException``\ をcatchし、ログIDがプロパティファイルに定義されていない旨のログメッセージを出力する。
-       | なお、本実装では指定したログIDに該当するメッセージがない場合、デフォルトログメッセージとする。
+
+
+- `LogMessageId`  (LogMessageId列挙型クラス)
+
+.. code-block:: java
+
+    package com.example.sample.common.logger;
+
+    public enum LogMessageId {
+        I_AB_CD_1001("i.ab.cd.1001"), 
+        I_AB_CD_1002("i.ab.cd.1002"), 
+        W_AB_CD_2001("w.ab.cd.2001"), 
+        E_AB_CD_3001("e.ab.cd.3001"), 
+        T_AB_CD_4001("t.ab.cd.4001");
+        
+        private final String code;
+
+        private LogMessageId(String code) {
+            this.code = code;
+        }
+        
+        public String getCode() {
+            return code;
+        }
+    }
+
 
 - `log-messages.properties`  (プロパティファイル)
 
@@ -816,11 +844,11 @@ How to extend
                 RequestMethod.POST })
         public String home(Model model) {
             logger.debug("debug log");
-            logger.info("i.ab.cd.1001","replace_value_1");
-            logger.warn("w.ab.cd.2001","replace_value_2");
-            logger.error("e.ab.cd.3001","replace_value_3");
-            logger.trace("t.ab.cd.4001","replace_value_4");
-            logger.info("i.ab.cd.1002","replace_value_5");
+            logger.info(LogMessageId.I_AB_CD_1001,"replace_value_1");
+            logger.warn(LogMessageId.W_AB_CD_2001,"replace_value_2");
+            logger.error(LogMessageId.E_AB_CD_3001,"replace_value_3");
+            logger.trace(LogMessageId.T_AB_CD_4001,"replace_value_4");
+            logger.info(LogMessageId.I_AB_CD_1002,"replace_value_5");
             return "welcome/home";
         }
     }
@@ -835,7 +863,7 @@ How to extend
     date:2016-05-30 17:34:18.590  thread:http-bio-8080-exec-3  X-Track:e2a65cd9160b48d6aaeb63fe6e751c6b  level:WARN   logger:com.example.sample.app.welcome.HomeController   message:This message is Warn-Level. replace_value_2
     date:2016-05-30 17:34:18.590  thread:http-bio-8080-exec-3  X-Track:e2a65cd9160b48d6aaeb63fe6e751c6b  level:ERROR  logger:com.example.sample.app.welcome.HomeController   message:This message is Error-Level. replace_value_3
     date:2016-05-30 17:34:18.590  thread:http-bio-8080-exec-3  X-Track:e2a65cd9160b48d6aaeb63fe6e751c6b  level:TRACE  logger:com.example.sample.app.welcome.HomeController   message:This message is Trace-Level. replace_value_4
-    date:2016-05-30 17:34:18.590  thread:http-bio-8080-exec-3  X-Track:e2a65cd9160b48d6aaeb63fe6e751c6b  level:INFO   logger:com.example.sample.app.welcome.HomeController   message:UNDEFINED-MESSAGE
+    date:2016-05-30 17:34:18.590  thread:http-bio-8080-exec-3  X-Track:e2a65cd9160b48d6aaeb63fe6e751c6b  level:INFO   logger:com.example.sample.app.welcome.HomeController   message:UNDEFINED-MESSAGE arg:[replace_value_5]
 
 
 ログメッセージの出力フォーマットの統一
@@ -1078,7 +1106,7 @@ MDCに追加した値をログに出力できる。
         </encoder>
     </appender>
 
-実行結果は、以下のようになる、
+実行結果は、以下のようになる。
 
 .. code-block:: console
 
