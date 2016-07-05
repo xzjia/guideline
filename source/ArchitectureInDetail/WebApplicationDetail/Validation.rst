@@ -4475,8 +4475,8 @@ OSコマンドインジェクションが発生する可能性がある。
     * - 項番
       - 説明
     * - | (1)
-      - | 例えば、\ ``script``\ に"exec.sh ; cat /etc/passwd" が入ると、文字列中のセミコロンが\ ``/bin/sh``\ により区切り文字として解釈される。
-        | そのため、スクリプト（\ ``exec.sh``\ ）の実行に加えて、\ ``/etc/passwd``\の内容が出力される。
+      - | 例えば、\ ``script``\ に"exec.sh ; cat /etc/passwd" が入ると、文字列中のセミコロンが\ ``/bin/sh``\ により区切り文字として解釈され、"cat /etc/passwd"が実行される。
+        | そのため、標準出力の扱い方によっては\ ``/etc/passwd``\ が出力される可能性がある。
 
 .. warning:: **ScriptEngineやScriptTemplateViewResolverの利用について**
 
