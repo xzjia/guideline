@@ -656,14 +656,13 @@ How to extend
     import org.slf4j.Logger;
     import org.slf4j.LoggerFactory;
     import org.springframework.context.NoSuchMessageException;
-    import org.springframework.context.support.ReloadableResourceBundleMessageSource;
+    import org.springframework.context.support.ResourceBundleMessageSource;
 
     public class LogIdBasedLogger  {
 
         private static final String UNDEFINED_MESSAGE = "UNDEFINED-MESSAGE";    // (1)
 
-        private static ReloadableResourceBundleMessageSource messageSource =
-            new ReloadableResourceBundleMessageSource();    // (2)
+        private static ResourceBundleMessageSource messageSource = new ResourceBundleMessageSource();// (2)
 
         static {    // (3)
             messageSource.setDefaultEncoding("UTF-8");          // (4)
