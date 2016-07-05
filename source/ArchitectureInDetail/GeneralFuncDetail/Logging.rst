@@ -722,9 +722,11 @@ How to extend
         private String getMessage(LogMessageId id, Object... args) {
             String message;
             try {
-                message = messageSource.getMessage(id, args, Locale.getDefault());
-            } catch (NoSuchMessageException e) {    // (10)
-                message = UNDEFINED_MESSAGE;
+                message = messageSource.getMessage(id.getCode(), args, Locale
+                        .getDefault());
+            } catch (NoSuchMessageException e) {                // (9)
+                message = MessageFormat.format(UNDEFINED_MESSAGE_FORMAT, Arrays
+                        .toString(args));
             }
             return message;
         }
