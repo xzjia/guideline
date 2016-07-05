@@ -4451,7 +4451,7 @@ OSコマンドインジェクションとは、アプリケーション内でユ
 
 .. tip::
 
-    詳細は、IPAの「\ `セキュア・プログラミング講座 第6章 入力対策 コマンド注入攻撃対策 <https://www.ipa.go.jp/security/awareness/vendor/programmingv2/contents/501.html>`_\ 」などを参照されたい。
+    詳細は、OWASPの\ `解説ページ <https://www.owasp.org/index.php/OS_Command_Injection>`_\ などを参照されたい。
 
 Javaでは\ ``ProcessBuilder``\ や\ ``Runtime.exec``\ を用いて外部コマンドを実行する際に、実行するコマンドとして以下のものを利用する場合に、
 OSコマンドインジェクションが発生する可能性がある。
