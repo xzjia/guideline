@@ -4530,8 +4530,8 @@ OSコマンドインジェクションを起こさないためには、可能な
 .. figure:: ./images_Validation/validations-os-command-injection.png
   :width: 60%
 
-エラーの意味を明確にし、かつ、ロジックを隠蔽するために、application-messages.propertiesに適切なメッセージを登録する。
-メッセージの登録方法の詳細については、\ :ref:`Validation_message_in_application_messages`\ を参照されたい。
+エラーの意味を明確にし、かつ、ロジックを隠蔽するために、application-messages.propertiesに適切なメッセージを定義する。
+メッセージの定義方法については、\ :ref:`Validation_message_in_application_messages`\ を参照されたい。
 
 .. code-block:: properties
 
