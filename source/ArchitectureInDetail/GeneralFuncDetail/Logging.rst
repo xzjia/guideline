@@ -866,11 +866,66 @@ How to extend
 
      \ :ref:`共通ライブラリ<\exception-handling-about-classes-of-library-label>` の例外ハンドリングの仕組みにより、例外発生時に出力される「業務エラーログ」および「システムエラーログ」は上記の表のデフォルトフォーマットで出力される。
 
-| そのため出力ログフォーマットの統一には、ログ出力フォーマットをもう一方のフォーマットに合わせる、または、両方とも独自のフォーマットに統一する必要がある。
-| 本ガイドラインでは、両方とも独自のフォーマット（[{例外コード(メッセージID)またはログID}], {メッセージまたはログメッセージ}）に統一する例を説明する。
-
 業務ロジックで出力するログにフォーマットを定める
 """""""""""""""""""""""""""""""""""""""""""""""""
+
+| 業務ロジックで出力するログをフレームワークが例外を検知して出力するログのフォーマットに設定する例を示す。
+| 本ガイドラインではLoggerラッパークラス(\ ``LogIdBasedLogger`` \)に、フォーマットを行う処理を追加して実現する。
+
+.. code-block:: java
+
+    package com.example.sample.common.logger;
+
+    import java.text.MessageFormat; // (1)
+
+    // omitted
+
+    public class LogIdBasedLogger {
+
+        private static final String LOG_MESSAGE_FORMAT = "[{0}] {1}"; // (2)
+
+        // omitted
+
+        private String createLogMessage(LogMessageId id, String... args) {
+            return MessageFormat.format(LOG_MESSAGE_FORMAT, id, getMessage(id,
+                    args)); // (1)
+        }
+
+        // omitted
+
+    }
+
+
+.. tabularcolumns:: |p{0.10\linewidth}|p{0.90\linewidth}|
+.. list-table::
+   :header-rows: 1
+   :widths: 10 90
+
+   * - 項番
+     - 説明
+   * - | (1)
+     - | ログメッセージフォーマットを元にログメッセージを作成する処理を追加する
+   * - | (2)
+     - | フォーマットを定義する。
+       | \ ``{0}``\ はログID、\ ``{1}``\ はログメッセージがリプレースされる。
+
+
+実行結果は、以下のようになる。
+
+.. code-block:: console
+
+  date:2016-05-30 16:32:33.239  thread:http-bio-8080-exec-4  X-Track:4f61314a51524ab3a41832b0ceae7119  level:DEBUG  logger:com.example.sample.app.welcome.HomeController   message:debug log
+  date:2016-05-30 16:32:33.239  thread:http-bio-8080-exec-4  X-Track:4f61314a51524ab3a41832b0ceae7119  level:INFO   logger:com.example.sample.app.welcome.HomeController   message:[i.ab.cd.1001] This message is Info-Level. replace_value_1
+  date:2016-05-30 16:32:33.239  thread:http-bio-8080-exec-4  X-Track:4f61314a51524ab3a41832b0ceae7119  level:WARN   logger:com.example.sample.app.welcome.HomeController   message:[w.ab.cd.2001] This message is Warn-Level. replace_value_2
+  date:2016-05-30 16:32:33.239  thread:http-bio-8080-exec-4  X-Track:4f61314a51524ab3a41832b0ceae7119  level:ERROR  logger:com.example.sample.app.welcome.HomeController   message:[e.ab.cd.3001] This message is Error-Level. replace_value_3
+  date:2016-05-30 17:34:18.590  thread:http-bio-8080-exec-3  X-Track:4f61314a51524ab3a41832b0ceae7119  level:TRACE  logger:com.example.sample.app.welcome.HomeController   message:[t.ab.cd.4001] This message is Trace-Level. replace_value_4
+  date:2016-05-30 16:32:33.239  thread:http-bio-8080-exec-4  X-Track:4f61314a51524ab3a41832b0ceae7119  level:INFO   logger:com.example.sample.app.welcome.HomeController   message:[i.ab.cd.1002] UNDEFINED-MESSAGE arg:[replace_value_5]
+
+独自のフォーマット（[{例外コード(メッセージID)またはログID}], {メッセージまたはログメッセージ}）に統一する
+"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+
+業務ロジックで出力するログにフォーマットを定める
+>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
 
 | 業務ロジックで出力するログを前述のフォーマットで出力する例を示す。
 | 本ガイドラインではLoggerラッパークラス(\ ``LogIdBasedLogger`` \)に、フォーマットを行う処理を追加して実現する。
@@ -889,7 +944,7 @@ How to extend
 
         // omitted
 
-        private String createLogMessage(String id, String... args) {
+        private String createLogMessage(LogMessageId id, String... args) {
             return MessageFormat.format(LOG_MESSAGE_FORMAT, id, getMessage(id,
                     args)); // (1)
         }
@@ -922,11 +977,12 @@ How to extend
   date:2016-05-30 16:32:33.239  thread:http-bio-8080-exec-4  X-Track:4f61314a51524ab3a41832b0ceae7119  level:WARN   logger:com.example.sample.app.welcome.HomeController   message:[w.ab.cd.2001], This message is Warn-Level. replace_value_2
   date:2016-05-30 16:32:33.239  thread:http-bio-8080-exec-4  X-Track:4f61314a51524ab3a41832b0ceae7119  level:ERROR  logger:com.example.sample.app.welcome.HomeController   message:[e.ab.cd.3001], This message is Error-Level. replace_value_3
   date:2016-05-30 17:34:18.590  thread:http-bio-8080-exec-3  X-Track:4f61314a51524ab3a41832b0ceae7119  level:TRACE  logger:com.example.sample.app.welcome.HomeController   message:[t.ab.cd.4001], This message is Trace-Level. replace_value_4
-  date:2016-05-30 16:32:33.239  thread:http-bio-8080-exec-4  X-Track:4f61314a51524ab3a41832b0ceae7119  level:INFO   logger:com.example.sample.app.welcome.HomeController   message:[i.ab.cd.1002], UNDEFINED-MESSAGE
+  date:2016-05-30 16:32:33.239  thread:http-bio-8080-exec-4  X-Track:4f61314a51524ab3a41832b0ceae7119  level:INFO   logger:com.example.sample.app.welcome.HomeController   message:[i.ab.cd.1002], UNDEFINED-MESSAGE arg:[replace_value_5]
+
 
 
 フレームワークが出力するログのフォーマットを変更する
-""""""""""""""""""""""""""""""""""""""""""""""""""""""
+>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
 
 | フレームワークが出力するログを前述のフォーマットで出力する例を示す。、
 | 業務エラーログやシステムエラーログのフォーマットを変更するには、\ ``applicationContext.xml``\ の\ ``<bean id="exceptionLogger>``\ の定義を変更する。
