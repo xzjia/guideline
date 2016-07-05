@@ -4531,10 +4531,7 @@ OSコマンドインジェクションを起こさないためには、可能な
   :width: 60%
 
 エラーの意味を明確にし、かつ、ロジックを隠蔽するために、application-messages.propertiesに適切なメッセージを登録する。
-
-.. tip::
-
-    メッセージの登録方法の詳細については、\ :ref:`Validation_message_in_application_messages`\ を参照されたい。
+メッセージの登録方法の詳細については、\ :ref:`Validation_message_in_application_messages`\ を参照されたい。
 
 .. code-block:: properties
 
