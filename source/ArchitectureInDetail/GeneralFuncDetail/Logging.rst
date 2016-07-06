@@ -760,7 +760,7 @@ How to extend
    * - | (4)
      - | プロパティファイルをパースする際に使用する文字コードを設定する。
        | 本実装ではプロパティファイルはUTF-8エンコードとしたのでUTF-8を指定する。
-       | また、 UTF-8にはASCIIコードとの互換性があることより、UTF-8を指定することで、ASCIIコードで保存されたファイルも読み込むことが出来る。
+       | 詳細は、\ :doc:`../../ArchitectureInDetail/WebApplicationDetail/MessageManagement`\ の\ :ref:`properties-display`\ を参照されたい。
    * - | (5)
      - | 国際化を考慮し\ ``setBasenames``\ メソッドを使用してプロパティファイルを指定する。
        | \ ``setBasenames``\ の詳細は\ `ReloadableResourceBundleMessageSourceクラスのsetBasenamesのJavaDoc <http://docs.spring.io/spring/docs/4.2.4.RELEASE/javadoc-api/org/springframework/context/support/ReloadableResourceBundleMessageSource.html#setBasenames-java.lang.String...->`_\を参照。
