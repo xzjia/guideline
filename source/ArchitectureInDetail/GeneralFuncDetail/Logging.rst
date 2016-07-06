@@ -673,7 +673,7 @@ How to extend
             messageSource.setBasenames("i18n/log-messages");    // (5)
         }
 
-        private Logger logger = null;
+        private final Logger logger;
 
         private LogIdBasedLogger(Class<?> clazz) {
             logger = LoggerFactory.getLogger(clazz);            // (6)
