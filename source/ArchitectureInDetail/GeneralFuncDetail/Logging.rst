@@ -864,7 +864,7 @@ How to extend
     date:2016-05-30 17:34:18.590  thread:http-bio-8080-exec-3  X-Track:e2a65cd9160b48d6aaeb63fe6e751c6b  level:WARN   logger:com.example.sample.app.welcome.HomeController   message:This message is Warn-Level. replace_value_2
     date:2016-05-30 17:34:18.590  thread:http-bio-8080-exec-3  X-Track:e2a65cd9160b48d6aaeb63fe6e751c6b  level:ERROR  logger:com.example.sample.app.welcome.HomeController   message:This message is Error-Level. replace_value_3
     date:2016-05-30 17:34:18.590  thread:http-bio-8080-exec-3  X-Track:e2a65cd9160b48d6aaeb63fe6e751c6b  level:TRACE  logger:com.example.sample.app.welcome.HomeController   message:This message is Trace-Level. replace_value_4
-    date:2016-05-30 17:34:18.590  thread:http-bio-8080-exec-3  X-Track:e2a65cd9160b48d6aaeb63fe6e751c6b  level:INFO   logger:com.example.sample.app.welcome.HomeController   message:UNDEFINED-MESSAGE arg:[replace_value_5]
+    date:2016-05-30 17:34:18.590  thread:http-bio-8080-exec-3  X-Track:e2a65cd9160b48d6aaeb63fe6e751c6b  level:INFO   logger:com.example.sample.app.welcome.HomeController   message:UNDEFINED-MESSAGE id:i.ab.cd.1002 arg:[replace_value_5]
 
 
 ログメッセージの出力フォーマットの統一
@@ -948,7 +948,7 @@ How to extend
   date:2016-05-30 16:32:33.239  thread:http-bio-8080-exec-4  X-Track:4f61314a51524ab3a41832b0ceae7119  level:WARN   logger:com.example.sample.app.welcome.HomeController   message:[w.ab.cd.2001] This message is Warn-Level. replace_value_2
   date:2016-05-30 16:32:33.239  thread:http-bio-8080-exec-4  X-Track:4f61314a51524ab3a41832b0ceae7119  level:ERROR  logger:com.example.sample.app.welcome.HomeController   message:[e.ab.cd.3001] This message is Error-Level. replace_value_3
   date:2016-05-30 17:34:18.590  thread:http-bio-8080-exec-3  X-Track:4f61314a51524ab3a41832b0ceae7119  level:TRACE  logger:com.example.sample.app.welcome.HomeController   message:[t.ab.cd.4001] This message is Trace-Level. replace_value_4
-  date:2016-05-30 16:32:33.239  thread:http-bio-8080-exec-4  X-Track:4f61314a51524ab3a41832b0ceae7119  level:INFO   logger:com.example.sample.app.welcome.HomeController   message:[i.ab.cd.1002] UNDEFINED-MESSAGE arg:[replace_value_5]
+  date:2016-05-30 16:32:33.239  thread:http-bio-8080-exec-4  X-Track:4f61314a51524ab3a41832b0ceae7119  level:INFO   logger:com.example.sample.app.welcome.HomeController   message:[i.ab.cd.1002] UNDEFINED-MESSAGE id:i.ab.cd.1002 arg:[replace_value_5]
 
 独自のフォーマット（[{例外コード(メッセージID)またはログID}], {メッセージまたはログメッセージ}）に統一する
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
