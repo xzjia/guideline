@@ -950,8 +950,10 @@ How to extend
   date:2016-05-30 17:34:18.590  thread:http-bio-8080-exec-3  X-Track:4f61314a51524ab3a41832b0ceae7119  level:TRACE  logger:com.example.sample.app.welcome.HomeController   message:[t.ab.cd.4001] This message is Trace-Level. replace_value_4
   date:2016-05-30 16:32:33.239  thread:http-bio-8080-exec-4  X-Track:4f61314a51524ab3a41832b0ceae7119  level:INFO   logger:com.example.sample.app.welcome.HomeController   message:[i.ab.cd.1002] UNDEFINED-MESSAGE id:i.ab.cd.1002 arg:[replace_value_5]
 
-独自のフォーマット（[{例外コード(メッセージID)またはログID}], {メッセージまたはログメッセージ}）に統一する
+独自のフォーマットに統一する
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+
+| 業務ロジックとフレームワークが出力するログを独自のフォーマット（[{例外コード(メッセージID)またはログID}], {メッセージまたはログメッセージ}）に統一する実装例を示す。
 
 業務ロジックで出力するログにフォーマットを定める
 >>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
