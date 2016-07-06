@@ -664,7 +664,7 @@ How to extend
 
     public class LogIdBasedLogger implements Logger {
 
-        private static final String UNDEFINED_MESSAGE_FORMAT = "UNDEFINED-MESSAGE arg:{0}";          // (1)
+        private static final String UNDEFINED_MESSAGE_FORMAT = "UNDEFINED-MESSAGE id:{0} arg:{1}";   // (1)
 
         private static ResourceBundleMessageSource messageSource = new ResourceBundleMessageSource();// (2)
 
@@ -737,8 +737,8 @@ How to extend
                 message = messageSource.getMessage(id.getCode(), args, Locale
                         .getDefault());
             } catch (NoSuchMessageException e) {                // (9)
-                message = MessageFormat.format(UNDEFINED_MESSAGE_FORMAT, Arrays
-                        .toString(args));
+                message = MessageFormat.format(UNDEFINED_MESSAGE_FORMAT, id
+                        .getCode(), Arrays.toString(args));
             }
             return message;
         }
