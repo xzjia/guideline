@@ -573,6 +573,7 @@ SLF4Jのロガー(\ ``org.slf4j.Logger``\ )の各ログレベルに応じたメ�
                // omitted
            }
 
+.. _note-description-of-log-output:
 
 ログ出力の記述の注意点
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
@@ -682,45 +683,47 @@ How to extend
             return new LogIdBasedLogger(clazz);
         }
 
+        public boolean isDebugEnabled() {                       // (7)
+            return logger.isDebugEnabled();
+        }
+
         public void debug(String format, Object... args) {
-            if (logger.isDebugEnabled()) {
-                logger.debug(format, args);                     // (7)
-            }
+            logger.debug(format, args);                         // (8)
         }
 
         public void info(LogMessageId id, Object... args) {
             if (logger.isInfoEnabled()) {
-                logger.info(createLogMessage(id, args));        // (8)
+                logger.info(createLogMessage(id, args));        // (9)
             }
         }
 
         public void warn(LogMessageId id, Object... args) {
             if (logger.isWarnEnabled()) {
-                logger.warn(createLogMessage(id, args));        // (8)
+                logger.warn(createLogMessage(id, args));        // (9)
             }
         }
 
         public void error(LogMessageId id, Object... args) {
             if (logger.isErrorEnabled()) {
-                logger.error(createLogMessage(id, args));       // (8)
+                logger.error(createLogMessage(id, args));       // (9)
             }
         }
 
         public void trace(LogMessageId id, Object... args) {
             if (logger.isTraceEnabled()) {
-                logger.trace(createLogMessage(id, args));       // (8)
+                logger.trace(createLogMessage(id, args));       // (9)
             }
         }
 
         public void warn(LogMessageId id, Throwable t, Object... args) {
             if (logger.isWarnEnabled()) {
-                logger.warn(createLogMessage(id, args), t);     // (8)
+                logger.warn(createLogMessage(id, args), t);     // (9)
             }
         }
 
         public void error(LogMessageId id, Throwable t, Object... args) {
             if (logger.isErrorEnabled()) {
-                logger.error(createLogMessage(id, args), t);    // (8)
+                logger.error(createLogMessage(id, args), t);    // (9)
             }
         }
 
@@ -733,7 +736,7 @@ How to extend
             try {
                 message = messageSource.getMessage(id.getCode(), args, Locale
                         .getDefault());
-            } catch (NoSuchMessageException e) {                // (9)
+            } catch (NoSuchMessageException e) {                // (10)
                 message = MessageFormat.format(UNDEFINED_MESSAGE_FORMAT, id
                         .getCode(), Arrays.toString(args));
             }
@@ -763,14 +766,17 @@ How to extend
        | 詳細は、\ :doc:`../../ArchitectureInDetail/WebApplicationDetail/MessageManagement`\ の\ :ref:`properties-display`\ を参照されたい。
    * - | (5)
      - | 国際化を考慮し\ ``setBasenames``\ メソッドを使用してプロパティファイルを指定する。
-       | \ ``setBasenames``\ の詳細は\ `ReloadableResourceBundleMessageSourceクラスのsetBasenamesのJavaDoc <http://docs.spring.io/spring/docs/4.2.4.RELEASE/javadoc-api/org/springframework/context/support/ReloadableResourceBundleMessageSource.html#setBasenames-java.lang.String...->`_\を参照。
+       | \ ``setBasenames``\ の詳細は\ `ReloadableResourceBundleMessageSourceクラスのsetBasenamesのJavaDoc <http://docs.spring.io/spring/docs/4.2.4.RELEASE/javadoc-api/org/springframework/context/support/ReloadableResourceBundleMessageSource.html#setBasenames-java.lang.String...->`_\を参照されたい。
    * - | (6)
      - | Loggerラッパークラスにおいても、SLF4Jを使用する。ロギングライブラリの実装を直接使用しない。
    * - | (7)
-     - | 本実装例ではDEBUGレベルのログにはログIDを使わない。引数のログメッセージをそのまま、ログ出力する。
+     - | DEBUGレベルのログ出力を許可してるか、判定する。
+       | 使用時の注意点については、\ :ref:`note-description-of-log-output`\ を参照されたい。
    * - | (8)
-     - | TRACE/INFO/WARN/ERRORレベルのログはログIDに該当するログメッセージをプロパティファイルから取得して、ログ出力する。
+     - | 本実装例ではDEBUGレベルのログにはログIDを使わない。引数のログメッセージをそのまま、ログ出力する。
    * - | (9)
+     - | TRACE/INFO/WARN/ERRORレベルのログはログIDに該当するログメッセージをプロパティファイルから取得して、ログ出力する。
+   * - | (10)
      - | getMessageを呼び出す際にプロパティファイルにログIDが記載されていないと例外:\ ``NoSuchMessageException``\ が発生する。
        | そのため\ ``NoSuchMessageException``\ をcatchし、ログIDがプロパティファイルに定義されていない旨のログメッセージを出力する。
 
