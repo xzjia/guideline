@@ -658,11 +658,10 @@ How to extend
 
     import org.slf4j.Logger;
     import org.slf4j.LoggerFactory;
-    import org.slf4j.Marker;
     import org.springframework.context.NoSuchMessageException;
     import org.springframework.context.support.ResourceBundleMessageSource;
 
-    public class LogIdBasedLogger implements Logger {
+    public class LogIdBasedLogger {
 
         private static final String UNDEFINED_MESSAGE_FORMAT = "UNDEFINED-MESSAGE id:{0} arg:{1}";   // (1)
 
@@ -683,11 +682,9 @@ How to extend
             return new LogIdBasedLogger(clazz);
         }
 
-        // omitted
-
-        public void debug(String message) {
+        public void debug(String format, Object... args) {
             if (logger.isDebugEnabled()) {
-                logger.debug(message);    // (7)
+                logger.debug(format, args);                     // (7)
             }
         }
 
