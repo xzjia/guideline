@@ -641,11 +641,10 @@ How to extend
 本実装例では
 
 #. Loggerラッパークラス
-#. LogMessageId列挙型クラス
 #. プロパティファイル
 
 | を作成することで実現する。
-| ここではLoggerラッパークラスを\ ``LogIdBasedLogger``\、LogMessageId列挙型クラスを\ ``LogMessageId``\、プロパティファイルを\ ``log-messages.properties``\とする。
+| ここではLoggerラッパークラスを\ ``LogIdBasedLogger``\、プロパティファイルを\ ``log-messages.properties``\とする。
 
 - `LogIdBasedLogger`  (Loggerラッパークラス)
 
@@ -691,54 +690,54 @@ How to extend
             logger.debug(format, args);                         // (8)
         }
 
-        public void info(LogMessageId id, Object... args) {
+        public void info(String id, Object... args) {
             if (logger.isInfoEnabled()) {
                 logger.info(createLogMessage(id, args));        // (9)
             }
         }
 
-        public void warn(LogMessageId id, Object... args) {
+        public void warn(String id, Object... args) {
             if (logger.isWarnEnabled()) {
                 logger.warn(createLogMessage(id, args));        // (9)
             }
         }
 
-        public void error(LogMessageId id, Object... args) {
+        public void error(String id, Object... args) {
             if (logger.isErrorEnabled()) {
                 logger.error(createLogMessage(id, args));       // (9)
             }
         }
 
-        public void trace(LogMessageId id, Object... args) {
+        public void trace(String id, Object... args) {
             if (logger.isTraceEnabled()) {
                 logger.trace(createLogMessage(id, args));       // (9)
             }
         }
 
-        public void warn(LogMessageId id, Throwable t, Object... args) {
+        public void warn(String id, Throwable t, Object... args) {
             if (logger.isWarnEnabled()) {
                 logger.warn(createLogMessage(id, args), t);     // (9)
             }
         }
 
-        public void error(LogMessageId id, Throwable t, Object... args) {
+        public void error(String id, Throwable t, Object... args) {
             if (logger.isErrorEnabled()) {
                 logger.error(createLogMessage(id, args), t);    // (9)
             }
         }
 
-        private String createLogMessage(LogMessageId id, Object... args) {
+        private String createLogMessage(String id, Object... args) {
             return getMessage(id, args);
         }
         
-        private String getMessage(LogMessageId id, Object... args) {
+        private String getMessage(String id, Object... args) {
             String message;
             try {
-                message = messageSource.getMessage(id.getCode(), args, Locale
+                message = messageSource.getMessage(id, args, Locale
                         .getDefault());
             } catch (NoSuchMessageException e) {                // (10)
-                message = MessageFormat.format(UNDEFINED_MESSAGE_FORMAT, id
-                        .getCode(), Arrays.toString(args));
+                message = MessageFormat.format(UNDEFINED_MESSAGE_FORMAT, id, Arrays
+                        .toString(args));
             }
             return message;
         }
@@ -779,31 +778,6 @@ How to extend
    * - | (10)
      - | getMessageを呼び出す際にプロパティファイルにログIDが記載されていないと例外:\ ``NoSuchMessageException``\ が発生する。
        | そのため\ ``NoSuchMessageException``\ をcatchし、ログIDがプロパティファイルに定義されていない旨のログメッセージを出力する。
-
-
-- `LogMessageId`  (LogMessageId列挙型クラス)
-
-.. code-block:: java
-
-    package com.example.sample.common.logger;
-
-    public enum LogMessageId {
-        I_AB_CD_1001("i.ab.cd.1001"), 
-        I_AB_CD_1002("i.ab.cd.1002"), 
-        W_AB_CD_2001("w.ab.cd.2001"), 
-        E_AB_CD_3001("e.ab.cd.3001"), 
-        T_AB_CD_4001("t.ab.cd.4001");
-        
-        private final String code;
-
-        private LogMessageId(String code) {
-            this.code = code;
-        }
-        
-        public String getCode() {
-            return code;
-        }
-    }
 
 
 - `log-messages.properties`  (プロパティファイル)
@@ -851,11 +825,11 @@ How to extend
                 RequestMethod.POST })
         public String home(Model model) {
             logger.debug("debug log");
-            logger.info(LogMessageId.I_AB_CD_1001,"replace_value_1");
-            logger.warn(LogMessageId.W_AB_CD_2001,"replace_value_2");
-            logger.error(LogMessageId.E_AB_CD_3001,"replace_value_3");
-            logger.trace(LogMessageId.T_AB_CD_4001,"replace_value_4");
-            logger.info(LogMessageId.I_AB_CD_1002,"replace_value_5");
+            logger.info("i.ab.cd.1001","replace_value_1");
+            logger.warn("w.ab.cd.2001","replace_value_2");
+            logger.error("e.ab.cd.3001","replace_value_3");
+            logger.trace("t.ab.cd.4001","replace_value_4");
+            logger.info("i.ab.cd.1002","replace_value_5");
             return "welcome/home";
         }
     }
@@ -921,8 +895,8 @@ How to extend
 
         // omitted
 
-        private String createLogMessage(LogMessageId id, String... args) {
-            return MessageFormat.format(LOG_MESSAGE_FORMAT, id.getCode(), getMessage(id,
+        private String createLogMessage(String id, String... args) {
+            return MessageFormat.format(LOG_MESSAGE_FORMAT, id, getMessage(id,
                     args)); // (1)
         }
 
@@ -981,8 +955,8 @@ How to extend
 
         // omitted
 
-        private String createLogMessage(LogMessageId id, String... args) {
-            return MessageFormat.format(LOG_MESSAGE_FORMAT, id.getCode(), getMessage(id,
+        private String createLogMessage(String id, String... args) {
+            return MessageFormat.format(LOG_MESSAGE_FORMAT, id, getMessage(id,
                     args)); // (1)
         }
 
