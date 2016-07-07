@@ -573,6 +573,7 @@ SLF4Jのロガー(\ ``org.slf4j.Logger``\ )の各ログレベルに応じたメ�
                // omitted
            }
 
+.. _note-description-of-log-output:
 
 ログ出力の記述の注意点
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
@@ -622,14 +623,14 @@ SLF4JのLoggerは、内部でログレベルのチェックを行い、必要な
 
 How to extend
 --------------------------------------------------------------------------------
-ログ出力仕様は監視製品や要件等で独自の規定があるケースが多く、個別に拡張するケースが想定される。ここでは、拡張例として以下の2例を説明する。
+ログ出力仕様は監視製品や要件等で独自の規定があるケースが多く、個別に実装するケースが想定される。ここでは、以下の2例を説明する。
 
 #. ログメッセージの一元管理
 #. ログメッセージの出力フォーマットの統一
 
 ログメッセージの一元管理
 ^^^^^^^^^^^^^^^^^^^^^^^^^
-| ログメッセージの一元管理によるメンテナンス性向上等を目的とした拡張例を紹介する。
+| ログメッセージの一元管理によるメンテナンス性向上等を目的とした実装例を紹介する。
 | ログメッセージの一元管理は、ログメッセージをプロパティファイル等の別ファイルにまとめ、ログ出力時にメッセージ解決を行うことで実現できる。
 | ここでは実装例として、ログ出力メソッドの引数にログIDを設定できるようにし、プロパティファイルの中のログIDに対応するメッセージを出力する方法を説明する。
 
@@ -643,7 +644,7 @@ How to extend
 #. プロパティファイル
 
 | を作成することで実現する。
-| ここではLoggerラッパークラスを\ ``LogIdBasedLogger``\とし、プロパティファイルを\ ``log-messages.properties``\とする。
+| ここではLoggerラッパークラスを\ ``LogIdBasedLogger``\、プロパティファイルを\ ``log-messages.properties``\とする。
 
 - `LogIdBasedLogger`  (Loggerラッパークラス)
 
@@ -651,76 +652,92 @@ How to extend
 
     package com.example.sample.common.logger;
 
+    import java.text.MessageFormat;
+    import java.util.Arrays;
     import java.util.Locale;
 
     import org.slf4j.Logger;
     import org.slf4j.LoggerFactory;
     import org.springframework.context.NoSuchMessageException;
-    import org.springframework.context.support.ReloadableResourceBundleMessageSource;
+    import org.springframework.context.support.ResourceBundleMessageSource;
 
-    public class LogIdBasedLogger  {
+    public class LogIdBasedLogger {
 
-        private static final String UNDEFINED_MESSAGE = "UNDEFINED-MESSAGE";    // (1)
+        private static final String UNDEFINED_MESSAGE_FORMAT = "UNDEFINED-MESSAGE id:{0} arg:{1}";   // (1)
 
-        private static ReloadableResourceBundleMessageSource messageSource =
-            new ReloadableResourceBundleMessageSource();    // (2)
+        private static ResourceBundleMessageSource messageSource = new ResourceBundleMessageSource();// (2)
 
         static {    // (3)
-            messageSource.setCacheSeconds(5);    // (4)
-            messageSource.setDefaultEncoding("UTF-8");    // (5)
-            messageSource.setBasenames("classpath:i18n/log-messages");    // (6)
+            messageSource.setDefaultEncoding("UTF-8");          // (4)
+            messageSource.setBasenames("i18n/log-messages");    // (5)
         }
 
-        private Logger logger = null;
+        private final Logger logger;
 
         private LogIdBasedLogger(Class<?> clazz) {
-            logger = LoggerFactory.getLogger(clazz);    // (7)
+            logger = LoggerFactory.getLogger(clazz);            // (6)
         }
 
         public static LogIdBasedLogger getLogger(Class<?> clazz) {
             return new LogIdBasedLogger(clazz);
         }
 
-        public void debug(String message) {
-            if (logger.isDebugEnabled()) {
-                logger.debug(message);    // (8)
-            }
+        public boolean isDebugEnabled() {                       // (7)
+            return logger.isDebugEnabled();
         }
 
-        public void info(String id, String... args) {
+        public void debug(String format, Object... args) {
+            logger.debug(format, args);                         // (8)
+        }
+
+        public void info(String id, Object... args) {
             if (logger.isInfoEnabled()) {
-                logger.info(createLogMessage(id, args));    // (9)
+                logger.info(createLogMessage(id, args));        // (9)
             }
         }
 
-        public void warn(String id, String... args) {
+        public void warn(String id, Object... args) {
             if (logger.isWarnEnabled()) {
-                logger.warn(createLogMessage(id, args));    // (9)
+                logger.warn(createLogMessage(id, args));        // (9)
             }
         }
 
-        public void error(String id, String... args) {
+        public void error(String id, Object... args) {
             if (logger.isErrorEnabled()) {
-                logger.error(createLogMessage(id, args));    // (9)
+                logger.error(createLogMessage(id, args));       // (9)
             }
         }
 
-        public void trace(String id, String... args) {
+        public void trace(String id, Object... args) {
             if (logger.isTraceEnabled()) {
-                logger.trace(createLogMessage(id, args));    // (9)
+                logger.trace(createLogMessage(id, args));       // (9)
             }
         }
 
-        private String createLogMessage(String id, String... args) {
+        public void warn(String id, Throwable t, Object... args) {
+            if (logger.isWarnEnabled()) {
+                logger.warn(createLogMessage(id, args), t);     // (9)
+            }
+        }
+
+        public void error(String id, Throwable t, Object... args) {
+            if (logger.isErrorEnabled()) {
+                logger.error(createLogMessage(id, args), t);    // (9)
+            }
+        }
+
+        private String createLogMessage(String id, Object... args) {
             return getMessage(id, args);
         }
         
-        private String getMessage(String id, String... args) { 
+        private String getMessage(String id, Object... args) {
             String message;
             try {
-                message = messageSource.getMessage(id, args, Locale.getDefault());
-            } catch (NoSuchMessageException e) {    // (10)
-                message = UNDEFINED_MESSAGE;
+                message = messageSource.getMessage(id, args, Locale
+                        .getDefault());
+            } catch (NoSuchMessageException e) {                // (10)
+                message = MessageFormat.format(UNDEFINED_MESSAGE_FORMAT, id, Arrays
+                        .toString(args));
             }
             return message;
         }
@@ -743,24 +760,25 @@ How to extend
      - | staticイニシャライザにて\ ``MessageSource``\ を生成する。
        | 本実装では\ ``i18n``\に配置した\ ``log-messages.properties``\ を読み込む。
    * - | (4)
-     - | プロパティファイルをキャッシュにロードしておく時間を設定する。
-       | この値を適切に設定することで、プロパティファイル更新後に再起動することなく変更を反映できる。詳細は\ `ReloadableResourceBundleMessageSourceクラスのsetCacheSecondsのJavaDoc <http://docs.spring.io/spring/docs/4.2.4.RELEASE/javadoc-api/org/springframework/context/support/ReloadableResourceBundleMessageSource.html#setCacheSeconds-int->`_\を参照。
-   * - | (5)
      - | プロパティファイルをパースする際に使用する文字コードを設定する。
        | 本実装ではプロパティファイルはUTF-8エンコードとしたのでUTF-8を指定する。
+       | 詳細は、\ :doc:`../../ArchitectureInDetail/WebApplicationDetail/MessageManagement`\ の\ :ref:`properties-display`\ を参照されたい。
+   * - | (5)
+     - | 国際化を考慮し\ ``setBasenames``\ メソッドを使用してプロパティファイルを指定する。
+       | \ ``setBasenames``\ の詳細は\ `ReloadableResourceBundleMessageSourceクラスのsetBasenamesのJavaDoc <http://docs.spring.io/spring/docs/4.2.4.RELEASE/javadoc-api/org/springframework/context/support/ReloadableResourceBundleMessageSource.html#setBasenames-java.lang.String...->`_\を参照されたい。
    * - | (6)
-     - | 国際化を考慮しsetBasenamesメソッドを使用してプロパティファイルを指定する。
-       | setBasenamesの詳細は\ `ReloadableResourceBundleMessageSourceクラスのsetBasenamesのJavaDoc <http://docs.spring.io/spring/docs/4.2.4.RELEASE/javadoc-api/org/springframework/context/support/ReloadableResourceBundleMessageSource.html#setBasenames-java.lang.String...->`_\を参照。
-   * - | (7)
      - | Loggerラッパークラスにおいても、SLF4Jを使用する。ロギングライブラリの実装を直接使用しない。
+   * - | (7)
+     - | DEBUGレベルのログ出力を許可してるか、判定する。
+       | 使用時の注意点については、\ :ref:`note-description-of-log-output`\ を参照されたい。
    * - | (8)
      - | 本実装例ではDEBUGレベルのログにはログIDを使わない。引数のログメッセージをそのまま、ログ出力する。
    * - | (9)
-     - | TRACE/INFO/WARN/ERRORレベルのログはログIDを付与して、ログ出力する。
+     - | TRACE/INFO/WARN/ERRORレベルのログはログIDに該当するログメッセージをプロパティファイルから取得して、ログ出力する。
    * - | (10)
      - | getMessageを呼び出す際にプロパティファイルにログIDが記載されていないと例外:\ ``NoSuchMessageException``\ が発生する。
        | そのため\ ``NoSuchMessageException``\ をcatchし、ログIDがプロパティファイルに定義されていない旨のログメッセージを出力する。
-       | なお、本実装では指定したログIDに該当するメッセージがない場合、デフォルトログメッセージとする。
+
 
 - `log-messages.properties`  (プロパティファイル)
 
@@ -775,9 +793,9 @@ How to extend
 
  .. note::
 
-     本ガイドでは、 画面出力用メッセージとログ出力用メッセージを別々に管理するため、新たにプロパティファイルを作成しているが1ファイルにしてもかまわない。
+     本ガイドラインでは、 画面出力用メッセージとログ出力用メッセージを別々に管理するため、新たにプロパティファイルを作成しているが1ファイルにしてもかまわない。
      
-     アプリの性質やメッセージの管理方法に合わせてファイルの単位を決めること。
+     アプリケーションの性質やメッセージの管理方法に合わせてファイルの単位を決めること。
 
 
 
@@ -817,7 +835,7 @@ How to extend
     }
 
 
-- ログ出力
+- ログ出力例
 
 .. code-block:: console
 
@@ -826,12 +844,14 @@ How to extend
     date:2016-05-30 17:34:18.590  thread:http-bio-8080-exec-3  X-Track:e2a65cd9160b48d6aaeb63fe6e751c6b  level:WARN   logger:com.example.sample.app.welcome.HomeController   message:This message is Warn-Level. replace_value_2
     date:2016-05-30 17:34:18.590  thread:http-bio-8080-exec-3  X-Track:e2a65cd9160b48d6aaeb63fe6e751c6b  level:ERROR  logger:com.example.sample.app.welcome.HomeController   message:This message is Error-Level. replace_value_3
     date:2016-05-30 17:34:18.590  thread:http-bio-8080-exec-3  X-Track:e2a65cd9160b48d6aaeb63fe6e751c6b  level:TRACE  logger:com.example.sample.app.welcome.HomeController   message:This message is Trace-Level. replace_value_4
-    date:2016-05-30 17:34:18.590  thread:http-bio-8080-exec-3  X-Track:e2a65cd9160b48d6aaeb63fe6e751c6b  level:INFO   logger:com.example.sample.app.welcome.HomeController   message:UNDEFINED-MESSAGE
+    date:2016-05-30 17:34:18.590  thread:http-bio-8080-exec-3  X-Track:e2a65cd9160b48d6aaeb63fe6e751c6b  level:INFO   logger:com.example.sample.app.welcome.HomeController   message:UNDEFINED-MESSAGE id:i.ab.cd.1002 arg:[replace_value_5]
 
 
 ログメッセージの出力フォーマットの統一
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 | ログメッセージの出力フォーマットは、下表のとおりログ出力の方式ごとで異なる。
+| そのため出力ログフォーマットの統一には、ログ出力フォーマットをもう一方のフォーマットに合わせる、または、両方とも独自のフォーマットに統一する必要がある。
+| 本ガイドラインでは、業務ロジックで出力するログにフォーマットを定める例と、両方とも独自のフォーマット（[{例外コード(メッセージID)またはログID}], {メッセージまたはログメッセージ}）に統一する例を説明する。
 
 .. tabularcolumns:: |p{0.10\linewidth}|p{0.90\linewidth}|
 .. list-table::
@@ -849,17 +869,74 @@ How to extend
    * - | (2)
      - | フレームワークが例外を検知して暗黙的にログを出力
      - | 業務エラーログ・システムエラーログなど
-     - | [{例外コード(メッセージID)}], {メッセージ}
+     - | [{例外コード(メッセージID)}] {メッセージ}
 
 .. note::
 
      \ :ref:`共通ライブラリ<\exception-handling-about-classes-of-library-label>` の例外ハンドリングの仕組みにより、例外発生時に出力される「業務エラーログ」および「システムエラーログ」は上記の表のデフォルトフォーマットで出力される。
 
-| そのため出力ログフォーマットの統一には、ログ出力フォーマットをもう一方のフォーマットに合わせる、または、両方とも独自のフォーマットに統一する必要がある。
-| 本ガイドラインでは、両方とも独自のフォーマット（[{例外コード(メッセージID)またはログID}], {メッセージまたはログメッセージ}）に統一する例を説明する。
+フレームワークが例外を検知して出力するログのフォーマットに統一
+"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 
-業務ロジックで出力するログにフォーマットを定める
-"""""""""""""""""""""""""""""""""""""""""""""""""
+| 業務ロジックで出力するログをフレームワークが例外を検知して出力するログのフォーマットに合わせるための実装例を示す。
+| 本ガイドラインではLoggerラッパークラス(\ ``LogIdBasedLogger`` \)に、フォーマットを行う処理を追加して実現する。
+
+.. code-block:: java
+
+    package com.example.sample.common.logger;
+
+    import java.text.MessageFormat; // (1)
+
+    // omitted
+
+    public class LogIdBasedLogger {
+
+        private static final String LOG_MESSAGE_FORMAT = "[{0}] {1}"; // (2)
+
+        // omitted
+
+        private String createLogMessage(String id, String... args) {
+            return MessageFormat.format(LOG_MESSAGE_FORMAT, id, getMessage(id,
+                    args)); // (1)
+        }
+
+        // omitted
+
+    }
+
+
+.. tabularcolumns:: |p{0.10\linewidth}|p{0.90\linewidth}|
+.. list-table::
+   :header-rows: 1
+   :widths: 10 90
+
+   * - 項番
+     - 説明
+   * - | (1)
+     - | ログメッセージフォーマットを元にログメッセージを作成する処理を追加する
+   * - | (2)
+     - | フォーマットを定義する。
+       | \ ``{0}``\ はログID、\ ``{1}``\ はログメッセージがリプレースされる。
+
+
+実行結果は、以下のようになる。
+
+.. code-block:: console
+
+  date:2016-05-30 16:32:33.239  thread:http-bio-8080-exec-4  X-Track:4f61314a51524ab3a41832b0ceae7119  level:DEBUG  logger:com.example.sample.app.welcome.HomeController   message:debug log
+  date:2016-05-30 16:32:33.239  thread:http-bio-8080-exec-4  X-Track:4f61314a51524ab3a41832b0ceae7119  level:INFO   logger:com.example.sample.app.welcome.HomeController   message:[i.ab.cd.1001] This message is Info-Level. replace_value_1
+  date:2016-05-30 16:32:33.239  thread:http-bio-8080-exec-4  X-Track:4f61314a51524ab3a41832b0ceae7119  level:WARN   logger:com.example.sample.app.welcome.HomeController   message:[w.ab.cd.2001] This message is Warn-Level. replace_value_2
+  date:2016-05-30 16:32:33.239  thread:http-bio-8080-exec-4  X-Track:4f61314a51524ab3a41832b0ceae7119  level:ERROR  logger:com.example.sample.app.welcome.HomeController   message:[e.ab.cd.3001] This message is Error-Level. replace_value_3
+  date:2016-05-30 17:34:18.590  thread:http-bio-8080-exec-3  X-Track:4f61314a51524ab3a41832b0ceae7119  level:TRACE  logger:com.example.sample.app.welcome.HomeController   message:[t.ab.cd.4001] This message is Trace-Level. replace_value_4
+  date:2016-05-30 16:32:33.239  thread:http-bio-8080-exec-4  X-Track:4f61314a51524ab3a41832b0ceae7119  level:INFO   logger:com.example.sample.app.welcome.HomeController   message:[i.ab.cd.1002] UNDEFINED-MESSAGE id:i.ab.cd.1002 arg:[replace_value_5]
+
+独自のフォーマットに統一
+"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+
+| 業務ロジックとフレームワークが出力するログを独自のフォーマット（[{例外コード(メッセージID)またはログID}], {メッセージまたはログメッセージ}）に統一する実装例を示す。
+
+業務ロジックで出力するログにフォーマットを定義
+>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
 
 | 業務ロジックで出力するログを前述のフォーマットで出力する例を示す。
 | 本ガイドラインではLoggerラッパークラス(\ ``LogIdBasedLogger`` \)に、フォーマットを行う処理を追加して実現する。
@@ -911,15 +988,16 @@ How to extend
   date:2016-05-30 16:32:33.239  thread:http-bio-8080-exec-4  X-Track:4f61314a51524ab3a41832b0ceae7119  level:WARN   logger:com.example.sample.app.welcome.HomeController   message:[w.ab.cd.2001], This message is Warn-Level. replace_value_2
   date:2016-05-30 16:32:33.239  thread:http-bio-8080-exec-4  X-Track:4f61314a51524ab3a41832b0ceae7119  level:ERROR  logger:com.example.sample.app.welcome.HomeController   message:[e.ab.cd.3001], This message is Error-Level. replace_value_3
   date:2016-05-30 17:34:18.590  thread:http-bio-8080-exec-3  X-Track:4f61314a51524ab3a41832b0ceae7119  level:TRACE  logger:com.example.sample.app.welcome.HomeController   message:[t.ab.cd.4001], This message is Trace-Level. replace_value_4
-  date:2016-05-30 16:32:33.239  thread:http-bio-8080-exec-4  X-Track:4f61314a51524ab3a41832b0ceae7119  level:INFO   logger:com.example.sample.app.welcome.HomeController   message:[i.ab.cd.1002], UNDEFINED-MESSAGE
+  date:2016-05-30 16:32:33.239  thread:http-bio-8080-exec-4  X-Track:4f61314a51524ab3a41832b0ceae7119  level:INFO   logger:com.example.sample.app.welcome.HomeController   message:[i.ab.cd.1002], UNDEFINED-MESSAGE arg:[replace_value_5]
 
 
-フレームワークが出力するログのフォーマットを変更する
-""""""""""""""""""""""""""""""""""""""""""""""""""""""
 
-| フレームワークが出力するログを前述のフォーマットで出力する例を示す。、
-| 業務エラーログやシステムエラーログのフォーマットを変更するには、\ ``applicationContext.xml``\ の\ ``<bean id="exceptionLogger>``\ の定義を変更する。
-| 以下に、\ ``<bean id="exceptionLogger>``\ の定義の例を挙げる。
+フレームワークが出力するログのフォーマットを変更
+>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
+
+| フレームワークが出力するログを前述のフォーマットで出力する例を示す。
+| 業務エラーログやシステムエラーログのフォーマットを変更するには、\ ``applicationContext.xml``\ の\ ``ExceptionLogger``\ のbean定義を変更する。
+| 以下に、\ ``ExceptionLogger``\ の定義の例を挙げる。
 
 - **applicationContext.xml**
 
@@ -948,7 +1026,7 @@ How to extend
 
 .. code-block:: console
 
-    date:2013-09-19 21:03:06   thread:tomcat-http--3   X-Track:c19eec546b054d54a13658f94292b24f    level:ERROR logger:o.t.gfw.common.exception.ExceptionLogger         message:[e.ad.od.9012],not found item entity. item code [10-123456].
+    date:2013-09-19 21:03:06   thread:tomcat-http--3   X-Track:c19eec546b054d54a13658f94292b24f    level:ERROR logger:o.t.gfw.common.exception.ExceptionLogger         message:[e.ad.od.9012], not found item entity. item code [10-123456].
     ...
     // stackTarace omitted
 
@@ -1011,7 +1089,7 @@ MDCに追加した値をログに出力できる。
         </encoder>
     </appender>
 
-実行結果は、以下のようになる、
+実行結果は、以下のようになる。
 
 .. code-block:: console
 
