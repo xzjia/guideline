@@ -1477,7 +1477,7 @@ MTOMを利用した大容量のバイナリデータを扱う方法
     一般的にSOAPクライアントアプリケーションの開発を行う場合は、SOAPサーバに接続する必要がある。
     試験用SOAPサーバ、本番用SOAPサーバ等、環境毎に異なるSOAPサーバの接続を容易に実現するために、当ガイドラインではプロキシの定義はdomainプロジェクトで行い、
     環境依存する値はプロパティファイルに集約、プロパティファイルのみenvプロジェクトに配置することを推奨する。
-    ただし、SOAPサーバが準備できない場合はスタブプロキシの作成とBean定義をdomainプロジェクトに追加、スタブプロキシの切り替えは
+    ただし、SOAPサーバ間の接続試験で試験用SOAPサーバが準備できない場合はスタブプロキシの作成とBean定義をdomainプロジェクトに追加、スタブプロキシの切り替えは
     `Springのプロファイル <http://docs.spring.io/spring/docs/current/spring-framework-reference/html/beans.html#beans-definition-profiles>`_\で行うことを推奨する。
 
 |
