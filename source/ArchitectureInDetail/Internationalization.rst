@@ -302,6 +302,7 @@ LocaleChangeInterceptorの設定
       - | 説明
     * - | (1)
       - | Spring MVCのインタセプターに、 ``org.springframework.web.servlet.i18n.LocaleChangeInterceptor`` を定義する。
+        | この設定により、"リクエストURL?locale=xx"で :ref:`使用可能<i18n_set_locale_jsp>` となる。
 
 .. note::
 
@@ -323,7 +324,6 @@ LocaleChangeInterceptorの設定
           - | 説明
         * - | (2)
           - | \ ``paramName``\ プロパティにリクエストパラメータ名を指定する。上記例では、"リクエストURL?lang=xx"となる。
-            | **paramNameプロパティを省略した場合、"locale"が設定される。** "リクエストURL?locale=xx"で :ref:`使用可能<i18n_set_locale_jsp>` となる。
 
 |
 
