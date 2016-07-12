@@ -883,7 +883,7 @@ Debug log as shown below is output.
 
     date:2013-09-06 16:41:33	thread:tomcat-http--3	USER:	X-Track:c004ddb56a3642d5bc5f6b5d884e5db2	level:DEBUG	logger:o.t.g.w.logging.HttpSessionEventLoggingListener 	message:SESSIONID#EDC3C240A7A1CCE87146A6BA1321AD0F sessionCreated : org.apache.catalina.session.StandardSessionFacade@f00e0f
 
-When the lifecycle of an object is managed using a Session such as \ ``@SessionAttribute``\  etc.,
+When the lifecycle of an object is managed using a Session such as \ ``@SessionAttributes``\  etc.,
 it is strongly recommended to use this listener to confirm whether the attributes added to the session are deleted as anticipated.
 
 TraceLoggingInterceptor

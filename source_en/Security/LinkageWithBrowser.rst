@@ -67,8 +67,8 @@ The following header is output to disable caching the contents.
 
 .. note:: **Overwriting Cache-Control header**
 
-    Cache-Control header is overwritten when Controller class of Spring MVC defines form class of \ ``@SessionAttribute`` \  or
-    uses Model of \ ``@SessionAttribute`` \  attribute in the request handler.
+    Cache-Control header is overwritten when Controller class of Spring MVC defines form class of \ ``@SessionAttributes`` \  or
+    uses Model of \ ``@SessionAttributes`` \  attribute in the request handler.
 
 .. note:: **Browser compatible with HTTP1.0**
 
