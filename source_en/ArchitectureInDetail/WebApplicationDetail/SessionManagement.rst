@@ -518,12 +518,12 @@ Specify the object to be stored in session by specifying \ ``@SessionAttributes`
  
     Life cycles of the objects stored in session using \ ``@SessionAttributes``\  annotation, are managed at Controller level.
     
-    When setComplete method of \ ``SessionStatus``\  object is called, all the objects specified with `` @ SessionAttribute `` annotation are deleted from session.
+    When setComplete method of \ ``SessionStatus``\  object is called, all the objects specified with `` @SessionAttributes `` annotation are deleted from session.
     Therefore, to store the objects having different life cycles in session, it is necessary to divide the Controller.
     
- .. warning:: **Points to be considered when using @SessionAttribute annotation**
+ .. warning:: **Points to be considered when using @SessionAttributes annotation**
 
-    As described above, life cycle is managed at Controller level. However, when the object with the same attribute name in multiple Controllers, is stored in session using \ ``@SessionAttribute``\  annotation,
+    As described above, life cycle is managed at Controller level. However, when the object with the same attribute name in multiple Controllers, is stored in session using \ ``@SessionAttributes``\  annotation,
     its life cycle is managed across Controllers.
 
     In case of a process wherein, screen can be operated simultaneously by opening another window or tab, it can cause an error as the same object is being accessed.

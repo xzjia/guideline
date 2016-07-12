@@ -518,12 +518,12 @@ How to use
 
     \ ``@SessionAttributes``\ アノテーションを使って、セッションに格納したオブジェクトは、Controller単位で、ライフサイクルが管理される。
 
-    \ ``SessionStatus``\ オブジェクトのsetCompleteメソッドを呼び出すと、\ ``@SessionAttribute``\ アノテーションで指定したオブジェクトが、すべてセッションから削除される。
+    \ ``SessionStatus``\ オブジェクトのsetCompleteメソッドを呼び出すと、\ ``@SessionAttributes``\ アノテーションで指定したオブジェクトが、すべてセッションから削除される。
     そのため、ライフサイクルが異なるオブジェクトを、セッションに格納する場合は、Controllerを分割する必要がある。
 
- .. warning:: **@SessionAttributeアノテーション使用時の注意点**
+ .. warning:: **@SessionAttributesアノテーション使用時の注意点**
 
-    Controller単位で、ライフサイクルされると上で説明したが、複数のControllerで同じ属性名のオブジェクトを、\ ``@SessionAttribute``\ アノテーションを使って、セッションに格納した場合は、
+    Controller単位で、ライフサイクルされると上で説明したが、複数のControllerで同じ属性名のオブジェクトを、\ ``@SessionAttributes``\ アノテーションを使って、セッションに格納した場合は、
     Controllerをまたいで、ライフサイクルが管理される。
 
     別ウィンドウやタブを開いて、同時に画面操作できる処理の場合は、同じオブジェクトに対してアクセスすることになるため、不具合を引き起こす原因になりうる。

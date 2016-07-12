@@ -1296,7 +1296,7 @@ logback.xmlには、以下のように\ ``org.terasoluna.gfw.web.logging.HttpSes
 
     date:2013-09-06 16:41:33	thread:tomcat-http--3	USER:	X-Track:c004ddb56a3642d5bc5f6b5d884e5db2	level:DEBUG	logger:o.t.g.w.logging.HttpSessionEventLoggingListener 	message:SESSIONID#EDC3C240A7A1CCE87146A6BA1321AD0F sessionCreated : org.apache.catalina.session.StandardSessionFacade@f00e0f
 
-\ ``@SessionAttribute``\ など、Sessionを使用してオブジェクトのライフサイクルを管理している場合、
+\ ``@SessionAttributes``\ など、Sessionを使用してオブジェクトのライフサイクルを管理している場合、
 本リスナーを利用して、セッションへ追加した属性が、想定通りに削除されているか確認することを、強く推奨する。
 
 TraceLoggingInterceptor
