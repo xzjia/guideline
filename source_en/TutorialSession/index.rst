@@ -31,7 +31,7 @@ Lessons to be learnt in the tutorial
     * Selecting data to be stored in the session
     * Discarding data in the session
 * Specific method of using the session in this FW
-    * How to use @SessionAttribute
+    * How to use @SessionAttributes
     * How to use the Bean for session scope
 
 
@@ -625,7 +625,7 @@ Considering these, the final result for which the data handled in the session is
       - Method of using data during session
     * - | Change account information
       - | Used only within 1 Controller
-      - | Method wherein @SessionAttribute annotation is used
+      - | Method wherein @SessionAttributes annotation is used
     * - | Account information
       - | Used among multiple Controllers
         | Used in authentication process
@@ -2794,7 +2794,7 @@ Create the Controller.
 
 .. warning::
 
-    Method to discard the Bean for session scope is different from the method to discard the object managed by @SessionAttribute.
+    Method to discard the Bean for session scope is different from the method to discard the object managed by @SessionAttributes.
     Discarding the Bean for session scope should be assigned to DI container and should not be discarded by the application.
     Therefore, fields in the Bean for session scope just need to be reset to discard the Bean for session scope.
     Bean itself is discarded at the time of session timeout or logout.
@@ -3127,7 +3127,7 @@ We have learnt the following contents in this tutorial.
     * Example of the flow to determine whether to use the session
     * Discarding data during the session
 * Specific method of using session in this FW
-    * Method of using @SessionAttribute
+    * Method of using @SessionAttributes
     * Method of using the Bean for session scope
     * How to refer the data in the session in each method of usage
     * How to discard session in each method of usage

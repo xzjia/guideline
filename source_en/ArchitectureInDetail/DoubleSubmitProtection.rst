@@ -1391,7 +1391,7 @@ See the example below wherein transaction token check is applied for the usecase
 
 Exclusion control of parallel processing while using a session
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
-When a form object is stored in a session using \ ``@SessionAttribute``\  annotation,
+When a form object is stored in a session using \ ``@SessionAttributes``\  annotation,
 and if multiple screen transitions of the same processing are performed in parallel, screen operations may interfere with each other and the values displayed on the screen and the values stored in the session may no longer match.
 
 Transaction token check function can be used to prevent requests from non-conforming screens as the invalid requests.
@@ -1424,7 +1424,7 @@ The maximum limit of transaction tokens that can be stored for each NameSpace is
 
  .. note::
  
-    When form objects etc. are stored in session using \ ``@SessionAttribute``\  annotation, the requests from the screen displaying old data can be prevented as invalid requests
+    When form objects etc. are stored in session using \ ``@SessionAttributes``\  annotation, the requests from the screen displaying old data can be prevented as invalid requests
     by setting number of transaction token stored for each NameSpace to "1".
 
 |
