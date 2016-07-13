@@ -2085,9 +2085,7 @@ HTTPレスポンスのキャッシュ制御有無
     HTTPレスポンスのキャッシュ制御有無を有にすると、以下のHTTPレスポンスヘッダーが出力される。
 
      | Cache-Control:no-store
-     | Cache-Control:no-cache
-     | Expires:Thu, 01 Jan 1970 00:00:00 GMT
-     | Pragma:no-cache
+
 
 
 .. _exception-handling-about-handlerexceptionresolverlogginginterceptor:
