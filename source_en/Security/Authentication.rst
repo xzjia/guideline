@@ -405,11 +405,6 @@ In the default operation of Spring Security, user is redirected to a URL assigne
 
 As an example, when the path to display login form is \ ``"/login"``\ , the user is redirected to \ ``"/login?error"``\ .
   
-.. note:: **Variation in behaviour based on definition methods** 
-
-    The operation is carried out as given above when Java Config is used. However, if a Bean is defined by using XML, \ ``"error"``\  parameter is not assigned.
-    A path for transition must be explicitly specified in \ ``authentication-failure-url``\  attribute to carry out operation identical to Java Config.
-    This is a bug in the Spring Security and will be resolved in 4.0.4.RELEASE and subsequent versions.
 
 |
 

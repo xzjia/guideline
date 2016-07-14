@@ -405,11 +405,6 @@ Spring Securityのデフォルトの動作では、ログインフォームを�
 
 例として、ログインフォームを表示するためのパスが\ ``"/login"``\ の場合は\ ``"/login?error"``\ にリダイレクトされる。
   
-.. note:: **定義方法による挙動の差異** 
-
-    Java Configを使用した場合は上記動作となるが、XMLを使用してBean定義を行うと\ ``"error"``\ パラメータが付与されない。
-    Java Configと同じ動作にするためには、\ ``authentication-failure-url``\ 属性に遷移先のパスを明示的に指定する必要がある。
-    これはSpring Securityのバグで、4.0.4.RELEASE以降のバージョンで解決される。
 
 |
 
