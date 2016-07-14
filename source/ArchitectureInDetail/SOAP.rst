@@ -1477,10 +1477,10 @@ MTOMを利用した大容量のバイナリデータを扱う方法
     一般的にSOAPクライアントアプリケーションの開発を行う場合は、SOAPサーバに接続する必要がある。
     試験用SOAPサーバ、本番用SOAPサーバ等、環境毎に異なるSOAPサーバの接続を容易に実現するために、当ガイドラインではプロキシの定義はdomainプロジェクトで行い、
     環境依存する値はプロパティファイルに集約、プロパティファイルのみenvプロジェクトに配置することを推奨する。
-    ただし、単体試験等、SOAPサーバが準備できない場合はスタブプロキシを作成し、Bean定義ファイルからプロキシ定義を修正して使用されたい。
-    本来的に試験用Bean定義ファイルを使用すれば良いが、[client projectName]-domain.xmlに試験用プロキシ定義を追記して使用したい等、同じBean定義ファイル内で複数のプロキシを定義し、目的別にプロキシを切り替えたい場合は、
-    `Spring Framework Reference Documentation -The IoC container(XML bean definition profiles)- <http://docs.spring.io/spring/docs/4.2.4.RELEASE/spring-framework-reference/html/beans.html#beans-definition-profiles-xml>`_\
-    よる切り替えや、Bean定義をenvモジュールに移し、Mavenのprofileによる切り替えを検討されたい。
+    ユニットテスト等、SOAPサーバが準備できない場合はスタブプロキシを作成し、ユニットテスト用のコンポーネントを定義するためのBean定義ファイル(test-context.xml)にBeanを定義することで
+    SOAPサーバに依存しないテストが可能である。ドメイン層のコンポーネントを定義するためのBean定義ファイル(artifactId-domain.xml)に環境毎のBeanを定義して使用したい等、
+    同一のBean定義ファイル内からBeanを定義して切り替えたい場合は、`Spring Framework Reference Documentation -The IoC container(XML bean definition profiles)- <http://docs.spring.io/spring/docs/4.2.4.RELEASE/spring-framework-reference/html/beans.html#beans-definition-profiles-xml>`_\
+    よる切り替えや、envモジュールの環境毎に設定ファイルを管理するためのディレクトリに環境別Bean定義ファイルを移すことを検討されたい。
     
 |
 
