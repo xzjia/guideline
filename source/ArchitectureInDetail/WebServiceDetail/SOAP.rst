@@ -1474,15 +1474,11 @@ MTOMを利用した大容量のバイナリデータを扱う方法
 
 .. note:: **プロキシの定義ついて**
 
-    一般的にSOAPクライアントアプリケーションの開発を行う場合は、SOAPサーバに接続する必要がある。
-    試験用SOAPサーバ、本番用SOAPサーバ等、環境毎に異なるSOAPサーバの接続を容易に実現するために、
-    当ガイドラインではプロキシの定義はdomainプロジェクトで行い、環境依存する値はプロパティファイルに集約、
-    プロパティファイルのみenvプロジェクトに配置することを推奨する。ユニットテスト等、SOAPサーバが準備できない場合はプロキシのスタブを作成し、
-    ユニットテスト用のコンポーネントを定義するためのBean定義ファイル(test-context.xml)にBeanを定義することでSOAPサーバに依存しないテストが可能である。
-    ドメイン層のコンポーネントを定義するためのBean定義ファイル([client projectName]-domain.xml)に環境毎のBeanを定義して使用したい等、
-    同一のBean定義ファイル内からBeanを定義して切り替えたい場合は、`Spring Framework Reference Documentation -The IoC container(XML bean definition profiles)- 
-    <http://docs.spring.io/spring/docs/4.2.4.RELEASE/spring-framework-reference/html/beans.html#beans-definition-profiles-xml>`_\
-    よる切り替えや、envモジュールの環境毎の[client projectName]-env.xmlにBean定義を移すことを検討されたい。
+   一般的にSOAPクライアントアプリケーションの開発を行う場合は、SOAPサーバに接続する必要がある。試験用SOAPサーバ、本番用SOAPサーバ等、環境毎に異なるSOAPサーバの接続を容易に実現するために、当ガイドラインではプロキシの定義はdomainプロジェクトで行い、環境依存する値はプロパティファイルに集約、プロパティファイルのみenvプロジェクトに配置することを推奨する。
+    
+   ユニットテスト等、SOAPサーバが準備できない場合はプロキシのスタブを作成し、ユニットテスト用のコンポーネントを定義するためのBean定義ファイル(test-context.xml)にBeanを定義することでSOAPサーバに依存しないテストが可能である。
+   
+   ドメイン層のコンポーネントを定義するためのBean定義ファイル([client projectName]-domain.xml)に環境毎のBeanを定義して使用したい等、同一のBean定義ファイル内からBeanを定義して切り替えたい場合は、`Spring Framework Reference Documentation -The IoC container(XML bean definition profiles)- <http://docs.spring.io/spring/docs/4.2.4.RELEASE/spring-framework-reference/html/beans.html#beans-definition-profiles-xml>`_\よる切り替えや、envモジュールの環境毎の[client projectName]-env.xmlにBean定義を移すことを検討されたい。
     
 |
 
