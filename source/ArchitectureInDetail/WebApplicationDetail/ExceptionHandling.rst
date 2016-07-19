@@ -2086,7 +2086,8 @@ HTTPレスポンスのキャッシュ制御有無
 
      | Cache-Control:no-store
 
-
+    SystemExceptionResolverによるキャッシュ制御用のヘッダー追加はブラウザキャッシュによる意図しないエラー画面の表示を抑止するためのオプションであるが、Spring Securityの機能を使用してセキュリティの観点からキャッシュ制御用のヘッダーを追加することも可能である。
+    Spring Securityの機能については、:ref:`SpringSecurityLinkageWithBrowser`\を参照されたい。
 
 .. _exception-handling-about-handlerexceptionresolverlogginginterceptor:
 
