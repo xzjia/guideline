@@ -2221,7 +2221,6 @@ Bean Validationのアノテーションの\ ``message``\ 属性に指定され�
     javax.validation.constraints.NotNull.message=is required.
     # (1)
     javax.validation.constraints.Size.message=size is not in the range {min} through {max}.
-    # (2)
     javax.validation.constraints.Min.message=can not be less than {value}.
     javax.validation.constraints.Max.message=can not be greater than {value}.
     org.hibernate.validator.constraints.Email.message=is an invalid e-mail address.
@@ -2235,8 +2234,6 @@ Bean Validationのアノテーションの\ ``message``\ 属性に指定され�
        - 説明
      * - | (1)
        - | アノテーションに指定した属性値は、\ ``{属性名}``\ で埋め込むことができる。
-     * - | (2)
-       - | 不正となった入力値は、\ ``{value}``\ で埋め込むことができる。
 
 この設定を加えた状態で、すべての入力フィールドを未入力のままフォームを送信すると、以下のように変更したエラーメッセージが、表示される。
 
