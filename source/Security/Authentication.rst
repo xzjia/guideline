@@ -244,7 +244,7 @@ Spring Securityはフォーム認証用のログインフォームをデフォ�
     <div id="wrapper">
         <h3>Login Screen</h3>
         <%-- (1) --%>
-        <c:if test="${param.error}">
+        <c:if test="${param.containsKey('error')}">
             <t:messagesPanel messagesType="error"
                 messagesAttributeName="SPRING_SECURITY_LAST_EXCEPTION"/> <%-- (2) --%>
         </c:if>

@@ -774,7 +774,7 @@ Spring Securityの設定
             <h3>Login with Username and Password</h3>
 
             <!-- (1) -->
-            <c:if test="${param.error}">
+            <c:if test="${param.containsKey('error')}">
                 <!-- (2) -->
                 <t:messagesPanel messagesType="error"
                     messagesAttributeName="SPRING_SECURITY_LAST_EXCEPTION" />
