@@ -244,7 +244,7 @@ An implementation example wherein a login form is displayed after receiving a re
     <div id="wrapper">
         <h3>Login Screen</h3>
         <%-- (1) --%>
-        <c:if test="${param.error}">
+        <c:if test="${param.containsKey('error')}">
             <t:messagesPanel messagesType="error"
                 messagesAttributeName="SPRING_SECURITY_LAST_EXCEPTION"/> <%-- (2) --%>
         </c:if>
@@ -298,10 +298,9 @@ Next, login form thus created is applied to Spring Security.
     <sec:http>
       <sec:form-login 
           login-page="/login/loginForm"
-          login-processing-url="/login" 
-          authentication-failure-url="/login/loginForm?error" /> <!-- (1)(2)(3) -->
-      <sec:intercept-url pattern="/login/**" access="permitAll"/>  <!-- (4) -->
-      <sec:intercept-url pattern="/**" access="isAuthenticated()"/> <!-- (5) -->
+          login-processing-url="/login" /> <!-- (1)(2) -->
+      <sec:intercept-url pattern="/login/**" access="permitAll"/>  <!-- (3) -->
+      <sec:intercept-url pattern="/**" access="isAuthenticated()"/> <!-- (4) -->
     </sec:http>
 
 .. tabularcolumns:: |p{0.10\linewidth}|p{0.90\linewidth}|
@@ -320,11 +319,9 @@ Next, login form thus created is applied to Spring Security.
       - | Specify path for performing authentication process in \ ``login-processing-url``\  attribute.
         | Although default path is also \ ``"/login"``\ , it should be explicitly specified.
     * - | (3)
-      - | Specify the path for transition at the time of authentication failure in \ ``authentication-failure-url``\  attribute.
-    * - | (4)
       - | Assign the rights enabling access to all users for the location under \ ``/login``\  path where login form is stored.
         | For how to specify access policy for web resource, refer "\ :ref:`SpringSecurityAuthorization`\".
-    * - | (5)
+    * - | (4)
       - | Assign the access rights for web resource handled by the application.
         | In the example above, only authenticated users are granted the rights to access location under root path of web application.
         | For how to specify access policy for web resource, refer "\ :ref:`SpringSecurityAuthorization`\".

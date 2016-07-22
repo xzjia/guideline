@@ -244,7 +244,7 @@ Spring Securityはフォーム認証用のログインフォームをデフォ�
     <div id="wrapper">
         <h3>Login Screen</h3>
         <%-- (1) --%>
-        <c:if test="${param.error}">
+        <c:if test="${param.containsKey('error')}">
             <t:messagesPanel messagesType="error"
                 messagesAttributeName="SPRING_SECURITY_LAST_EXCEPTION"/> <%-- (2) --%>
         </c:if>
@@ -298,10 +298,9 @@ Spring Securityはフォーム認証用のログインフォームをデフォ�
     <sec:http>
       <sec:form-login 
           login-page="/login/loginForm"
-          login-processing-url="/login" 
-          authentication-failure-url="/login/loginForm?error" /> <!-- (1)(2)(3) -->
-      <sec:intercept-url pattern="/login/**" access="permitAll"/>  <!-- (4) -->
-      <sec:intercept-url pattern="/**" access="isAuthenticated()"/> <!-- (5) -->
+          login-processing-url="/login"  /> <!-- (1)(2) -->
+      <sec:intercept-url pattern="/login/**" access="permitAll"/>  <!-- (3) -->
+      <sec:intercept-url pattern="/**" access="isAuthenticated()"/> <!-- (4) -->
     </sec:http>
 
 .. tabularcolumns:: |p{0.10\linewidth}|p{0.90\linewidth}|
@@ -320,11 +319,9 @@ Spring Securityはフォーム認証用のログインフォームをデフォ�
       - | \ ``login-processing-url``\ 属性に認証処理を行うためのパスを指定する。
         | デフォルトのパスも\ ``"/login"``\ であるが、ここでは明示的に指定することとする。
     * - | (3)
-      - | \ ``authentication-failure-url``\ 属性に認証失敗時に遷移するパスを指定する。
-    * - | (4)
       - | ログインフォームが格納されている\ ``/login``\ パス配下に対し、すべてのユーザーがアクセスできる権限を付与する。
         | Webリソースに対してアクセスポリシーの指定方法については、「\ :ref:`SpringSecurityAuthorization`\ 」を参照されたい。
-    * - | (5)
+    * - | (4)
       - | アプリケーションで扱うWebリソースに対してアクセス権を付与する。
         | 上記例では、Webアプリケーションのルートパスの配下に対して、認証済みユーザーのみがアクセスできる権限を付与している。
         | Webリソースに対してアクセスポリシーの指定方法については、「\ :ref:`SpringSecurityAuthorization`\ 」を参照されたい。
