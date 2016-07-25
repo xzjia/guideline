@@ -638,6 +638,20 @@ An example of error message is shown when the following CSS class is applied.
            <form:button name="confirm">Confirm</form:button>
        </form:form>
 
+Date and time format check
+""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+| In case of performing the date and time format check, it is recommend the use of \ ``@DateTimeFormat`` \ annotation offered by Spring rather than the use of Bean Validation mechanism.
+| About how to use the \ ``@DateTimeFormat`` \ annotation, refer \ :ref:`ApplicationLayer-DateTimeFormat`\.
+| It is also possible to check the date and time format using \ ``@Pattern`` \ annotation of the Bean Validation.
+| However, it is necessary to write the date and time format in regular expressions while using \ ``@Pattern`` \ annotation. If you want to check the date and time that does not exist, the description is complicated.
+| Therefore \ ``@DateTimeFormat`` \ annotation is more simpler than the \ ``@Pattern`` \ annotation.
+
+
+| Since \ ``@DateTimeFormat`` \ annotation is one of the type conversion mechanism provided by Spring, instead of the error messages of Bean Validation, the error message of the type mismatch exception (\ ``TypeMismatchException``\ ) has been displayed on screen at the time of input error.
+| In order to avoid the actual exception message gets displayed on the screen, it is necessary to configure the error message in the \ **property file** \ which will be displayed at the time of type mismatch is occurred.
+| For more detail, refer \ :ref:`Validation_type_mismatch`\ .
+
+
 Single item check of nested Bean
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 The method to validate nested Bean using Bean Validation is explained below.
@@ -4217,6 +4231,7 @@ Use annotation created above instead of annotation implemented in \ :ref:`Valida
     * - | (3)
       - | Similarly assign \ ``@NotNull``\  annotation in \ ``confirmPassword``\  field as well.
 
+.. _Validation_type_mismatch:
 
 Type mismatch
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
