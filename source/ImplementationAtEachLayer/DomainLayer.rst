@@ -1705,7 +1705,7 @@ Spring Frameworkから提供されている「宣言型トランザクション�
 
  .. note:: **@Transactionalアノテーションのtimeout属性について**
 
-    \ ``@Transactional``\ アノテーションには\ ``timeout``\属性があるが、現バージョンであるMyBatis 3.3とMyBatis-Spring 1.2の組み合わせでは
+    \ ``@Transactional``\ アノテーションには\ ``timeout``\属性があるが、MyBatis 3.3とMyBatis-Spring 1.2の組み合わせでは
     \ ``timeout``\属性に指定した値は無視され、使用されない。
 
 
