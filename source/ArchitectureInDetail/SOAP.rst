@@ -1510,13 +1510,14 @@ WebServiceインターフェースを実装したプロキシを生成する\ ``
         <property name="portName" value="TodoWebPort" />
         <property name="namespaceUri" value="http://example.com/todo" />
         <property name="wsdlDocumentResource" value="${webservice.todoWebService.wsdlDocumentResource}" /><!-- (4) -->
+        <property name="lookupServiceOnStartup" value="false" /><!-- (5) -->
     </bean>
 
 *[client projectName]-env/src/main/resources/META-INF/spring/[client projectName]-infra.properties*
 
 .. code-block:: properties
 
-    # (5)
+    # (6)
     webservice.todoWebService.wsdlDocumentResource=http://AAA.BBB.CCC.DDD:XXXX/[server projectName]-web/ws/TodoWebService?wsdl
 
 .. tabularcolumns:: |p{0.10\linewidth}|p{0.90\linewidth}|
@@ -1536,6 +1537,13 @@ WebServiceインターフェースを実装したプロキシを生成する\ ``
       - | \ ``wsdlDocumentResource``\ プロパティに公開されているWDSLのURLを設定する。
         | ここでは後述するプロパティファイルにURLを記述するため、プロパティのキーを指定している。
     * - | (5)
+      - | \ ``lookupServiceOnStartup``\ プロパティに起動時のSOAPサーバ参照フラグを設定する。
+
+        .. warning:: 
+
+            SOAPサーバが公開しているWSDLファイルにアクセス出来ない場合でもWebクライアントアプリケーションを起動させるためには、\ ``lookupServiceOnStartup``\ プロパティに\ ``false``\を指定する。ただし、\ ``wsdlDocumentResource``\プロパティのWSDLファイルのURLがクライアントアプリケーションで保持している静的WSDLファイルの場合は設定不要である。
+            
+    * - | (6)
       - | \ ``[client projectName]-domain.xml``\ で定義したプロパティのキーの値を設定する。WSDLのURLを記述する。
 
         .. Note:: **wsdlDocumentResourceへのWSDLファイルのURL以外の指定**
@@ -1563,13 +1571,14 @@ WebServiceインターフェースを実装したプロキシを生成する\ ``
              <property name="namespaceUri" value="http://example.com/todo" />
              <property name="wsdlDocumentResource" value="${webservice.todoWebService.wsdlDocumentResource}" />
              <property name="endpointAddress" value="${webservice.todoWebService.endpointAddress}" /><!-- (1) -->
+             <property name="lookupServiceOnStartup" value="false" /><!-- (2) -->
          </bean>
 
     *[client projectName]-env/src/main/resources/META-INF/spring/[client projectName]-infra.properties*
 
      .. code-block:: properties
 
-         # (2)
+         # (3)
          webservice.todoWebService.endpointAddress=http://AAA.BBB.CCC.DDD:XXXX/[server projectName]-web/ws/TodoWebService
 
 
@@ -1584,6 +1593,13 @@ WebServiceインターフェースを実装したプロキシを生成する\ ``
            - | エンドポイントアドレスを設定する。
              | ここでは後述するプロパティファイルにURLを記述するため、プロパティのキーを指定している。
          * - | (2)
+           - | \ ``lookupServiceOnStartup``\ プロパティに起動時のSOAPサーバ参照フラグを設定する。
+
+             .. warning:: 
+
+                 Webサービスのエンドポイントアドレスにアクセス出来ない場合でもWebクライアントアプリケーションを起動させるためには、、\ ``lookupServiceOnStartup``\ プロパティに\ ``false``\を指定する。
+                 
+         * - | (3)
            - | \ ``[client projectName]-domain.xml``\ で定義したプロパティのキーの値を設定する。エンドポイントアドレスを記述する。
 
 |
