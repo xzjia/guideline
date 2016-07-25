@@ -4438,6 +4438,108 @@ Native to Asciiを行わずにBean Validationのメッセージ（\ ``Validation
      \ ``MessageSource``\ の機能を利用することで、
      プロパティファイルの配置先がクラスパス直下に制限されなくなる。また、複数のプロパティファイルを指定することもできるようになる。
 
+.. _Validation_os_command_injection:
+
+OSコマンドインジェクション対策
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+ここでは、セキュリティ脆弱性の一種であるOSコマンドインジェクションとその対策について説明する。
+
+OSコマンドインジェクションとは
+""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+OSコマンドインジェクションとは、アプリケーション内でユーザー入力文字列からコマンド実行文字列を組み立てている箇所がある場合に、
+ユーザー入力文字列の中に悪意のあるコマンドが送り込まれると、コンピュータを不正に操られてしまう問題である。
+
+.. tip::
+
+    詳細は、OWASPの\ `解説ページ <https://www.owasp.org/index.php/OS_Command_Injection>`_\ などを参照されたい。
+
+Javaでは\ ``ProcessBuilder``\ クラスや、\ ``Runtime``\ クラスの\ ``exec``\ メソッドを用いてコマンドを実行する際に、実行するコマンドとして以下のものを利用する場合に、
+OSコマンドインジェクションが発生する可能性がある。
+
+* \ ``/bin/sh``\ （Unix系の場合）や\ ``cmd.exe``\（Windowsの場合）
+* ユーザーが入力した文字列
+
+以下では、\ ``/bin/sh``\ を利用する場合にOSコマンドインジェクションが発生する例を示す。
+
+.. code-block:: java
+
+  ProcessBuilder pb = new ProcessBuilder("/bin/sh", "-c", script); // (1)
+  Process p = pb.start();
+
+
+.. tabularcolumns:: |p{0.10\linewidth}|p{0.90\linewidth}|
+.. list-table::
+    :header-rows: 1
+    :widths: 10 90
+
+    * - 項番
+      - 説明
+    * - | (1)
+      - | 例えば、\ ``script``\ に"exec.sh ; cat /etc/passwd" が入ると、文字列中のセミコロンが\ ``/bin/sh``\ により区切り文字として解釈され、"cat /etc/passwd"が実行される。
+        | そのため、標準出力の扱い方によっては\ ``/etc/passwd``\ が出力される可能性がある。
+
+.. warning:: **ScriptEngineやScriptTemplateViewResolverの利用について**
+
+    Java SE 6より追加された\ ``ScriptEngine``\ や、Spring Framework 4.2より追加された\ ``ScriptTemplateViewResolver``\ では、
+    JVM上で別言語（\ ``Ruby``\ や\ ``Python``\ など）を使用することができる。
+
+    これらの機能を利用して別言語のコードを実行する場合、コードの書き方によってはOSコマンドインジェクションが発生する可能性があるため、
+    利用には十分注意すること。
+
+対策方法
+""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+OSコマンドインジェクションを起こさないためには、可能な限りコマンドの実行を避ける。コマンドの実行が必要な場合、
+以下の対策を行う。
+
+* 極力、\ ``/bin/sh``\ （Unix系の場合）や\ ``cmd.exe``\ （Windowsの場合）を使用したコマンド実行を行わない
+* ユーザーにより入力された文字が、アプリケーションとして許可されたものであるかをホワイトリスト方式を用いてチェックする
+
+以下では、ユーザーが入力したコマンドと引数が指定された文字列で構成されているかをホワイトリスト方式でチェックするルールの例を示す。
+
+.. code-block:: java
+
+    @Pattern(regexp = "batch0\\d\\.sh") // (1)
+    private String cmdStr;
+
+    @Pattern(regexp = "[\\w=_]+")  // (2)
+    private String arg;
+
+
+.. tabularcolumns:: |p{0.10\linewidth}|p{0.90\linewidth}|
+.. list-table::
+    :header-rows: 1
+    :widths: 10 90
+
+    * - 項番
+      - 説明
+    * - | (1)
+      - | コマンドとして \ ``batch0X.sh``\ （Xは0から9までの半角数字）のみ許可するルールを指定する。
+    * - | (2)
+      - | 引数として、無害な文字である半角英数字（\\w）、\ ``=``\ 、\ ``_``\ から構成された文字列のみ許可するルールを指定する。
+
+.. note::
+
+    この例では、コマンドや引数にパスが含まれないようなルールとすることで、ディレクトリトラバーサルを起こさないようにしている。
+      
+\ ``@Pattern``\ を利用する場合、\ ``@Pattern``\ に指定された正規表現がそのままエラーメッセージとして出力され、
+以下の点でメッセージとしては不適切である。
+
+* エラーの意味が不明確となり、ユーザに優しくない
+* 脆弱性への対策のためのロジックが利用者に露呈してしまう
+
+.. figure:: ./images_Validation/validations-os-command-injection.png
+  :width: 60%
+
+エラーの意味を明確にし、かつ、ロジックを隠蔽するために、application-messages.propertiesに適切なメッセージを定義する。
+メッセージの定義方法については、\ :ref:`Validation_message_in_application_messages`\ を参照されたい。
+
+.. code-block:: properties
+
+  Pattern.cmdForm.cmdStr = permit command name: batch00.sh - batch09.sh
+  Pattern.cmdForm.arg = permit parameter characters and symbols: alphanumeric, =, _
+
+.. figure:: ./images_Validation/validations-os-command-injection2.png
+  :width: 60%
 
 .. raw:: latex
 
