@@ -1653,9 +1653,30 @@ WebServiceインターフェースを実装したプロキシを生成する\ ``
 
     ただし、この場合Webサービス実行がプロキシに依存してしまう。そのため、テスト時にスタブを使用する場合にも、スタブに\ ``javax.xml.ws.BindingProvider``\を実装させる必要が発生する。
     この機能の利用は最小限に抑えることを推奨する。
+    
+    Apatch CXFをベースにしたApplication Serverでは上記のレスポンスコード取得方法で取得出来ないWebサービス例外が存在する。
+    Application Server毎にレスポンスコード取得状況は下記の表を参照されたい。
+    
+
+     .. tabularcolumns:: |p{0.30\linewidth}|p{0.50\linewidth}|p{0.20\linewidth}|
+     .. list-table::
+         :header-rows: 1
+         :widths: 30 50 20
+
+         * - Application Server
+           - バージョン
+           - 取得状況
+         * - | Tomcat
+           - | 
+           - | ×
+         * - | JBoss
+           - | 
+           - | ×
+         * - | WebLogic
+           - | 
+           - | ○
 
 |
-
 
 セキュリティ対策
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
