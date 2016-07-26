@@ -73,6 +73,12 @@
       
         * \ `CVE-2016-3092 <https://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2016-3092>`_\ (File Uploadの脆弱性)に関する注意喚起を追加(\ `guideline#1973 <https://github.com/terasolunaorg/guideline/issues/1973>`_\ )
 
+    * - 2016-07-26
+      - :doc:`../ArchitectureInDetail/WebApplicationDetail/FileUpload`
+      - 記載内容の追加
+
+        * ディレクトリトラバーサル攻撃に関する記載を追加 (\ `guideline#2010 <https://github.com/terasolunaorg/guideline/issues/2010>`_\ )
+
     * - 2016-07-20
       - :doc:`../ArchitectureInDetail/WebApplicationDetail/ExceptionHandling`
       - Spring Framework 4.2.7対応に伴う修正
