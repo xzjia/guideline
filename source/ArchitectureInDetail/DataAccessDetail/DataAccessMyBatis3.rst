@@ -461,6 +461,27 @@ pom.xmlの設定
         
     上記例では5.1.0.RELEASEを指定しているが、実際に指定するバージョンは、プロジェクトで利用するバージョンを指定すること。
 
+ .. Warning:: **Java SE 7環境にて使用する場合の設定**
+
+    terasoluna-gfw-mybatis3-dependenciesはJava SE 8を前提とした依存関係を設定している。Java SE 7環境にて使用する場合は下記のようにJava SE 8依存ライブラリをexclusionすること。
+    java SE 8依存ライブラリについてはアーキテクチャ概要の「\ :ref:`frameworkstack_using_oss_version` \」を参照
+
+   .. code-block:: xml
+    :emphasize-lines: 4-9
+
+            <dependency>
+                <groupId>org.terasoluna.gfw</groupId>
+                <artifactId>terasoluna-gfw-mybatis3-dependencies</artifactId>
+                <exclusions>
+                    <exclusion>
+                        <groupId>org.mybatis</groupId>
+                        <artifactId>mybatis-typehandlers-jsr310</artifactId>
+                    </exclusion>
+                </exclusions>
+            </dependency>
+
+
+
 |
 
 .. _DataAccessMyBatis3HowToUseSettingsCooperateWithMyBatis3AndSpring:
@@ -995,7 +1016,7 @@ NULL値とJDBC型のマッピング設定
 TypeHandlerの設定
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 
-TypeHandlerは、JavaクラスとJDBC型をマッピングする時に使用される。
+\ ``TypeHandler`` \は、JavaクラスとJDBC型をマッピングする時に使用される。
 
 具体的には、
 
@@ -1004,15 +1025,63 @@ TypeHandlerは、JavaクラスとJDBC型をマッピングする時に使用さ�
 
 際に、使用される。
 
-プリミティブ型やプリミティブラッパ型などの一般的なJavaクラスについては、MyBatis3からTypeHandlerが提供されており、
+プリミティブ型やプリミティブラッパ型などの一般的なJavaクラスについては、MyBatis3から\ ``TypeHandler`` \が提供されており、
 特別な設定を行う必要はない。
+
+**JSR-310 Date and Time APIを使う場合の設定**
+
+MyBatis3でJSR-310 Date and Time APIから提供されている日付や時刻を表現するクラスを使用する場合には、MyBatisより別ライブラリ(\ ``mybatis-typehandlers-jsr310`` \)で提供されている\ ``TypeHandler`` \を使用する。
+使用する場合は、MyBatisに\ ``TypeHandler`` \を認識させるための設定を\ ``mybatis-config.xml`` \に追記する。
+    
+
+ .. code-block:: xml
+ 
+      <typeHandlers>
+          <typeHandler handler="org.apache.ibatis.type.InstantTypeHandler" />         <!-- (1) -->
+          <typeHandler handler="org.apache.ibatis.type.LocalDateTimeTypeHandler" />   <!-- (2) -->
+          <typeHandler handler="org.apache.ibatis.type.LocalDateTypeHandler" />       <!-- (3) -->
+          <typeHandler handler="org.apache.ibatis.type.LocalTimeTypeHandler" />       <!-- (4) -->
+          <typeHandler handler="org.apache.ibatis.type.OffsetDateTimeTypeHandler" />  <!-- (5) -->
+          <typeHandler handler="org.apache.ibatis.type.OffsetTimeTypeHandler" />      <!-- (6) -->
+          <typeHandler handler="org.apache.ibatis.type.ZonedDateTimeTypeHandler" />   <!-- (7) -->
+      </typeHandlers>
+
+ .. tabularcolumns:: |p{0.10\linewidth}|p{0.80\linewidth}|
+ .. list-table::
+   :header-rows: 1
+   :widths: 10 80
+
+   * - 項番
+     - 説明
+   * - (1)
+     - \ ``java.time.Instant`` \を\ ``java.sql.Timestamp`` \にマッピングするための\ ``TypeHandler`` \
+   * - (2)
+     - \ ``java.time.LocalDateTime`` \を\ ``java.sql.Timestamp`` \にマッピングするための\ ``TypeHandler`` \
+   * - (3)
+     - \ ``java.time.LocalDate`` \を\ ``java.sql.Date`` \にマッピングするための\ ``TypeHandler`` \
+   * - (4)
+     - \ ``java.time.LocalTime`` \を\ ``java.sql.Time`` \にマッピングするための\ ``TypeHandler`` \
+   * - (5)
+     - \ ``java.time.OffsetDateTime`` \を\ ``java.sql.Timestamp`` \にマッピングするための\ ``TypeHandler`` \
+   * - (6)
+     - \ ``java.time.OffsetTime`` \を\ ``java.sql.Time`` \にマッピングするための\ ``TypeHandler`` \
+   * - (7)
+     - \ ``java.time.ZonedDateTime`` \を\ ``java.sql.Timestamp`` \にマッピングするための\ ``TypeHandler`` \
+   * - (8)
+     - \ ``java.time.Year`` \をプリミティブ型のintにマッピングするための\ ``TypeHandler`` \
+   * - (9)
+     - \ ``java.time.Month`` \をプリミティブ型のintにマッピングするための\ ``TypeHandler`` \
 
  .. tip::
 
-    MyBatis3から提供されているTypeHandlerについては、
-    「\ `MyBatis 3 REFERENCE DOCUMENTATION(Configuration XML-typeHandlers-) <http://mybatis.github.io/mybatis-3/configuration.html#typeHandlers>`_ \」を参照されたい。
+        MyBatis 3.4になると\ ``TypeHandler`` \は自動検出されるようになっているため上記の設定は不要になる。
 
- .. tip:: **Enum型のマッピングについて**
+.. tip::
+
+   MyBatis3から提供されている\ ``TypeHandler`` \については、
+   「\ `MyBatis 3 REFERENCE DOCUMENTATION(Configuration XML-typeHandlers-) <http://mybatis.github.io/mybatis-3/configuration.html#typeHandlers>`_ \」を参照されたい。
+
+.. tip:: **Enum型のマッピングについて**
 
     MyBatis3のデフォルトの動作では、Enum型はEnumの定数名(文字列)とマッピングされる。
 
@@ -1034,7 +1103,7 @@ TypeHandlerは、JavaクラスとJDBC型をマッピングする時に使用さ�
 
 |
 
-TypeHandlerの作成が必要になるケースは、MyBatis3でサポートしていないJavaクラスとJDBC型をマッピングする場合である。
+\ ``TypeHandler`` \の作成が必要になるケースは、MyBatis3でサポートしていないJavaクラスとJDBC型をマッピングする場合である。
 
 具体的には、
 
@@ -1043,14 +1112,14 @@ TypeHandlerの作成が必要になるケースは、MyBatis3でサポートし�
 * 本ガイドラインで利用を推奨している「:doc:`../GeneralFuncDetail/JodaTime`」の\ ``org.joda.time.DateTime`` \型と、JDBC型の\ ``TIMESTAMP`` \型をマッピングする
 * etc ...
 
-場合に、TypeHandlerの作成が必要となる。
+場合に、\ ``TypeHandler`` \の作成が必要となる。
 
-上記にあげた3つのTypeHandlerの作成例については、
+上記にあげた3つの\ ``TypeHandler`` \の作成例については、
 「:ref:`DataAccessMyBatis3HowToExtendTypeHandler`」を参照されたい。
 
 |
 
-ここでは、作成したTypeHandlerをMyBatisに適用する方法について説明を行う。
+ここでは、作成した\ ``TypeHandler`` \をMyBatisに適用する方法について説明を行う。
 
 - :file:`projectName-domain/src/main/resources/META-INF/mybatis/mybatis-config.xml`
 
@@ -1076,17 +1145,17 @@ TypeHandlerの作成が必要になるケースは、MyBatis3でサポートし�
    * - 項番
      - 説明
    * - (1)
-     - MyBatis設定ファイルにTypeHandlerの設定を行う。
+     - MyBatis設定ファイルに\ ``TypeHandler`` \の設定を行う。
 
-       \ ``package``\要素のname 属性に、作成したTypeHandlerが格納されているパッケージ名を指定する。
-       指定したパッケージ配下に格納されているTypeHandlerが、MyBatisによって自動検出される。
+       \ ``package``\要素のname 属性に、作成した\ ``TypeHandler`` \が格納されているパッケージ名を指定する。
+       指定したパッケージ配下に格納されている\ ``TypeHandler`` \が、MyBatisによって自動検出される。
 
  .. tip::
 
-    上記例では、指定したパッケージ配下に格納されているTypeHandlerをMyBatisによって自動検出させているが、
+    上記例では、指定したパッケージ配下に格納されている\ ``TypeHandler`` \をMyBatisによって自動検出させているが、
     クラス単位に設定する事もできる。
 
-    クラス単位にTypeHandlerを設定する場合は、\ ``typeHandler``\要素を使用する。
+    クラス単位に\ ``TypeHandler`` \を設定する場合は、\ ``typeHandler``\要素を使用する。
 
     - :file:`projectName-domain/src/main/resources/META-INF/mybatis/mybatis-config.xml`
 
@@ -1100,8 +1169,8 @@ TypeHandlerの作成が必要になるケースは、MyBatis3でサポートし�
 
     |
 
-    更に、TypeHandlerの中でDIコンテナで管理されているbeanを使用したい場合は、
-    bean定義ファイル内でTypeHandlerを指定すればよい。
+    更に、\ ``TypeHandler`` \の中でDIコンテナで管理されているbeanを使用したい場合は、
+    bean定義ファイル内で\ ``TypeHandler`` \を指定すればよい。
 
     - :file:`projectName-domain/src/main/resources/META-INF/spring/projectName-infra.xml`
 
@@ -1134,11 +1203,11 @@ TypeHandlerの作成が必要になるケースは、MyBatis3でサポートし�
 
     |
 
-    TypeHandlerを適用するJavaクラスとJDBC型のマッピングの指定は、
+    \ ``TypeHandler`` \を適用するJavaクラスとJDBC型のマッピングの指定は、
 
     * MyBatis設定ファイル内の\ ``typeHandler``\要素の属性値として指定
     * ``@org.apache.ibatis.type.MappedTypes``\アノテーションと\ ``@org.apache.ibatis.type.MappedJdbcTypes``\アノテーションに指定
-    * MyBatis3から提供されているTypeHandlerの基底クラス(\ ``org.apache.ibatis.type.BaseTypeHandler``\)を継承することで指定
+    * MyBatis3から提供されている\ ``TypeHandler`` \の基底クラス(\ ``org.apache.ibatis.type.BaseTypeHandler``\)を継承することで指定
 
     する方法がある。
 
@@ -1148,8 +1217,8 @@ TypeHandlerの作成が必要になるケースは、MyBatis3でサポートし�
  .. tip::
 
     上記の設定例は、いずれもアプリケーション全体に適用するための設定方法であったが、
-    フィールド毎に個別のTypeHandlerを指定する事も可能である。
-    これは、アプリケーション全体に適用しているTypeHandlerを上書きする際に使用する。
+    フィールド毎に個別の\ ``TypeHandler`` \を指定する事も可能である。
+    これは、アプリケーション全体に適用している\ ``TypeHandler`` \を上書きする際に使用する。
 
      .. code-block:: xml
         :emphasize-lines: 6-7,31-32
@@ -1200,12 +1269,12 @@ TypeHandlerの作成が必要になるケースは、MyBatis3でサポートし�
           - 説明
         * - (2)
           - 検索結果(\ ``ResultSet``\)から値を取得する際は、
-            \ ``id``\又は\ ``result``\要素の\ ``typeHandler``\属性に適用するTypeHandlerを指定する。
+            \ ``id``\又は\ ``result``\要素の\ ``typeHandler``\属性に適用する\ ``TypeHandler`` \を指定する。
         * - (3)
           - \ ``PreparedStatement``\に値を設定する際は、
-            インラインパラメータの\ ``typeHandler``\属性に適用するTypeHandlerを指定する。
+            インラインパラメータの\ ``typeHandler``\属性に適用する\ ``TypeHandler`` \を指定する。
 
-    TypeHandlerをフィールド毎に個別に指定する場合は、TypeHandlerのクラスにTypeAliasを設けることを推奨する。
+    \ ``TypeHandler`` \をフィールド毎に個別に指定する場合は、\ ``TypeHandler`` \のクラスにTypeAliasを設けることを推奨する。
     TypeAliasの設定方法については、「:ref:`DataAccessMyBatis3HowToUseSettingsTypeAlias`」を参照されたい。
 
 
@@ -4819,7 +4888,7 @@ TypeHandlerの実装
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
 MyBatis3の標準でサポートされていないJavaクラスとのマッピングが必要だったり、
-MyBatis3標準の振る舞いを変更する必要がある場合は、独自のTypeHandlerの作成が必要となる。
+MyBatis3標準の振る舞いを変更する必要がある場合は、独自の\ ``TypeHandler`` \の作成が必要となる。
 
 以下に、
 
@@ -4827,9 +4896,9 @@ MyBatis3標準の振る舞いを変更する必要がある場合は、独自の
 * :ref:`DataAccessMyBatis3HowToExtendTypeHandlerClob`
 * :ref:`DataAccessMyBatis3HowToExtendTypeHandlerJoda`
 
-を例に、TypeHandlerの実装方法について説明する。
+を例に、\ ``TypeHandler`` \の実装方法について説明する。
 
-作成したTypeHandlerをアプリケーションに適用する方法については、
+作成した\ ``TypeHandler`` \をアプリケーションに適用する方法については、
 「:ref:`DataAccessMyBatis3HowToUseSettingsTypeHandler`」を参照されたい。
 
  .. note:: **BLOB用とCLOB用の実装例の前提条件について**
@@ -4851,10 +4920,10 @@ MyBatis3標準の振る舞いを変更する必要がある場合は、独自の
 BLOB用のTypeHandlerの実装
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 
-MyBatis3では、BLOBを\ ``byte[]``\にマッピングするためのTypeHandlerを提供している。
+MyBatis3では、BLOBを\ ``byte[]``\にマッピングするための\ ``TypeHandler`` \を提供している。
 ただし、扱うデータの容量が大きい場合は、\ ``java.io.InputStream``\とマッピングが必要なケースがある。
 
-以下に、BLOBと\ ``java.io.InputStream``\をマッピングするためのTypeHandlerの実装例を示す。
+以下に、BLOBと\ ``java.io.InputStream``\をマッピングするための\ ``TypeHandler`` \の実装例を示す。
 
  .. code-block:: java
 
@@ -4937,10 +5006,10 @@ MyBatis3では、BLOBを\ ``byte[]``\にマッピングするためのTypeHandle
 CLOB用のTypeHandlerの実装
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 
-MyBatis3では、CLOBを\ ``java.lang.String``\にマッピングするためのTypeHandlerを提供している。
+MyBatis3では、CLOBを\ ``java.lang.String``\にマッピングするための\ ``TypeHandler`` \を提供している。
 ただし、扱うデータの容量が大きい場合は、\ ``java.io.Reader``\とマッピングが必要なケースがある。
 
-以下に、CLOBと\ ``java.io.Reader``\をマッピングするためのTypeHandlerの実装例を示す。
+以下に、CLOBと\ ``java.io.Reader``\をマッピングするための\ ``TypeHandler`` \の実装例を示す。
 
  .. code-block:: java
 
@@ -5023,9 +5092,9 @@ Joda-Time用のTypeHandlerの実装
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 
 | MyBatis3では、Joda-Timeのクラス(\ ``org.joda.time.DateTime``\ 、\ ``org.joda.time.LocalDateTime``\、\ ``org.joda.time.LocalDate``\など)はサポートされていない。
-| そのため、EntityクラスのフィールドにJoda-Timeのクラスを使用する場合は、Joda-Time用のTypeHandlerを用意する必要がある。
+| そのため、EntityクラスのフィールドにJoda-Timeのクラスを使用する場合は、Joda-Time用の\ ``TypeHandler`` \を用意する必要がある。
 
-``org.joda.time.DateTime``\と\ ``java.sql.Timestamp``\をマッピングするためのTypeHandlerの実装例を、以下に示す。
+``org.joda.time.DateTime``\と\ ``java.sql.Timestamp``\をマッピングするための\ ``TypeHandler`` \の実装例を、以下に示す。
 
  .. note::
 

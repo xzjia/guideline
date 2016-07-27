@@ -2124,3 +2124,10 @@ HTTP Proxyサーバにアクセスする際に資格情報(ユーザ名とパス
     * - | (1)
       - | \ ``HttpClientBuilder``\ の\ ``defaultCredentialsProvider``\ プロパティに、\ ``BasicCredentialsProvider``\ を設定する。
         | \ ``BasicCredentialsProvider``\ は、\ ``FactoryBean``\ を実装した\ ``BasicCredentialsProviderFactoryBean``\ を使用しBeanを作成する。
+
+
+JSONでJSR-310 Date and Time APIを使う場合の設定
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+リソースを表現するJavaBean(Resourceクラス)のプロパティとしてJSR-310 Date and Time APIを使用する場合の設定は
+「\ :ref:`RESTAppendixUsingJSR310_JodaTime` \」を参照されたい。
