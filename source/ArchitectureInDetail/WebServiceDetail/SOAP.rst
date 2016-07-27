@@ -1501,7 +1501,6 @@ WebServiceインターフェースを実装したプロキシを生成する\ ``
 *[client projectName]-domain/src/main/resources/META-INF/spring/[client projectName]-domain.xml*
 
 .. code-block:: xml
-    :emphasize-lines: 8-9
 
     <bean id="todoWebService"
         class="org.springframework.remoting.jaxws.JaxWsPortProxyFactoryBean"><!-- (1) -->
@@ -1539,10 +1538,7 @@ WebServiceインターフェースを実装したプロキシを生成する\ ``
         | ここでは後述するプロパティファイルにURLを記述するため、プロパティのキーを指定している。
     * - | (5)
       - | \ ``lookupServiceOnStartup``\ プロパティに起動時のSOAPサーバ参照フラグを設定する。
-
-        .. warning:: 
-
-            SOAPサーバが公開しているWSDLファイルにアクセス出来ない場合でもWebクライアントアプリケーションを起動させるためには、\ ``lookupServiceOnStartup``\ プロパティに\ ``false``\を指定する。ただし、WSDLファイルをWebクライアントアプリケーションで保持している場合は設定不要である。
+        | SOAPサーバが公開しているWSDLファイルにアクセス出来ない場合でもWebクライアントアプリケーションを起動させるためには、\ ``lookupServiceOnStartup``\ プロパティに\ ``false``\を指定する。ただし、WSDLファイルをWe|bクライアントアプリケーションで保持している場合は設定不要である。
             
     * - | (6)
       - | \ ``[client projectName]-domain.xml``\ で定義したプロパティのキーの値を設定する。WSDLのURLを記述する。
@@ -1562,7 +1558,6 @@ WebServiceインターフェースを実装したプロキシを生成する\ ``
     *[client projectName]-domain/src/main/resources/META-INF/spring/[client projectName]-domain.xml*
 
      .. code-block:: xml
-         :emphasize-lines: 8-9
 
          <bean id="todoWebService"
              class="org.springframework.remoting.jaxws.JaxWsPortProxyFactoryBean">
@@ -1595,11 +1590,7 @@ WebServiceインターフェースを実装したプロキシを生成する\ ``
              | ここでは後述するプロパティファイルにURLを記述するため、プロパティのキーを指定している。
          * - | (2)
            - | \ ``lookupServiceOnStartup``\ プロパティに起動時のSOAPサーバ参照フラグを設定する。
-
-             .. warning:: 
-
-                 Webサービスのエンドポイントアドレスにアクセス出来ない場合でもWebクライアントアプリケーションを起動させるためには、、\ ``lookupServiceOnStartup``\ プロパティに\ ``false``\を指定する。
-                 
+             | Webサービスのエンドポイントアドレスにアクセス出来ない場合でもWebクライアントアプリケーションを起動させるためには、、\ ``lookupServiceOnStartup``\ プロパティに\ ``false``\を指定する。
          * - | (3)
            - | \ ``[client projectName]-domain.xml``\ で定義したプロパティのキーの値を設定する。エンドポイントアドレスを記述する。
 
