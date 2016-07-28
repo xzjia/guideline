@@ -1648,7 +1648,7 @@ WebServiceインターフェースを実装したプロキシを生成する\ ``
 
 .. note:: **レスポンスの情報取得**
 
-    リトライを考慮するなど、レスポンスの情報をクライアントで取得したい場合、以下のように\ ``javax.xml.ws.BindingProvider``\ クラスにキャストすることで取得できる。
+    リトライを考慮するなど、レスポンス情報をクライアントで取得したい場合、以下のように\ `javax.xml.ws.BindingProvider- <http://docs.oracle.com/javase/7/docs/api/javax/xml/ws/BindingProvider.html#getRequestContext()>`_\ クラスにキャストすることで取得できる。
 
      .. code-block:: java
 
@@ -1660,24 +1660,24 @@ WebServiceインターフェースを実装したプロキシを生成する\ ``
     
     Apatch CXFをベースにしたApplication Serverでは上記のレスポンスコード取得方法で取得出来ないWebサービス例外が存在する。
     Application Server毎にレスポンスコード取得状況は下記の表を参照されたい。
-    
 
-     .. tabularcolumns:: |p{0.30\linewidth}|p{0.50\linewidth}|p{0.20\linewidth}|
+    Apatch CXFの場合、上記の実装方法により直前に完了したリクエスト操作のレスポンス情報をクライアントで取得可能である。実装方法については\ `Apache CXF Developing a Consumer with CXF -Reading a response context- <http://cxf.apache.org/docs/developing-a-consumer.html#DevelopingaConsumer-SettingConnectionPropertieswithContexts>`_\を参照されたい。    
+    ただし、Apatch CXFのエラー処理ではSOAPサーバにメッセージ送信エラーが発生した場合、リクエスト操作を中断する。 \ `Apache CXF Software Architecture Guide -Fault Handling- <http://cxf.apache.org/docs/cxf-architecture.html#CXFArchitecture-FaultHandling>`_\を参照。 中断された未完了のリクエスト操作に対して、上記の実装方法ではレスポンス情報を取得できない。(Basic認証エラーで確認)
+ 
+    そのため、Apatch CXFに内部的に基づくJava EEサーバでも上記と同じ事情が発生する可能性がある。Java EEサーバ毎のBasic認証エラー時のレスポンスコード取得状況は下記の表を参照されたい。
+
+     .. tabularcolumns:: |p{0.50\linewidth}|p{0.50\linewidth}|
      .. list-table::
          :header-rows: 1
-         :widths: 30 50 20
+         :widths: 50 50
 
-         * - Application Server
-           - バージョン
+         * - Java EEサーバ
            - 取得状況
-         * - | Tomcat
-           - | 
+         * - | Tomcat8
            - | ×
-         * - | JBoss
-           - | 
+         * - | JBoss6
            - | ×
-         * - | WebLogic
-           - | 
+         * - | WebLogic12c
            - | ○
 
 |
