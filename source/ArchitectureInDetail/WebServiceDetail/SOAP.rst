@@ -1662,7 +1662,7 @@ WebServiceインターフェースを実装したプロキシを生成する\ ``
     Application Server毎にレスポンスコード取得状況は下記の表を参照されたい。
 
     Apatch CXFの場合、上記の実装方法により直前に完了したリクエスト操作のレスポンス情報をクライアントで取得可能である。実装方法については\ `Apache CXF Developing a Consumer with CXF -Reading a response context- <http://cxf.apache.org/docs/developing-a-consumer.html#DevelopingaConsumer-SettingConnectionPropertieswithContexts>`_\を参照されたい。    
-    ただし、Apatch CXFのエラー処理ではSOAPサーバにメッセージ送信エラーが発生した場合、リクエスト操作を中断する。 \ `Apache CXF Software Architecture Guide -Fault Handling- <http://cxf.apache.org/docs/cxf-architecture.html#CXFArchitecture-FaultHandling>`_\を参照。 中断された未完了のリクエスト操作に対して、上記の実装方法ではレスポンス情報を取得できない。(Basic認証エラーで確認)
+    ただし、Apatch CXFのエラー処理ではSOAPサーバにメッセージ送信エラーが発生した場合、リクエスト操作を中断する。 \ `Apache CXF Software Architecture Guide -Fault Handling- <http://cxf.apache.org/docs/cxf-architecture.html#CXFArchitecture-FaultHandling>`_\を参照。 中断された未完了のリクエスト操作に対して、上記の実装方法ではレスポンス情報が取得できない。(Basic認証エラーで確認)
  
     そのため、Apatch CXFに内部的に基づくJava EEサーバでも上記と同じ事情が発生する可能性がある。Java EEサーバ毎のBasic認証エラー時のレスポンスコード取得状況は下記の表を参照されたい。
 
