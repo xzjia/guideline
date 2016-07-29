@@ -2085,10 +2085,9 @@ HTTPレスポンスのキャッシュ制御有無
     HTTPレスポンスのキャッシュ制御有無を有にすると、以下のHTTPレスポンスヘッダーが出力される。
 
      | Cache-Control:no-store
-     | Cache-Control:no-cache
-     | Expires:Thu, 01 Jan 1970 00:00:00 GMT
-     | Pragma:no-cache
 
+    \ ``SystemExceptionResolver``\によるキャッシュ制御用のヘッダー追加はブラウザキャッシュによる意図しないエラー画面の表示を抑止するためのオプションであるが、Spring Securityの機能を使用してセキュリティの観点からキャッシュ制御用のヘッダーを追加することも可能である。
+    Spring Securityの機能については、:ref:`SpringSecurityLinkageWithBrowser`\を参照されたい。
 
 .. _exception-handling-about-handlerexceptionresolverlogginginterceptor:
 
