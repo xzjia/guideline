@@ -5551,43 +5551,6 @@ RepositoryのBean定義を行えばよい。
       - \ ``sqlSessionTemplate``\プロパティには、
         (3)で定義したバッチモード用の\ ``SqlSessionTemplate``\を指定する。
 
- .. note::
-
-    ``SqlSessionTemplate``\をBean定義すると、アプリケーション終了時に以下の様なWARNログが出力される。
-
-    これは、\ ``SqlSession``\インタフェースが\ ``java.io.Closeable``\を継承しているため、
-    SpringのApplicationContextの終了処理時に\ ``close``\メソッドが呼び出されている事が原因である。
-
-     .. code-block:: text
-
-        21:12:35.999 [Thread-2] WARN  o.s.b.f.s.DisposableBeanAdapter - Invocation of destroy method 'close' failed on bean with name 'sqlSessionTemplate'
-        java.lang.UnsupportedOperationException: Manual close is not allowed over a Spring managed SqlSession
-            at org.mybatis.spring.SqlSessionTemplate.close(SqlSessionTemplate.java:310) ~[mybatis-spring-1.2.2.jar:1.2.2]
-            at sun.reflect.NativeMethodAccessorImpl.invoke0(Native Method) ~[na:1.8.0_20]
-            at sun.reflect.NativeMethodAccessorImpl.invoke(NativeMethodAccessorImpl.java:62) ~[na:1.8.0_20]
-            at sun.reflect.DelegatingMethodAccessorImpl.invoke(DelegatingMethodAccessorImpl.java:43) ~[na:1.8.0_20]
-            at java.lang.reflect.Method.invoke(Method.java:483) ~[na:1.8.0_20]
-
-    上記ログが出力されても、アプリケーションの動作に影響はないため、システム運用上問題がなければ対策は不要である。
-
-    ただし、ログ監視などシステム運用上問題がある場合は、
-    SpringのApplicationContextの終了処理時に呼び出されるメソッド(\ ``destroy-method``\属性)を指定する事で、
-    ログ出力を抑止する事ができる。
-
-    下記例では、\ ``getExecutorType``\メソッドを呼び出すように指定している。
-    \ ``getExecutorType``\メソッドは、コンストラクタ引数で指定した実行モードを返却するだけのメソッドであり、
-    このメソッドを呼び出しても他への副作用はない。
-
-     .. code-block:: xml
-        :emphasize-lines: 3
-
-        <bean id="batchSqlSessionTemplate"
-              class="org.mybatis.spring.SqlSessionTemplate"
-              destroy-method="getExecutorType">
-            <constructor-arg index="0" ref="sqlSessionFactory"/>
-            <constructor-arg index="1" value="BATCH"/>
-        </bean>
-
 |
 
 .. _DataAccessMyBatis3HowToExtendExecutorTypeBatchBulkSetting:
