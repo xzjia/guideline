@@ -2052,9 +2052,9 @@ Spring Validatorによる相関項目チェック実装
                           "password and confirm password must be same.");
 
                    // register a field error for confirmPassword
-                   errors.rejectValue("confirmPassword",// (1)
-                   /* (2) */ "PasswordEqualsValidator.passwordResetForm.confirmPassword",
-                   /* (3) */ "");
+                   errors.rejectValue("confirmPassword", // (1)
+                             "PasswordEqualsValidator.passwordResetForm.confirmPassword", // (2)
+                             ""); // (3)
                }
            }
        }
