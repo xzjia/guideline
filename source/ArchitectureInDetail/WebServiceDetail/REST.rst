@@ -1636,15 +1636,12 @@ terasoluna-gfw-common-dependenciesを使用していれば、依存関係の設�
    terasoluna-gfw-common-dependenciesはJava SE 8を前提とした依存関係を設定している。Java SE 7環境にて使用する場合は下記のようにJava SE 8依存ライブラリをexclusionすること。
    java SE 8依存ライブラリについてはアーキテクチャ概要の「\ :ref:`frameworkstack_using_oss_version` \」を参照
 
- |
-
-   .. code-block:: xml
-      :emphasize-lines: 3-9
+    .. code-block:: xml
 
        <dependency>
            <groupId>org.terasoluna.gfw</groupId>
-           <artifactId>terasoluna-gfw-common-dependencies</artifactId> <!-- (1) -->
-           <exclusions>                                                <!-- (2) -->
+           <artifactId>terasoluna-gfw-common-dependencies</artifactId>
+           <exclusions>
                <exclusion>
                    <groupId>com.fasterxml.jackson.datatype</groupId>
                    <artifactId>jackson-datatype-jsr310</artifactId>
@@ -1652,18 +1649,6 @@ terasoluna-gfw-common-dependenciesを使用していれば、依存関係の設�
            </exclusions>
        </dependency>
 
-
-   .. tabularcolumns:: |p{0.10\linewidth}|p{0.80\linewidth}|
-   .. list-table::
-      :header-rows: 1
-      :widths: 10 80
-
-      * - 項番
-        - 説明
-      * - | (1)  
-        - | jackson-datatype-jsr310への依存関係を定義しているartifactId。
-      * - | (2)  
-        - | 依存関係の除外設定。Java SE 8以降のAPIに依存しているjackson-datatype-jsr310を除外する。
 
 .. _RESTHowToUseApplicationSettings:
 
