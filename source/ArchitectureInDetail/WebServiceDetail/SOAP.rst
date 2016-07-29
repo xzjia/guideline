@@ -1537,9 +1537,8 @@ WebServiceインターフェースを実装したプロキシを生成する\ ``
       - | \ ``wsdlDocumentResource``\ プロパティに公開されているWDSLのURLを設定する。
         | ここでは後述するプロパティファイルにURLを記述するため、プロパティのキーを指定している。
     * - | (5)
-      - | \ ``lookupServiceOnStartup``\ プロパティに起動時のSOAPサーバ参照フラグを設定する。
-        | SOAPサーバが公開しているWSDLファイルにアクセス出来ない場合でもWebクライアントアプリケーションを起動させるためには、\ ``lookupServiceOnStartup``\ プロパティに\ ``false``\を指定する。ただし、WSDLファイルをWe|bクライアントアプリケーションで保持している場合は設定不要である。
-            
+      - | \ ``lookupServiceOnStartup``\ プロパティにBean生成する時、SOAPサーバからWSDLファイルを取得するかどうかを設定する。falseの場合はBeanが初めて使用されるタイミングでWSDLファイルの取得が行われる。
+        | SOAPサーバからWSDLファイルの取得が不可能な場合でもWebサービス クライアントを起動させるためには、\ ``lookupServiceOnStartup``\ プロパティに\ ``false``\を指定する。ただし、WSDLファイルをWebサービス クライアントで保持している場合は設定不要である。
     * - | (6)
       - | \ ``[client projectName]-domain.xml``\ で定義したプロパティのキーの値を設定する。WSDLのURLを記述する。
 
@@ -1567,14 +1566,14 @@ WebServiceインターフェースを実装したプロキシを生成する\ ``
              <property name="namespaceUri" value="http://example.com/todo" />
              <property name="wsdlDocumentResource" value="${webservice.todoWebService.wsdlDocumentResource}" />
              <property name="endpointAddress" value="${webservice.todoWebService.endpointAddress}" /><!-- (1) -->
-             <property name="lookupServiceOnStartup" value="false" /><!-- (2) -->
+             <property name="lookupServiceOnStartup" value="false" />
          </bean>
 
     *[client projectName]-env/src/main/resources/META-INF/spring/[client projectName]-infra.properties*
 
      .. code-block:: properties
 
-         # (3)
+         # (2)
          webservice.todoWebService.endpointAddress=http://AAA.BBB.CCC.DDD:XXXX/[server projectName]-web/ws/TodoWebService
 
 
@@ -1589,9 +1588,6 @@ WebServiceインターフェースを実装したプロキシを生成する\ ``
            - | エンドポイントアドレスを設定する。
              | ここでは後述するプロパティファイルにURLを記述するため、プロパティのキーを指定している。
          * - | (2)
-           - | \ ``lookupServiceOnStartup``\ プロパティに起動時のSOAPサーバ参照フラグを設定する。
-             | Webサービスのエンドポイントアドレスにアクセス出来ない場合でもWebクライアントアプリケーションを起動させるためには、、\ ``lookupServiceOnStartup``\ プロパティに\ ``false``\を指定する。
-         * - | (3)
            - | \ ``[client projectName]-domain.xml``\ で定義したプロパティのキーの値を設定する。エンドポイントアドレスを記述する。
 
 |
