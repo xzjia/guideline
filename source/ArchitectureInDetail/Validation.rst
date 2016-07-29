@@ -2019,8 +2019,11 @@ Spring Validatorによる相関項目チェック実装
 
 .. note::
 
-   \ ``password``\ フィールドと、\ ``confirmPassword``\ フィールドの各フィールドにエラーメッセージ表示、エラー時のスタイル適用をさせる場合、
-   エラー情報の設定を各フィールドに対して実施するとよい。
+   \ ``password``\ フィールドと、\ ``confirmPassword``\ フィールドの各フィールドにエラー時のスタイル適用をさせ、エラーメッセージを
+   \ ``password``\ フィールドのみに表示させたい場合、エラー情報の設定を各フィールドに対して実施する必要がある。
+
+   エラーメッセージを\ ``password``\ フィールドに統合して設定することはできないため、\ ``confirmPassword``\ フィールドのエラーメッセージに
+   空文字を設定することで、メッセージを統合したように表示することが可能である。
 
      .. code-block:: java
 
@@ -2049,12 +2052,29 @@ Spring Validatorによる相関項目チェック実装
                           "password and confirm password must be same.");
 
                    // register a field error for confirmPassword
-                   errors.rejectValue("confirmPassword",
-                          "PasswordEqualsValidator.passwordResetForm.confirmPassword",
-                          "password and confirm password must be same.");
+                   errors.rejectValue("confirmPassword",// (1)
+                   /* (2) */ "PasswordEqualsValidator.passwordResetForm.confirmPassword",
+                   /* (3) */ "");
                }
            }
        }
+
+     .. tabularcolumns:: |p{0.10\linewidth}|p{0.90\linewidth}|
+     .. list-table::
+        :header-rows: 1
+        :widths: 10 90
+
+        * - 項番
+          - 説明
+        * - | (1)
+          - | \ ``confirmPassword``\ フィールドのエラーを登録する。
+        * - | (2)
+          - | エラーメッセージのコード名を指定する。この際、対応するエラーメッセージに空文字を指定する。
+            | メッセージ定義は\ :ref:`Validation_message_in_application_messages`\ を参照されたい。
+        * - | (3)
+          - | エラーメッセージをコードで解決できなかった場合に使用する、デフォルトメッセージを設定する。
+            | 上記の例では空文字を設定している。
+
 
 .. note::
 
@@ -2996,8 +3016,11 @@ Bean Validationは標準で用意されているチェックルール以外に�
 
 .. note::
 
-   \ ``field``\ フィールドと、\ ``confirmField``\ フィールドの各フィールドにエラーメッセージ表示、エラー時のスタイル適用をさせる場合、
-   \ ``ConstraintViolation``\ オブジェクトの生成を各フィールドに対して実施するとよい。
+   \ ``password``\ フィールドと、\ ``confirmPassword``\ フィールドの各フィールドにエラー時のスタイル適用をさせ、エラーメッセージを
+   \ ``password``\ フィールドのみに表示させたい場合、エラー情報の設定を各フィールドに対して実施する必要がある。
+
+   エラーメッセージを\ ``password``\ フィールドに統合して設定することはできないため、\ ``confirmPassword``\ フィールドのエラーメッセージに
+   空文字を設定することで、メッセージを統合したように表示することが可能である。
 
      .. code-block:: java
 
@@ -3025,7 +3048,7 @@ Bean Validationは標準で用意されているチェックルール以外に�
                            .addPropertyNode(field).addConstraintViolation();
 
                    //new ConstraintViolation to be generated for confirmField
-                   context.buildConstraintViolationWithTemplate(message)
+                   context.buildConstraintViolationWithTemplate("") // (1)
                            .addPropertyNode(confirmField).addConstraintViolation();
 
                    return false;
@@ -3033,6 +3056,16 @@ Bean Validationは標準で用意されているチェックルール以外に�
            }
 
        }
+
+     .. tabularcolumns:: |p{0.10\linewidth}|p{0.90\linewidth}|
+     .. list-table::
+        :header-rows: 1
+        :widths: 10 90
+
+        * - 項番
+          - 説明
+        * - | (1)
+          - | \ ``confirmPassword``\ フィールドのエラーを登録する。この際、エラーメッセージに空文字を設定している。
 
 
 この\ ``@Confirm``\ アノテーションを使用して、前述の「パスワードリセット」処理を再実装すると、以下のようになる。
