@@ -1478,8 +1478,6 @@ MTOMを利用した大容量のバイナリデータを扱う方法
     
    ユニットテストでプロキシのスタブやモックを使用する場合は、ユニットテスト用のコンポーネントを定義するためのBean定義ファイル(test-context.xml)にBeanを定義する。
    
-   ドメイン層のコンポーネントを定義するためのBean定義ファイル([client projectName]-domain.xml)に環境毎のBeanを定義して使用したい等、同一のBean定義ファイル内からBeanを定義して切り替えたい場合は、`Spring Framework Reference Documentation -The IoC container(XML bean definition profiles)- <http://docs.spring.io/spring/docs/4.2.4.RELEASE/spring-framework-reference/html/beans.html#beans-definition-profiles-xml>`_\よる切り替えや、envモジュールの環境毎の[client projectName]-env.xmlにBean定義を移すことを検討されたい。
-    
 |
 
 .. _SOAPHowToUseWebServiceClient:
