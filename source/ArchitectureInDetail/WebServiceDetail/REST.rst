@@ -1762,7 +1762,7 @@ RESTful Web Serviceで必要となるSpring MVCのコンポーネントを有効
         | プロパティファイルから値を取得する方法の詳細ついては、「:doc:`../GeneralFuncDetail/PropertyManagement`」を参照されたい。
     * - | (2)
       - | JSONの日付フィールドの形式をISO-8601の拡張形式として扱うための設定を追加する。
-        | なお、リソースを表現するJavaBean(Resourceクラス)のプロパティとしてJSR-310 Date and Time APIやJoda Timeのクラスを使用する場合は、「\ :ref:`RESTAppendixUsingJSR310_JodaTime`\ 」を行う必要がある。
+        | なお、リソースを表現するJavaBean(Resourceクラス)のプロパティとしてJoda Timeのクラスを使用する場合は、「\ :ref:`RESTAppendixUsingJSR310_JodaTime`\ 」を行う必要がある。
     * - | (3)
       - | RESTful Web Serviceを提供するために必要となるSpring MVCのフレームワークコンポーネントをbean登録する。
         | 本設定を行うことで、リソースのフォーマットとしてJSONを使用する事ができる。
