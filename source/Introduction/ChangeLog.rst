@@ -56,6 +56,12 @@
       
         * HTTPレスポンスヘッダー出力に関する説明内容を修正(\ `guideline#1965 <https://github.com/terasolunaorg/guideline/issues/1965>`_\ )
 
+    * - 
+      - :doc:`../Security/Authentication`
+      - Spring Security 4.0.4対応に伴う修正
+      
+        * Spring 4.0.4にて authentication-failure-url の仕様が改善されたことによるコード例の修正とNoteの削除 (\ `guideline#1963 <https://github.com/terasolunaorg/guideline/issues/1963>`_\ )
+
     * - 2016-06-31
       - :doc:`../ArchitectureInDetail/GeneralFuncDetail/StringProcessing`
       - 記載内容の追加
