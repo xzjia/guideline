@@ -1626,6 +1626,30 @@ RESTful Web Serviceとクライアントアプリケーションを一つのWeb�
 
 |
 
+
+pom.xmlの設定
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+terasoluna-gfw-common-dependenciesを使用していれば、依存関係の設定は不要である。
+
+.. Warning:: **Java SE 7環境にて使用する場合の設定**
+
+   terasoluna-gfw-common-dependenciesはJava SE 8を前提とした依存関係を設定している。Java SE 7環境にて使用する場合は下記のようにJava SE 8依存ライブラリをexclusionすること。
+   java SE 8依存ライブラリについてはアーキテクチャ概要の「\ :ref:`frameworkstack_using_oss_version` \」を参照
+
+    .. code-block:: xml
+
+       <dependency>
+           <groupId>org.terasoluna.gfw</groupId>
+           <artifactId>terasoluna-gfw-common-dependencies</artifactId>
+           <exclusions>
+               <exclusion>
+                   <groupId>com.fasterxml.jackson.datatype</groupId>
+                   <artifactId>jackson-datatype-jsr310</artifactId>
+               </exclusion>
+           </exclusions>
+       </dependency>
+
+
 .. _RESTHowToUseApplicationSettings:
 
 アプリケーションの設定
@@ -1738,7 +1762,7 @@ RESTful Web Serviceで必要となるSpring MVCのコンポーネントを有効
         | プロパティファイルから値を取得する方法の詳細ついては、「:doc:`../GeneralFuncDetail/PropertyManagement`」を参照されたい。
     * - | (2)
       - | JSONの日付フィールドの形式をISO-8601の拡張形式として扱うための設定を追加する。
-        | なお、リソースを表現するJavaBean(Resourceクラス)のプロパティとしてJSR-310 Date and Time APIやJoda Timeのクラスを使用する場合は、「\ :ref:`RESTAppendixUsingJSR310_JodaTime`\ 」を行う必要がある。
+        | なお、リソースを表現するJavaBean(Resourceクラス)のプロパティとしてJoda Timeのクラスを使用する場合は、「\ :ref:`RESTAppendixUsingJSR310_JodaTime`\ 」を行う必要がある。
     * - | (3)
       - | RESTful Web Serviceを提供するために必要となるSpring MVCのフレームワークコンポーネントをbean登録する。
         | 本設定を行うことで、リソースのフォーマットとしてJSONを使用する事ができる。
@@ -5015,17 +5039,11 @@ Appendix
 JSR-310 Date and Time API / Joda Timeを使う場合の設定
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
-リソースを表現するJavaBean(Resourceクラス)のプロパティとしてJSR-310 Date and Time APIやJoda Timeのクラスを使用する場合は、
+リソースを表現するJavaBean(Resourceクラス)のプロパティとしてJSR-310 Date and Time APIを使用する場合は、
+terasoluna-gfw-common-dependenciesにて依存関係が定義されているため依存関係の追加は不要である。
+一方、Joda Timeのクラスを使用する場合は、
 \ ``pom.xml``\ にJacksonから提供されている拡張モジュールを依存ライブラリに追加する。
 
-**JSR-310 Date and Time APIのクラスを使用する場合**
-
-.. code-block:: xml
-
-    <dependency>
-        <groupId>com.fasterxml.jackson.datatype</groupId>
-        <artifactId>jackson-datatype-jsr310</artifactId>
-    </dependency>
 
 **Joda Timeのクラスを使用する場合**
 
@@ -7102,8 +7120,8 @@ member-mapping.xml
 mybatis-config.xml
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 | MyBatis3の動作をカスタマイズする場合は、MyBatis設定ファイルに設定値を追加する。MyBatis3では、Joda-Timeのクラス(org.joda.time.DateTime、org.joda.time.LocalDateTime、org.joda.time.LocalDateなど)はサポートされていない。
-| そのため、EntityクラスのフィールドにJoda-Timeのクラスを使用する場合は、Joda-Time用のTypeHandlerを用意する必要がある。
-| org.joda.time.DateTimeとjava.sql.TimestampをマッピングするためのTypeHandlerの実装例、「\ :ref:`DataAccessMyBatis3HowToExtendTypeHandlerJoda`\」を使って行っている。
+| そのため、EntityクラスのフィールドにJoda-Timeのクラスを使用する場合は、Joda-Time用の\ ``TypeHandler`` \を用意する必要がある。
+| org.joda.time.DateTimeとjava.sql.Timestampをマッピングするための\ ``TypeHandler`` \の実装例、「\ :ref:`DataAccessMyBatis3HowToExtendTypeHandlerJoda`\」を使って行っている。
 
 :file:`resources/META-INF/mybatis/mybatis-config.xml`
 

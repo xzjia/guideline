@@ -269,6 +269,12 @@ version 5.1.0.RELEASEで利用するOSSの一覧を以下に示す。
       - 1.2.3
       -
       - \*1
+    * - MyBatis3
+      - org.mybatis
+      - mybatis-typehandlers-jsr310
+      - 1.0.1
+      -
+      - \*1*6
     * - JPA(Hibernate)
       - antlr
       - antlr
@@ -413,6 +419,12 @@ version 5.1.0.RELEASEで利用するOSSの一覧を以下に示す。
       - 2.6.4
       - \*
       -
+    * - JSON
+      - com.fasterxml.jackson.datatype
+      - jackson-datatype-jsr310
+      - 2.6.4
+      - \*
+      - \*6
     * - 入力チェック
       - javax.validation
       - validation-api
@@ -601,6 +613,9 @@ version 5.1.0.RELEASEで利用するOSSの一覧を以下に示す。
    | (Spring IO platformとしては依存関係の管理は行っていないライブラリ)
 #. | Spring IO platformで適用されるバージョンが、BetaやRC(Release Candidate)であるライブラリ
    | (TERASOLUNA Server Framework for Java (5.x)側でGAのバージョンを明示的に指定しているライブラリ)
+#. | Java SE 8以降のAPIを前提としたライブラリ
+   | Java SE 7以下の場合は本ライブラリへの依存関係を明示的に除去する必要がある
+
 
 .. _frameworkstack_common_library:
 

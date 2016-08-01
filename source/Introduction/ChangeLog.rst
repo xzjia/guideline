@@ -18,12 +18,44 @@
           \ ``TransactionToken``\を正しい状態に維持できなくなるなど、フレームワーク内部の挙動に影響を及ぼすような作り込ができてしまうことから、
           当該APIの非推奨化がなされた。非推奨化にあわせて該当機能の利用方法の記述を削除した。 
 
+    * - 
+      - :doc:`../Overview/FrameworkStack`
+      - 記載内容の追加
+      
+        * 利用するOSSのバージョンににmybatis-typehandlers-jsr310 、jackson-datatype-jsr310を追加 (\ `guideline#1966 <https://github.com/terasolunaorg/guideline/issues/1966>`_\ )
+
+    * - 
+      - :doc:`../ArchitectureInDetail/DataAccessDetail/DataAccessMyBatis3`
+      - 記載内容の追加
+      
+        * JSR-310 Date and Time APIをMybatis3.3で使用するための設定方法を記載 (\ `guideline#1966 <https://github.com/terasolunaorg/guideline/issues/1966>`_\ )
+        * MyBatisをJava SE 7環境で使用する場合の注意点を記載 (\ `guideline#1966 <https://github.com/terasolunaorg/guideline/issues/1966>`_\ )
+
+    * - 
+      - :doc:`../ArchitectureInDetail/WebServiceDetail/REST`
+      - 記載内容の変更、追加
+      
+        * JSR-310 Date and Time API / Joda Timeを使う場合の設定の記述を変更 (\ `guideline#1966 <https://github.com/terasolunaorg/guideline/issues/1966>`_\ )
+        * JacksonをJava SE 7環境で使用する場合の注意点を記載 (\ `guideline#1966 <https://github.com/terasolunaorg/guideline/issues/1966>`_\ )
+
+    * - 
+      - :doc:`../ArchitectureInDetail/WebServiceDetail/RestClient`
+      - 記載内容の追加
+      
+        * JSONでJSR-310 Date and Time APIを使う場合の設定を記載 (\ `guideline#1966 <https://github.com/terasolunaorg/guideline/issues/1966>`_\ )
+
+    * - 
+      - :doc:`../ArchitectureInDetail/GeneralFuncDetail/Dozer`
+      - 記載内容の追加
+      
+        * JSR-310 Date and Time APIを使用する際の注意点を記載 (\ `guideline#1966 <https://github.com/terasolunaorg/guideline/issues/1966>`_\ )
+
     * - 2016-07-20
       - :doc:`../ArchitectureInDetail/WebApplicationDetail/ExceptionHandling`
       - Spring Framework 4.2.7対応に伴う修正
       
         * HTTPレスポンスヘッダー出力に関する説明内容を修正(\ `guideline#1965 <https://github.com/terasolunaorg/guideline/issues/1965>`_\ )
-        
+
     * - 2016-06-31
       - :doc:`../ArchitectureInDetail/GeneralFuncDetail/StringProcessing`
       - 記載内容の追加
