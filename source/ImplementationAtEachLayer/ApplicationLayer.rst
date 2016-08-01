@@ -2374,6 +2374,9 @@ Spring Frameworkでは、HTML formから送信されたリクエストパラメ�
        | M- : Dec 9, 2013
        | -M : 3:41:45 AM
 
+.. warning::
+    @DateTimeFormat の pattern でフォーマットを指定した場合、 JSR310の java.time.LocalDate ではSTRICTにチェックがされない。
+
 |
 
 Controller単位の型変換
