@@ -640,10 +640,10 @@ version 5.1.0.RELEASEで利用するOSSの一覧を以下に示す。
       - シングルプロジェクト構成のブランクプロジェクト組込
     * - \ (1)
       - terasoluna-gfw-common
-      - Webに依存しない汎用的に使用できる機能と依存関係定義を提供する。
+      - Webに依存しない汎用的に使用できる機能を提供する。
       - 有
-      - 有
-      - 有
+      - 有*1
+      - 有*1
     * - \ (2)
       - terasoluna-gfw-string
       - 文字列処理に関連する機能を提供する。(5.1.0から追加)
@@ -664,46 +664,46 @@ version 5.1.0.RELEASEで利用するOSSの一覧を以下に示す。
       - 無
     * - \ (5)
       - terasoluna-gfw-jodatime
-      - Joda Timeに依存する機能と依存関係定義を提供する。(5.0.0から追加)
+      - Joda Timeに依存する機能を提供する。(5.0.0から追加)
       - 有
-      - 有
-      - 有
+      - 有*1
+      - 有*1
     * - \ (6)
       - terasoluna-gfw-web
-      - Webアプリケーションを作成する場合に使用する機能と依存関係定義を提供する。Viewに依存しない機能や依存関係定義を集約している。
+      - Webアプリケーションを作成する場合に使用する機能を提供する。Viewに依存しない機能を集約している。
       - 有
-      - 有
-      - 有
+      - 有*1
+      - 有*1
     * - \ (7)
       - terasoluna-gfw-web-jsp
-      - ViewにJSPを採用するWebアプリケーションを作成する場合に使用する機能と依存関係定義を提供する。
+      - ViewにJSPを採用するWebアプリケーションを作成する場合に使用する機能を提供する。
       - 有
-      - 有
-      - 有
+      - 有*1
+      - 有*1
     * - \ (8)
-      - terasoluna-gfw-mybatis3
+      - terasoluna-gfw-mybatis3-dependencies
       - MyBatis3を使用する場合の依存関係定義を提供する。
       - 無
-      - 有*1
-      - 有*1
+      - 有*2
+      - 有*2
     * - \ (9)
-      - terasoluna-gfw-jpa
+      - terasoluna-gfw-jpa-dependencies
       - JPAを使用する場合の依存関係定義を提供する。
       - 無
-      - 有*2
-      - 有*2
+      - 有*3
+      - 有*3
     * - \ (10)
-      - terasoluna-gfw-security-core
+      - terasoluna-gfw-security-core-dependencies
       - Spring Securityを使用する場合の依存関係定義(Web以外)を提供する。
       - 無
       - 有
       - 有
     * - \ (11)
       - terasoluna-gfw-security-web
-      - Spring Securityを使用する場合の依存関係定義(Web関連)とSpring Securityの拡張部品を提供する。
+      - Spring Securityの拡張部品を提供する。
       - 有
-      - 有
-      - 有
+      - 有*1
+      - 有*1
     * - \ (12)
       - terasoluna-gfw-recommended-dependencies
       - Webに依存しない推奨ライブラリへの依存関係定義を提供する。
@@ -720,12 +720,56 @@ version 5.1.0.RELEASEで利用するOSSの一覧を以下に示す。
       - terasoluna-gfw-parent
       - 依存ライブラリの管理とビルド用プラグインの推奨設定を提供する。
       - 無
-      - 有*3
-      - 有*3
+      - 有*4
+      - 有*4
+    * - \ (15)
+      - terasoluna-gfw-common-libraries
+      - 共通ライブラリのうち、Javaソースコードを含むプロジェクトの構成を定義する。
+      - 無
+      - 有*4
+      - 有*4
+    * - \ (16)
+      - terasoluna-gfw-dependencies
+      - 共通ライブラリのうち、依存関係定義のみを提供するプロジェクト(terasoluna-gfw-parent以外)の構成を定義する。
+      - 無
+      - 有*4
+      - 有*4
+    * - \ (17)
+      - terasoluna-gfw-common-dependencies
+      - terasoluna-gfw-commonプロジェクトが提供する機能を使用する場合の依存関係定義を提供する。
+      - 無
+      - 有
+      - 有
+    * - \ (18)
+      - terasoluna-gfw-jodatime-dependencies
+      - terasoluna-gfw-jodatimeプロジェクトが提供する機能を使用する場合の依存関係定義を提供する。
+      - 無
+      - 有
+      - 有
+    * - \ (19)
+      - terasoluna-gfw-security-web-dependencies
+      - Spring Securityを使用する場合の依存関係定義(Web関連)と、terasoluna-gfw-security-webプロジェクトが提供する機能を使用する場合の依存関係定義を提供する。
+      - 無
+      - 有
+      - 有
+    * - \ (20)
+      - terasoluna-gfw-web-dependencies
+      - terasoluna-gfw-webプロジェクトが提供する機能を使用する場合の依存関係定義を提供する。
+      - 無
+      - 有
+      - 有
+    * - \ (21)
+      - terasoluna-gfw-web-jsp-dependencies
+      - terasoluna-gfw-web-jspプロジェクトが提供する機能を使用する場合の依存関係定義を提供する。
+      - 無
+      - 有
+      - 有
 
+#. | \ ``<dependency>``\ 要素ではないが、\ ``<dependency>``\ 要素からの推移的依存関係として組み込まれる。
 #. | データアクセスに、MyBatis3を使用する場合に標準で組み込まれる共通ライブラリ
 #. | データアクセスに、JPAを使用する場合に標準で組み込まれる共通ライブラリ
 #. | \ ``<dependency>``\ 要素ではないが、各プロジェクトの\ ``<parent>``\ 要素として組み込まれる。
+
 
 Javaソースコードを含まないものは、ライブラリの依存関係のみ定義しているプロジェクトである。
 
@@ -734,6 +778,14 @@ Javaソースコードを含まないものは、ライブラリの依存関係�
 .. figure:: images_FrameworkStack/FrameworkStackProjectDependencies.png
     :width: 75%
 
+.. note::
+
+  一部を除き、共通ライブラリにはプロジェクト名末尾に"dependencies"が付与されたプロジェクトが存在する。
+  (例えば、terasoluna-gfw-commonに対応するterasoluna-gfw-common-dependenciesなどである)
+
+  このようなプロジェクトでは、共通ライブラリへの依存関係定義の他に、利用を推奨するOSSライブラリへの依存関係定義を提供している為、
+  共通ライブラリを利用する際は"dependencies"が付与されたプロジェクトの方を、依存関係としてpom.xmlに追加することを推奨する。
+  
 
 terasoluna-gfw-common
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
@@ -947,4 +999,3 @@ terasoluna-gfw-security-webは以下の部品を提供している。
 .. raw:: latex
 
    \newpage
-

@@ -173,7 +173,8 @@ pom.xmlの設定
         <!-- (1) -->
         <dependency>
             <groupId>org.terasoluna.gfw</groupId>
-            <artifactId>terasoluna-gfw-jodatime</artifactId>
+            <artifactId>terasoluna-gfw-jodatime-dependencies</artifactId>
+            <type>pom</type>
         </dependency>
 
     </dependencies>
@@ -187,8 +188,8 @@ pom.xmlの設定
     * - 項番
       - 説明
     * - (1)
-      - terasoluna-gfw-jodatimeをdependenciesに追加する。
-        terasoluna-gfw-jodatimeには、Joda Time用のDate FactoryとJoda Time関連のライブラリへの依存関係が定義されている。
+      - terasoluna-gfw-jodatime-dependenciesをdependenciesに追加する。
+        terasoluna-gfw-jodatime-dependenciesには、Joda Time用のDate FactoryとJoda Time関連のライブラリへの依存関係が定義されている。
 
 .. tip:: **terasoluna-gfw-parentをParentプロジェクトとして使用しない場合の設定方法について**
 
@@ -201,6 +202,7 @@ pom.xmlの設定
                 <groupId>org.terasoluna.gfw</groupId>
                 <artifactId>terasoluna-gfw-jodatime</artifactId>
                 <version>5.1.0.RELEASE</version>
+                <type>pom</type>
             </dependency>
 
     上記例では5.1.0.RELEASEを指定しているが、実際に指定するバージョンは、プロジェクトで利用するバージョンを指定すること。
