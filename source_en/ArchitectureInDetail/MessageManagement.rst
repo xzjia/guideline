@@ -1442,7 +1442,7 @@ Apart from \ ``ResultMessages``\  object, \ ``<t:messagesPanel>``\  tag can also
     </style>
     </head>
     <body>
-        <c:if test="${param.error}">
+        <c:if test="${param.containsKey('error')}">
             <t:messagesPanel messagesType="error"
                 messagesAttributeName="SPRING_SECURITY_LAST_EXCEPTION" /><!-- (2) -->
         </c:if>
