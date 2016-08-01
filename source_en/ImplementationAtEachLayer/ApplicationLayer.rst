@@ -2371,6 +2371,9 @@ Attributes of \ ``@DateTimeFormat``\  annotation are given below.
        | M- : Dec 9, 2013
        | -M : 3:41:45 AM
 
+.. warning::
+    @DateTimeFormat's formatter is not strict in case of pattern attribute specified with JSR-310 Date&Time API on JDK 8.
+
 |
 
 DataType conversion in controller
