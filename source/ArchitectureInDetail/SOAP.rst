@@ -1654,27 +1654,28 @@ WebServiceインターフェースを実装したプロキシを生成する\ ``
     ただし、この場合Webサービス実行がプロキシに依存してしまう。そのため、テスト時にスタブを使用する場合にも、スタブに\ ``javax.xml.ws.BindingProvider``\を実装させる必要が発生する。
     この機能の利用は最小限に抑えることを推奨する。
     
-    Apatch CXFをベースにしたApplication Serverでは上記のレスポンスコード取得方法で取得出来ないWebサービス例外が存在する。
-    Application Server毎にレスポンスコード取得状況は下記の表を参照されたい。
+    Apatch CXFの場合、上記の取得方法により、もっとも最近完了したリクエスト操作のレスポンス情報をクライアントで取得可能である。取得方法については\ `Apache CXF Developing a Consumer with CXF -Reading a response context- <http://cxf.apache.org/docs/developing-a-consumer.html#DevelopingaConsumer-SettingConnectionPropertieswithContexts>`_\を参照されたい。
+    ただし、Apatch CXFのエラー処理ではメッセージ通信エラーが発生した場合、リクエスト操作を中断するため異常時のレスポンス情報取得は基本的に不可能である。Apache CXFのエラー処理については\ `Apache CXF Software Architecture Guide -Fault Handling- <http://cxf.apache.org/docs/cxf-architecture.html#CXFArchitecture-FaultHandling>`_\を参照されたい。どうしても異常時のレスポンス情報が必要な場合は、\ `Apache CXF  -Interceptors and Phases- <http://cxf.apache.org/docs/interceptors.html>`_\を参考に独自の処理を実装する必要がある。
 
-    Apatch CXFの場合、上記の実装方法により直前に完了したリクエスト操作のレスポンス情報をクライアントで取得可能である。実装方法については\ `Apache CXF Developing a Consumer with CXF -Reading a response context- <http://cxf.apache.org/docs/developing-a-consumer.html#DevelopingaConsumer-SettingConnectionPropertieswithContexts>`_\を参照されたい。    
-    ただし、Apatch CXFのエラー処理ではSOAPサーバにメッセージ送信エラーが発生した場合、リクエスト操作を中断する。 \ `Apache CXF Software Architecture Guide -Fault Handling- <http://cxf.apache.org/docs/cxf-architecture.html#CXFArchitecture-FaultHandling>`_\を参照。 中断された未完了のリクエスト操作に対して、上記の実装方法ではレスポンス情報が取得できない。(Basic認証エラーで確認)
- 
-    そのため、Apatch CXFに内部的に基づくJava EEサーバでも上記と同じ事情が発生する可能性がある。Java EEサーバ毎のBasic認証エラー時のレスポンスコード取得状況は下記の表を参照されたい。
+    そのため、Apatch CXFに内部的に基づくJava EEサーバでも上記と同じ事情が発生する可能性がある。Java EEサーバ毎の異常系のレスポンス情報取得状況は下記の表を参照されたい。
 
-     .. tabularcolumns:: |p{0.50\linewidth}|p{0.50\linewidth}|
+     .. tabularcolumns:: |p{0.10\linewidth}|p{0.50\linewidth}|p{0.40\linewidth}|
      .. list-table::
          :header-rows: 1
-         :widths: 50 50
+         :widths: 10 50 40
 
-         * - Java EEサーバ
+         * - 項番
+           - Java EEサーバ
            - 取得状況
-         * - | Tomcat8
+         * - | (1)
+           - | Apache Tomcat
            - | ×
-         * - | JBoss6
-           - | ×
-         * - | WebLogic12c
+         * - | (2)
+           - | Oracle WebLogic Server
            - | ○
+         * - | (3)
+           - | JBoss Enterprise Application Platform
+           - | ×
 
 |
 
