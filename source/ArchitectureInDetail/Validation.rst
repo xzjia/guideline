@@ -2017,6 +2017,7 @@ Spring Validatorによる相関項目チェック実装
 
   \ ``<form:password>``\ タグを使用すると、再表示時に、データがクリアされる。
 
+.. _Validation_how_to_cross-field_validation_for_multi_field_highlight:
 .. note::
 
    相関チェック対象の複数フィールドに対してエラー情報を設定することも可能である。
@@ -3017,12 +3018,10 @@ Bean Validationは標準で用意されているチェックルール以外に�
 
 .. note::
 
-   相関チェック対象の複数フィールドに対してエラー情報を設定することも可能である。
-   ただし、必ずエラーメッセージの表示とスタイル適用がセットで行われ、いずれか片方のみを行うことはできない。
+   Spring Validatorによる相関項目チェックにて紹介したように、Bean Validationにおいても
+   :ref:`相関チェック対象の複数フィールドに対してエラー情報を設定する<Validation_how_to_cross-field_validation_for_multi_field_highlight>` ことが可能である。
 
-   相関チェックエラーとなった両方のフィールドにスタイル適用したいが、エラーメッセージは1つだけ表示したいような場合は、
-   エラーメッセージに空文字を設定することで実現することが可能である。
-   以下に、\ ``password``\ フィールドと\ ``confirmPassword``\ フィールドにスタイルを適用し、\ ``password``\ フィールドのみにエラーメッセージを表示する例を示す。
+   以下に、Bean Validationにて\ ``password``\ フィールドと\ ``confirmPassword``\ フィールドにスタイルを適用し、\ ``password``\ フィールドのみにエラーメッセージを表示する例を示す。
 
      .. code-block:: java
 
