@@ -2017,6 +2017,67 @@ Spring Validatorによる相関項目チェック実装
 
   \ ``<form:password>``\ タグを使用すると、再表示時に、データがクリアされる。
 
+.. _Validation_how_to_cross-field_validation_for_multi_field_highlight:
+.. note::
+
+   相関チェック対象の複数フィールドに対してエラー情報を設定することも可能である。
+   ただし、必ずエラーメッセージの表示とスタイル適用がセットで行われ、いずれか片方のみを行うことはできない。
+
+   相関チェックエラーとなった両方のフィールドにスタイル適用したいが、エラーメッセージは1つだけ表示したいような場合は、
+   エラーメッセージに空文字を設定することで実現することが可能である。
+   以下に、\ ``password``\ フィールドと\ ``confirmPassword``\ フィールドにスタイルを適用し、\ ``password``\ フィールドのみにエラーメッセージを表示する例を示す。
+
+     .. code-block:: java
+
+       package com.example.sample.app.validation;
+
+       import org.springframework.stereotype.Component;
+       import org.springframework.validation.Errors;
+       import org.springframework.validation.Validator;
+
+       @Component
+       public class PasswordEqualsValidator implements Validator {
+
+           @Override
+           public boolean supports(Class<?> clazz) {
+               return PasswordResetForm.class.isAssignableFrom(clazz);
+           }
+
+           @Override
+           public void validate(Object target, Errors errors) {
+
+               // omitted
+               if (!password.equals(confirmPassword)) {
+                   // register a field error for password
+                   errors.rejectValue("password",
+                          "PasswordEqualsValidator.passwordResetForm.password",
+                          "password and confirm password must be same.");
+
+                   // register a field error for confirmPassword
+                   errors.rejectValue("confirmPassword", // (1)
+                             "PasswordEqualsValidator.passwordResetForm.confirmPassword", // (2)
+                             ""); // (3)
+               }
+           }
+       }
+
+     .. tabularcolumns:: |p{0.10\linewidth}|p{0.90\linewidth}|
+     .. list-table::
+        :header-rows: 1
+        :widths: 10 90
+
+        * - 項番
+          - 説明
+        * - | (1)
+          - | \ ``confirmPassword``\ フィールドのエラーを登録する。
+        * - | (2)
+          - | エラーメッセージのコード名を指定する。この際、対応するエラーメッセージに空文字を指定する。
+            | メッセージ定義は\ :ref:`Validation_message_in_application_messages`\ を参照されたい。
+        * - | (3)
+          - | エラーメッセージをコードで解決できなかった場合に使用する、デフォルトメッセージを設定する。
+            | 上記の例では空文字を設定している。
+
+
 .. note::
 
    一つのControllerで複数のフォームを扱う場合は、Validatorの対象を限定するために、\ ``@InitBinder("xxx")``\ でモデル名を指定する必要がある。
@@ -2954,6 +3015,58 @@ Bean Validationは標準で用意されているチェックルール以外に�
     Bean Validation 1.0では \ ``ConstraintViolationBuilder.addNode``\ というメソッドを使用していたが、Bean Validation 1.1から非推奨のAPIとなっている。
 
     Bean Validationの非推奨APIについては、\ `Bean Validation API Document(Deprecated API) <http://docs.jboss.org/hibernate/beanvalidation/spec/1.1/api/deprecated-list.html>`_\ を参照されたい。
+
+.. note::
+
+   Spring Validatorによる相関項目チェックにて紹介したように、Bean Validationにおいても
+   :ref:`相関チェック対象の複数フィールドに対してエラー情報を設定する<Validation_how_to_cross-field_validation_for_multi_field_highlight>` ことが可能である。
+
+   以下に、Bean Validationにて\ ``password``\ フィールドと\ ``confirmPassword``\ フィールドにスタイルを適用し、\ ``password``\ フィールドのみにエラーメッセージを表示する例を示す。
+
+     .. code-block:: java
+
+       // omitted
+       public class ConfirmValidator implements ConstraintValidator<Confirm, Object> {
+           private String field;
+
+           private String confirmField;
+
+           private String message;
+
+           public void initialize(Confirm constraintAnnotation) {
+               // omitted
+           }
+
+           public boolean isValid(Object value, ConstraintValidatorContext context) {
+               // omitted
+               if (matched) {
+                   return true;
+               } else {
+                   context.disableDefaultConstraintViolation();
+
+                   //new ConstraintViolation to be generated for field
+                   context.buildConstraintViolationWithTemplate(message)
+                           .addPropertyNode(field).addConstraintViolation();
+
+                   //new ConstraintViolation to be generated for confirmField
+                   context.buildConstraintViolationWithTemplate("") // (1)
+                           .addPropertyNode(confirmField).addConstraintViolation();
+
+                   return false;
+               }
+           }
+
+       }
+
+     .. tabularcolumns:: |p{0.10\linewidth}|p{0.90\linewidth}|
+     .. list-table::
+        :header-rows: 1
+        :widths: 10 90
+
+        * - 項番
+          - 説明
+        * - | (1)
+          - | \ ``confirmPassword``\ フィールドのエラーを登録する。この際、エラーメッセージに空文字を設定している。
 
 
 この\ ``@Confirm``\ アノテーションを使用して、前述の「パスワードリセット」処理を再実装すると、以下のようになる。
