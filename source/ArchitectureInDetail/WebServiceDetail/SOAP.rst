@@ -1659,7 +1659,7 @@ WebServiceインターフェースを実装したプロキシを生成する\ ``
     この機能の利用は最小限に抑えることを推奨する。
     
     Apatch CXFの場合、上記の取得方法により、もっとも最近完了したリクエスト操作のレスポンス情報をクライアントで取得可能である。取得方法については\ `Apache CXF Developing a Consumer with CXF -Reading a response context- <http://cxf.apache.org/docs/developing-a-consumer.html#DevelopingaConsumer-SettingConnectionPropertieswithContexts>`_\を参照されたい。
-    ただし、Apatch CXFのエラー処理ではメッセージ通信エラーが発生した場合、リクエスト操作を中断するため異常時のレスポンス情報取得は基本的に不可能である。Apache CXFのエラー処理については\ `Apache CXF Software Architecture Guide -Fault Handling- <http://cxf.apache.org/docs/cxf-architecture.html#CXFArchitecture-FaultHandling>`_\を参照されたい。どうしても異常時のレスポンス情報が必要な場合は、\ `Apache CXF  -Interceptors and Phases- <http://cxf.apache.org/docs/interceptors.html>`_\を参考に独自の処理を実装する必要がある。
+    ただし、Apatch CXFのエラー処理ではメッセージ通信エラーが発生した場合、リクエスト操作を中断するため異常時のレスポンス情報取得は基本的に不可能である。Apache CXFのエラー処理については\ `Apache CXF Software Architecture Guide -Fault Handling- <http://cxf.apache.org/docs/cxf-architecture.html#CXFArchitecture-FaultHandling>`_\を参照されたい。どうしても異常時のレスポンス情報を取得する必要がある場合は、\ `Apache CXF  -Interceptors and Phases- <http://cxf.apache.org/docs/interceptors.html>`_\を参考に専用のインターセプタークラスを実装する必要がある。
 
     そのため、Apatch CXFに内部的に基づくJava EEサーバでも上記と同じ事情が発生する可能性がある。Java EEサーバ毎の異常系のレスポンス情報取得状況は下記の表を参照されたい。
 
