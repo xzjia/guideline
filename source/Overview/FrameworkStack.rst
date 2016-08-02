@@ -222,6 +222,12 @@ version 5.1.0.RELEASEで利用するOSSの一覧を以下に示す。
       - \*
       -
     * - Spring
+      - org.springframework
+      - spring-jms
+      - 4.2.6.RELEASE
+      - \*
+      -
+    * - Spring
       - org.springframework.data
       - spring-data-commons
       - 1.11.4RELEASE
