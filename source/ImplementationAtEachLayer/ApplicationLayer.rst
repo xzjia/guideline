@@ -1,4 +1,5 @@
 <<<<<<< HEAD
+<<<<<<< HEAD
 アプリケーション層の実装
 ================================================================================
 
@@ -2376,9 +2377,9 @@ Spring Frameworkでは、HTML formから送信されたリクエストパラメ�
        | -M : 3:41:45 AM
 
 .. warning::
-    @DateTimeFormat の pattern でフォーマットを指定した場合、`JSR310の java.time.LocalDate ではSTRICTにチェックがされない <https://jira.spring.io/browse/SPR-13567>`_\。
+    \ ``@DateTimeFormat`` \ の pattern でフォーマットを指定した場合、`JSR310の \ ``java.time.LocalDate`` \ ではSTRICTにチェックがされない <https://jira.spring.io/browse/SPR-13567>`_\。
     Spring Framework  4.3で仕様が改善されて発生しなくなるが、TERASOLUNA Server Framework for Java (5.x)では Spring Framework 4.2 を使用しているので影響を受ける。
-    ("2015/2/29"が2015/2/28"を示す ` java.time.LocalDate ` インスタンスへ変換される)
+    (\ ``"2015/2/29"`` \が\ ``2015/2/28`` \を示す \ `` java.time.LocalDate `` \ インスタンスへ変換される)
 
 |
 
