@@ -163,7 +163,7 @@ Performance
 
 * Number of users: 10,000
 * Number of concurrent access users: 200
-* Number of online process records: 10000/month
+* Number of online process records: 10,000/month
 * The number of users/number of concurrent access users/number of online process records together are expected to increase 1.2 times in 1 year
 
 
