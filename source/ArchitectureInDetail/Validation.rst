@@ -3702,9 +3702,11 @@ Bean Validationの制約アノテーションを指定する方法について�
 
 .. warning::
 
-    \ ``ConstraintViolationException``\ を\ ``try-catch``\句で捕捉する場合、 \ ``ConstraintViolation.getMessage()``\ メソッドを使用することで Hibernate Validator のメッセージ補間がされたエラーメッセージを取得することができる。
+    \ ``ConstraintViolationException``\ の捕捉時、 \ ``ConstraintViolation#getMessage``\ メソッドを使用することでエラーメッセージを取得することができる。
     
-    ただし、Hibernate Validator 外のメッセージ補間（Springによる \ ``{0}`` \ などのプレースホルダの補間）については適用できないという制約があるため、注意すること。
+    ただし、Springの機能によるメッセージ補完は行われないため、エラーメッセージに \ ``{0}``\ でフィールド名を埋め込むことはできない。(前述の :ref:`Validation_message_in_validationmessages` のNoteを参照)
+    
+    代わりに、フィールド名は\ ``ConstraintViolation#getPropertyPath``\メソッドで取得することが可能である。
     
     \ ``ConstraintViolation``\ の詳細については、\ `Hibernate Validatorのリファレンス <http://docs.jboss.org/hibernate/validator/5.2/reference/en-US/html_single/#section-constraint-violation-methods>`_\ を参照されたい。
     
