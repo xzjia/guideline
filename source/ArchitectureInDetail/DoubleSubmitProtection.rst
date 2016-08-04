@@ -1432,39 +1432,6 @@ NameSpaceごとに保持できるトランザクショントークンの上限�
 How to extend
 --------------------------------------------------------------------------------
 
-プログラマティックにトランザクショントークンのライフサイクルを管理する方法について
-^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
-
-以下の設定を追加することで、Controllerのハンドラメソッドの引数として\ ``org.terasoluna.gfw.web.token.transaction.TransactionTokenContext``\を受け取り、プログラマティックにトランザクショントークンのライフサイクルを管理することができる。
-
-- :file:`spring-mvc.xml`
-
- .. code-block:: xml
-    :emphasize-lines: 3-5
-
-    <mvc:annotation-driven>
-      <mvc:argument-resolvers>
-        <!-- (1) -->
-        <bean
-          class="org.terasoluna.gfw.web.token.transaction.TransactionTokenContextHandlerMethodArgumentResolver" />
-      </mvc:argument-resolvers>
-    </mvc:annotation-driven>
-
- .. tabularcolumns:: |p{0.10\linewidth}|p{0.90\linewidth}|
- .. list-table::
-   :header-rows: 1
-   :widths: 10 90
-
-   * - 項番
-     - 説明
-   * - | (1)
-     - | \ ``<mvc:argument-resolvers>``\要素に、Controllerのメソッドの引数として、プログラマティックにトランザクショントークンのライフサイクルを管理するためのオブジェクト(\ ``TransactionTokenContext``\)を引き渡すためのクラス(\ ``TransactionTokenContextHandlerMethodArgumentResolver``\)を設定をする。
-       | プログラマティックにトランザクショントークンのライフサイクルを管理する必要がない場合は、本設定は不要である。
-
- .. note::
- 
-    使用されなくなったトランザクショントークンは、1つのNameSpaceで保持することが出来る上限値を超えた時点で自動的に破棄されていくため、基本的には、本設定は不要である。
-
 .. _doubleSubmit_how_to_extend_change_max_count:
 
 トランザクショントークンの上限数の変更方法について

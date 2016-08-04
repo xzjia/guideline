@@ -9,6 +9,14 @@
     * - 更新日付
       - 更新箇所
       - 更新内容
+    * - 2016-08-31
+      - :doc:`../ArchitectureInDetail/DoubleSubmitProtection`
+      - 「How To Extend プログラマティックにトランザクショントークンのライフサイクルを管理する方法について」を削除。
+        
+        * \ ``TransactionTokenContext``\が提供していたアプリケーション向けAPIを使用した場合、
+          \ ``TransactionToken``\を正しい状態に維持できなくなるなど、フレームワーク内部の挙動に影響を及ぼすような作り込ができてしまうことから、
+          当該APIの非推奨化がなされた。非推奨化にあわせて該当機能の利用方法の記述を削除した。 
+
     * - 2016-06-31
       - :doc:`../ArchitectureInDetail/Utilities/StringProcessing`
       - 記載内容の追加
