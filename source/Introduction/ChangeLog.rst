@@ -10,6 +10,17 @@
       - 更新箇所
       - 更新内容
 
+    * - 2016-08-04
+      - :doc:`../Overview/FrameworkStack`
+      - 利用するOSSのバージョン(Spring IO Platformのバージョン)を更新
+
+        * Spring IO Platformのバージョンを2.0.6.RELEASEに更新
+        * Spring Frameworkのバージョンを4.2.7.RELEASEに更新
+        * Spring Securityのバージョンを4.0.4.RELEASEに更新
+
+        Spring IO Platformのバージョン更新に伴い利用するOSSのバージョンを更新
+
+
     * - 2016-08-31
       - :doc:`../ArchitectureInDetail/WebApplicationDetail/DoubleSubmitProtection`
       - 「How To Extend プログラマティックにトランザクショントークンのライフサイクルを管理する方法について」を削除。

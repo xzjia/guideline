@@ -9,6 +9,17 @@ Change Log
     * - Modified on
       - Modified locations
       - Modification details
+
+    * - 2016-08-04
+      - :doc:`../Overview/FrameworkStack`
+      - OSS version to be used (Spring IO Platform version) updated
+
+        * Spring IO Platform version updated in 2.0.6.RELEASE
+        * Spring Framework version updated in 4.2.7.RELEASE
+        * Spring Security version updated in 4.0.4.RELEASE
+
+        OSS version to be used along with Spring IO Platform version update is updated  
+
     * - 2016-08-31
       - :doc:`../ImplementationAtEachLayer/ApplicationLayer`
       - Description details added
