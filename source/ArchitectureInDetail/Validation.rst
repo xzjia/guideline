@@ -3702,9 +3702,9 @@ Bean Validationの制約アノテーションを指定する方法について�
 
 .. warning::
 
-    \ ``ConstraintViolationException``\ の捕捉時、 \ ``ConstraintViolation#getMessage``\ メソッドを使用することでエラーメッセージを取得することができる。
+    \ ``ConstraintViolation#getMessage``\ メソッドを使用することでエラーメッセージを取得することができるが、Springの機能によるメッセージ補完は行われないため、エラーメッセージに \ ``{0}``\ でフィールド名を埋め込むことはできない。
     
-    ただし、Springの機能によるメッセージ補完は行われないため、エラーメッセージに \ ``{0}``\ でフィールド名を埋め込むことはできない。(前述の :ref:`Validation_message_in_validationmessages` のNoteを参照)
+    (前述の :ref:`Validation_message_in_validationmessages` のNoteを参照)
     
     代わりに、フィールド名は\ ``ConstraintViolation#getPropertyPath``\メソッドで取得することが可能である。
     
