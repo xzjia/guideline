@@ -2375,10 +2375,10 @@ Spring Frameworkでは、HTML formから送信されたリクエストパラメ�
        | -M : 3:41:45 AM
 
 .. warning::
-    \ ``@DateTimeFormat`` \ の pattern でフォーマットを指定し、プロパティとしてJSR-310 Date and Time APIを使用した場合、STRICTにチェックがされない
-    (\ ``"2015/2/29"`` \を変換した場合、本来は変換エラーとなるはずが、\ ``2015年2月28日`` \ がバインドされる)。
+    \ ``@DateTimeFormat`` \ の pattern でフォーマットを指定し、プロパティとして  JSR-310 Date and Time APIが提供する\ ``java.time.LocalDate`` \を使用した場合、STRICTにチェックがされない
+    (\ ``"20150229"`` \を変換した場合、本来は型ミスマッチエラーとなるはずが、\ ``2015年2月28日`` \ がバインドされる)。
     Spring Framework  4.3で仕様が改善されて発生しなくなるが、TERASOLUNA Server Framework for Java (5.x)では Spring Framework 4.2 を使用しているので影響を受ける。
-    本事象の詳細は「`@DateTimeFormat's JSR-310 formatter is not strict in case of pattern <https://jira.spring.io/browse/SPR-13567>`_\」を参照
+    本事象の詳細は「`@DateTimeFormat's JSR-310 formatter is not strict in case of pattern <https://jira.spring.io/browse/SPR-13567>`_\」を参照されたい。
 
 |
 
