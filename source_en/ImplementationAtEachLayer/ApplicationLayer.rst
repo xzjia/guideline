@@ -2372,7 +2372,10 @@ Attributes of \ ``@DateTimeFormat``\  annotation are given below.
        | -M : 3:41:45 AM
 
 .. warning::
-    @DateTimeFormat's formatter is not strict in case of pattern attribute specified with JSR-310 Date&Time API on JDK 8.
+    @DateTimeFormat's formatter is not strict in case of pattern attribute specified with JSR-310 Date and Time API
+    (\ ``"2015/2/29"`` \ is invalid , but it will be regarded as \ ``2015/2/28`` \).
+    Specifications are improved in Spring Framework 4.3 , but are affected because they use Spring Framework 4.2 in TERASOLUNA Server Framework for JAVA (5.x).
+    For details reference to '`@DateTimeFormat's JSR-310 formatter is not strict in case of pattern <https://jira.spring.io/browse/SPR-13567>`_\'
 
 |
 
