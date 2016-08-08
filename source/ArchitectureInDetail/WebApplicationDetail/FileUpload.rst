@@ -33,11 +33,10 @@ Overview
 
  .. warning::
  
-    使用するアプリケーションサーバのファイルアップロードの実装が、Apache Commons FileUploadの実装に依存している場合、\ `CVE-2014-0050 <http://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2014-0050>`_\で報告されているセキュリティの脆弱性が発生する可能性がある。
+    使用するアプリケーションサーバのファイルアップロードの実装が、Apache Commons FileUploadの実装に依存している場合、\ `CVE-2014-0050 <http://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2014-0050>`_\および\ `CVE-2016-3092 <https://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2016-3092>`_\で報告されているセキュリティの脆弱性が発生する可能性がある。
     使用するアプリケーションサーバに同様の脆弱性がない事を確認されたい。
     
-    Tomcatを使用する場合、7.0系は7.0.52以上、8.0系は8.0.3以上を使用する必要がある。
-    Tomcat 7/8は問題が起きないアプリケーションサーバなのでServlet 3.0のファイルアップロード機能を使用すること。
+    Tomcatを使用する場合、7.0系は7.0.70以上、8.0系は8.0.36以上、8.5系は8.5.3以上を使用する必要がある。
 
 アップロード処理の基本フロー
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
@@ -1719,17 +1718,18 @@ Commons FileUploadを使用する場合は以下の設定を行う。
      - | 説明
    * - | (1)
      - | \ ``commons-fileupload``\ への依存関係を追加する。
-       | バージョンはSpring IO Platformによって定義されているため、:file:`pom.xml`\ で指定しなくてよい。
+       | バージョンはSpring IO Platformによって定義されているため、:file:`pom.xml`\で指定しなくてよい。
 
 .. warning::
 
     Apache Commons FileUploadを使用する場合、
-    \ `CVE-2014-0050 <http://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2014-0050>`_\で報告されているセキュリティの脆弱性が発生する可能性がある。
+    \ `CVE-2014-0050 <http://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2014-0050>`_\および\ `CVE-2016-3092 <https://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2016-3092>`_\で報告されているセキュリティの脆弱性が発生する可能性がある。
     使用するApache Commons FileUploadのバージョンに脆弱性がない事を確認されたい。
 
-    Apache Commons FileUploadを使用する場合、1.3.1以上を使用する必要がある。
+    Apache Commons FileUploadを使用する場合、1.3.2以上を使用する必要がある。
 
-    なお、Spring IO Platformで管理されているバージョンを使用すれば、CVE-2014-0050で報告されている脆弱性は発生しない。
+    なお、TERASOLUNA Server Framework for Java version 5.2.0.RELEASEが準拠しているSpring IO Platform 2.0.6.RELEASEで管理されているバージョンを使用すれば、CVE-2014-0050およびCVE-2016-3092で報告されている脆弱性は発生しない。
+    意図的にApache Commons FileUploadのバージョンを変更する場合は、当該脆弱性が対処されているバージョンを指定すること。
 
 |
 
