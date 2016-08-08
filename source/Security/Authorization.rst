@@ -246,6 +246,12 @@ How to use
      * - | \ ``![式]``\ 
        - | 式が真の場合は偽を、偽の場合は真を返す。
 
+.. warning:: **パスマッチングの注意点**
+
+    Spring FrameworkとSpring Securityは、パスのマッチングの厳格さが異なっている。
+    さらに、Spring Frameworkのマッチング設定をカスタマイズすることでSpring Securitとの違いが拡大する懸念がある。
+    そのため、@Securedの追加といったSpring Securityが提供している認可機能で常にURLを制御するなどの対策を行う必要がある。
+    本事象の詳細は「`CVE-2016-5007 Spring Security / MVC Path Matching Inconsistency <https://pivotal.io/security/cve-2016-5007>`_\」を参照されたい。
 
 アクセス認可制御を行わないURLの設定
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
