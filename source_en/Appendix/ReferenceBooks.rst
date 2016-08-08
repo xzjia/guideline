@@ -10,6 +10,9 @@ This guideline was prepared after referring to the following books. Refer to the
    * - Book name
      - Publisher
      - Remarks
+   * - `Spring徹底入門 <http://www.shoeisha.co.jp/book/detail/9784798142470>`_
+     - Shoeisha Co., Ltd
+     - Japanese
    * - `Pro Spring 4th Edition <http://www.apress.com/9781430261513>`_
      - APress
      -
