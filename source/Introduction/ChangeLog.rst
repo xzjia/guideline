@@ -17,6 +17,12 @@
           \ ``TransactionToken``\を正しい状態に維持できなくなるなど、フレームワーク内部の挙動に影響を及ぼすような作り込ができてしまうことから、
           当該APIの非推奨化がなされた。非推奨化にあわせて該当機能の利用方法の記述を削除した。 
 
+    * - 
+      - :doc:`../ImplementationAtEachLayer/ApplicationLayer`
+      - 記載内容の追加
+      
+        * JSR-310 Date and Time APIを使用する際の注意点を記載 (\ `guideline#1991 <https://github.com/terasolunaorg/guideline/issues/1991>`_\ )
+
     * - 2016-06-31
       - :doc:`../ArchitectureInDetail/Utilities/StringProcessing`
       - 記載内容の追加
