@@ -1653,29 +1653,14 @@ WebServiceインターフェースを実装したプロキシを生成する\ ``
 
     ただし、この場合Webサービス実行がプロキシに依存してしまう。そのため、テスト時にスタブを使用する場合にも、スタブに\ ``javax.xml.ws.BindingProvider``\を実装させる必要が発生する。
     この機能の利用は最小限に抑えることを推奨する。
+
+    SOAPサーバのレスポンス情報をクライアントのレスポンスコンテキストに保持することにより、上記のレスポンス情報の取得方法は実現できる。実際の保持処理はJAX-WS実装ライブラリが行う。
+    クライアントがApatch CXFライブラリを用いて実装した場合も上記の取得方法により、最近完了したリクエスト操作のレスポンス情報をクライアントで取得可能である。
+    取得方法については\ `Apache CXF Developing a Consumer with CXF -Reading a response context- <http://cxf.apache.org/docs/developing-a-consumer.html#DevelopingaConsumer-SettingConnectionPropertieswithContexts>`_\を参照されたい。
     
-    Apatch CXFの場合、上記の取得方法により、もっとも最近完了したリクエスト操作のレスポンス情報をクライアントで取得可能である。取得方法については\ `Apache CXF Developing a Consumer with CXF -Reading a response context- <http://cxf.apache.org/docs/developing-a-consumer.html#DevelopingaConsumer-SettingConnectionPropertieswithContexts>`_\を参照されたい。
-    ただし、Apatch CXFのエラー処理ではメッセージ通信エラーが発生した場合、リクエスト操作を中断するため異常時のレスポンス情報取得は基本的に不可能である。Apache CXFのエラー処理については\ `Apache CXF Software Architecture Guide -Fault Handling- <http://cxf.apache.org/docs/cxf-architecture.html#CXFArchitecture-FaultHandling>`_\を参照されたい。どうしても異常時のレスポンス情報を取得する必要がある場合は、\ `Apache CXF  -Interceptors and Phases- <http://cxf.apache.org/docs/interceptors.html>`_\を参考に専用のインターセプタークラスを実装する必要がある。
+    ただし、Apatch CXFライブラリではSOAPサーバとメッセージ通信が出来ないエラーが発生した場合はSOAPサーバからの異常レスポンス情報をクライアントのレスポンスコンテキストに保持せずに、リクエスト操作を中断するため、上記の取得方法では異常時のレスポンス情報取得が不可能になる。Apache CXFのエラー処理については\ `Apache CXF Software Architecture Guide -Fault Handling- <http://cxf.apache.org/docs/cxf-architecture.html#CXFArchitecture-FaultHandling>`_\を参照されたい。
 
-    そのため、Apatch CXFに内部的に基づくJava EEサーバでも上記と同じ事情が発生する可能性がある。Java EEサーバ毎の異常系のレスポンス情報取得状況は下記の表を参照されたい。
-
-     .. tabularcolumns:: |p{0.10\linewidth}|p{0.50\linewidth}|p{0.40\linewidth}|
-     .. list-table::
-         :header-rows: 1
-         :widths: 10 50 40
-
-         * - 項番
-           - Java EEサーバ
-           - 取得状況
-         * - | (1)
-           - | Apache Tomcat
-           - | ×
-         * - | (2)
-           - | Oracle WebLogic Server
-           - | ○
-         * - | (3)
-           - | JBoss Enterprise Application Platform
-           - | ×
+    基本クライアント実装にはApache CXFライブラリへの依存関係は不要であるため、Apache CXFライブラリを追加しないことを推奨する。SOAPサーバとクライアントが同一アプリケーションの構成などクライアントにApache CXFライブラリへの依存関係を追加する必要がある場合は異常時のレスポンス情報取得方法の対策が必要になる。
 
 |
 
