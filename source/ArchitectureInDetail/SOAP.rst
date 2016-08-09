@@ -1651,9 +1651,6 @@ WebServiceインターフェースを実装したプロキシを生成する\ ``
          BindingProvider provider = (BindingProvider) todoWebService;
          int status = (int) provider.getResponseContext().get(MessageContext.HTTP_RESPONSE_CODE);
 
-    ただし、この場合Webサービス実行がプロキシに依存してしまう。そのため、テスト時にスタブを使用する場合にも、スタブに\ ``javax.xml.ws.BindingProvider``\を実装させる必要が発生する。
-    この機能の利用は最小限に抑えることを推奨する。
-
     SOAPサーバのレスポンスの情報をクライアントのレスポンスコンテキストに保持することにより、上記のレスポンスの情報の取得方法は実現できる。実際の保持処理はJAX-WS実装ライブラリが行う。
     クライアントがApatch CXFライブラリを用いて実装した場合も上記の取得方法により、最近完了したリクエスト操作のレスポンスの情報をクライアントで取得可能である。
     取得方法については\ `Apache CXF Developing a Consumer with CXF -Reading a response context- <http://cxf.apache.org/docs/developing-a-consumer.html#DevelopingaConsumer-SettingConnectionPropertieswithContexts>`_\を参照されたい。
