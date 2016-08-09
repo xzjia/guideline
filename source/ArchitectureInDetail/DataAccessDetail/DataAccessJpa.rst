@@ -251,7 +251,8 @@ pom.xmlの設定
     <!-- (1) -->
     <dependency>
         <groupId>org.terasoluna.gfw</groupId>
-        <artifactId>terasoluna-gfw-jpa</artifactId>
+        <artifactId>terasoluna-gfw-jpa-dependencies</artifactId>
+        <type>pom</type>
     </dependency>
 
  .. tabularcolumns:: |p{0.10\linewidth}|p{0.90\linewidth}|
@@ -262,7 +263,7 @@ pom.xmlの設定
    * - 項番
      - 説明
    * - | (1)
-     - | JPAに関連するライブラリ群が定義してある\ ``terasoluna-gfw-jpa``\ を、dependencyに追加する。
+     - | JPAに関連するライブラリ群が定義してある\ ``terasoluna-gfw-jpa-dependencies``\ を、dependencyに追加する。
 
 アプリケーションの設定
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^

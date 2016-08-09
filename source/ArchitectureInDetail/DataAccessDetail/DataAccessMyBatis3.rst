@@ -392,13 +392,13 @@ How to use
 pom.xmlの設定
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
-| インフラストラクチャ層にMyBatis3を使用する場合は、\ :file:`pom.xml`\にterasoluna-gfw-mybatis3への依存関係を追加する。
+| インフラストラクチャ層にMyBatis3を使用する場合は、\ :file:`pom.xml`\にterasoluna-gfw-mybatis3-dependenciesへの依存関係を追加する。
 | マルチプロジェクト構成の場合は、domainプロジェクトの\ :file:`pom.xml`\(:file:`projectName-domain/pom.xml`)に追加する。
 
-`MyBatis3用のブランクプロジェクト <https://github.com/terasolunaorg/terasoluna-gfw-web-multi-blank#multi-blank-project-with-mybatis3>`_ \ からプロジェクトを生成した場合は、terasoluna-gfw-mybatis3への依存関係は、設定済の状態である。
+`MyBatis3用のブランクプロジェクト <https://github.com/terasolunaorg/terasoluna-gfw-web-multi-blank#multi-blank-project-with-mybatis3>`_ \ からプロジェクトを生成した場合は、terasoluna-gfw-mybatis3-dependenciesへの依存関係は、設定済の状態である。
 
  .. code-block:: xml
-    :emphasize-lines: 22-26
+    :emphasize-lines: 22-27
 
     <?xml version="1.0" encoding="UTF-8"?>
     <project xmlns="http://maven.apache.org/POM/4.0.0"
@@ -424,7 +424,8 @@ pom.xmlの設定
             <!-- (1) -->
             <dependency>
                 <groupId>org.terasoluna.gfw</groupId>
-                <artifactId>terasoluna-gfw-mybatis3</artifactId>
+                <artifactId>terasoluna-gfw-mybatis3-dependencies</artifactId>
+                <type>pom</type>
             </dependency>
 
             <!-- omitted -->
@@ -455,8 +456,9 @@ pom.xmlの設定
  
         <dependency>
             <groupId>org.terasoluna.gfw</groupId>
-            <artifactId>terasoluna-gfw-mybatis3</artifactId>
+            <artifactId>terasoluna-gfw-mybatis3-dependencies</artifactId>
             <version>5.1.0.RELEASE</version>
+            <type>pom</type>
         </dependency>
         
     上記例では5.1.0.RELEASEを指定しているが、実際に指定するバージョンは、プロジェクトで利用するバージョンを指定すること。

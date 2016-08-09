@@ -5051,7 +5051,8 @@ terasoluna-gfw-common-dependenciesにて依存関係が定義されているた�
 
     <dependency>
         <groupId>org.terasoluna.gfw</groupId>
-        <artifactId>terasoluna-gfw-jodatime</artifactId>
+        <artifactId>terasoluna-gfw-jodatime-dependencies</artifactId>
+        <type>pom</type>
     </dependency>
 
 or
