@@ -249,11 +249,11 @@ How to use
 
 .. warning:: **パスマッチングの注意点**
 
-    Spring MVCとSpring Securityは、パスのマッチングの厳格さが異なっていることで、Spring Securityが提供している認可機能を回避できる脆弱性が存在する。
+    Spring MVCとSpring Securityは、パスのマッチングの仕組みが異なっているため、差異を利用してSpring Securityの認可機能を突破できる脆弱性が存在する。
     本事象の詳細は「`CVE-2016-5007 Spring Security / MVC Path Matching Inconsistency <https://pivotal.io/security/cve-2016-5007>`_\」を参照されたい。
 
     Spring Framework 4.3.1+、Spring Security 4.1.1+では \ `MvcRequestMatcher` \ を使用することで本事象は解消されるが、
-    Spring Framework 4.3.0+ 以前の場合、Spring MVCで \ `trimTokens` \ プロパティに \ `false` \ を設定した \ `org.springframework.util.AntPathMatcher` \ を使用する必要がある。
+    Spring Framework 4.3.0 以前の場合、Spring MVCで \ `trimTokens` \ プロパティに \ `false` \ を設定した \ `org.springframework.util.AntPathMatcher` \ を使用する必要がある。
 
       .. code-block:: xml
 
@@ -265,7 +265,7 @@ How to use
               <property name="trimTokens" value="false" />
           </bean>
 
-    上記の対策をTERASOLUNA Server Framework for Java 5.2.0、5.1.1、1.0.5では実施しているが、
+    上記の対策をTERASOLUNA Server Framework for Javaでは実施しているが、
     設定を外すと脆弱性にさらされてしまうので注意する必要がある。
 
 アクセス認可制御を行わないURLの設定
