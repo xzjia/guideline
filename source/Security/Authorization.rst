@@ -352,7 +352,7 @@ Spring Securityは定義した順番でリクエストとのマッチング処�
     本事象の詳細は「\ `CVE-2016-5007 Spring Security / MVC Path Matching Inconsistency <https://pivotal.io/security/cve-2016-5007>`_\」を参照されたい。
 
     Spring Framework 4.3.1 以降、Spring Security 4.1.1 以降では \ `MvcRequestMatcher` \ を使用することで本事象は解消されるが、
-    TERASOLUNA Server Framework for Java (5.x)ではSpring Framework 4.2.7 を使用しているため、Spring MVCで \ `trimTokens` \ プロパティに \ `false` \ を設定した \ `org.springframework.util.AntPathMatcher` \ を使用する必要がある。
+    TERASOLUNA Server Framework for Java (5.x)使用しているSpring Framework 4.2.x では、Spring MVCで \ `trimTokens` \ プロパティに \ `false` \ を設定した \ `org.springframework.util.AntPathMatcher` \ を使用する必要がある。
 
       .. code-block:: xml
 
@@ -364,7 +364,7 @@ Spring Securityは定義した順番でリクエストとのマッチング処�
               <property name="trimTokens" value="false" />
           </bean>
 
-    上記の対策を設定してTERASOLUNA Server Framework for Javaで提供しているが、
+    上記の対策をTERASOLUNA Server Framework for Javaで提供するブランクプロジェクトでは設定しているが、
     設定を外すと脆弱性にさらされてしまうので注意する必要がある。
 
 アクセスポリシーの指定
