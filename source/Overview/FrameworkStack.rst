@@ -640,7 +640,7 @@ version 5.1.0.RELEASEで利用するOSSの一覧を以下に示す。
       - シングルプロジェクト構成のブランクプロジェクト組込
     * - \ (1)
       - terasoluna-gfw-common
-      - Webに依存しない汎用的に使用できる機能を提供する。
+      - Webに依存しない汎用的に使用できる機能を提供する。本ライブラリを利用する場合は、依存関係としてterasoluna-gfw-common-dependenciesをpom.xmlに追加する。
       - 有
       - 有*1
       - 有*1
@@ -664,19 +664,19 @@ version 5.1.0.RELEASEで利用するOSSの一覧を以下に示す。
       - 無
     * - \ (5)
       - terasoluna-gfw-jodatime
-      - Joda Timeに依存する機能を提供する。(5.0.0から追加)
+      - Joda Timeに依存する機能を提供する。本ライブラリを利用する場合は、依存関係としてterasoluna-gfw-jodatime-dependenciesをpom.xmlに追加する。(5.0.0から追加)
       - 有
       - 有*1
       - 有*1
     * - \ (6)
       - terasoluna-gfw-web
-      - Webアプリケーションを作成する場合に使用する機能を提供する。Viewに依存しない機能を集約している。
+      - Webアプリケーションを作成する場合に使用する機能を提供する。Viewに依存しない機能を集約している。本ライブラリを利用する場合は、依存関係としてterasoluna-gfw-web-dependenciesをpom.xmlに追加する。
       - 有
       - 有*1
       - 有*1
     * - \ (7)
       - terasoluna-gfw-web-jsp
-      - ViewにJSPを採用するWebアプリケーションを作成する場合に使用する機能を提供する。
+      - ViewにJSPを採用するWebアプリケーションを作成する場合に使用する機能を提供する。本ライブラリを利用する場合は、依存関係としてterasoluna-gfw-web-jsp-dependenciesをpom.xmlに追加する。
       - 有
       - 有*1
       - 有*1
@@ -700,7 +700,7 @@ version 5.1.0.RELEASEで利用するOSSの一覧を以下に示す。
       - 有
     * - \ (11)
       - terasoluna-gfw-security-web
-      - Spring Securityの拡張部品を提供する。
+      - Spring Securityの拡張部品を提供する。本ライブラリを利用する場合は、依存関係としてterasoluna-gfw-security-web-dependenciesをpom.xmlに追加する。
       - 有
       - 有*1
       - 有*1
