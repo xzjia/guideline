@@ -347,6 +347,26 @@ Spring Securityは定義した順番でリクエストとのマッチング処�
               <!-- omitted -->
           </sec:http>
 
+.. warning::
+    Spring MVCとSpring Securityでは、リクエストとのマッチングの仕組みが厳密には異なっており、この差異を利用してSpring Securityの認可機能を突破し、ハンドラメソッドにアクセスできる脆弱性が存在する。
+    本事象の詳細は「\ `CVE-2016-5007 Spring Security / MVC Path Matching Inconsistency <https://pivotal.io/security/cve-2016-5007>`_\」を参照されたい。
+
+    Spring Framework 4.3.1 以降、Spring Security 4.1.1 以降では \ `MvcRequestMatcher` \ を使用することで本事象は解消されるが、
+    TERASOLUNA Server Framework for Java (5.x)が使用しているSpring Framework 4.2.x では、Spring MVCで \ `trimTokens` \ プロパティに \ `false` \ を設定した \ `org.springframework.util.AntPathMatcher` \ を使用する必要がある。
+
+      .. code-block:: xml
+
+          <mvc:annotation-driven>
+              <mvc:path-matching path-matcher="pathMatcher" />
+          </mvc:annotation-driven>
+
+          <bean id="pathMatcher" class="org.springframework.util.AntPathMatcher">
+              <property name="trimTokens" value="false" />
+          </bean>
+
+    上記の対策をTERASOLUNA Server Framework for Javaで提供するブランクプロジェクトでは設定しているが、
+    設定を外すと脆弱性にさらされてしまうので注意する必要がある。
+
 アクセスポリシーの指定
 ''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''
 
