@@ -66,7 +66,7 @@ JAX-WSとは
 | JAX-WSを用いることで、JavaのオブジェクトをSOAPの仕様に沿ったXMLに変換して送信することが可能である。
 | そのため、SOAP Web Serviceとしては、XMLでやり取りが行われるものの、利用者は、XMLの構造をあまり意識せずデータを扱うことができる。
 | Oracle WebLogic ServerやJBoss Enterprise Application Platformなど主要なJava EEサーバはJAX-WS実装をサーバ側で有しており、特別なライブラリを追加せずにその機能を使用して簡単にWebサービスを公開することができる。
-| ただし、Tomcatは、JAX-WSを実装してしないため、使用する際には別途JAX-WS実装ライブラリを追加する必要がある。
+| ただし、Tomcatは、JAX-WSを実装していないため、使用する際には別途JAX-WS実装ライブラリを追加する必要がある。
 | 詳細は、「\ :ref:`SOAPAppendixTomcatWebService`\」を参照されたい。
 
 |
