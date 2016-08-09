@@ -1648,7 +1648,7 @@ WebServiceインターフェースを実装したプロキシを生成する\ ``
 
 .. note:: **レスポンスの情報取得**
 
-    リトライを考慮するなど、レスポンス情報をクライアントで取得したい場合、以下のように\ `javax.xml.ws.BindingProvider- <http://docs.oracle.com/javase/7/docs/api/javax/xml/ws/BindingProvider.html#getRequestContext()>`_\ クラスにキャストすることで取得できる。
+    リトライを考慮するなど、レスポンスの情報をクライアントで取得したい場合、以下のように\ `javax.xml.ws.BindingProvider- <http://docs.oracle.com/javase/7/docs/api/javax/xml/ws/BindingProvider.html#getRequestContext()>`_\ クラスにキャストすることで取得できる。
 
      .. code-block:: java
 
@@ -1658,13 +1658,13 @@ WebServiceインターフェースを実装したプロキシを生成する\ ``
     ただし、この場合Webサービス実行がプロキシに依存してしまう。そのため、テスト時にスタブを使用する場合にも、スタブに\ ``javax.xml.ws.BindingProvider``\を実装させる必要が発生する。
     この機能の利用は最小限に抑えることを推奨する。
 
-    SOAPサーバのレスポンス情報をクライアントのレスポンスコンテキストに保持することにより、上記のレスポンス情報の取得方法は実現できる。実際の保持処理はJAX-WS実装ライブラリが行う。
-    クライアントがApatch CXFライブラリを用いて実装した場合も上記の取得方法により、最近完了したリクエスト操作のレスポンス情報をクライアントで取得可能である。
+    SOAPサーバのレスポンスの情報をクライアントのレスポンスコンテキストに保持することにより、上記のレスポンスの情報の取得方法は実現できる。実際の保持処理はJAX-WS実装ライブラリが行う。
+    クライアントがApatch CXFライブラリを用いて実装した場合も上記の取得方法により、最近完了したリクエスト操作のレスポンスの情報をクライアントで取得可能である。
     取得方法については\ `Apache CXF Developing a Consumer with CXF -Reading a response context- <http://cxf.apache.org/docs/developing-a-consumer.html#DevelopingaConsumer-SettingConnectionPropertieswithContexts>`_\を参照されたい。
     
-    ただし、Apatch CXFライブラリではSOAPサーバとメッセージ通信が出来ないエラーが発生した場合はSOAPサーバからの異常レスポンス情報をクライアントのレスポンスコンテキストに保持せずに、リクエスト操作を中断するため、上記の取得方法では異常時のレスポンス情報取得が不可能になる。Apache CXFのエラー処理については\ `Apache CXF Software Architecture Guide -Fault Handling- <http://cxf.apache.org/docs/cxf-architecture.html#CXFArchitecture-FaultHandling>`_\を参照されたい。
+    ただし、Apatch CXFライブラリではSOAPサーバとメッセージ通信が出来ないエラーが発生した場合はSOAPサーバからの異常レスポンスの情報をクライアントのレスポンスコンテキストに保持せずに、リクエスト操作を中断するため、上記の取得方法では異常時のレスポンスの情報取得が不可能になる。Apache CXFのエラー処理については\ `Apache CXF Software Architecture Guide -Fault Handling- <http://cxf.apache.org/docs/cxf-architecture.html#CXFArchitecture-FaultHandling>`_\を参照されたい。
 
-    基本クライアント実装にはApache CXFライブラリへの依存関係は不要であるため、Apache CXFライブラリを追加しないことを推奨する。SOAPサーバとクライアントが同一アプリケーションの構成などクライアントにApache CXFライブラリへの依存関係を追加する必要がある場合は異常時のレスポンス情報取得方法の対策が必要になる。
+    基本クライアント実装にはApache CXFライブラリへの依存関係は不要であるため、Apache CXFライブラリを追加しないことを推奨する。SOAPサーバとクライアントが同一アプリケーションの構成などクライアントにApache CXFライブラリへの依存関係を追加する必要がある場合は異常時のレスポンスの情報取得方法の対策が必要になる。
 
 |
 
