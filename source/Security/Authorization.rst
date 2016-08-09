@@ -347,8 +347,7 @@ Spring Securityは定義した順番でリクエストとのマッチング処�
               <!-- omitted -->
           </sec:http>
 
-.. warning:: **パスマッチングの注意点**
-
+.. warning::
     Spring MVCとSpring Securityは、パスのマッチングの仕組みが異なっているため、差異を利用してSpring Securityの認可機能を突破できる脆弱性が存在する。
     本事象の詳細は「`CVE-2016-5007 Spring Security / MVC Path Matching Inconsistency <https://pivotal.io/security/cve-2016-5007>`_\」を参照されたい。
 
