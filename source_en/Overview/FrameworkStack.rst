@@ -224,7 +224,13 @@ List of OSS being used in version 5.1.0.RELEASE.
     * - Spring
       - org.springframework
       - spring-jms
-      - 4.2.6.RELEASE
+      - 4.2.7.RELEASE
+      - \*
+      -
+    * - Spring
+      - org.springframework
+      - spring-messaging
+      - 4.2.7.RELEASE
       - \*
       -
     * - Spring
