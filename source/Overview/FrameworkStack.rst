@@ -639,136 +639,136 @@ version 5.1.0.RELEASEで利用するOSSの一覧を以下に示す。
       - マルチプロジェクト構成のブランクプロジェクト組込
       - シングルプロジェクト構成のブランクプロジェクト組込
     * - \ (1)
-      - terasoluna-gfw-common
-      - Webに依存しない汎用的に使用できる機能を提供する。本ライブラリを利用する場合は、依存関係としてterasoluna-gfw-common-dependenciesをpom.xmlに追加する。
-      - 有
-      - 有*1
-      - 有*1
-    * - \ (2)
-      - terasoluna-gfw-string
-      - 文字列処理に関連する機能を提供する。(5.1.0から追加)
-      - 有
-      - 無
-      - 無
-    * - \ (3)
-      - terasoluna-gfw-codepoints
-      - 対象の文字列を構成するコードポイントがコードポイント集合に含まれることをチェックする機能を提供する。(5.1.0から追加)
-      - 有
-      - 無
-      - 無
-    * - \ (4)
-      - terasoluna-gfw-validator
-      - 汎用的なBean Validationの制約アノテーションを追加して提供する。(5.1.0から追加)
-      - 有
-      - 無
-      - 無
-    * - \ (5)
-      - terasoluna-gfw-jodatime
-      - Joda Timeに依存する機能を提供する。本ライブラリを利用する場合は、依存関係としてterasoluna-gfw-jodatime-dependenciesをpom.xmlに追加する。(5.0.0から追加)
-      - 有
-      - 有*1
-      - 有*1
-    * - \ (6)
-      - terasoluna-gfw-web
-      - Webアプリケーションを作成する場合に使用する機能を提供する。Viewに依存しない機能を集約している。本ライブラリを利用する場合は、依存関係としてterasoluna-gfw-web-dependenciesをpom.xmlに追加する。
-      - 有
-      - 有*1
-      - 有*1
-    * - \ (7)
-      - terasoluna-gfw-web-jsp
-      - ViewにJSPを採用するWebアプリケーションを作成する場合に使用する機能を提供する。本ライブラリを利用する場合は、依存関係としてterasoluna-gfw-web-jsp-dependenciesをpom.xmlに追加する。
-      - 有
-      - 有*1
-      - 有*1
-    * - \ (8)
-      - terasoluna-gfw-mybatis3-dependencies
-      - MyBatis3を使用する場合の依存関係定義を提供する。
-      - 無
-      - 有*2
-      - 有*2
-    * - \ (9)
-      - terasoluna-gfw-jpa-dependencies
-      - JPAを使用する場合の依存関係定義を提供する。
-      - 無
-      - 有*3
-      - 有*3
-    * - \ (10)
-      - terasoluna-gfw-security-core-dependencies
-      - Spring Securityを使用する場合の依存関係定義(Web以外)を提供する。
-      - 無
-      - 有
-      - 有
-    * - \ (11)
-      - terasoluna-gfw-security-web
-      - Spring Securityの拡張部品を提供する。本ライブラリを利用する場合は、依存関係としてterasoluna-gfw-security-web-dependenciesをpom.xmlに追加する。
-      - 有
-      - 有*1
-      - 有*1
-    * - \ (12)
-      - terasoluna-gfw-recommended-dependencies
-      - Webに依存しない推奨ライブラリへの依存関係定義を提供する。
-      - 無
-      - 有
-      - 有
-    * - \ (13)
-      - terasoluna-gfw-recommended-web-dependencies
-      - Webに依存する推奨ライブラリへの依存関係定義を提供する。
-      - 無
-      - 有
-      - 有
-    * - \ (14)
       - terasoluna-gfw-parent
       - 依存ライブラリの管理とビルド用プラグインの推奨設定を提供する。
       - 無
-      - 有*4
-      - 有*4
-    * - \ (15)
+      - 有*1
+      - 有*1
+    * - \ (2)
       - terasoluna-gfw-common-libraries
       - 共通ライブラリのうち、Javaソースコードを含むプロジェクトの構成を定義する。依存関係としてpom.xmlに追加する必要はない。
       - 無
-      - 有*4
-      - 有*4
-    * - \ (16)
+      - 有*1
+      - 有*1
+    * - \ (3)
       - terasoluna-gfw-dependencies
       - 共通ライブラリのうち、依存関係定義のみを提供するプロジェクト(terasoluna-gfw-parent以外)の構成を定義する。依存関係としてpom.xmlに追加する必要はない。
       - 無
-      - 有*4
-      - 有*4
-    * - \ (17)
+      - 有*1
+      - 有*1
+    * - \ (4)
+      - terasoluna-gfw-common
+      - Webに依存しない汎用的に使用できる機能を提供する。本ライブラリを利用する場合は、依存関係としてterasoluna-gfw-common-dependenciesをpom.xmlに追加する。
+      - 有
+      - 有*2
+      - 有*2
+    * - \ (5)
       - terasoluna-gfw-common-dependencies
       - terasoluna-gfw-commonプロジェクトが提供する機能を使用する場合の依存関係定義を提供する。
       - 無
       - 有
       - 有
-    * - \ (18)
+    * - \ (6)
+      - terasoluna-gfw-jodatime
+      - Joda Timeに依存する機能を提供する。本ライブラリを利用する場合は、依存関係としてterasoluna-gfw-jodatime-dependenciesをpom.xmlに追加する。(5.0.0から追加)
+      - 有
+      - 有*2
+      - 有*2
+    * - \ (7)
       - terasoluna-gfw-jodatime-dependencies
       - terasoluna-gfw-jodatimeプロジェクトが提供する機能を使用する場合の依存関係定義を提供する。
       - 無
       - 有
       - 有
-    * - \ (19)
-      - terasoluna-gfw-security-web-dependencies
-      - Spring Securityを使用する場合の依存関係定義(Web関連)と、terasoluna-gfw-security-webプロジェクトが提供する機能を使用する場合の依存関係定義を提供する。
-      - 無
+    * - \ (8)
+      - terasoluna-gfw-web
+      - Webアプリケーションを作成する場合に使用する機能を提供する。Viewに依存しない機能を集約している。本ライブラリを利用する場合は、依存関係としてterasoluna-gfw-web-dependenciesをpom.xmlに追加する。
       - 有
-      - 有
-    * - \ (20)
+      - 有*2
+      - 有*2
+    * - \ (9)
       - terasoluna-gfw-web-dependencies
       - terasoluna-gfw-webプロジェクトが提供する機能を使用する場合の依存関係定義を提供する。
       - 無
       - 有
       - 有
-    * - \ (21)
+    * - \ (10)
+      - terasoluna-gfw-web-jsp
+      - ViewにJSPを採用するWebアプリケーションを作成する場合に使用する機能を提供する。本ライブラリを利用する場合は、依存関係としてterasoluna-gfw-web-jsp-dependenciesをpom.xmlに追加する。
+      - 有
+      - 有*2
+      - 有*2
+    * - \ (11)
       - terasoluna-gfw-web-jsp-dependencies
       - terasoluna-gfw-web-jspプロジェクトが提供する機能を使用する場合の依存関係定義を提供する。
       - 無
       - 有
       - 有
+    * - \ (12)
+      - terasoluna-gfw-security-web
+      - Spring Securityの拡張部品を提供する。本ライブラリを利用する場合は、依存関係としてterasoluna-gfw-security-web-dependenciesをpom.xmlに追加する。
+      - 有
+      - 有*2
+      - 有*2
+    * - \ (13)
+      - terasoluna-gfw-security-web-dependencies
+      - Spring Securityを使用する場合の依存関係定義(Web関連)と、terasoluna-gfw-security-webプロジェクトが提供する機能を使用する場合の依存関係定義を提供する。
+      - 無
+      - 有
+      - 有
+    * - \ (14)
+      - terasoluna-gfw-string
+      - 文字列処理に関連する機能を提供する。(5.1.0から追加)
+      - 有
+      - 無
+      - 無
+    * - \ (15)
+      - terasoluna-gfw-codepoints
+      - 対象の文字列を構成するコードポイントがコードポイント集合に含まれることをチェックする機能を提供する。(5.1.0から追加)
+      - 有
+      - 無
+      - 無
+    * - \ (16)
+      - terasoluna-gfw-validator
+      - 汎用的なBean Validationの制約アノテーションを追加して提供する。(5.1.0から追加)
+      - 有
+      - 無
+      - 無
+    * - \ (17)
+      - terasoluna-gfw-security-core-dependencies
+      - Spring Securityを使用する場合の依存関係定義(Web以外)を提供する。
+      - 無
+      - 有
+      - 有
+    * - \ (18)
+      - terasoluna-gfw-mybatis3-dependencies
+      - MyBatis3を使用する場合の依存関係定義を提供する。
+      - 無
+      - 有*3
+      - 有*3
+    * - \ (19)
+      - terasoluna-gfw-jpa-dependencies
+      - JPAを使用する場合の依存関係定義を提供する。
+      - 無
+      - 有*4
+      - 有*4
+    * - \ (20)
+      - terasoluna-gfw-recommended-dependencies
+      - Webに依存しない推奨ライブラリへの依存関係定義を提供する。
+      - 無
+      - 有
+      - 有
+    * - \ (21)
+      - terasoluna-gfw-recommended-web-dependencies
+      - Webに依存する推奨ライブラリへの依存関係定義を提供する。
+      - 無
+      - 有
+      - 有
 
+#. | \ ``<dependency>``\ 要素ではないが、各プロジェクトの\ ``<parent>``\ 要素として組み込まれる。
 #. | \ ``<dependency>``\ 要素ではないが、\ ``<dependency>``\ 要素からの推移的依存関係として組み込まれる。
 #. | データアクセスに、MyBatis3を使用する場合に標準で組み込まれる共通ライブラリ
 #. | データアクセスに、JPAを使用する場合に標準で組み込まれる共通ライブラリ
-#. | \ ``<dependency>``\ 要素ではないが、各プロジェクトの\ ``<parent>``\ 要素として組み込まれる。
 
 
 Javaソースコードを含まないものは、ライブラリの依存関係のみ定義しているプロジェクトである。
