@@ -252,7 +252,7 @@ How to use
     本事象の詳細は「\ `CVE-2016-5007 Spring Security / MVC Path Matching Inconsistency <https://pivotal.io/security/cve-2016-5007>`_\」を参照されたい。
 
     Spring Framework 4.3.1 以降、Spring Security 4.1.1 以降では \ `MvcRequestMatcher` \ を使用することで本事象は解消されるが、
-    TERASOLUNA Server Framework for Java (1.x)が使用しているSpring Framework 3.2.x では、Spring MVCで \ `trimTokens` \ プロパティに \ `false` \ を設定した \ `org.springframework.util.AntPathMatcher` \ を使用する必要がある。
+    TERASOLUNA Global Framework for Java (1.x)が使用しているSpring Framework 3.2.17 以降では、Spring MVCで \ `trimTokens` \ プロパティに \ `false` \ を設定した \ `org.springframework.util.AntPathMatcher` \ を使用する必要がある。
 
       .. code-block:: xml
 
@@ -264,7 +264,7 @@ How to use
               <property name="trimTokens" value="false" />
           </bean>
 
-    上記の対策をTERASOLUNA Server Framework for Javaで提供するブランクプロジェクトでは設定しているが、
+    上記の対策をTERASOLUNA Global Framework for Javaで提供するブランクプロジェクトでは設定しているが、
     設定を外すと脆弱性にさらされてしまうので注意する必要がある。
 
 アクセス認可制御を行わないURLの設定
