@@ -1661,7 +1661,7 @@ WebServiceインターフェースを実装したプロキシを生成する\ ``
     これは、依存関係にApatch CXFライブラリが含まれる場合は自動的にApatch CXFのプロキシが使用されるため、およびApache CXFのプロキシは通信エラーが発生した場合にレスポンスの情報をレスポンスコンテキストに保持しないためである。
     Apache CXFのエラー処理については\ `Apache CXF Software Architecture Guide -Fault Handling- <http://cxf.apache.org/docs/cxf-architecture.html#CXFArchitecture-FaultHandling>`_\を参照されたい。
 
-    基本クライアント実装にはApache CXFライブラリへの依存関係は不要であるため、Apache CXFライブラリを追加しないことを推奨する。SOAPサーバとクライアントが同一アプリケーションの構成などクライアントにApache CXFライブラリへの依存関係を追加する必要がある場合は異常時のレスポンスの情報取得方法の対策が必要になる。
+    Webサービスと別のWebサービスへのクライアントを持つ中継サービスのように、どうしてもクライアントにApache CXFライブラリの依存関係を含んでしまう場合は制限事項として注意されたい。
 
 |
 
