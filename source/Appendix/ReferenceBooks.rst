@@ -10,6 +10,9 @@
    * - 書籍名
      - 出版社
      - 備考
+   * - `Spring徹底入門 <http://www.shoeisha.co.jp/book/detail/9784798142470>`_
+     - 翔泳社
+     - 日本語
    * - `Pro Spring 4th Edition <http://www.apress.com/9781430261513>`_
      - APress
      -
