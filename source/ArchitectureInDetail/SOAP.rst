@@ -1651,11 +1651,11 @@ WebServiceインターフェースを実装したプロキシを生成する\ ``
          BindingProvider provider = (BindingProvider) todoWebService;
          int status = (int) provider.getResponseContext().get(MessageContext.HTTP_RESPONSE_CODE);
 
-    SOAPサーバのレスポンスの情報をクライアントのレスポンスコンテキストに保持することにより、上記のレスポンスの情報の取得方法は実現できる。実際の保持処理はJAX-WS実装ライブラリが行う。
-    クライアントがApatch CXFライブラリを用いて実装した場合も上記の取得方法により、最近完了したリクエスト操作のレスポンスの情報をクライアントで取得可能である。
     取得方法については\ `Apache CXF Developing a Consumer with CXF -Reading a response context- <http://cxf.apache.org/docs/developing-a-consumer.html#DevelopingaConsumer-SettingConnectionPropertieswithContexts>`_\を参照されたい。
     
-    ただし、Apatch CXFライブラリではSOAPサーバとメッセージ通信が出来ないエラーが発生した場合はSOAPサーバからの異常レスポンスの情報をクライアントのレスポンスコンテキストに保持せずに、リクエスト操作を中断するため、上記の取得方法では異常時のレスポンスの情報取得が不可能になる。Apache CXFのエラー処理については\ `Apache CXF Software Architecture Guide -Fault Handling- <http://cxf.apache.org/docs/cxf-architecture.html#CXFArchitecture-FaultHandling>`_\を参照されたい。
+    ただし、クライアントの依存関係にApatch CXFライブラリが含まれる場合、通信エラー時に上記の方法でレスポンスの情報を取得することができない。
+    これは、依存関係にApatch CXFライブラリが含まれる場合は自動的にApatch CXFのプロキシが使用されるため、およびApache CXFのプロキシは通信エラーが発生した場合にレスポンスの情報をレスポンスコンテキストに保持しないためである。
+    Apache CXFのエラー処理については\ `Apache CXF Software Architecture Guide -Fault Handling- <http://cxf.apache.org/docs/cxf-architecture.html#CXFArchitecture-FaultHandling>`_\を参照されたい。
 
     基本クライアント実装にはApache CXFライブラリへの依存関係は不要であるため、Apache CXFライブラリを追加しないことを推奨する。SOAPサーバとクライアントが同一アプリケーションの構成などクライアントにApache CXFライブラリへの依存関係を追加する必要がある場合は異常時のレスポンスの情報取得方法の対策が必要になる。
 
