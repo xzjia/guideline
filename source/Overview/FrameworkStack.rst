@@ -224,7 +224,7 @@ version 5.1.0.RELEASEで利用するOSSの一覧を以下に示す。
     * - Spring
       - org.springframework.data
       - spring-data-commons
-      - 4.0.4RELEASE
+      - 1.11.4RELEASE
       - \*
       -
     * - Spring
