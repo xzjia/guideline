@@ -155,7 +155,7 @@ How to describe an access policy is explained.
 
 Spring Security supports Spring Expression Language (SpEL) as a method which describes how to specify an access policy.
 Although there are other methods which do not use SpEL, this guideline explains how to specify an access policy by using Expression.
-How to use SpEL is briefly explained in this section, however for detailed description, refer \ `Spring Framework Reference Documentation -Spring Expression Language (SpEL)- <http://docs.spring.io/spring/docs/4.2.4.RELEASE/spring-framework-reference/htmlsingle/#expressions>`_\ .
+How to use SpEL is briefly explained in this section, however for detailed description, refer \ `Spring Framework Reference Documentation -Spring Expression Language (SpEL)- <http://docs.spring.io/spring/docs/4.2.7.RELEASE/spring-framework-reference/htmlsingle/#expressions>`_\ .
 
 |
 

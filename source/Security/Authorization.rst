@@ -155,7 +155,7 @@ How to use
 
 Spring Securityは、アクセスポリシーを指定する記述方法としてSpring Expression Language(SpEL)をサポートしている。
 SpELを使わない方法もあるが、本ガイドラインではExpressionを使ってアクセスポリシーを指定する方法で説明を行う。
-SpELの使い方については本節でも紹介するが、より詳しい使い方を知りたい場合は \ `Spring Framework Reference Documentation -Spring Expression Language (SpEL)- <http://docs.spring.io/spring/docs/4.2.4.RELEASE/spring-framework-reference/htmlsingle/#expressions>`_\ を参照されたい。
+SpELの使い方については本節でも紹介するが、より詳しい使い方を知りたい場合は \ `Spring Framework Reference Documentation -Spring Expression Language (SpEL)- <http://docs.spring.io/spring/docs/4.2.7.RELEASE/spring-framework-reference/htmlsingle/#expressions>`_\ を参照されたい。
 
 |
 

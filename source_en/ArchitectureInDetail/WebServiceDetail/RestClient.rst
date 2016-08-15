@@ -313,7 +313,7 @@ This chapter explains how to implement a client process which uses \ ``RestTempl
 
     In this guideline, only the implementation example of client process which use GET method and POST method is introduced, however,
     \ ``RestTemplate``\  supports other HTTP methods (PUT, PATCH, DELETE, HEAD, OPTIONS etc) as well and can be used in the similar way.
-    Refer Javadoc of \ `RestTemplate <http://docs.spring.io/spring/docs/4.2.4.RELEASE/javadoc-api/org/springframework/web/client/RestTemplate.html>`_\  for details.
+    Refer Javadoc of \ `RestTemplate <http://docs.spring.io/spring/docs/4.2.7.RELEASE/javadoc-api/org/springframework/web/client/RestTemplate.html>`_\  for details.
 
 .. _RestClientHowToUseSetup:
 
@@ -510,7 +510,7 @@ When HTTP status code, response header and response body must be fetched, \ ``ge
 .. note:: **ResponseEntity**
 
     ``ResponseEntity``\  is a class which shows HTTP response and can fetch HTTP status code, response header and response body information.
-    Refer Javadoc of \ `ResponseEntity <http://docs.spring.io/spring/docs/4.2.4.RELEASE/javadoc-api/org/springframework/http/ResponseEntity.html>`_\  for details.
+    Refer Javadoc of \ `ResponseEntity <http://docs.spring.io/spring/docs/4.2.7.RELEASE/javadoc-api/org/springframework/http/ResponseEntity.html>`_\  for details.
 
 
 
@@ -571,7 +571,7 @@ Internal method
 .. note:: **RequestEntity**
 
     ``RequestEntity``\  is a class which shows HTTP request and can set connection URI, HTTP method, request header and request body.
-    Refer Javadoc of \ `RequestEntity <http://docs.spring.io/spring/docs/4.2.4.RELEASE/javadoc-api/org/springframework/http/RequestEntity.html>`_\  for details.
+    Refer Javadoc of \ `RequestEntity <http://docs.spring.io/spring/docs/4.2.7.RELEASE/javadoc-api/org/springframework/http/RequestEntity.html>`_\  for details.
 
     Also, refer :ref:`RestClientHowToUseRequestHeader` for how to configure a request header.
 
@@ -742,7 +742,7 @@ Configuration of request header
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
 If \ ``RequestEntity``\  and \ ``exchange``\  methods are used, a specific header or any other header can be set by using \ ``RequestEntity``\  method.
-Refer Javadoc of \ `RequestEntity <http://docs.spring.io/spring/docs/4.2.4.RELEASE/javadoc-api/org/springframework/http/RequestEntity.html>`_\  for details.
+Refer Javadoc of \ `RequestEntity <http://docs.spring.io/spring/docs/4.2.7.RELEASE/javadoc-api/org/springframework/http/RequestEntity.html>`_\  for details.
 
 This guideline explains about
 
@@ -1537,7 +1537,7 @@ Internal method
       - | Variable {action} of URI template is changed to value specified while using ``RestTeamplate``\ .
     * - | (2)
       - | By using ``UriComponentsBuilder``\ , first variable of URI template is replaced by value specified in the argument of ``buildAndExpand``\  and "http://localhost:8080/api/users/create" URI is created.
-        | Refer Javadoc of \ `UriComponentsBuilder <http://docs.spring.io/spring/docs/4.2.4.RELEASE/javadoc-api/org/springframework/web/util/UriComponentsBuilder.html>`_\  for details.
+        | Refer Javadoc of \ `UriComponentsBuilder <http://docs.spring.io/spring/docs/4.2.7.RELEASE/javadoc-api/org/springframework/web/util/UriComponentsBuilder.html>`_\  for details.
 
 
 
@@ -1839,10 +1839,10 @@ Define a bean for ``AsyncRestTemplate``\ .
 
     This guideline introduces an implementation example to customise the task execution process only, however
     HTTP communication process can also be customised for \ ``AsyncRestTemplate``\ .
-    Refer Javadoc of \ `AsyncRestTemplate <http://docs.spring.io/spring/docs/4.2.4.RELEASE/javadoc-api/org/springframework/web/client/AsyncRestTemplate.html>`_\  for details.
+    Refer Javadoc of \ `AsyncRestTemplate <http://docs.spring.io/spring/docs/4.2.7.RELEASE/javadoc-api/org/springframework/web/client/AsyncRestTemplate.html>`_\  for details.
     
     Also, customisation for other than thread pool size is possible for \ ``ThreadPoolTaskExecutor``\ as well.
-    Refer Javadoc of \ `ThreadPoolTaskExecutor <http://docs.spring.io/spring/docs/4.2.4.RELEASE/javadoc-api/org/springframework/scheduling/concurrent/ThreadPoolTaskExecutor.html>`_\  for details.
+    Refer Javadoc of \ `ThreadPoolTaskExecutor <http://docs.spring.io/spring/docs/4.2.7.RELEASE/javadoc-api/org/springframework/scheduling/concurrent/ThreadPoolTaskExecutor.html>`_\  for details.
 
 
 

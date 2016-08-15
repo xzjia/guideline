@@ -806,7 +806,7 @@ The code implemented according to the implementation method mentioned above is d
      \ ``@ Cacheable`` \  assigned to isInitialPassword and isCurrentPasswordExpired is an annotation to use the Spring Cache Abstraction function.
      The result for method arguments can be cached by assigning \ ``@Cacheable`` \  annotation.
      Access to database during each initial password and password expiration determination is prevented by the use of the cache thereby preventing performance degradation.
-     Refer to `Official document <http://docs.spring.io/spring/docs/4.2.4.RELEASE/spring-framework-reference/html/cache.html>`_ for Cache Abstraction.
+     Refer to `Official document <http://docs.spring.io/spring/docs/4.2.7.RELEASE/spring-framework-reference/html/cache.html>`_ for Cache Abstraction.
 
      Further, while using cache, it should be noted that it is necessary to clear the cache as and when needed.
      In this application, at the time of changing the password or during logout, clear the cache to determine password expiration and determine initial password again.
