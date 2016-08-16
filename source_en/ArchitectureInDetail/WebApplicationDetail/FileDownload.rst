@@ -42,7 +42,7 @@ Overview of File Download process is given below.
 | when rendering Excel files using model information.
 |
 | For file formats other than those specified above, various types of View implementations are provided in Spring.
-| For technical details on View, refer to \ `Spring Reference View technologies <http://docs.spring.io/spring/docs/4.2.4.RELEASE/spring-framework-reference/html/view.html>`_\ .
+| For technical details on View, refer to \ `Spring Reference View technologies <http://docs.spring.io/spring/docs/4.2.7.RELEASE/spring-framework-reference/html/view.html>`_\ .
 
 | \ ``org.terasoluna.gfw.web.download.AbstractFileDownloadView``\  provided by common library is the
 | abstract class to download arbitrary files.
@@ -336,7 +336,7 @@ Implementation of Custom View
         <version> is omitted in the configuration example since poi-ooxml version uses details defined in Spring IO Platform.
 
         Also, \ ``AbstractExcelView``\  uses @Deprecated annotation from Spring Framework 4.2. Hence, it is recommended to use \ ``AbstractXlsxView``\ in the same way even if you want to use a xls file.
-        For details, refer \ `AbstractExcelView - JavaDoc <https://docs.spring.io/spring/docs/4.2.4.RELEASE/javadoc-api/org/springframework/web/servlet/view/document/AbstractExcelView.html>`_\ .
+        For details, refer \ `AbstractExcelView - JavaDoc <https://docs.spring.io/spring/docs/4.2.7.RELEASE/javadoc-api/org/springframework/web/servlet/view/document/AbstractExcelView.html>`_\ .
           
 
 Definition of ViewResolver
@@ -474,7 +474,7 @@ Specifying View in controller
 
             As described above, Model information can be rendered in various types of Views using Spring.
             Spring supports rendering engine such as Jasper Reports and returns various types of views.
-            For details, refer to the official Spring website  \ `Spring reference <http://docs.spring.io/spring/docs/4.2.4.RELEASE/spring-framework-reference/html/view.html#view-jasper-reports>`_\ .
+            For details, refer to the official Spring website  \ `Spring reference <http://docs.spring.io/spring/docs/4.2.7.RELEASE/spring-framework-reference/html/view.html#view-jasper-reports>`_\ .
 
 .. raw:: latex
 

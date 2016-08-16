@@ -29,13 +29,13 @@ DIコンテナ
 DIコンテナとしてSpring Frameworkを利用する。
 
 
-* `Spring Framework 4.2 <http://docs.spring.io/spring/docs/4.2.4.RELEASE/spring-framework-reference/html/beans.html>`_
+* `Spring Framework 4.2 <http://docs.spring.io/spring/docs/4.2.7.RELEASE/spring-framework-reference/html/beans.html>`_
 
 MVCフレームワーク
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 Web MVCフレームワークとしてSpring MVCを利用する。
 
-* `Spring MVC 4.2 <http://docs.spring.io/spring/docs/4.2.4.RELEASE/spring-framework-reference/html/mvc.html>`_
+* `Spring MVC 4.2 <http://docs.spring.io/spring/docs/4.2.7.RELEASE/spring-framework-reference/html/mvc.html>`_
 
 O/R Mapper
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
@@ -95,7 +95,7 @@ Viewのレイアウトを共通化する場合は、
 
   * 実装は、\ `Hibernate Validator 5.2 <http://docs.jboss.org/hibernate/validator/5.2/reference/en-US/html/>`_\ を利用する。
 
-* 相関チェックには\ `Bean Validation <http://download.oracle.com/otn-pub/jcp/bean_validation-1_1-fr-eval-spec/bean-validation-specification.pdf>`_\ 、もしくは\ `Spring Validation <http://docs.spring.io/spring/docs/4.2.4.RELEASE/spring-framework-reference/html/validation.html#validator>`_\ を利用する。
+* 相関チェックには\ `Bean Validation <http://download.oracle.com/otn-pub/jcp/bean_validation-1_1-fr-eval-spec/bean-validation-specification.pdf>`_\ 、もしくは\ `Spring Validation <http://docs.spring.io/spring/docs/4.2.7.RELEASE/spring-framework-reference/html/validation.html#validator>`_\ を利用する。
 
   * 使い分けについては\ :doc:`../ArchitectureInDetail/WebApplicationDetail/Validation`\ を参照されたい。
 
@@ -152,121 +152,121 @@ version 5.1.0.RELEASEで利用するOSSの一覧を以下に示す。
     * - Spring
       - org.springframework
       - spring-aop
-      - 4.2.4.RELEASE
+      - 4.2.7.RELEASE
       - \*
       -
     * - Spring
       - org.springframework
       - spring-aspects
-      - 4.2.4.RELEASE
+      - 4.2.7.RELEASE
       - \*
       -
     * - Spring
       - org.springframework
       - spring-beans
-      - 4.2.4.RELEASE
+      - 4.2.7.RELEASE
       - \*
       -
     * - Spring
       - org.springframework
       - spring-context
-      - 4.2.4.RELEASE
+      - 4.2.7.RELEASE
       - \*
       -
     * - Spring
       - org.springframework
       - spring-context-support
-      - 4.2.4.RELEASE
+      - 4.2.7.RELEASE
       - \*
       -
     * - Spring
       - org.springframework
       - spring-core
-      - 4.2.4.RELEASE
+      - 4.2.7.RELEASE
       - \*
       -
     * - Spring
       - org.springframework
       - spring-expression
-      - 4.2.4.RELEASE
+      - 4.2.7.RELEASE
       - \*
       -
     * - Spring
       - org.springframework
       - spring-jdbc
-      - 4.2.4.RELEASE
+      - 4.2.7.RELEASE
       - \*
       -
     * - Spring
       - org.springframework
       - spring-orm
-      - 4.2.4.RELEASE
+      - 4.2.7.RELEASE
       - \*
       -
     * - Spring
       - org.springframework
       - spring-tx
-      - 4.2.4.RELEASE
+      - 4.2.7.RELEASE
       - \*
       -
     * - Spring
       - org.springframework
       - spring-web
-      - 4.2.4.RELEASE
+      - 4.2.7.RELEASE
       - \*
       -
     * - Spring
       - org.springframework
       - spring-webmvc
-      - 4.2.4.RELEASE
+      - 4.2.7.RELEASE
       - \*
       -
     * - Spring
       - org.springframework.data
       - spring-data-commons
-      - 1.11.2.RELEASE
+      - 1.11.4RELEASE
       - \*
       -
     * - Spring
       - org.springframework.security
       - spring-security-acl
-      - 4.0.3.RELEASE
+      - 4.0.4.RELEASE
       - \*
       -
     * - Spring
       - org.springframework.security
       - spring-security-config
-      - 4.0.3.RELEASE
+      - 4.0.4.RELEASE
       - \*
       -
     * - Spring
       - org.springframework.security
       - spring-security-core
-      - 4.0.3.RELEASE
+      - 4.0.4.RELEASE
       - \*
       -
     * - Spring
       - org.springframework.security
       - spring-security-taglibs
-      - 4.0.3.RELEASE
+      - 4.0.4.RELEASE
       - \*
       -
     * - Spring
       - org.springframework.security
       - spring-security-web
-      - 4.0.3.RELEASE
+      - 4.0.4.RELEASE
       - \*
       -
     * - MyBatis3
       - org.mybatis
       - mybatis
-      - 3.3.0
+      - 3.3.1
       -
       - \*1
     * - MyBatis3
       - org.mybatis
       - mybatis-spring
-      - 1.2.3
+      - 1.2.5
       -
       - \*1
     * - MyBatis3
@@ -338,7 +338,7 @@ version 5.1.0.RELEASEで利用するOSSの一覧を以下に示す。
     * - JPA(Hibernate)
       - org.springframework.data
       - spring-data-jpa
-      - 1.9.2.RELEASE
+      - 1.9.4.RELEASE
       - \*
       - \*2
     * - DI
@@ -356,25 +356,25 @@ version 5.1.0.RELEASEで利用するOSSの一覧を以下に示す。
     * - AOP
       - org.aspectj
       - aspectjrt
-      - 1.8.7
+      - 1.8.9
       - \*
       -
     * - AOP
       - org.aspectj
       - aspectjweaver
-      - 1.8.7
+      - 1.8.9
       - \*
       -
     * - ログ出力
       - ch.qos.logback
       - logback-classic
-      - 1.1.3
+      - 1.1.7
       - \*
       -
     * - ログ出力
       - ch.qos.logback
       - logback-core
-      - 1.1.3
+      - 1.1.7
       - \*
       - \*4
     * - ログ出力
@@ -386,43 +386,43 @@ version 5.1.0.RELEASEで利用するOSSの一覧を以下に示す。
     * - ログ出力
       - org.slf4j
       - jcl-over-slf4j
-      - 1.7.13
+      - 1.7.21
       - \*
       -
     * - ログ出力
       - org.slf4j
       - slf4j-api
-      - 1.7.13
+      - 1.7.21
       - \*
       -
     * - JSON
       - com.fasterxml.jackson.core
       - jackson-annotations
-      - 2.6.4
+      - 2.6.7
       - \*
       -
     * - JSON
       - com.fasterxml.jackson.core
       - jackson-core
-      - 2.6.4
+      - 2.6.7
       - \*
       -
     * - JSON
       - com.fasterxml.jackson.core
       - jackson-databind
-      - 2.6.4
+      - 2.6.7
       - \*
       -
     * - JSON
       - com.fasterxml.jackson.datatype
       - jackson-datatype-joda
-      - 2.6.4
+      - 2.6.7
       - \*
       -
     * - JSON
       - com.fasterxml.jackson.datatype
       - jackson-datatype-jsr310
-      - 2.6.4
+      - 2.6.7
       - \*
       - \*6
     * - 入力チェック
@@ -434,7 +434,7 @@ version 5.1.0.RELEASEで利用するOSSの一覧を以下に示す。
     * - 入力チェック
       - org.hibernate
       - hibernate-validator
-      - 5.2.2.Final
+      - 5.2.4.Final
       - \*
       -
     * - 入力チェック
