@@ -121,8 +121,8 @@ When \ ``RestTemplate``\  is used, implementation class of \ ``HttpMessageConver
         * When media type is \ ``multipart/form-data``\ , data is written as \ ``MultiValueMap<String, Object>``\  and \ ``Object``\  is converted by \ ``HttpMessageConveter``\  configured separately in \ ``AllEncompassingFormHttpMessageConverter``\ .
           (Caution: Refer Note)
 
-        | Refer `AllEncompassingFormHttpMessageConverter <https://github.com/spring-projects/spring-framework/blob/v4.2.4.RELEASE/spring-web/src/main/java/org/springframework/http/converter/support/AllEncompassingFormHttpMessageConverter.java>`_\  and
-          `FormHttpMessageConverter <https://github.com/spring-projects/spring-framework/blob/v4.2.4.RELEASE/spring-web/src/main/java/org/springframework/http/converter/FormHttpMessageConverter.java>`_\  source for \ ``HttpMessageConveter``\  used for conversion of part data which is registered by default. Note that, it is also possible to register an arbitrary \ ``HttpMessageConverter``\ .
+        | Refer `AllEncompassingFormHttpMessageConverter <https://github.com/spring-projects/spring-framework/blob/v4.2.7.RELEASE/spring-web/src/main/java/org/springframework/http/converter/support/AllEncompassingFormHttpMessageConverter.java>`_\  and
+          `FormHttpMessageConverter <https://github.com/spring-projects/spring-framework/blob/v4.2.7.RELEASE/spring-web/src/main/java/org/springframework/http/converter/FormHttpMessageConverter.java>`_\  source for \ ``HttpMessageConveter``\  used for conversion of part data which is registered by default. Note that, it is also possible to register an arbitrary \ ``HttpMessageConverter``\ .
       - | ``MultiValueMap`` [#p3]_
 
 .. note:: **When media type of AllEncompassingFormHttpMessageConverter is multipart/form-data**

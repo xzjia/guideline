@@ -26,7 +26,7 @@ An access policy for following 3 types of resources is defined in Spring Securit
 
 This section introduces an implementation example (definition example) wherein authorization process is applied to access "Web resource", "Java method" and "Screen fields of JSP" and explains the authorization function of Spring Security.
 
-.. [#fSpringSecurityAuthorization1] For authorization function to access domain object , refer \ `Spring Security Reference -Domain Object Security (ACLs)- <http://docs.spring.io/spring-security/site/docs/4.0.3.RELEASE/reference/htmlsingle/#domain-acls>`_\ .
+.. [#fSpringSecurityAuthorization1] For authorization function to access domain object , refer \ `Spring Security Reference -Domain Object Security (ACLs)- <http://docs.spring.io/spring-security/site/docs/4.0.4.RELEASE/reference/htmlsingle/#domain-acls>`_\ .
 
 |
 
@@ -317,7 +317,7 @@ Attribute under \ ``<sec:intercept-url>``\  tag is used for the specification of
       - | Specify "http" or "https". An attribute for controlling the access by specified protocol.
         | if it is not specified, either of these can be accessed.
 
-For the attributes other than above, refer \ `<intercept-url> <http://docs.spring.io/spring-security/site/docs/4.0.3.RELEASE/reference/htmlsingle/#nsa-intercept-url>`_\ .
+For the attributes other than above, refer \ `<intercept-url> <http://docs.spring.io/spring-security/site/docs/4.0.4.RELEASE/reference/htmlsingle/#nsa-intercept-url>`_\ .
 
 * Definition example of \ ``<sec:intercept-url>``\  tag \ ``pattern``\  attribute (spring-security.xml)
 

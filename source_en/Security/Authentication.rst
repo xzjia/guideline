@@ -205,7 +205,7 @@ Bean is defined as below when form authentication is used.
            - | Security Filter(\ ``UsernamePasswordAuthenticationFilter``\ ) which performs form authentication process is applied.
          * - | \ ``<http-basic>``\
            - | Security Filter(\ ``BasicAuthenticationFilter``\ ) which performs Basic authentication in conformance with RFC1945 is applied.
-             | For detailed usage method, refer \ `JavaDoc of BasicAuthenticationFilter <http://docs.spring.io/spring-security/site/docs/4.0.3.RELEASE/apidocs/org/springframework/security/web/authentication/www/BasicAuthenticationFilter.html>`_\ .
+             | For detailed usage method, refer \ `JavaDoc of BasicAuthenticationFilter <http://docs.spring.io/spring-security/site/docs/4.0.4.RELEASE/apidocs/org/springframework/security/web/authentication/www/BasicAuthenticationFilter.html>`_\ .
          * - | \ ``<logout>``\
            - | Security Filter(\ ``LogoutFilter``\ ) which performs logout process is applied.
              | For details of logout process, refer "\ :ref:`SpringSecurityAuthenticationLogout`\ ".
@@ -863,10 +863,10 @@ Spring Security offers following classes as the implementation class of \ ``Pass
     * - | \ ``BCryptPasswordEncoder``\
       - | Implementation class which performs password hashing and verification by using BCrypt algorithm.
         | **When there are no specific constraints in password hashing requirement, using this class is recommended.**
-        | For details, refer \ `JavaDoc of BCryptPasswordEncoder <http://docs.spring.io/spring-security/site/docs/4.0.3.RELEASE/apidocs/org/springframework/security/crypto/bcrypt/BCryptPasswordEncoder.html>`_\ .
+        | For details, refer \ `JavaDoc of BCryptPasswordEncoder <http://docs.spring.io/spring-security/site/docs/4.0.4.RELEASE/apidocs/org/springframework/security/crypto/bcrypt/BCryptPasswordEncoder.html>`_\ .
     * - | \ ``StandardPasswordEncoder``\
       - | Implementation class which performs password hashing and verification by using SHA-256 algorithm.
-        | For details, refer \ `JavaDoc of StandardPasswordEncoder <http://docs.spring.io/spring-security/site/docs/4.0.3.RELEASE/apidocs/org/springframework/security/crypto/password/StandardPasswordEncoder.html>`_\ .
+        | For details, refer \ `JavaDoc of StandardPasswordEncoder <http://docs.spring.io/spring-security/site/docs/4.0.4.RELEASE/apidocs/org/springframework/security/crypto/password/StandardPasswordEncoder.html>`_\ .
     * - | \ ``NoOpPasswordEncoder``\
       - | Implementation class which does not perform hashing.
         | It is a class used for testing and is not used in the actual application.
@@ -2088,7 +2088,7 @@ In addition, authentication path is added to Spring Security servlet filter for 
 Expansion of authentication process
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
-In case of authentication requirements which cannot be handled by \ `authentication provider <http://docs.spring.io/spring-security/site/docs/4.0.3.RELEASE/apidocs/org/springframework/security/authentication/AuthenticationProvider.html>`_\  offered by Spring Security,
+In case of authentication requirements which cannot be handled by \ `authentication provider <http://docs.spring.io/spring-security/site/docs/4.0.4.RELEASE/apidocs/org/springframework/security/authentication/AuthenticationProvider.html>`_\  offered by Spring Security,
 a class which implements \ ``org.springframework.security.authentication.AuthenticationProvider``\  interface must be created.
 
 Here, an expansion example for performing DB authentication by using 3 parameters - user name, password and \ **Company identifier (unique authentication parameter)**\ is shown below.
@@ -2718,13 +2718,13 @@ As per this example, it is also possible to substitute by using \ ``<mvc:view-co
 Using Remember Me authentication
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
-"\ `Remember Me authentication <http://docs.spring.io/spring-security/site/docs/4.0.3.RELEASE/reference/htmlsingle/#remember-me>`_\ " is one of the functions to enhance
+"\ `Remember Me authentication <http://docs.spring.io/spring-security/site/docs/4.0.4.RELEASE/reference/htmlsingle/#remember-me>`_\ " is one of the functions to enhance
 the user experience who frequently access Websites, and retains logged in state of a user for a little longer than normal lifecycle.
 If this function is used, the user can login again without entering user name and password by using a Token for Remember Me authentication retained by a Cookie,
 even when the browser is closed or session has timed-out.
 Note that, this function is enabled only when the user has authorised retaining the logged in state.
 
-Spring Security supports "Remember Me authentication of `Hash-Based Token <http://docs.spring.io/spring-security/site/docs/4.0.3.RELEASE/reference/htmlsingle/#remember-me-hash-token>`_ method and `Persistent Token <http://docs.spring.io/spring-security/site/docs/4.0.3.RELEASE/reference/htmlsingle/#remember-me-persistent-token>`_ method.
+Spring Security supports "Remember Me authentication of `Hash-Based Token <http://docs.spring.io/spring-security/site/docs/4.0.4.RELEASE/reference/htmlsingle/#remember-me-hash-token>`_ method and `Persistent Token <http://docs.spring.io/spring-security/site/docs/4.0.4.RELEASE/reference/htmlsingle/#remember-me-persistent-token>`_ method.
 Hash-Based Token method is used as a default.
 
 |
@@ -2759,7 +2759,7 @@ When Remember Me authentication is to be used, \ ``<sec:remember-me>``\  tag is 
         | When it is not specified, the validity period is 14 days by default.
         | In the example above, 30 days has been set as a validity period.
 
-For attributes other than above, refer \ `Spring Security Reference -The Security Namespace (<remember-me>) - <http://docs.spring.io/spring-security/site/docs/4.0.3.RELEASE/reference/htmlsingle/#nsa-remember-me>`_\ .
+For attributes other than above, refer \ `Spring Security Reference -The Security Namespace (<remember-me>) - <http://docs.spring.io/spring-security/site/docs/4.0.4.RELEASE/reference/htmlsingle/#nsa-remember-me>`_\ .
 
 .. note:: **Changes in Spring Security 4.0**
 
