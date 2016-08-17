@@ -174,6 +174,8 @@ String split
         // Java SE 8 => {A, B, C}
 
 
+.. _StringProcessingHowToUseFullHalfConverter:
+
 Full width, half width string conversion
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 
@@ -189,6 +191,21 @@ For default pair definition, refer `DefaultFullHalf source <https://github.com/t
     When change requirements are not met in the default pair definition provided by common library, \ ``FullHalfConverter``\  object registering a unique pair definition should be created.
     For basic methods for creation, refer :ref:`StringOperationsHowToUseCustomFullHalfConverter` .
 
+
+
+How to apply common library
+''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''
+
+| It is necessary to add following common library as dependency library in case of :ref:`StringProcessingHowToUseFullHalfConverter` is used.
+
+.. code-block:: xml
+
+   <dependencies>
+       <dependency>
+           <groupId>org.terasoluna.gfw</groupId>
+           <artifactId>terasoluna-gfw-string</artifactId>
+       </dependency>
+   </dependencies>
 
 Conversion to full width string
 ''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''
@@ -399,6 +416,10 @@ Here, how to implement a character type check by using a code point set function
 * :ref:`StringProcessingHowToUseCodePointsValidator`
 * :ref:`StringProcessingHowToUseCodePointsClassCreation`
 
+
+How to apply common library
+''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''
+| It is necessary to add :ref:`StringProcessingHowToUseCodePointsClasses` as dependency library in case of :ref:`StringProcessingHowToUseCodePoints` is used.
 
 .. _StringProcessingHowToUseCodePointsConstruction:
 
