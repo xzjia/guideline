@@ -1970,7 +1970,7 @@ SimpleClientHttpRequestFactoryを使用したHTTP Proxyサーバの設定方法
     * - | (6)
       - | \ ``SimpleClientHttpRequestFactory``\ の\ ``proxy``\ プロパティに\ ``java.net.Proxy``\ を設定する。
     * - | (7)
-      - | \ ``Proxy``\ のコンストラクタの引数に、\ ``java.net.Proxy.Type.HTTP``\ と生成した\ ``InetSocketAddress``\ オブジェクトを設定する。
+      - | \ ``Proxy``\ のコンストラクタの引数に、\ ``java.net.Proxy.Type.HTTP``\ と生成した\ ``InetSocketAddress``\ を設定する。
 
 
 HttpComponentsClientHttpRequestFactoryを使用したHTTP Proxyサーバの設定方法
@@ -2053,7 +2053,7 @@ HTTP Proxyサーバの指定方法
     * - | (6)
       - | \ ``RestTemplate``\ のコンストラクタの引数に、\ ``HttpComponentsClientHttpRequestFactory``\ を設定する。
     * - | (7)
-      - | \ ``HttpComponentsClientHttpRequestFactory``\ のコンストラクタの引数に、\ ``HttpClientBuilder``\ から生成した\ ``HttpClient``\ オブジェクトを設定する。
+      - | \ ``HttpComponentsClientHttpRequestFactory``\ のコンストラクタの引数に、\ ``HttpClientBuilder``\ から生成した\ ``HttpClient``\ を設定する。
 
 
 HTTP Proxyサーバの資格情報の指定方法
