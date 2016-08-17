@@ -449,7 +449,7 @@ URLパターンでの例外処理
        - | アクセス制御式を記述する。メソッドを実行する前に式が評価され、真であれば、メソッドが実行される。
          | 偽であれば、\ ``org.springframework.security.access.AccessDeniedException``\ がスローされる。
          | 設定可能な値は、\ :ref:`authorization-intercept-url`\ で述べたExpressionや、および
-         | \ `Spring Expression Language (SpEL) <http://docs.spring.io/spring/docs/3.2.16.RELEASE/spring-framework-reference/html/expressions.html>`_\ で記述された式である。
+         | \ `Spring Expression Language (SpEL) <http://docs.spring.io/spring/docs/3.2.17.RELEASE/spring-framework-reference/html/expressions.html>`_\ で記述された式である。
 
   .. tip::
   
