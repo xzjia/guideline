@@ -260,13 +260,13 @@ List of OSS being used in version 5.1.0.RELEASE.
     * - MyBatis3
       - org.mybatis
       - mybatis
-      - 3.3.0
+      - 3.3.1
       -
       - \*1
     * - MyBatis3
       - org.mybatis
       - mybatis-spring
-      - 1.2.3
+      - 1.2.5
       -
       - \*1
     * - JPA(Hibernate)
