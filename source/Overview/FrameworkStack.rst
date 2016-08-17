@@ -29,13 +29,13 @@ DIコンテナ
 DIコンテナとしてSpring Frameworkを利用する。
 
 
-* `Spring Framework 3.2 <http://docs.spring.io/spring/docs/3.2.16.RELEASE/spring-framework-reference/html/beans.html>`_
+* `Spring Framework 3.2 <http://docs.spring.io/spring/docs/3.2.17.RELEASE/spring-framework-reference/html/beans.html>`_
 
 MVCフレームワーク
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 Web MVCフレームワークとしてSpring MVCを利用する。
 
-* `Spring MVC 3.2 <http://docs.spring.io/spring/docs/3.2.16.RELEASE/spring-framework-reference/html/mvc.html>`_
+* `Spring MVC 3.2 <http://docs.spring.io/spring/docs/3.2.17.RELEASE/spring-framework-reference/html/mvc.html>`_
 
 O/R Mapper
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
@@ -87,7 +87,7 @@ Viewのレイアウトを共通化する場合は、
 
   * 実装は、\ `Hibernate Validator 4.3 <http://docs.jboss.org/hibernate/validator/4.3/reference/en-US/html/>`_\ を利用する。
 
-* 相関チェックには\ `BeanValidation <http://download.oracle.com/otn-pub/jcp/bean_validation-1.0-fr-oth-JSpec/bean_validation-1_0-final-spec.pdf>`_\ 、もしくは\ `Spring Validation <http://docs.spring.io/spring/docs/3.2.16.RELEASE/spring-framework-reference/html/validation.html>`_\ を利用する。
+* 相関チェックには\ `BeanValidation <http://download.oracle.com/otn-pub/jcp/bean_validation-1.0-fr-oth-JSpec/bean_validation-1_0-final-spec.pdf>`_\ 、もしくは\ `Spring Validation <http://docs.spring.io/spring/docs/3.2.17.RELEASE/spring-framework-reference/html/validation.html>`_\ を利用する。
 
   * 使い分けについては\ :doc:`../ArchitectureInDetail/Validation`\ を参照されたい。
 
@@ -125,62 +125,62 @@ version 1.0.4.RELEASEで利用するOSSの一覧を以下に示す。
     * - Spring
       - org.springframework
       - spring-aop
-      - 3.2.16.RELEASE
+      - 3.2.17.RELEASE
       -
     * - Spring
       - org.springframework
       - spring-aspects
-      - 3.2.16.RELEASE
+      - 3.2.17.RELEASE
       -
     * - Spring
       - org.springframework
       - spring-beans
-      - 3.2.16.RELEASE
+      - 3.2.17.RELEASE
       -
     * - Spring
       - org.springframework
       - spring-context
-      - 3.2.16.RELEASE
+      - 3.2.17.RELEASE
       -
     * - Spring
       - org.springframework
       - spring-context-support
-      - 3.2.16.RELEASE
+      - 3.2.17.RELEASE
       -
     * - Spring
       - org.springframework
       - spring-core
-      - 3.2.16.RELEASE
+      - 3.2.17.RELEASE
       -
     * - Spring
       - org.springframework
       - spring-expression
-      - 3.2.16.RELEASE
+      - 3.2.17.RELEASE
       -
     * - Spring
       - org.springframework
       - spring-jdbc
-      - 3.2.16.RELEASE
+      - 3.2.17.RELEASE
       -
     * - Spring
       - org.springframework
       - spring-orm
-      - 3.2.16.RELEASE
+      - 3.2.17.RELEASE
       -
     * - Spring
       - org.springframework
       - spring-tx
-      - 3.2.16.RELEASE
+      - 3.2.17.RELEASE
       -
     * - Spring
       - org.springframework
       - spring-web
-      - 3.2.16.RELEASE
+      - 3.2.17.RELEASE
       -
     * - Spring
       - org.springframework
       - spring-webmvc
-      - 3.2.16.RELEASE
+      - 3.2.17.RELEASE
       -
     * - Spring
       - org.springframework.data

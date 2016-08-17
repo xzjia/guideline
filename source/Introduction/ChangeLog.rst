@@ -9,6 +9,11 @@
     * - 更新日付
       - 更新箇所
       - 更新内容
+    * -2016-08-17
+      - :doc:`../Overview/FrameworkStack`
+      - 利用するOSSのバージョンを更新
+
+        * GroupId「\ ``org.springframework``\」のバージョンを3.2.14.RELEASEから3.2.17.RELEASEに更新
     * - 2016-02-24
       - \-
       - 1.0.4 RELEASE版公開
