@@ -11,6 +11,13 @@
       - 更新内容
     * - 2016-08-31
       - :doc:`../ArchitectureInDetail/DoubleSubmitProtection`
+      - 記載内容の追加
+      
+        * \ ``@TransactionTokenCheck``\アノテーションのtype属性に新たに追加された \ ``TransactionTokenType.CHECK``\の仕様、利用方法に関する記載の追加 
+          (\ `guideline#2071 <https://github.com/terasolunaorg/guideline/issues/2071>`_\ )
+
+    * - 
+      - :doc:`../ArchitectureInDetail/DoubleSubmitProtection`
       - 「How To Extend プログラマティックにトランザクショントークンのライフサイクルを管理する方法について」を削除。
         
         * \ ``TransactionTokenContext``\が提供していたアプリケーション向けAPIを使用した場合、
