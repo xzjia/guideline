@@ -48,6 +48,11 @@ Overview
 | 任意のファイルをダウンロードするために使用する抽象クラスである。
 | PDFやExcel形式以外のファイルをレンダリングする際に、本クラスをサブクラスに定義する。
 
+.. tip::
+   
+    ファイルダウンロード機能を提供する際には、ディレクトリトラバーサル攻撃への対策が必要な場合がある。
+    ディレクトリトラバーサル攻撃については、\ :ref:`file-upload_security_related_warning_points_directory_traversal` \を参照すること。
+
 |
 
 How to use
