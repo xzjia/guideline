@@ -1711,7 +1711,6 @@ Commons FileUploadを使用する場合は以下の設定を行う。
     <dependency>
         <groupId>commons-fileupload</groupId>
         <artifactId>commons-fileupload</artifactId>
-        <!-- (2) -->
         <version>1.3.2</version>
     </dependency>
 
@@ -1724,8 +1723,6 @@ Commons FileUploadを使用する場合は以下の設定を行う。
      - | 説明
    * - | (1)
      - | \ ``commons-fileupload``\ への依存関係を追加する。
-   * - | (2)
-     - | 使用される\ ``commons-fileupload``\にセキュリティの脆弱性がある場合はバージョンを指定すること。
 
 .. warning::
 
