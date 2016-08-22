@@ -456,10 +456,10 @@ pom.xml settings
         <dependency>
             <groupId>org.terasoluna.gfw</groupId>
             <artifactId>terasoluna-gfw-mybatis3</artifactId>
-            <version>5.1.0.RELEASE</version>
+            <version>5.1.1.RELEASE</version>
         </dependency>
         
-    In the above example, 5.1.0.RELEASE is specified. However, version used in the project should be specified.
+    In the above example, 5.1.1.RELEASE is specified. However, version used in the project should be specified.
 
 |
 
@@ -725,7 +725,7 @@ MyBatis3 can specify \ ``fetchSize``\  by using 2 methods shown below to control
 
  .. note:: **"Regarding default fetchSize"**
 
-    "Default \ ``fetchSize``\ "can be used in MyBatis3.3.0 and subsequent versions supported in terasoluna-gfw-mybatis3 5.1.0.RELEASE.
+    "Default \ ``fetchSize``\ "can be used in MyBatis3.3.0 and subsequent versions supported in terasoluna-gfw-mybatis3 5.1.1.RELEASE.
 
 
 How to specify "default \ ``fetchSize``\ " is shown below.
@@ -5236,7 +5236,7 @@ How to implement a process wherein the search results are downloaded as CSV data
 
     When a query to return a large amount of data is to be described, an appropriate value should be set in \ ``fetchSize``\  attribute.
     \ ``fetchSize``\  is a parameter which specifies data record count to be fetched in a single communication between JDBC driver and database.
-    Note that, "default \ ``fetchSize``\ " can be specified in MyBatis configuration file, in MyBatis3.3.0 and subsequent versions which are supported in terasoluna-gfw-mybatis3 5.1.0.RELEASE.
+    Note that, "default \ ``fetchSize``\ " can be specified in MyBatis configuration file, in MyBatis3.3.0 and subsequent versions which are supported in terasoluna-gfw-mybatis3 5.1.1.RELEASE.
     
     Refer ":ref:`DataAccessMyBatis3HowToUseSettingsDefaultFetchSize`" for details of \ ``fetchSize``\ .
     
@@ -5844,7 +5844,7 @@ Based on the application requirement, it is also necessary to check the validity
 In such cases, "a method to execute SQL queued for batch execution" is provided in the Mapper interface."
 
 In MyBatis 3.2, \ ``flushStatements``\  method of \ ``org.apache.ibatis.session.SqlSession``\  interface must be called directly, however,
-a method is supported in MyBatis 3.3.0 and subsequent versions supported in terasoluna-gfw-mybatis3 5.1.0.RELEASE wherein
+a method is supported in MyBatis 3.3.0 and subsequent versions supported in terasoluna-gfw-mybatis3 5.1.1.RELEASE wherein
 a method which assigns \ ``@org.apache.ibatis.annotations.Flush``\  annotation in Mapper interface is created.
 
  .. warning:: **Regarding update results returned by JDBC driver while using batch mode**
@@ -7985,7 +7985,7 @@ When "Lazy Load" is used, one of the libraries given below is necessary in order
 
 
 CGLIB had been used as default until MyBatis 3.2 series.
-From  MyBatis 3.3.0, JAVASSIST has been used as default at the MyBatis 3.3.0 or later version, which is supported by terasoluna-gfw-mybatis3 5.1.0.RELEASE.
+From  MyBatis 3.3.0, JAVASSIST has been used as default at the MyBatis 3.3.0 or later version, which is supported by terasoluna-gfw-mybatis3 5.1.1.RELEASE.
 In addition, it is possible to use "Lazy Load" without adding the library because the JAVASSIST is embedded in the MyBatis since MyBatis 3.3.0.
 
  .. note::
