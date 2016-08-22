@@ -9,7 +9,12 @@
     * - 更新日付
       - 更新箇所
       - 更新内容
-    * -2016-08-17
+    * - 2016-08-31
+      - :doc:`../ArchitectureInDetail/FileUpload`
+      - 記載内容の追加
+      
+        * \ `CVE-2016-3092 <https://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2016-3092>`_\ (File Uploadの脆弱性)に関する注意喚起を追加(\ `guideline#1973 <https://github.com/terasolunaorg/guideline/issues/1973>`_\ ) 
+    * -
       - :doc:`../Overview/FrameworkStack`
       - 利用するOSSのバージョンを更新
 
