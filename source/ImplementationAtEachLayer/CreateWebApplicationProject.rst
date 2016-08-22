@@ -1505,7 +1505,7 @@ initdbモジュールの構成
       - データベースを初期化するためのSQLファイルを格納するためのディレクトリ。
 
         作成時点では、空のディレクトリである。
-        作成例については、`サンプルアプリケーションのinitdbプロジェクト <https://github.com/terasolunaorg/terasoluna-tourreservation-mybatis3/tree/master/terasoluna-tourreservation-initdb/src/main/sqls>`_ を参照されたい。
+        作成例については、`サンプルアプリケーションのinitdbプロジェクト <https://github.com/terasolunaorg/terasoluna-tourreservation-mybatis3/tree/5.2.0.RELEASE/terasoluna-tourreservation-initdb/src/main/sqls>`_ を参照されたい。
 
 .. note::
 
@@ -1561,7 +1561,7 @@ Seleniumを使用したE2E(End To End)テスト用のコンポーネントを管
     * - | (2)
       - テスト用のコンポーネントと設定ファイルを格納するディレクトリ。
 
-        作成例については、`サンプルアプリケーションのseleniumプロジェクト <https://github.com/terasolunaorg/terasoluna-tourreservation-mybatis3/tree/master/terasoluna-tourreservation-selenium>`_ を参照されたい。
+        作成例については、`サンプルアプリケーションのseleniumプロジェクト <https://github.com/terasolunaorg/terasoluna-tourreservation-mybatis3/tree/5.2.0.RELEASE/terasoluna-tourreservation-selenium>`_ を参照されたい。
 
     * - | (3)
       - Selenium WebDriverを使用したサンプルテストクラス。
