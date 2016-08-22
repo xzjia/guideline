@@ -1734,7 +1734,6 @@ Commons FileUploadを使用する場合は以下の設定を行う。
 
     なお、Spring IO Platform 2.0.6.RELEASE以上で管理されているバージョンを使用すれば、CVE-2014-0050およびCVE-2016-3092で報告されている脆弱性は発生しない。
     TERASOLUNA Server Framework for Java version 5.1.1.RELEASEで指定しているSpring IO platformのバージョンは、2.0.1.RELEASEであるため、:file:`pom.xml`\にバージョンの指定が必要になる。
-    Spring IO Platformのバージョンについては、:ref:`frameworkstack_using_oss_version`\を参照されたい。
 
 |
 
