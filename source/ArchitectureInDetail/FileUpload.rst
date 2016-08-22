@@ -1707,8 +1707,6 @@ Commons FileUploadを使用する場合は以下の設定を行う。
     <dependency>
         <groupId>commons-fileupload</groupId>
         <artifactId>commons-fileupload</artifactId>
-        <!-- (2) -->
-        <version>1.3.2</version>
     </dependency>
 
 .. tabularcolumns:: |p{0.10\linewidth}|p{0.90\linewidth}|
@@ -1720,9 +1718,6 @@ Commons FileUploadを使用する場合は以下の設定を行う。
      - | 説明
    * - | (1)
      - | \ ``commons-fileupload``\ への依存関係を追加する。
-   * - | (2)
-     - | バージョンはSpring IO Platformによって定義されているため、:file:`pom.xml`\で指定しなくてよい。
-       | ただし、使用される\ ``commons-fileupload``\にセキュリティの脆弱性がある場合はバージョンを指定すること。
 
 .. warning::
 
@@ -1733,8 +1728,44 @@ Commons FileUploadを使用する場合は以下の設定を行う。
     Apache Commons FileUploadを使用する場合、1.3.2以上を使用する必要がある。
 
     なお、Spring IO Platform 2.0.6.RELEASE以上で管理されているバージョンを使用すれば、CVE-2014-0050およびCVE-2016-3092で報告されている脆弱性は発生しない。
-    2.0.6.RELEASEよりも古いバージョンのSpring IO Platformを使用している場合は、:file:`pom.xml`\にバージョンを指定すること。
+    2.0.6.RELEASEよりも古いバージョンのSpring IO Platformを使用している場合は、下記のようにバージョンを指定すること。
     Spring IO Platformのバージョンについては、:ref:`frameworkstack_using_oss_version`\を参照されたい。
+
+        :file:`artifactId/pom.xml`
+
+        .. code-block:: xml
+
+            <dependencyManagement>
+                <dependencies>
+                    <!-- (1) -->
+                    <dependency>
+                        <groupId>commons-fileupload</groupId>
+                        <artifactId>commons-fileupload</artifactId>
+                        <version>${commons-fileupload.version}</version>
+                    </dependency>
+
+                    <!-- ... -->
+                </dependencies>
+            </dependencyManagement>
+
+            <properties>
+                <!-- (2) -->
+                <commons-fileupload.version>1.3.2</commons-fileupload.version>
+
+                <!-- ... -->
+            <properties>
+
+        .. tabularcolumns:: |p{0.10\linewidth}|p{0.90\linewidth}|
+        .. list-table::
+           :header-rows: 1
+           :widths: 10 90
+
+           * - | 項番
+             - | 説明
+           * - | (1)
+             - | \ ``<dependencyManagement>``\に\ ``commons-fileupload``\への依存関係を追加する。
+           * - | (2)
+             - | \ ``<properties>``\に\ ``commons-fileupload``\のバージョンを追加する。
 
 |
 
