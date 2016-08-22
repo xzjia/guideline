@@ -457,11 +457,11 @@ pom.xmlの設定
         <dependency>
             <groupId>org.terasoluna.gfw</groupId>
             <artifactId>terasoluna-gfw-mybatis3-dependencies</artifactId>
-            <version>5.1.0.RELEASE</version>
+            <version>5.2.0.RELEASE</version>
             <type>pom</type>
         </dependency>
         
-    上記例では5.1.0.RELEASEを指定しているが、実際に指定するバージョンは、プロジェクトで利用するバージョンを指定すること。
+    上記例では5.2.0.RELEASEを指定しているが、実際に指定するバージョンは、プロジェクトで利用するバージョンを指定すること。
 
  .. Warning:: **Java SE 7環境にて使用する場合の設定**
 
@@ -748,7 +748,7 @@ MyBatis3の設定
 
  .. note:: **「デフォルトのfetchSize」について**
 
-    「デフォルトの\ ``fetchSize``\ 」は、terasoluna-gfw-mybatis3 5.1.0.RELEASEでサポートしたMyBatis 3.3.0以降のバージョンで利用することができる。
+    「デフォルトの\ ``fetchSize``\ 」は、terasoluna-gfw-mybatis3 5.2.0.RELEASEでサポートしたMyBatis 3.3.0以降のバージョンで利用することができる。
 
 
 以下に、「デフォルトの\ ``fetchSize``\ 」を指定する方法を示す。
@@ -5308,7 +5308,7 @@ MyBatis3では、検索結果を1件単位で処理する仕組みを提供し�
 
     大量のデータを返すようなクエリを記述する場合には、\ ``fetchSize``\属性に適切な値を設定すること。
     \ ``fetchSize``\は、JDBCドライバとデータベース間の１回の通信で取得するデータの件数を設定するパラメータである。
-    なお、terasoluna-gfw-mybatis3 5.1.0.RELEASEでサポートしたMyBatis 3.3.0以降のバージョンでは、
+    なお、terasoluna-gfw-mybatis3 5.2.0.RELEASEでサポートしたMyBatis 3.3.0以降のバージョンでは、
     MyBatis設定ファイルに「デフォルトの\ ``fetchSize``\ 」を指定することができる。
     \ ``fetchSize``\ の詳細は「:ref:`DataAccessMyBatis3HowToUseSettingsDefaultFetchSize`」を参照されたい。
 
@@ -5878,7 +5878,7 @@ RepositoryのBean定義を行えばよい。
 そのようなケースでは、Mapperインタフェースに「バッチ実行用にキューイングされているSQLを実行するためのメソッド」を用意すればよい。
 
 MyBatis 3.2系では、\ ``org.apache.ibatis.session.SqlSession``\インタフェースの\ ``flushStatements``\ メソッドを直接呼び出す必要があったが、
-terasoluna-gfw-mybatis3 5.1.0.RELEASEでサポートしたMyBatis 3.3.0以降のバージョンでは、
+terasoluna-gfw-mybatis3 5.2.0.RELEASEでサポートしたMyBatis 3.3.0以降のバージョンでは、
 Mapperインタフェースに\ ``@org.apache.ibatis.annotations.Flush``\ アノテーションを付与したメソッドを作成する方法がサポートされている。
 
  .. warning:: **バッチモード使用時のJDBCドライバが返却する更新結果について**
@@ -8018,7 +8018,7 @@ MyBatis3では、マッピング時に別のSQL(ネストしたSQL)を使用し�
 のいずれか一方のライブラリが必要となる。
 
 MyBatis 3.2系まではCGLIBがデフォルトで使用されるライブラリであったが、
-terasoluna-gfw-mybatis3 5.1.0.RELEASEでサポートしたMyBatis 3.3.0以降のバージョンではJAVASSISTがデフォルトで使用される。
+terasoluna-gfw-mybatis3 5.2.0.RELEASEでサポートしたMyBatis 3.3.0以降のバージョンではJAVASSISTがデフォルトで使用される。
 さらに、MyBatis 3.3.0からJAVASSISTがMyBatis本体に内包されているため、ライブラリを追加しなくても"Lazy Load"を使用する事ができる。
 
  .. note::

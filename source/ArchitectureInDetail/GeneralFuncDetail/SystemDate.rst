@@ -201,11 +201,11 @@ pom.xmlの設定
             <dependency>
                 <groupId>org.terasoluna.gfw</groupId>
                 <artifactId>terasoluna-gfw-jodatime</artifactId>
-                <version>5.1.0.RELEASE</version>
+                <version>5.2.0.RELEASE</version>
                 <type>pom</type>
             </dependency>
 
-    上記例では5.1.0.RELEASEを指定しているが、実際に指定するバージョンは、プロジェクトで利用するバージョンを指定すること。
+    上記例では5.2.0.RELEASEを指定しているが、実際に指定するバージョンは、プロジェクトで利用するバージョンを指定すること。
 
 |
 
