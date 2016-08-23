@@ -722,6 +722,8 @@ Controller class and the handler methods of the Controller class.
 
 |
 
+.. _transaction_token_check_attribute: 
+
 Attributes of ``@TransactionTokenCheck``\  annotation
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 
