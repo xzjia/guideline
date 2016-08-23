@@ -40,7 +40,7 @@ This guideline was prepared after referring to the following books. Refer to the
    * - `Spring3入門―Javaフレームワーク・より良い設計とアーキテクチャ <http://gihyo.jp/book/2012/978-4-7741-5380-3>`_
      - Gihyo Digital Publishing
      - Japanese
-   * - `Beginning Java EE 6 GlassFish 3で始めるエンタープライズJava <http://books.shoeisha.co.jp/book/b92647.html>`_
+   * - `Beginning Java EE 6 GlassFish 3で始めるエンタープライズJava <http://www.shoeisha.co.jp/book/detail/9784798124605>`_
      - Shoeisha Co., Ltd
      - Japanese
    * - Seasar2とHibernateで学ぶデータベースアクセス JPA入門

@@ -1499,7 +1499,7 @@ Module that manages the SQL file to initialize the database is explained.
       - Directory for storing the database initialization SQL files.
 
         It is an empty directory at the time of creation.
-        For how to create, Refer `Sample application of initdb project <https://github.com/terasolunaorg/terasoluna-tourreservation-mybatis3/tree/master/terasoluna-tourreservation-initdb/src/main/sqls>`_.
+        For how to create, Refer `Sample application of initdb project <https://github.com/terasolunaorg/terasoluna-tourreservation-mybatis3/tree/5.2.0.RELEASE/terasoluna-tourreservation-initdb/src/main/sqls>`_.
 
 .. note::
 
@@ -1555,7 +1555,7 @@ Module that manages the E2E (End To End) testing components used in Selenium exp
     * - | (2)
       - Directory that contains the configuration files and testing components.
 
-        For how to create, Refer `Sample application of selenium project <https://github.com/terasolunaorg/terasoluna-tourreservation-mybatis3/tree/master/terasoluna-tourreservation-selenium>`_.
+        For how to create, Refer `Sample application of selenium project <https://github.com/terasolunaorg/terasoluna-tourreservation-mybatis3/tree/5.2.0.RELEASE/terasoluna-tourreservation-selenium>`_.
 
     * - | (3)
       - Sample test class using Selenium WebDriver.
