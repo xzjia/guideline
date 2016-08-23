@@ -1954,6 +1954,8 @@ PlatformTransactionManagerの設定
 | トランザクション管理を行う場合、\ ``PlatformTransactionManager``\ のbeanを設定する必要がある。
 | Spring Frameworkより用途毎のクラスが提供されているので、使用するクラスを指定すればよい。
 
+
+
 - :file:`xxx-env.xml`
 
  以下に、DataSourceから取得されるJDBCコネクションの機能を使って、トランザクションを管理する場合の設定例を示す。
@@ -1978,14 +1980,41 @@ PlatformTransactionManagerの設定
       - | 用途にあった\ ``PlatformTransactionManager``\ の実装クラスを指定する。
         | idは「transactionManager」としておくことを推奨する。
 
-\
+ .. note:: 
+
+     **Spring Frameworkから提供されているPlatformTransactionManagerの実装クラスについて**
+
+      .. tabularcolumns:: |p{0.10\linewidth}|p{0.35\linewidth}|p{0.55\linewidth}|
+      .. list-table:: 
+         :header-rows: 1
+         :widths: 10 35 55
+
+         * - 項番
+           - クラス名
+           - 説明
+         * - 1.
+           - | org.springframework.jdbc.datasource.DataSourceTransactionManager
+           - | JDBC(\ ``java.sql.Connection``\ )のAPIを呼び出して、トランザクションを管理するための実装クラス。
+             | MyBatisや、\ ``JdbcTemplate``\ を使う場合は、本クラスを使用する。
+         * - 2.
+           - | org.springframework.orm.jpa.JpaTransactionManager
+           - | JPA(\ ``javax.persistence.EntityTransaction``\ )のAPIを呼び出して、トランザクションを管理するための実装クラス。
+             | JPAを使う場合は、本クラスを使用する。
+         * - 3.
+           - | org.springframework.transaction.jta.JtaTransactionManager
+           - | JTA(\ ``javax.transaction.UserTransaction``\ )のAPIを呼び出してトランザクションを管理するための実装クラス。
+             | アプリケーションサーバから提供されているJTS(Java Transaction Service)を利用して、リソース(データベース/メッセージングサービス/汎用EIS(Enterprise Information System)など)とのトランザクションを管理する場合は、本クラスを使用する。
+             | 複数のリソースに対する操作を同一トランザクションで行う必要がある場合は、JTAを利用して、リソースとのトランザクションを管理する必要がある。
+
+     PlatformTransactionManager実装クラスの詳細については、\ `Spring Reference Document -PlatformTransactionManager(All Known Implementing Classes)- <http://docs.spring.io/spring/docs/4.2.7.RELEASE/javadoc-api/org/springframework/transaction/PlatformTransactionManager.html>`_\ を参照されたい。
+
 
  .. note:: **複数DB（複数リソース）に対するトランザクション管理（グローバルトランザクションの管理）が必要な場合**
 
-     * \ ``org.springframework.transaction.jta.JtaTransactionManager``\ を利用し、アプリケーションサーバから提供されているJTAの機能を使って、トランザクション管理を行う必要がある。アプリケーションサーバから提供されるトランザクション機能については下記を参照されたい。
+     * \ ``org.springframework.transaction.jta.JtaTransactionManager``\ を利用し、アプリケーションサーバから提供されているJTAの機能を使って、トランザクション管理を行う必要がある。アプリケーションサーバから提供されているJTAの機能については下記を参照されたい。
 
       .. tabularcolumns:: |p{0.10\linewidth}|p{0.35\linewidth}|p{0.55\linewidth}|
-      .. list-table:: **アプリケーションサーバから提供されているトランザクション機能**
+      .. list-table:: **アプリケーションサーバから提供されているJTAの機能**
         :header-rows: 1
         :widths: 10 35 55
 
@@ -1996,39 +2025,21 @@ PlatformTransactionManagerの設定
           - Oracle WebLogic Server 12c
           - \ `Oracle WebLogic Server 12.2.1.0 Documentation <https://docs.oracle.com/middleware/1221/wls/WLACH/taskhelp/jta/ConfigureJTA.html>`_\ を参照されたい。
         * - 2.
-          - Red Hat JBoss Enterprise Application Platform Version 6.4
-          - \ `Product Documentation <https://access.redhat.com/documentation/en-US/JBoss_Enterprise_Application_Platform/6.4/html/Administration_and_Configuration_Guide/chap-Transaction_Subsystem.html>`_\ を参照されたい。
-        * - 3.
           - IBM WebSphere Application Server Version 8.5
           - \ `WebSphere Application Server Version 8.5.5 documentation <http://www.ibm.com/support/knowledgecenter/ja/SSEQTP_8.5.5/com.ibm.websphere.base.iseries.doc/ae/cjta_glotran.html>`_\ を参照されたい。
+        * - 3.
+          - Red Hat JBoss Enterprise Application Platform Version 6.4
+          - \ `Product Documentation <https://access.redhat.com/documentation/en-US/JBoss_Enterprise_Application_Platform/6.4/html/Administration_and_Configuration_Guide/chap-Transaction_Subsystem.html>`_\ を参照されたい。
+
 
      * WebSphere、Oracle WebLogic ServerでJTAを使う場合、<tx:jta-transaction-manager/> を指定することで、
        アプリケーションサーバ用に拡張された\ ``JtaTransactionManager``\ が、自動的で設定される。
 
- .. tabularcolumns:: |p{0.10\linewidth}|p{0.35\linewidth}|p{0.55\linewidth}|
- .. list-table:: **Spring Frameworkから提供されているPlatformTransactionManagerの実装クラス**
-    :header-rows: 1
-    :widths: 10 35 55
 
-    * - 項番
-      - クラス名
-      - 説明
-    * - 1.
-      - | org.springframework.jdbc.datasource.
-        | DataSourceTransactionManager
-      - | JDBC(\ ``java.sql.Connection``\ )のAPIを呼び出して、トランザクションを管理するための実装クラス。
-        | MyBatisや、\ ``JdbcTemplate``\ を使う場合は、本クラスを使用する。
-    * - 2.
-      - | org.springframework.orm.jpa.
-        | JpaTransactionManager
-      - | JPA(\ ``javax.persistence.EntityTransaction``\ )のAPIを呼び出して、トランザクションを管理するための実装クラス。
-        | JPAを使う場合は、本クラスを使用する。
-    * - 3.
-      - | org.springframework.transaction.jta.
-        | JtaTransactionManager
-      - | JTA(\ ``javax.transaction.UserTransaction``\ )のAPIを呼び出してトランザクションを管理するための実装クラス。
-        | アプリケーションサーバから提供されているJTS(Java Transaction Service)を利用して、リソース(データベース/メッセージングサービス/汎用EIS(Enterprise Information System)など)とのトランザクションを管理する場合は、本クラスを使用する。
-        | 複数のリソースに対する操作を同一トランザクションで行う必要がある場合は、JTAを利用して、リソースとのトランザクションを管理する必要がある。
+
+
+
+
 
 @Transactionalを有効化するための設定
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
