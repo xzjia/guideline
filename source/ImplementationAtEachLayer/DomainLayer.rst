@@ -2022,24 +2022,20 @@ PlatformTransactionManagerの設定
           - アプリケーションサーバ
           - 参照ページ
         * - 1.
+          - Apache Tomcat
+          - Apache TomcatはJTAを実装してないため、\ `JOTM <http://jotm.objectweb.org>`_\など別途JTAライブラリをインストールする必要がある。
+        * - 2.
           - Oracle WebLogic Server 12c
           - \ `Oracle WebLogic Server 12.2.1.0 Documentation <https://docs.oracle.com/middleware/1221/wls/WLACH/taskhelp/jta/ConfigureJTA.html>`_\ を参照されたい。
-        * - 2.
+        * - 3.
           - IBM WebSphere Application Server Version 8.5
           - \ `WebSphere Application Server Version 8.5.5 documentation <http://www.ibm.com/support/knowledgecenter/ja/SSEQTP_8.5.5/com.ibm.websphere.base.iseries.doc/ae/cjta_glotran.html>`_\ を参照されたい。
-        * - 3.
+        * - 4.
           - Red Hat JBoss Enterprise Application Platform Version 6.4
           - \ `Product Documentation <https://access.redhat.com/documentation/en-US/JBoss_Enterprise_Application_Platform/6.4/html/Administration_and_Configuration_Guide/chap-Transaction_Subsystem.html>`_\ を参照されたい。
 
-
      * WebSphere、Oracle WebLogic ServerでJTAを使う場合、<tx:jta-transaction-manager/> を指定することで、
        アプリケーションサーバ用に拡張された\ ``JtaTransactionManager``\ が、自動的で設定される。
-
-
-
-
-
-
 
 @Transactionalを有効化するための設定
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
