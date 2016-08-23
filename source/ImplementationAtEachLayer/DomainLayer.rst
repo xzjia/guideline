@@ -1982,7 +1982,26 @@ PlatformTransactionManagerの設定
 
  .. note:: **複数DB（複数リソース）に対するトランザクション管理（グローバルトランザクションの管理）が必要な場合**
 
-     * \ ``org.springframework.transaction.jta.JtaTransactionManager``\ を利用し、アプリケーションサーバから提供されているJTAの機能を使って、トランザクション管理を行う必要がある。
+     * \ ``org.springframework.transaction.jta.JtaTransactionManager``\ を利用し、アプリケーションサーバから提供されているJTAの機能を使って、トランザクション管理を行う必要がある。アプリケーションサーバから提供されるトランザクション機能については下記を参照されたい。
+
+      .. tabularcolumns:: |p{0.10\linewidth}|p{0.35\linewidth}|p{0.55\linewidth}|
+      .. list-table:: **アプリケーションサーバから提供されているトランザクション機能**
+        :header-rows: 1
+        :widths: 10 35 55
+
+        * - 項番
+          - アプリケーションサーバ
+          - 参照ページ
+        * - 1.
+          - Oracle WebLogic Server 12c
+          - \ `Oracle WebLogic Server 12.2.1.0 Documentation <https://docs.oracle.com/middleware/1221/wls/WLACH/taskhelp/jta/ConfigureJTA.html>`_\ を参照されたい。
+        * - 2.
+          - Red Hat JBoss Enterprise Application Platform Version 6.4
+          - \ `Product Documentation <https://access.redhat.com/documentation/en-US/JBoss_Enterprise_Application_Platform/6.4/html/Administration_and_Configuration_Guide/chap-Transaction_Subsystem.html>`_\ を参照されたい。
+        * - 3.
+          - IBM WebSphere Application Server Version 8.5
+          - \ `WebSphere Application Server Version 8.5.5 documentation <http://www-01.ibm.com/support/knowledgecenter/SSAW57_8.5.5/com.ibm.websphere.nd.doc/ae/cjta_glotran.html?cp=SSAW57_8.5.5%2F1-2-7-2-1&lang=ja>`_\ を参照されたい。
+
      * WebSphere、Oracle WebLogic ServerでJTAを使う場合、<tx:jta-transaction-manager/> を指定することで、
        アプリケーションサーバ用に拡張された\ ``JtaTransactionManager``\ が、自動的で設定される。
 
