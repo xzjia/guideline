@@ -2000,7 +2000,7 @@ PlatformTransactionManagerの設定
           - \ `Product Documentation <https://access.redhat.com/documentation/en-US/JBoss_Enterprise_Application_Platform/6.4/html/Administration_and_Configuration_Guide/chap-Transaction_Subsystem.html>`_\ を参照されたい。
         * - 3.
           - IBM WebSphere Application Server Version 8.5
-          - \ `WebSphere Application Server Version 8.5.5 documentation <http://www-01.ibm.com/support/knowledgecenter/SSAW57_8.5.5/com.ibm.websphere.nd.doc/ae/cjta_glotran.html?cp=SSAW57_8.5.5%2F1-2-7-2-1&lang=ja>`_\ を参照されたい。
+          - \ `WebSphere Application Server Version 8.5.5 documentation <http://www.ibm.com/support/knowledgecenter/ja/SSEQTP_8.5.5/com.ibm.websphere.base.iseries.doc/ae/cjta_glotran.html>`_\ を参照されたい。
 
      * WebSphere、Oracle WebLogic ServerでJTAを使う場合、<tx:jta-transaction-manager/> を指定することで、
        アプリケーションサーバ用に拡張された\ ``JtaTransactionManager``\ が、自動的で設定される。
