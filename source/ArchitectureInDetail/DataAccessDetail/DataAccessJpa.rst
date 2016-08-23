@@ -2748,7 +2748,7 @@ Entityを追加したい場合は、Entityオブジェクトを生成し、Repos
 
  .. note :: **ID採番用のアノテーションについて**
 
-    各アノテーションの詳細は、`JSR 318: Java Persistence API, Version 2.1のSpecification(PDF) <http://download.oracle.com/otn-pub/jcp/persistence-2_1-fr-eval-spec/JavaPersistence.pdf>`_\ を参照されたい。
+    各アノテーションの詳細は、`JSR 338: Java Persistence API, Version 2.1のSpecification(PDF) <http://download.oracle.com/otn-pub/jcp/persistence-2_1-fr-eval-spec/JavaPersistence.pdf>`_\ を参照されたい。
 
     * ``@GeneratedValue`` : 11.1.20 GeneratedValue Annotation
     * ``@SequenceGenerator`` : 11.1.48 SequenceGenerator Annotation
