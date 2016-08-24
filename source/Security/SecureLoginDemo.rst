@@ -15,7 +15,7 @@
 
 * TERASOLUNA Server Framework for Java (5.x)を利用して代表的なセキュリティ要件を満たすための実装方法の例
 * :ref:`app-description-sec` に示すサンプルアプリケーションを題材として、実装方法とソースコードの説明を行う
-  
+
 .. warning::
     * この章で説明している実装方法はあくまでも一例であり、実際の開発においては個別の要件を考慮して実装する必要がある
     * セキュリティ対策の網羅的な実施を保証するものではないため、必要に応じて追加の対策を検討すること
@@ -57,12 +57,12 @@
       - 初期パスワード使用時のパスワード変更の強制
       - 初期パスワードを使用して認証成功した際に、パスワードの変更を強制する
     * - | (2)
-      - 
+      -
       - 期限切れパスワードの変更の強制
       - | 一定期間パスワードを変更していないユーザに対して、認証成功時にパスワードの変更を強制する
         | 本アプリケーションでは、管理ユーザのみを対象とする
     * - | (3)
-      - 
+      -
       - パスワード変更を促すメッセージの表示
       - 一定期間パスワードを変更していないユーザに対して、認証成功時にパスワードの変更を促すメッセージを表示する
     * - | (4)
@@ -70,15 +70,15 @@
       - パスワードの最小文字数指定
       - パスワードとして設定できる文字数の最小値を指定する
     * - | (5)
-      - 
+      -
       - パスワードの文字種別指定
       - パスワード中に含めなければならない文字種別（英大文字、英小文字、数字、記号）を指定する
     * - | (6)
-      - 
+      -
       - ユーザ名を含むパスワードの禁止
       - パスワード中にアカウントのユーザ名を含めることを禁止する
     * - | (7)
-      - 
+      -
       - 管理ユーザパスワードの再使用禁止
       - 管理ユーザが、以前使用したパスワードを短期間のうちに再使用することを禁止する
     * - | (8)
@@ -86,11 +86,11 @@
       - アカウントロックアウト
       - あるアカウントが短期間の間に一定回数以上認証に失敗した場合、そのアカウントを認証不能な状態（ロックアウト状態）にする
     * - | (9)
-      - 
+      -
       - アカウントロックアウト期間の指定
       - アカウントのロックアウト状態の継続時間を指定する
     * - | (10)
-      - 
+      -
       - 管理ユーザによるロックアウトの解除
       - 管理ユーザは任意のアカウントのロックアウト状態を解除できる
     * - | (11)
@@ -102,7 +102,7 @@
       - パスワード再発行用URLへのランダム文字列の付与
       - 不正なアクセスを防ぐため、パスワード再発行画面にアクセスするためのURLに十分に推測困難な文字列を付与する
     * - | (13)
-      - 
+      -
       - パスワード再発行用秘密情報の発行
       - パスワード再発行時のユーザ確認に用いるために、事前に十分に推測困難な秘密情報（ランダム文字列）を生成する
     * - | (14)
@@ -110,7 +110,7 @@
       - パスワード再発行画面URLのメール送付
       - パスワード再発行ページにアクセスするためのURLは、アカウントの登録済みメールアドレスへ送付する
     * - | (15)
-      - 
+      -
       - パスワード再発行画面のURLと秘密情報の別配布
       - パスワード再発行画面のURLの漏えいに備え、秘密情報はメール以外の方法でユーザに配布する
     * - | (16)
@@ -209,7 +209,7 @@
         * {baseUrl} : アプリケーションのベースURL
         * {token} : UUID version4形式の文字列（ハイフン込みで36文字、128bit）
 * パスワード再発行画面のURLには30分の有効期限を設け、有効期限内のみ認証可能
-      
+
 設計情報
 --------------------------------------------------------------------------------
 
@@ -532,7 +532,7 @@ ER図
   \ ``org.springframework.web.servlet.handler.HandlerInterceptor`` \ を利用して、Controllerのハンドラメソッド実行前に上記の条件に該当するかどうかの判定を行う。
 
   .. tip ::
-     
+
      認証後にパスワード変更画面へリダイレクトさせる方法は他にもあるが、方法によってはリダイレクト後にURLを直打ちすることでパスワード変更を避けて別画面にアクセスできてしまう可能性がある。
      \ ``HandlerInterceptor`` \を使用する方法ではハンドラメソッド実行前に処理を行うため、URLを直打ちするなどの方法で回避することはできない。
 
@@ -578,7 +578,7 @@ ER図
     .. list-table::
        :header-rows: 1
        :widths: 10 90
-    
+
        * - 項番
          - 説明
        * - | (1)
@@ -602,11 +602,11 @@ ER図
 
            int create(PasswordHistory history); // (1)
 
-           List<PasswordHistory> findByUseFrom(@Param("username") String username,  
+           List<PasswordHistory> findByUseFrom(@Param("username") String username,
                    @Param("useFrom") LocalDateTime useFrom); // (2)
 
-           List<PasswordHistory> findLatest(
-                   @Param("username") String username, @Param("limit") int limit); // (3)
+           List<PasswordHistory> findLatest(@Param("username") String username,
+                   @Param("limit") int limit); // (3)
 
        }
 
@@ -614,7 +614,7 @@ ER図
     .. list-table::
        :header-rows: 1
        :widths: 10 90
-    
+
        * - 項番
          - 説明
        * - | (1)
@@ -773,7 +773,7 @@ ER図
     .. list-table::
        :header-rows: 1
        :widths: 10 90
-    
+
        * - 項番
          - 説明
        * - | (1)
@@ -849,7 +849,7 @@ ER図
   .. list-table::
      :header-rows: 1
      :widths: 10 90
-  
+
      * - 項番
        - 説明
      * - | (1)
@@ -914,7 +914,7 @@ ER図
                              .isCurrentPasswordExpired(userDetails.getUsername())) // (5)
                              || accountSharedService.isInitialPassword(userDetails
                                      .getUsername())) { // (6)
-                         response.sendRedirect(request.getContextPath() 
+                         response.sendRedirect(request.getContextPath()
                                  + "/password?form"); // (7)
                          return false; // (8)
                      }
@@ -929,7 +929,7 @@ ER図
   .. list-table::
      :header-rows: 1
      :widths: 10 90
-  
+
      * - 項番
        - 説明
      * - | (1)
@@ -981,7 +981,7 @@ ER図
   .. list-table::
      :header-rows: 1
      :widths: 10 90
-  
+
      * - 項番
        - 説明
      * - | (1)
@@ -1017,14 +1017,16 @@ ER図
              Account account = userDetails.getAccount(); // (2)
 
              model.addAttribute("account", account);
-             
-             if(accountSharedService.isCurrentPasswordExpired(account.getUsername())){ // (3)
-                 ResultMessages messages = ResultMessages.warning().add("w.sl.pe.0001");
+
+             if (accountSharedService
+                    .isCurrentPasswordExpired(account.getUsername())) { // (3)
+                 ResultMessages messages = ResultMessages.warning().add(
+                         "w.sl.pe.0001");
                  model.addAttribute(messages);
              }
 
-             // omitted        
-             
+             // omitted
+
              return "welcome/home";
 
          }
@@ -1035,7 +1037,7 @@ ER図
   .. list-table::
      :header-rows: 1
      :widths: 10 90
-  
+
      * - 項番
        - 説明
      * - | (1)
@@ -1070,7 +1072,7 @@ ER図
   .. list-table::
      :header-rows: 1
      :widths: 10 90
-  
+
      * - 項番
        - 説明
      * - | (1)
@@ -1172,12 +1174,12 @@ ER図
   .. list-table::
      :header-rows: 1
      :widths: 10 90
-  
+
      * - 項番
        - 説明
      * - | (1)
        - | パスワードが過去に使用したパスワードに含まれないをチェックするための\ ``org.passay.HistoryRule`` \を拡張する。
-     * - | (2) 
+     * - | (2)
        - | パスワードのハッシュ化に用いている\ ``PasswordEncoder`` \ をインジェクションする。
      * - | (3)
        - | 過去のパスワードとの比較を行うメソッドをオーバーライドする。
@@ -1191,7 +1193,7 @@ ER図
   .. code-block:: xml
 
      <bean id="lengthRule" class="org.passay.LengthRule"> <!-- (1) -->
-         <property name="minimumLength" value="${security.passwordMinimumLength}" /> 
+         <property name="minimumLength" value="${security.passwordMinimumLength}" />
      </bean>
      <bean id="upperCaseRule" class="org.passay.CharacterRule"> <!-- (2) -->
          <constructor-arg name="data">
@@ -1238,12 +1240,12 @@ ER図
   .. list-table::
      :header-rows: 1
      :widths: 10 90
-  
+
      * - 項番
        - 説明
      * - | (1)
        - | パスワードの長さをチェックするための\ ``org.passay.LengthRule`` \のプロパティに、プロパティファイルから取得したパスワードの最短長を設定する。
-     * - | (2) 
+     * - | (2)
        - | 半角英大文字を一文字以上含むことをチェックする検証規則。パスワードに含まれる文字種別に関するチェックを行うための\ ``org.passay.CharacterRule`` \のコンストラクタに、\ ``org.passay.EnglishCharacterData.UpperCase`` \と数値の1を設定する。
      * - | (3)
        - | 半角英小文字を一文字以上含むことをチェックする検証規則。パスワードに含まれる文字種別に関するチェックを行うための\ ``org.passay.CharacterRule`` \のコンストラクタに、\ ``org.passay.EnglishCharacterData.LowerCase`` \と数値の1を設定する。
@@ -1287,7 +1289,7 @@ ER図
   .. list-table::
      :header-rows: 1
      :widths: 10 90
-  
+
      * - 項番
        - 説明
      * - | (1)
@@ -1336,7 +1338,7 @@ ER図
     .. list-table::
        :header-rows: 1
        :widths: 10 90
-    
+
        * - 項番
          - 説明
        * - | (1)
@@ -1398,7 +1400,7 @@ ER図
     .. list-table::
        :header-rows: 1
        :widths: 10 90
-    
+
        * - 項番
          - 説明
        * - | (1)
@@ -1451,7 +1453,7 @@ ER図
     .. list-table::
        :header-rows: 1
        :widths: 10 90
-    
+
        * - 項番
          - 説明
        * - | (1)
@@ -1530,7 +1532,7 @@ ER図
                if (!passwordEncoder.matches(newPassword, currentPassword)) {
                    return true;
                } else {
-       	           context.disableDefaultConstraintViolation();
+                   context.disableDefaultConstraintViolation();
                    context.buildConstraintViolationWithTemplate(message)
                            .addPropertyNode(newPasswordPropertyName).addConstraintViolation();
                    return false;
@@ -1562,7 +1564,7 @@ ER図
                if (result.isValid()) { // (10)
                    return true;
                } else {
-       	           context.disableDefaultConstraintViolation();
+                   context.disableDefaultConstraintViolation();
                    context.buildConstraintViolationWithTemplate(
                            encodedPasswordHistoryValidator.getMessages(result).get(0)) // (11)
                            .addPropertyNode(newPasswordPropertyName).addConstraintViolation();
@@ -1575,7 +1577,7 @@ ER図
     .. list-table::
        :header-rows: 1
        :widths: 10 90
-    
+
        * - 項番
          - 説明
        * - | (1)
@@ -1620,10 +1622,10 @@ ER図
      @StrongPassword(usernamePropertyName = "username", newPasswordPropertyName = "newPassword") // (2)
      @NotReusedPassword(usernamePropertyName = "username", newPasswordPropertyName = "newPassword") // (3)
      @ConfirmOldPassword(usernamePropertyName = "username", oldPasswordPropertyName = "oldPassword") // (4)
-     public class PasswordChangeForm implements Serializable{
+     public class PasswordChangeForm implements Serializable {
 
          private static final long serialVersionUID = 1L;
-         
+
          @NotNull
          private String username;
 
@@ -1642,7 +1644,7 @@ ER図
   .. list-table::
      :header-rows: 1
      :widths: 10 90
-  
+
      * - 項番
        - 説明
      * - | (1)
@@ -1675,8 +1677,8 @@ ER図
                  Model model) {
 
              Account account = userDetails.getAccount();
-             if (bindingResult.hasErrors() ||
-                     !account.getUsername().equals(form.getUsername())) { // (2)
+             if (bindingResult.hasErrors()
+                     || !account.getUsername().equals(form.getUsername())) { // (2)
                  model.addAttribute(account);
                  return "passwordchange/changeForm";
              }
@@ -1695,7 +1697,7 @@ ER図
   .. list-table::
      :header-rows: 1
      :widths: 10 90
-  
+
      * - 項番
        - 説明
      * - | (1)
@@ -1779,12 +1781,12 @@ ER図
    :alt: Account Lockout
    :width: 60%
    :align: center
-  
+
 .. tabularcolumns:: |p{0.10\linewidth}|p{0.90\linewidth}|
 .. list-table::
    :header-rows: 1
    :widths: 10 90
-  
+
    * - 項番
      - 説明
    * - | (1)
@@ -1805,13 +1807,13 @@ ER図
 .. list-table::
    :header-rows: 1
    :widths: 10 90
-  
+
    * - 項番
      - 説明
    * - | (1)
      - | 過去10分以内に、誤ったパスワードでの認証が3回試行されている。
        | その後、認証失敗イベントエンティティが消去されているため、データベースには認証失敗イベントエンティティが保存されておらず、ロックアウト状態ではないと判定される。
-   
+
 コード解説
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 
@@ -1819,31 +1821,31 @@ ER図
 
   本アプリケーションにおいて、アカウントのロックアウトに関する機能を実現するためには、データベースに対する認証失敗イベントエンティティの登録、検索、削除が共通的に必要となる。
   そのため、まずは認証失敗イベントエンティティに関するドメイン層・インフラストラクチャ層の実装を示す。
-  
+
   * Entityの実装
-  
+
     ユーザ名と認証試行日時を持つ認証失敗イベントエンティティの実装を以下に示す。
-  
+
     .. code-block:: java
-  
+
       package org.terasoluna.securelogin.domain.model;
-      
+
       // omitted
-      
+
       @Data
       public class FailedAuthentication implements Serializable {
         private static final long serialVersionUID = 1L;
-      
+
         private String username; // (1)
-      
+
         private LocalDateTime authenticationTimestamp; // (2)
       }
-      
+
     .. tabularcolumns:: |p{0.10\linewidth}|p{0.90\linewidth}|
     .. list-table::
        :header-rows: 1
        :widths: 10 90
-    
+
        * - 項番
          - 説明
        * - | (1)
@@ -1852,30 +1854,30 @@ ER図
          - | 認証を試行した日時
 
   * Repositoryの実装
-  
+
     認証失敗イベントエンティティの検索、登録、削除のためのRepositoryを以下に示す。
-  
+
     .. code-block:: java
-  
+
       package org.terasoluna.securelogin.domain.repository.authenticationevent;
-      
+
       // omitted
-      
+
       public interface FailedAuthenticationRepository {
-      
+
         int create(FailedAuthentication event); // (1)
-      
-        List<FailedAuthentication> findLatest(
-                        @Param("username") String username, @Param("count") long count); // (2)
-      
+
+        List<FailedAuthentication> findLatest(@Param("username") String username,
+                @Param("count") long count); // (2)
+
         int deleteByUsername(@Param("username") String username); // (3)
       }
-    
+
     .. tabularcolumns:: |p{0.10\linewidth}|p{0.90\linewidth}|
     .. list-table::
        :header-rows: 1
        :widths: 10 90
-    
+
        * - 項番
          - 説明
        * - | (1)
@@ -1884,24 +1886,24 @@ ER図
          - | 引数として与えられたユーザ名をキーとして、指定された個数の\ ``FailedAuthentication``\ オブジェクトを新しい順に取得するメソッド
        * - | (3)
          - | 引数として与えられたユーザ名をキーとして、認証失敗イベントエンティティのレコードを一括削除するメソッド
-    
+
     マッピングファイルは以下の通り。
-  
+
     .. code-block:: xml
-    
+
       <?xml version="1.0" encoding="UTF-8"?>
       <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
       "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
-     
+
       <mapper
         namespace="org.terasoluna.securelogin.domain.repository.authenticationevent.FailedAuthenticationRepository">
-      
+
         <resultMap id="failedAuthenticationResultMap"
                 type="FailedAuthentication">
                 <id property="username" column="username" />
                 <id property="authenticationTimestamp" column="authentication_timestamp" />
         </resultMap>
-      
+
         <insert id="create" parameterType="FailedAuthentication">
           <![CDATA[
               INSERT INTO failed_authentication (
@@ -1913,7 +1915,7 @@ ER図
               )
           ]]>
         </insert>
-      
+
         <select id="findLatest" resultMap="failedAuthenticationResultMap">
              <![CDATA[
                   SELECT
@@ -1927,7 +1929,7 @@ ER図
                   LIMIT #{count}
              ]]>
         </select>
-      
+
         <delete id="deleteByUsername">
            <![CDATA[
                 DELETE FROM
@@ -1937,11 +1939,11 @@ ER図
            ]]>
         </delete>
       </mapper>
-      
+
   * Serviceの実装
-  
+
     作成したRepositoryのメソッドを呼び出すServiceを以下の通り定義する。
-  
+
     .. code-block:: java
 
        package org.terasoluna.securelogin.domain.service.authenticationevent;
@@ -1951,13 +1953,13 @@ ER図
        @Service
        @Transactional
        public class AuthenticationEventSharedServiceImpl implements
-                       AuthenticationEventSharedService {
+               AuthenticationEventSharedService {
 
            // omitted
 
            @Inject
            ClassicDateFactory dateFactory;
-           
+
            @Inject
            FailedAuthenticationRepository failedAuthenticationRepository;
 
@@ -1968,26 +1970,26 @@ ER図
            @Override
            public List<FailedAuthentication> findLatestFailureEvents(
                            String username, int count) {
-                   return failedAuthenticationRepository.findLatestEvents(username, count);
+               return failedAuthenticationRepository.findLatestEvents(username, count);
            }
 
 
            @Transactional(propagation = Propagation.REQUIRES_NEW)
            @Override
            public void authenticationFailure(String username) { // (1)
-                if (accountSharedService.exists(username)){
-                    FailedAuthentication failureEvents = new FailedAuthentication();
-                    failureEvents.setUsername(username);
-                    failureEvents.setAuthenticationTimestamp(dateFactory.newTimestamp()
-                            .toLocalDateTime());
-                
-                    failedAuthenticationRepository.create(failureEvents);
-                }
-            }
+               if (accountSharedService.exists(username)) {
+                   FailedAuthentication failureEvents = new FailedAuthentication();
+                   failureEvents.setUsername(username);
+                   failureEvents.setAuthenticationTimestamp(dateFactory.newTimestamp()
+                           .toLocalDateTime());
+
+                   failedAuthenticationRepository.create(failureEvents);
+               }
+           }
 
            @Override
            public int deleteFailureEventByUsername(String username) {
-                   return failedAuthenticationRepository.deleteByUsername(username);
+               return failedAuthenticationRepository.deleteByUsername(username);
            }
 
            // omitted
@@ -1998,14 +2000,14 @@ ER図
     .. list-table::
        :header-rows: 1
        :widths: 10 90
-    
+
        * - 項番
          - 説明
        * - | (1)
          - | 認証失敗イベントエンティティを作成してデータベースに登録するメソッド。
            | 引数として受け取ったユーザ名のアカウントが存在しない場合、データベースの外部キー制約に違反するため、データベースへの登録処理をスキップする。
            | 本メソッド実行後の例外により認証失敗イベントエンティティが登録されない可能性を考慮し、トランザクションの伝搬方法に\ ``REQUIRES_NEW`` \を指定している。
-           
+
 以下、実装方法に従って実装されたコードについて順に解説する。
 
 * 認証失敗イベントエンティティの保存
@@ -2020,7 +2022,7 @@ ER図
      // omitted
 
      @Component
-     public class AccountAuthenticationFailureBadCredentialsEventListener{ 
+     public class AccountAuthenticationFailureBadCredentialsEventListener{
 
          @Inject
          AuthenticationEventSharedService authenticationEventSharedService;
@@ -2035,12 +2037,12 @@ ER図
          }
 
      }
-         
+
   .. tabularcolumns:: |p{0.10\linewidth}|p{0.90\linewidth}|
   .. list-table::
      :header-rows: 1
      :widths: 10 90
-  
+
      * - 項番
        - 説明
      * - | (1)
@@ -2082,7 +2084,7 @@ ER図
          @Override
          public boolean isLocked(String username) {
              List<FailedAuthentication> failureEvents = authenticationEventSharedService
-                             .findLatestFailureEvents(username, lockingThreshold); // (3)
+                     .findLatestFailureEvents(username, lockingThreshold); // (3)
 
              if (failureEvents.size() < lockingThreshold) { // (4)
                  return false;
@@ -2093,7 +2095,7 @@ ER図
                      .getAuthenticationTimestamp()
                      .isBefore(
                              dateFactory.newTimestamp().toLocalDateTime()
-                             .minusSeconds(lockingDurationSeconds))) {
+                                     .minusSeconds(lockingDurationSeconds))) {
                  return false;
              }
 
@@ -2107,7 +2109,7 @@ ER図
   .. list-table::
      :header-rows: 1
      :widths: 10 90
-  
+
      * - 項番
        - 説明
      * - | (1)
@@ -2125,7 +2127,7 @@ ER図
   | 本アプリケーションでは以下のように\ ``User`` \を継承したクラスと、\ ``org.springframework.security.core.userdetails.UserDetailsService`` \を実装したクラスを用いる。
 
   .. code-block:: java
-  
+
      package org.terasoluna.securelogin.domain.service.userdetails;
 
      // omitted
@@ -2137,9 +2139,10 @@ ER図
         private final Account account;
 
         public LoggedInUser(Account account, boolean isLocked,
-                        LocalDateTime lastLoginDate, List<SimpleGrantedAuthority> authorities) {
+                LocalDateTime lastLoginDate,
+                List<SimpleGrantedAuthority> authorities) {
             super(account.getUsername(), account.getPassword(), true, true, true,
-                        !isLocked, authorities); // (1)
+                    !isLocked, authorities); // (1)
             this.account = account;
 
             // omitted
@@ -2213,16 +2216,16 @@ ER図
   .. code-block:: xml
 
     <!-- omitted -->
-  
+
     <sec:authentication-manager>
         <sec:authentication-provider
             user-service-ref="loggedInUserDetailsService"> <!-- (1) -->
             <sec:password-encoder ref="passwordEncoder" />
         </sec:authentication-provider>
     </sec:authentication-manager>
-    
+
     <!-- omitted -->
-  
+
   .. tabularcolumns:: |p{0.10\linewidth}|p{0.90\linewidth}|
   .. list-table::
      :header-rows: 1
@@ -2249,7 +2252,7 @@ ER図
        @Service
        @Transactional
        public class AuthenticationEventSharedServiceImpl implements
-                       AuthenticationEventSharedService {
+               AuthenticationEventSharedService {
 
            // omitted
 
@@ -2270,7 +2273,7 @@ ER図
     .. list-table::
        :header-rows: 1
        :widths: 10 90
-    
+
        * - 項番
          - 説明
        * - | (1)
@@ -2286,7 +2289,7 @@ ER図
        // omitted
 
        @Component
-       public class AccountAuthenticationSuccessEventListener{ 
+       public class AccountAuthenticationSuccessEventListener{
 
            @Inject
            AuthenticationEventSharedService authenticationEventSharedService;
@@ -2303,20 +2306,20 @@ ER図
            }
 
        }
-           
+
     .. tabularcolumns:: |p{0.10\linewidth}|p{0.90\linewidth}|
     .. list-table::
        :header-rows: 1
        :widths: 10 90
-    
+
        * - 項番
          - 説明
        * - | (1)
          - | \ ``@EventListener`` \アノテーションを付与することで、認証が成功した際に\ ``onApplicationEvent`` \メソッドが実行される。
        * - | (2)
          - | \ ``AuthenticationSuccessEvent`` \からユーザ名を取得し、認証失敗イベントエンティティを削除する処理を呼び出す。
-    
-    
+
+
   * ロックアウト状態の解除
 
     ロックアウト状態の判定に認証失敗イベントエンティティを使用しているため、認証失敗イベントエンティティを削除することでロックアウト状態を解除することができる。
@@ -2334,13 +2337,13 @@ ER図
 
           <sec:http pattern="/resources/**" security="none" />
           <sec:http>
-          
+
               <!-- omitted -->
-              
+
               <sec:intercept-url pattern="/unlock/**" access="hasRole('ADMIN')" /> <!-- (1) -->
-              
+
               <!-- omitted -->
-              
+
           </sec:http>
 
         <!-- omitted -->
@@ -2349,7 +2352,7 @@ ER図
       .. list-table::
          :header-rows: 1
          :widths: 10 90
-    
+
          * - 項番
            - 説明
          * - | (1)
@@ -2375,17 +2378,16 @@ ER図
 
              @Override
              public void unlock(String username) {
-                 authenticationEventSharedService
-                        .deleteFailureEventByUsername(username); // (1)
+                 authenticationEventSharedService.deleteFailureEventByUsername(username); // (1)
              }
 
          }
-        
+
       .. tabularcolumns:: |p{0.10\linewidth}|p{0.90\linewidth}|
       .. list-table::
          :header-rows: 1
          :widths: 10 90
-    
+
          * - 項番
            - 説明
          * - | (1)
@@ -2395,7 +2397,7 @@ ER図
 
       .. code-block:: java
 
-        package org.terasoluna.securelogin.app.unlock;    
+        package org.terasoluna.securelogin.app.unlock;
 
         @Data
         public class UnlockForm implements Serializable {
@@ -2405,7 +2407,7 @@ ER図
             @NotEmpty
             private String username;
         }
-        
+
     * Viewの実装
 
       **トップ画面(home.jsp)**
@@ -2417,7 +2419,7 @@ ER図
         <body>
             <div id="wrapper">
 
-                <!-- omitted -->        
+                <!-- omitted -->
 
                 <sec:authorize url="/unlock"> <!-- (1) -->
                 <div>
@@ -2438,7 +2440,7 @@ ER図
       .. list-table::
          :header-rows: 1
          :widths: 10 90
-    
+
          * - 項番
            - 説明
          * - | (1)
@@ -2447,7 +2449,7 @@ ER図
       **ロックアウト解除フォーム(unlokcForm.jsp)**
 
       .. code-block:: jsp
-      
+
         <!-- omitted -->
 
         <body>
@@ -2485,7 +2487,7 @@ ER図
                   <a href="${f:h(pageContext.request.contextPath)}/">go to Top</a>
             </div>
         </body>
-        
+
         <!-- omitted -->
 
     * Controllerの実装
@@ -2537,7 +2539,7 @@ ER図
       .. list-table::
          :header-rows: 1
          :widths: 10 90
-    
+
          * - 項番
            - 説明
          * - | (1)
@@ -2582,13 +2584,13 @@ ER図
 
   本アプリケーションにおいて、前回ログイン日時を表示するためには、データベースに対する認証成功イベントエンティティの登録、検索が必要となる。
   そのため、まずは認証成功イベントエンティティに関するドメイン層・インフラストラクチャ層の実装から解説を行う。
-  
+
   * Entityの実装
-  
+
     ユーザ名と認証成功日時を持つ認証成功イベントエンティティの実装は以下の通り。
-  
+
     .. code-block:: java
-  
+
        package org.terasoluna.securelogin.domain.model;
 
        // omitted
@@ -2603,12 +2605,12 @@ ER図
            private LocalDateTime authenticationTimestamp; // (2)
 
        }
-    
+
     .. tabularcolumns:: |p{0.10\linewidth}|p{0.90\linewidth}|
     .. list-table::
        :header-rows: 1
        :widths: 10 90
-    
+
        * - 項番
          - 説明
        * - | (1)
@@ -2617,11 +2619,11 @@ ER図
          - | 認証を試行した日時
 
   * Repositoryの実装
-  
+
     認証成功イベントエンティティの検索、登録を行うためのRepositoryを以下に示す。
-  
+
     .. code-block:: java
-                  
+
        package org.terasoluna.securelogin.domain.repository.authenticationevent;
 
        // omitted
@@ -2630,26 +2632,26 @@ ER図
 
            int create(SuccessfulAuthentication event); // (1)
 
-           List<SuccessfulAuthentication> findLatestEvents(
+           List<SuccessfulAuthentication> findLatest(
                   @Param("username") String username, @Param("count") long count); // (2)
        }
-      
+
     .. tabularcolumns:: |p{0.10\linewidth}|p{0.90\linewidth}|
     .. list-table::
        :header-rows: 1
        :widths: 10 90
-    
+
        * - 項番
          - 説明
        * - | (1)
          - | 引数として与えられた\ ``SuccessfulAuthentication``\ オブジェクトをデータベースのレコードとして登録するメソッド
        * - | (2)
          - | 引数として与えられたユーザ名をキーとして、指定された個数の\ ``SuccessfulAuthentication``\ オブジェクトを新しい順に取得するメソッド
-  
+
     マッピングファイルは以下の通り。
-  
+
     .. code-block:: xml
-  
+
        <?xml version="1.0" encoding="UTF-8"?>
        <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
@@ -2675,7 +2677,7 @@ ER図
            ]]>
            </insert>
 
-           <select id="findLatestEvents" resultMap="successfulAuthenticationResultMap">
+           <select id="findLatest" resultMap="successfulAuthenticationResultMap">
            <![CDATA[
                SELECT
                    username,
@@ -2689,13 +2691,13 @@ ER図
            ]]>
            </select>
        </mapper>
-      
+
   * Serviceの実装
-  
+
     作成したRepositoryのメソッドを呼び出すServiceを以下に示す。
-  
+
     .. code-block:: java
-    
+
        package org.terasoluna.securelogin.domain.service.authenticationevent;
 
        // omitted
@@ -2703,10 +2705,10 @@ ER図
        @Service
        @Transactional
        public class AuthenticationEventSharedServiceImpl implements
-       		AuthenticationEventSharedService {
+            AuthenticationEventSharedService {
 
            // omitted
-           
+
            @Inject
            ClassicDateFactory dateFactory;
 
@@ -2716,8 +2718,8 @@ ER図
            @Transactional(readOnly = true)
            @Override
            public List<SuccessfulAuthentication> findLatestSuccessEvents(
-                           String username, int count) {
-               return successAuthenticationRepository.findLatestEvents(username, count);
+                   String username, int count) {
+               return successAuthenticationRepository.findLatest(username, count);
            }
 
            @Transactional(propagation = Propagation.REQUIRES_NEW)
@@ -2725,14 +2727,15 @@ ER図
              public void authenticationSuccess(String username) {
                  SuccessfulAuthentication successEvent = new SuccessfulAuthentication();
                  successEvent.setUsername(username);
-                 successEvent.setAuthenticationTimestamp(dateFactory.newTimestamp().toLocalDateTime());
+                 successEvent.setAuthenticationTimestamp(dateFactory.newTimestamp()
+                         .toLocalDateTime());
 
                  successAuthenticationRepository.create(successEvent);
                  deleteFailureEventByUsername(username);
              }
 
        }
-  
+
 以下、実装方法に従って実装されたコードについて順に解説する。
 
 * 認証成功イベントエンティティの保存
@@ -2754,9 +2757,10 @@ ER図
          @EventListener // (1)
          public void onApplicationEvent(AuthenticationSuccessEvent event) {
              LoggedInUser details = (LoggedInUser) event.getAuthentication()
-                             .getPrincipal(); // (2)
+                     .getPrincipal(); // (2)
 
-             authenticationEventSharedService.authenticationSuccess(details.getUsername()); // (3)
+             authenticationEventSharedService.authenticationSuccess(details
+                     .getUsername()); // (3)
          }
 
      }
@@ -2765,7 +2769,7 @@ ER図
   .. list-table::
      :header-rows: 1
      :widths: 10 90
-  
+
      * - 項番
        - 説明
      * - | (1)
@@ -2798,7 +2802,7 @@ ER図
           @Override
           public LocalDateTime getLastLoginDate(String username) {
               List<SuccessfulAuthentication> events = authenticationEventSharedService
-                          .findLatestSuccessEvents(username, 1); // (1)
+                      .findLatestSuccessEvents(username, 1); // (1)
 
               if (events.isEmpty()) {
                   return null; // (2)
@@ -2810,12 +2814,12 @@ ER図
           // omitted
 
       }
-    
+
   .. tabularcolumns:: |p{0.10\linewidth}|p{0.90\linewidth}|
   .. list-table::
      :header-rows: 1
      :widths: 10 90
-  
+
      * - 項番
        - 説明
      * - | (1)
@@ -2840,27 +2844,28 @@ ER図
          private final LocalDateTime lastLoginDate; // (1)
 
          public LoggedInUser(Account account, boolean isLocked,
-                         LocalDateTime lastLoginDate, List<SimpleGrantedAuthority> authorities) {
+                 LocalDateTime lastLoginDate,
+                 List<SimpleGrantedAuthority> authorities) {
 
              super(account.getUsername(), account.getPassword(), true, true, true,
-                             !isLocked, authorities);
+                     !isLocked, authorities);
              this.account = account;
              this.lastLoginDate = lastLoginDate; // (2)
          }
 
-         // omitted    
+         // omitted
 
          public LocalDateTime getLastLoginDate() { // (3)
              return lastLoginDate;
          }
 
      }
-    
+
   .. tabularcolumns:: |p{0.10\linewidth}|p{0.90\linewidth}|
   .. list-table::
      :header-rows: 1
      :widths: 10 90
-  
+
      * - 項番
        - 説明
      * - | (1)
@@ -2885,18 +2890,18 @@ ER図
          @Transactional(readOnly = true)
          @Override
          public UserDetails loadUserByUsername(String username)
-                     throws UsernameNotFoundException {
+                 throws UsernameNotFoundException {
              try {
                  Account account = accountSharedService.findOne(username);
                  List<SimpleGrantedAuthority> authorities = new ArrayList<>();
                  for (Role role : account.getRoles()) {
                          authorities.add(new SimpleGrantedAuthority("ROLE_"
-                                         + role.getRoleValue()));
+                                + role.getRoleValue()));
                  }
                  return new LoggedInUser(account,
-                                 accountSharedService.isLocked(username),
-                                 accountSharedService.getLastLoginDate(username), // (1)
-                                 authorities);
+                         accountSharedService.isLocked(username),
+                         accountSharedService.getLastLoginDate(username), // (1)
+                         authorities);
              } catch (ResourceNotFoundException e) {
                  throw new UsernameNotFoundException("user not found", e);
              }
@@ -2908,7 +2913,7 @@ ER図
   .. list-table::
      :header-rows: 1
      :widths: 10 90
-  
+
      * - 項番
        - 説明
      * - | (1)
@@ -2925,25 +2930,25 @@ ER図
      @Controller
      public class HomeController {
 
-     	@Inject
-     	AccountSharedService accountSharedService;
+        @Inject
+        AccountSharedService accountSharedService;
 
-     	@RequestMapping(value = "/", method = { RequestMethod.GET,
-     			RequestMethod.POST })
-     	public String home(@AuthenticationPrincipal LoggedInUser userDetails, // (1)
-     			Model model) {
+        @RequestMapping(value = "/", method = { RequestMethod.GET,
+                RequestMethod.POST })
+        public String home(@AuthenticationPrincipal LoggedInUser userDetails, // (1)
+                Model model) {
 
             // omitted
-     		
-     		LocalDateTime lastLoginDate = userDetails.getLastLoginDate(); // (2)
-     		if (lastLoginDate != null) {
-     			model.addAttribute("lastLoginDate", lastLoginDate
-     					.format(DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss"))); // (3)
-     		}
-     		
-     		return "welcome/home";
 
-     	}
+            LocalDateTime lastLoginDate = userDetails.getLastLoginDate(); // (2)
+            if (lastLoginDate != null) {
+                model.addAttribute("lastLoginDate", lastLoginDate
+                        .format(DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss"))); // (3)
+            }
+
+            return "welcome/home";
+
+        }
 
      }
 
@@ -2951,7 +2956,7 @@ ER図
   .. list-table::
      :header-rows: 1
      :widths: 10 90
-  
+
      * - 項番
        - 説明
      * - | (1)
@@ -2985,14 +2990,14 @@ ER図
   .. list-table::
      :header-rows: 1
      :widths: 10 90
-  
+
      * - 項番
        - 説明
      * - | (1)
        - | 前回ログイン日時がnullの場合は表示しない。
      * - | (2)
        - | Controllerから渡された前回ログイン日時を表示する。
-      
+
 .. _reissue-info-create:
 
 パスワード再発行のための認証情報の生成
@@ -3001,12 +3006,12 @@ ER図
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 * :ref:`パスワード再発行用URLへのランダム文字列の付与 <sec-requirements>`
 * :ref:`パスワード再発行用秘密情報の発行 <sec-requirements>`
-  
+
 動作イメージ
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 
 .. figure:: ./images/SecureLogin_password_reissue_generate.png
-   :alt: Generate Password Reissue Information 
+   :alt: Generate Password Reissue Information
    :width: 80%
    :align: center
 
@@ -3036,7 +3041,7 @@ ER図
   * 有効期限：パスワード再発行のための認証情報の有効期限
 
   トークンの生成には\ ``java.util.UUID`` \クラスの\ ``randomUUID`` \メソッドを用い、秘密情報の生成にはPassayのパスワード生成機能を用いる。
-  
+
   秘密情報については、パスワードと同様にハッシュ化してデータベースへ保存する。
   有効期限の設定と確認処理については、:ref:`パスワード再発行実行時の検査 <reissue-info-validate>` に記す。
   パスワード再発行のための認証情報をユーザに配布する方法については、:ref:`パスワード再発行のための認証情報の配布 <reissue-info-delivery>` を参照。
@@ -3076,7 +3081,7 @@ ER図
     .. list-table::
        :header-rows: 1
        :widths: 10 90
-    
+
        * - 項番
          - 説明
        * - | (1)
@@ -3087,7 +3092,7 @@ ER図
          - | パスワード再発行時にユーザを確認するための文字列（秘密情報）
        * - | (2)
          - | パスワード再発行のための認証情報の有効期限
-           
+
   * Repositoryの実装
 
     パスワード再発行のための認証情報の検索、登録、削除を行うためのRepositoryを以下に示す。
@@ -3114,7 +3119,7 @@ ER図
    .. list-table::
       :header-rows: 1
       :widths: 10 90
-   
+
       * - 項番
         - 説明
       * - | (1)
@@ -3198,7 +3203,7 @@ ER図
     .. list-table::
        :header-rows: 1
        :widths: 10 90
-    
+
        * - 項番
          - 説明
        * - | (1)
@@ -3256,15 +3261,15 @@ ER図
 
            @Override
            public String createAndSendReissueInfo(String username) {
-               
+
                String rowSecret = passwordGenerator.generatePassword(10, passwordGenerationRules); // (4)
 
-               if(!accountSharedService.exists(username)){ // (5)
-                   return rowSecret;           
+               if (!accountSharedService.exists(username)) { // (5)
+                   return rowSecret;
                }
-               
+
                Account account= accountSharedService.findOne(username); // (6)
-               
+
                String token = UUID.randomUUID().toString(); // (7)
 
                LocalDateTime expiryDate = dateFactory.newTimestamp().toLocalDateTime()
@@ -3292,7 +3297,7 @@ ER図
     .. list-table::
        :header-rows: 1
        :widths: 10 90
-    
+
        * - 項番
          - 説明
        * - | (1)
@@ -3332,7 +3337,7 @@ ER図
        public class CreateReissueInfoForm implements Serializable {
 
            private static final long serialVersionUID = 1L;
-       
+
            @NotEmpty
            private String username;
        }
@@ -3409,13 +3414,13 @@ ER図
            // omitted
 
        }
-    
+
 
     .. tabularcolumns:: |p{0.10\linewidth}|p{0.90\linewidth}|
     .. list-table::
        :header-rows: 1
        :widths: 10 90
-    
+
        * - 項番
          - 説明
        * - | (1)
@@ -3430,12 +3435,12 @@ ER図
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 * :ref:`パスワード再発行画面のURLと秘密情報の別配布 <sec-requirements>`
 * :ref:`パスワード再発行画面のURLのメール送付 <sec-requirements>`
-  
+
 動作イメージ
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 
 .. figure:: ./images/SecureLogin_password_reissue_give.png
-   :alt: Givee Password Reissue Information 
+   :alt: Givee Password Reissue Information
    :width: 80%
    :align: center
 
@@ -3458,7 +3463,7 @@ ER図
 * パスワード再発行画面のURLのメール送付
 
   :ref:`パスワード再発行のための認証情報の生成 <reissue-info-create>` で生成したトークンを含むパスワード再発行画面のURLを、Spring FrameworkのMail連携用コンポーネントを用いて、メールで送付する。
-  
+
 
 コード解説
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
@@ -3492,7 +3497,8 @@ ER図
                  return showCreateReissueInfoForm(form);
              }
 
-             String rawSecret = passwordReissueService.createAndSendReissueInfo(form.getUsername()); // (1)
+             String rawSecret = passwordReissueService.createAndSendReissueInfo(form
+                     .getUsername()); // (1)
              attributes.addFlashAttribute("secret", rawSecret); // (2)
              return "redirect:/reissue/create?complete"; // (3)
          }
@@ -3510,7 +3516,7 @@ ER図
   .. list-table::
      :header-rows: 1
      :widths: 10 90
-  
+
      * - 項番
        - 説明
      * - | (1)
@@ -3542,7 +3548,7 @@ ER図
   .. list-table::
      :header-rows: 1
      :widths: 10 90
-  
+
      * - 項番
        - 説明
      * - | (1)
@@ -3560,7 +3566,8 @@ ER図
      // omitted
 
      @Service
-     public class PasswordReissueMailSharedServiceImpl implements PasswordReissueMailSharedService {
+     public class PasswordReissueMailSharedServiceImpl implements
+             PasswordReissueMailSharedService {
 
          @Inject
          JavaMailSender mailSender; // (1)
@@ -3585,7 +3592,7 @@ ER図
   .. list-table::
      :header-rows: 1
      :widths: 10 90
-  
+
      * - 項番
        - 説明
      * - | (1)
@@ -3631,15 +3638,16 @@ ER図
 
          @Override
          public String createAndSendReissueInfo(String username) {
-            
-             String rowSecret = passwordGenerator.generatePassword(10, passwordGenerationRules);
 
-             if(!accountSharedService.exists(username)){
-                 return rowSecret;           
+             String rowSecret = passwordGenerator.generatePassword(10,
+                     passwordGenerationRules);
+
+             if (!accountSharedService.exists(username)) {
+                 return rowSecret;
              }
-            
+
              Account account= accountSharedService.findOne(username);
-            
+
              String token = UUID.randomUUID().toString();
 
              LocalDateTime expiryDate = dateFactory.newTimestamp().toLocalDateTime()
@@ -3672,7 +3680,7 @@ ER図
   .. list-table::
      :header-rows: 1
      :widths: 10 90
-  
+
      * - 項番
        - 説明
      * - | (1)
@@ -3691,12 +3699,12 @@ ER図
 実装する要件一覧
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 * :ref:`パスワード再発行用の認証情報の有効期限の設定 <sec-requirements>`
-  
+
 動作イメージ
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 
 .. figure:: ./images/SecureLogin_password_reissue_execute.png
-   :alt: Use Password Reissue Information 
+   :alt: Use Password Reissue Information
    :width: 80%
    :align: center
 
@@ -3763,7 +3771,7 @@ URLに含まれるトークンと秘密情報の組が正しい場合にのみ�
 
            @Override
            public String createAndSendReissueInfo(String username) {
-               
+
                // omitted
 
                LocalDateTime expiryDate = dateFactory.newTimestamp().toLocalDateTime()
@@ -3789,7 +3797,7 @@ URLに含まれるトークンと秘密情報の組が正しい場合にのみ�
     .. list-table::
        :header-rows: 1
        :widths: 10 90
-    
+
        * - 項番
          - 説明
        * - | (1)
@@ -3836,7 +3844,8 @@ URLに含まれるトークンと秘密情報の組が正しい場合にのみ�
                            MessageKeys.E_SL_PR_5002, token));
                }
 
-               if (dateFactory.newTimestamp().toLocalDateTime().isAfter(info.getExpiryDate())) { // (2)
+               if (dateFactory.newTimestamp().toLocalDateTime()
+                        .isAfter(info.getExpiryDate())) { // (2)
                    throw new BusinessException(ResultMessages.error().add(
                            MessageKeys.E_SL_PR_2001));
                }
@@ -3854,7 +3863,7 @@ URLに含まれるトークンと秘密情報の組が正しい場合にのみ�
     .. list-table::
        :header-rows: 1
        :widths: 10 90
-    
+
        * - 項番
          - 説明
        * - | (1)
@@ -3898,7 +3907,7 @@ URLに含まれるトークンと秘密情報の組が正しい場合にのみ�
     .. list-table::
        :header-rows: 1
        :widths: 10 90
-    
+
        * - 項番
          - 説明
        * - | (1)
@@ -3934,7 +3943,7 @@ URLに含まれるトークンと秘密情報の組が正しい場合にのみ�
     .. list-table::
        :header-rows: 1
        :widths: 10 90
-    
+
        * - 項番
          - 説明
        * - | (1)
@@ -3942,7 +3951,7 @@ URLに含まれるトークンと秘密情報の組が正しい場合にのみ�
 
 
     .. code-block:: java
-                    
+
        package org.terasoluna.securelogin.domain.service.passwordreissue;
 
        // omitted
@@ -3989,7 +3998,7 @@ URLに含まれるトークンと秘密情報の組が正しい場合にのみ�
     .. list-table::
        :header-rows: 1
        :widths: 10 90
-    
+
        * - 項番
          - 説明
        * - | (1)
@@ -4004,7 +4013,7 @@ URLに含まれるトークンと秘密情報の組が正しい場合にのみ�
   * Formの実装
 
     クラスに付与されたアノテーションによってNullチェック以外の入力チェックが網羅されていることから、単項目チェックとしては\ ``@NotNull`` \のみを付与している。
-       
+
     .. code-block:: java
 
        package org.terasoluna.securelogin.app.passwordreissue;
@@ -4039,7 +4048,7 @@ URLに含まれるトークンと秘密情報の組が正しい場合にのみ�
     .. list-table::
        :header-rows: 1
        :widths: 10 90
-    
+
        * - 項番
          - 説明
        * - | (1)
@@ -4102,7 +4111,7 @@ URLに含まれるトークンと秘密情報の組が正しい場合にのみ�
     .. list-table::
        :header-rows: 1
        :widths: 10 90
-    
+
        * - 項番
          - 説明
        * - | (1)
@@ -4144,8 +4153,7 @@ URLに含まれるトークンと秘密情報の組が正しい場合にのみ�
            public String resetPassword(@Validated PasswordResetForm form,
                    BindingResult bindingResult, Model model) {
                if (bindingResult.hasErrors()) {
-                   return showPasswordResetForm(form, model, form.getUsername(),
-                           form.getToken());
+                   return showPasswordResetForm(form, model, form.getToken());
                }
 
                try {
@@ -4154,8 +4162,7 @@ URLに含まれるトークンと秘密情報の組が正しい場合にのみ�
                    return "redirect:/reissue/resetpassword?complete";
                } catch (BusinessException e) {
                    model.addAttribute(e.getResultMessages());
-                   return showPasswordResetForm(form, model, form.getUsername(),
-                           form.getToken());
+                   return showPasswordResetForm(form, model, form.getToken());
                }
            }
 
@@ -4172,7 +4179,7 @@ URLに含まれるトークンと秘密情報の組が正しい場合にのみ�
     .. list-table::
        :header-rows: 1
        :widths: 10 90
-    
+
        * - 項番
          - 説明
        * - | (1)
@@ -4248,7 +4255,7 @@ URLに含まれるトークンと秘密情報の組が正しい場合にのみ�
     .. list-table::
        :header-rows: 1
        :widths: 10 90
-    
+
        * - 項番
          - 説明
        * - | (1)
@@ -4282,7 +4289,7 @@ URLに含まれるトークンと秘密情報の組が正しい場合にのみ�
     .. list-table::
        :header-rows: 1
        :widths: 10 90
-    
+
        * - 項番
          - 説明
        * - | (1)
@@ -4301,9 +4308,9 @@ URLに含まれるトークンと秘密情報の組が正しい場合にのみ�
        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 
        <mapper
-       	namespace="org.terasoluna.securelogin.domain.repository.passwordreissue.FailedPasswordReissueRepository">
+        namespace="org.terasoluna.securelogin.domain.repository.passwordreissue.FailedPasswordReissueRepository">
 
-       	<select id="countByToken" resultType="_int">
+        <select id="countByToken" resultType="_int">
            <![CDATA[
                SELECT
                    COUNT(*)
@@ -4312,7 +4319,7 @@ URLに含まれるトークンと秘密情報の組が正しい場合にのみ�
                WHERE
                    token = #{token}
            ]]>
-       	</select>
+        </select>
 
         <insert id="create" parameterType="FailedPasswordReissue">
            <![CDATA[
@@ -4320,20 +4327,20 @@ URLに含まれるトークンと秘密情報の組が正しい場合にのみ�
                    token,
                    attempt_date
                ) VALUES (
-       	        #{token},
+                #{token},
                    #{attemptDate}
                )
            ]]>
-       	</insert>
+        </insert>
 
-       	<delete id="deleteByToken">
+        <delete id="deleteByToken">
            <![CDATA[
-           	DELETE FROM
-           		failed_password_reissue
-           	WHERE
-           		token = #{token}
+            DELETE FROM
+                failed_password_reissue
+            WHERE
+                token = #{token}
            ]]>
-       	</delete>
+        </delete>
 
        </mapper>
 
@@ -4342,7 +4349,7 @@ URLに含まれるトークンと秘密情報の組が正しい場合にのみ�
 * パスワード再発行失敗イベントエンティティの保存
 
   パスワード再発行失敗時に行う処理を実装したクラスを以下に示す。
-  
+
   .. code-block:: java
 
      package org.terasoluna.securelogin.domain.service.passwordreissue;
@@ -4387,7 +4394,7 @@ URLに含まれるトークンと秘密情報の組が正しい場合にのみ�
   .. list-table::
      :header-rows: 1
      :widths: 10 90
-  
+
      * - 項番
        - 説明
      * - | (1)
@@ -4446,7 +4453,7 @@ URLに含まれるトークンと秘密情報の組が正しい場合にのみ�
   .. list-table::
      :header-rows: 1
      :widths: 10 90
-  
+
      * - 項番
        - 説明
      * - | (1)
@@ -5711,7 +5718,7 @@ Overview
 .. list-table::
    :header-rows: 1
    :widths: 10 90
-  
+
    * - 項番
      - 説明
    * - | (1)
@@ -5808,7 +5815,7 @@ How to use
      - 説明
    * - | (1)
      - | パスワードに含まれるべき文字種別と、その文字種別の最低文字数を規定するための検証規則のBean定義
-   * - | (2) 
+   * - | (2)
      - | 文字種別を指定する。ここでは、\ ``org.passay.EnglishCharacterData.UpperCase`` \を渡しているため、半角英大文字に関する検証規則となる。
    * - | (3)
      - | 文字数を指定する。ここでは"1"を渡しているため、半角英大文字を一文字以上含むことをチェックする検証規則となる。
@@ -5828,7 +5835,7 @@ How to use
 
    // omitted
 
-   public void validatePassword(String password){
+   public void validatePassword(String password) {
 
        PasswordData pd = new PasswordData(password); // (1)
        RuleResult result = characterPasswordValidator.validate(pd); // (2)
@@ -5852,7 +5859,7 @@ How to use
      - 説明
    * - | (1)
      - | 検証対象のパスワードを \ ``PasswordData`` \ のコンストラクタに渡し、インスタンスを作成する。
-   * - | (2) 
+   * - | (2)
      - | \ ``PasswordValidator`` \ の \ ``validate`` \ メソッドに \ ``PasswordData`` \を引数として渡し、パスワード入力チェックを実行する。
    * - | (3)
      - | \ ``RuleResult`` \ の \ ``isValid`` \ メソッドを使用して、パスワード入力チェックの結果を真理値で取得する。
@@ -5915,7 +5922,7 @@ How to use
      - 説明
    * - | (1)
      - | パスワードに含まれるべき文字種別と、その文字種別の最低文字数を規定するための検証規則のBean定義
-   * - | (2) 
+   * - | (2)
      - | 文字種別を指定する。ここでは、\ ``org.passay.EnglishCharacterData.UpperCase`` \を渡しているため、半角英大文字に関する検証規則となる。
    * - | (3)
      - | 文字数を指定する。ここでは"1"を渡しているため、半角英大文字を一文字以上含むことをチェックする検証規則となる。
@@ -5940,7 +5947,7 @@ How to use
 
    // omitted
 
-   public void generatePassword(){
+   public void generatePassword() {
 
        String password = passwordGenerator.generatePassword(10, passwordGenerationRules); // (1)
 
@@ -5957,7 +5964,7 @@ How to use
      - | \ ``PasswordGenerator`` \の\ ``generatePassword`` \メソッドに、生成するパスワードの長さと生成規則を引数として渡すと、生成規則を満たしたパスワードが生成される。
 
 .. tip::
-     
+
    Bean定義したコレクションをDIする際には、\ ``@Inject`` \ + \ ``@Named`` \では期待した動作をしない。
    そのため、代わりに\ ``@Resource`` \を使用してBean名でDIする。
 
