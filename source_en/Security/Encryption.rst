@@ -792,7 +792,7 @@ Hybrid encryption method
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
 | Similar to public key encryption method, since functions related to hybrid encryption methods are not offered by Spring Security, it is explained using a sample code.
-| The sample code refers to \ `RsaSecretEncryptor class <https://github.com/dsyer/spring-security-rsa/blob/master/src/main/java/org/springframework/security/rsa/crypto/RsaSecretEncryptor.java>`_\  of spring-security-rsa.
+| The sample code refers to \ `RsaSecretEncryptor class <https://github.com/dsyer/spring-security-rsa/blob/1.0.1.RELEASE/src/main/java/org/springframework/security/rsa/crypto/RsaSecretEncryptor.java>`_\  of spring-security-rsa.
 
 Encryption
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""

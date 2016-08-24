@@ -792,7 +792,7 @@ OpenSSL
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
 | 公開鍵暗号化方式と同様、Spring Securityではハイブリッド暗号化方式に関する機能は提供されていないため、サンプルコードを用いて説明する。
-| このサンプルコードは、spring-security-rsaの\ `RsaSecretEncryptorクラス <https://github.com/dsyer/spring-security-rsa/blob/master/src/main/java/org/springframework/security/rsa/crypto/RsaSecretEncryptor.java>`_\ を参考にしている。
+| このサンプルコードは、spring-security-rsaの\ `RsaSecretEncryptorクラス <https://github.com/dsyer/spring-security-rsa/blob/1.0.1.RELEASE/src/main/java/org/springframework/security/rsa/crypto/RsaSecretEncryptor.java>`_\ を参考にしている。
 
 暗号化
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
