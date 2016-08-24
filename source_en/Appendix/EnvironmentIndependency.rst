@@ -81,7 +81,7 @@ Perform the following procedure to release the Web application in Tomcat.
 4. If Tomcat 7 is used, add /etc/foo/bar/\*.jar into class path using VirtualWebappLoader function of the Tomcat.
 
  * The following definition should be added in [CATALINA_HOME]/conf/[contextPath].xml file.
- * For details, refer to http://tomcat.apache.org/tomcat-7.0-doc/api/org/apache/catalina/loader/VirtualWebappLoader.html and `configs folder of terasoluna-tourreservation-env <https://github.com/terasolunaorg/terasoluna-tourreservation/tree/master/terasoluna-tourreservation-env/configs>`_\ .
+ * For details, refer to http://tomcat.apache.org/tomcat-7.0-doc/api/org/apache/catalina/loader/VirtualWebappLoader.html and `configs folder of terasoluna-tourreservation-env <https://github.com/terasolunaorg/terasoluna-tourreservation/tree/5.1.1.RELEASE/terasoluna-tourreservation-env/configs>`_\ .
  * Example of VirtualWebappLoader function usages :
 
   .. code-block:: xml
@@ -94,7 +94,7 @@ Perform the following procedure to release the Web application in Tomcat.
 5. If Tomcat 8 is used, add /etc/foo/bar/\*.jar into class path using Resource function of the Tomcat.
 
  * The following definition should be added in [CATALINA_HOME]/conf/[contextPath].xml file.
- * For details, refer to https://tomcat.apache.org/migration-8.html#Web_application_resources and `configs folder of terasoluna-tourreservation-env <https://github.com/terasolunaorg/terasoluna-tourreservation/tree/master/terasoluna-tourreservation-env/configs>`_\ .
+ * For details, refer to https://tomcat.apache.org/migration-8.html#Web_application_resources and `configs folder of terasoluna-tourreservation-env <https://github.com/terasolunaorg/terasoluna-tourreservation/tree/5.1.1.RELEASE/terasoluna-tourreservation-env/configs>`_\ .
  * Example of Resource function usages :
 
   .. code-block:: xml
