@@ -9,39 +9,95 @@
     * - 更新日付
       - 更新箇所
       - 更新内容
+
     * - 2016-08-31
+      - \-
+      - 5.1.1 RELEASE版公開
+
+        * 更新内容の詳細は、\ `5.1.1のIssue一覧 <https://github.com/terasolunaorg/guideline/issues?utf8=%E2%9C%93&q=label%3A5.1.1%20is%3Aissue%20is%3Aclosed%20>`_\ を参照されたい。
+
+    * -
+      - 全般
+      - ガイドラインの誤記(タイプミスや単純な記述ミスなど)の修正
+
+        * 修正内容の詳細は、\ `5.1.1のIssue一覧(clerical error) <https://github.com/terasolunaorg/guideline/issues?utf8=%E2%9C%93&q=%20label%3A5.1.1%20is%3Aclosed%20label%3A%22clerical%20error%22%20>`_\ を参照されたい。
+
+        記載内容の改善
+
+        * 改善内容の詳細は、\ `5.1.1のIssue一覧(improvement) <https://github.com/terasolunaorg/guideline/issues?utf8=%E2%9C%93&q=label%3A5.1.1%20label%3Aimprovement%20is%3Aclosed%20>`_\ を参照されたい。
+
+        共通ライブラリのバージョンを5.1.1.RELEASEに更新
+
+        * 更新内容の詳細は、\ `Check Version  #2076 <https://github.com/terasolunaorg/guideline/issues/2076>`_\ を参照されたい。
+
+    * - 
+      - :doc:`../Overview/FrameworkStack`
+      - 利用するOSSのバージョン(mybatis,mybatis-springのバージョン)を更新
+
+        * mybatisのバージョンを3.3.1に更新
+        * mybatis-springのバージョンを1.2.5に更新  
+
+    * -
+      - :doc:`../ImplementationAtEachLayer/ApplicationLayer`
+      - 記載内容の追加
+
+        * JSR-310 Date and Time APIを使用する際の注意点を記載 (\ `guideline#1991 <https://github.com/terasolunaorg/guideline/issues/1991>`_\ )
+
+    * -
+      - :doc:`../ArchitectureInDetail/ExclusionControl`
+      - 記載内容の追加
+
+        *  ExclusionControlにwarningメッセージを追加(\ `guideline#1694 <https://github.com/terasolunaorg/guideline/issues/1694>`_\ )
+
+    * -
+      - :doc:`../ArchitectureInDetail/Validation`
+      - 記載内容の改善
+
+        * ValidationMessages.propertiesについての説明を修正 (\ `guideline#1948 <https://github.com/terasolunaorg/guideline/issues/1948>`_\ )
+
+    * -
       - :doc:`../ArchitectureInDetail/DoubleSubmitProtection`
       - 記載内容の追加
-      
+
         * \ ``@TransactionTokenCheck``\アノテーションのtype属性に新たに追加された \ ``TransactionTokenType.CHECK``\の仕様、利用方法に関する記載の追加 
           (\ `guideline#2071 <https://github.com/terasolunaorg/guideline/issues/2071>`_\ )
 
-    * - 
-      - :doc:`../ArchitectureInDetail/DoubleSubmitProtection`
-      - 「How To Extend プログラマティックにトランザクショントークンのライフサイクルを管理する方法について」を削除。
-        
+        「How To Extend プログラマティックにトランザクショントークンのライフサイクルを管理する方法について」を削除。
+
         * \ ``TransactionTokenContext``\が提供していたアプリケーション向けAPIを使用した場合、
           \ ``TransactionToken``\を正しい状態に維持できなくなるなど、フレームワーク内部の挙動に影響を及ぼすような作り込みができてしまうことから、
           当該APIの非推奨化がなされた。非推奨化にあわせて該当機能の利用方法の記述を削除した。 
 
-    * - 
-      - :doc:`../ImplementationAtEachLayer/ApplicationLayer`
+    * -
+      - :doc:`../ArchitectureInDetail/SOAP`
       - 記載内容の追加
-      
-        * JSR-310 Date and Time APIを使用する際の注意点を記載 (\ `guideline#1991 <https://github.com/terasolunaorg/guideline/issues/1991>`_\ )
-        
+
+        * Webサービス例外発生時のステータスコード取得方法について追加(\ `guideline#2007 <https://github.com/terasolunaorg/guideline/issues/2007>`_\ )
+
     * -
       - :doc:`../ArchitectureInDetail/FileUpload`
       - 記載内容の追加
-      
+
         * \ `CVE-2016-3092 <https://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2016-3092>`_\ (File Uploadの脆弱性)に関する注意喚起を追加(\ `guideline#1973 <https://github.com/terasolunaorg/guideline/issues/1973>`_\ )
 
-    * - 2016-06-31
+    * -
       - :doc:`../ArchitectureInDetail/Utilities/StringProcessing`
       - 記載内容の追加
-      
+
         * JIS漢字\ ``U+2014``\(EM DASH)のUCS(Unicode)文字対応について記載を追加(\ `guideline#1914 <https://github.com/terasolunaorg/guideline/issues/1914>`_\ )
-      
+
+    * -
+      - :doc:`../Security/Authorization`
+      - 記載内容の追加
+
+        * \ `CVE-2016-5007 Spring Security / MVC Path Matching Inconsistency <https://pivotal.io/security/cve-2016-5007>`_\ の対応方法を追加 (\ `guideline#1976 <https://github.com/terasolunaorg/guideline/issues/1976>`_\ )
+
+    * -
+      - :doc:`../Appendix/ReferenceBooks`
+      - 記載内容の追加
+
+        * 「Spring徹底入門」を参考書籍として追加(\ `guideline#2043 <https://github.com/terasolunaorg/guideline/issues/2043>`_\ )
+
     * - 2016-02-24
       - \-
       - 5.1.0 RELEASE版公開
