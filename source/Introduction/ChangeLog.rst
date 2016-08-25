@@ -10,9 +10,43 @@
       - 更新箇所
       - 更新内容
 
-    * - 2016-08-04
+    * - 2016-08-31
+      - \-
+      - 5.2.0 RELEASE版公開
+
+        * 更新内容の詳細は、\ `5.2.0のIssue一覧 <https://github.com/terasolunaorg/guideline/issues?utf8=%E2%9C%93&q=label%3A5.2.0%20is%3Aissue%20is%3Aclosed%20>`_\ を参照されたい。
+
+    * -
+      - 全般
+      - ガイドラインの誤記(タイプミスや単純な記述ミスなど)の修正
+
+        * 修正内容の詳細は、\ `5.2.0のIssue一覧(clerical error) <https://github.com/terasolunaorg/guideline/issues?utf8=%E2%9C%93&q=%20label%3A5.2.0%20is%3Aclosed%20label%3A%22clerical%20error%22%20>`_\ を参照されたい。
+
+        記載内容の改善
+
+        * 改善内容の詳細は、\ `5.2.0のIssue一覧(improvement) <https://github.com/terasolunaorg/guideline/issues?utf8=%E2%9C%93&q=label%3A5.2.0%20label%3Aimprovement%20is%3Aclosed%20>`_\ を参照されたい。
+
+        章立てを全面見直し
+
+        * 更新内容の詳細は、\ `Optimize the order of chapters and sections #1683 <https://github.com/terasolunaorg/guideline/issues/1683>`_\ を参照されたい。
+
+        共通ライブラリのバージョンを5.2.0.RELEASEに更新
+
+        * 更新内容の詳細は、\ `Check Version  #2076 <https://github.com/terasolunaorg/guideline/issues/2076>`_\ を参照されたい。
+
+        記載内容の改善
+
+        * 共通ライブラリのpomの依存性について追加 (\ `guideline#1982 <https://github.com/terasolunaorg/guideline/issues/1982>`_\ )
+
+    * -
       - :doc:`../Overview/FrameworkStack`
-      - 利用するOSSのバージョン(Spring IO Platformのバージョン)を更新
+      - 記載内容の追加
+
+        * ブランクプロジェクトの共通ライブラリ標準の組込状況を追加(\ `guideline#1700 <https://github.com/terasolunaorg/guideline/issues/1700>`_\ )
+        * mybatis-typehandlers-jsr310 、jackson-datatype-jsr310をOSSスタックに追加 (\ `guideline#1966 <https://github.com/terasolunaorg/guideline/issues/1966>`_\ )
+        * spring-jmsおよびその依存ライブラリをOSSスタックに追加 (\ `guideline#1992 <https://github.com/terasolunaorg/guideline/issues/1992>`_\ )
+
+        利用するOSSのバージョン(Spring IO Platformのバージョン)を更新
 
         * Spring IO Platformのバージョンを2.0.6.RELEASEに更新
         * Spring Frameworkのバージョンを4.2.7.RELEASEに更新
@@ -20,65 +54,132 @@
 
         Spring IO Platformのバージョン更新に伴い利用するOSSのバージョンを更新
 
+    * -
+      - :doc:`../ImplementationAtEachLayer/DomainLayer`
+      - 記載内容の追加
 
-    * - 2016-08-31
+        * MyBatis 3.3 + MyBatis-Spring 1.2 において、 @Transactinal  の  timeout  属性に指定した値は使用されない旨を追加(\ `guideline#1777 <https://github.com/terasolunaorg/guideline/issues/1777>`_\ )
+
+    * -
+      - :doc:`../ImplementationAtEachLayer/ApplicationLayer`
+      - 記載内容の追加
+
+        * HttpSessionをハンドラメソッドの引数として使用すべきでない旨を追加(\ `guideline#1313 <https://github.com/terasolunaorg/guideline/issues/1313>`_\ )
+        * JSR-310 Date and Time APIを使用する際の注意点を記載 (\ `guideline#1991 <https://github.com/terasolunaorg/guideline/issues/1991>`_\ )
+
+    * -
+      - :doc:`../ArchitectureInDetail/WebApplicationDetail/Validation`
+      - 記載内容の改善
+
+        * メッセージプロパティファイルをNative to Asciiせずに直接扱う方法を追加(\ `guideline#994 <https://github.com/terasolunaorg/guideline/issues/994>`_\ )
+        * cross-field validationについて追加(\ `guideline#1561 <https://github.com/terasolunaorg/guideline/issues/1561>`_\ )
+        * @DateTimeFormat  の説明を追加(\ `guideline#1873 <https://github.com/terasolunaorg/guideline/issues/1873>`_\ )
+        * ValidationMessages.propertiesについての説明を修正 (\ `guideline#1948 <https://github.com/terasolunaorg/guideline/issues/1948>`_\ )
+        * Method Validationを利用した入力チェックの注意事項を追加(\ `guideline#1998 <https://github.com/terasolunaorg/guideline/issues/1998>`_\ )
+
+        記載内容の追加
+
+        * OSコマンドインジェクションに関する記載を追加 (\ `guideline#1957 <https://github.com/terasolunaorg/guideline/issues/1957>`_\ )
+
+    * -
+      - :doc:`../ArchitectureInDetail/WebApplicationDetail/ExceptionHandling`
+      - Spring Framework 4.2.7対応に伴う修正
+      
+        * HTTPレスポンスヘッダー出力に関する説明内容を修正(\ `guideline#1965 <https://github.com/terasolunaorg/guideline/issues/1965>`_\ )
+
+    * -
       - :doc:`../ArchitectureInDetail/WebApplicationDetail/DoubleSubmitProtection`
       - 記載内容の追加
       
         * \ ``@TransactionTokenCheck``\アノテーションのtype属性に新たに追加された \ ``TransactionTokenType.CHECK``\の仕様、利用方法に関する記載の追加 
           (\ `guideline#2071 <https://github.com/terasolunaorg/guideline/issues/2071>`_\ )
 
-    * - 
-      - :doc:`../ArchitectureInDetail/WebApplicationDetail/DoubleSubmitProtection`
-      - 「How To Extend プログラマティックにトランザクショントークンのライフサイクルを管理する方法について」を削除。
-        
+        「How To Extend プログラマティックにトランザクショントークンのライフサイクルを管理する方法について」を削除。
+
         * \ ``TransactionTokenContext``\が提供していたアプリケーション向けAPIを使用した場合、
           \ ``TransactionToken``\を正しい状態に維持できなくなるなど、フレームワーク内部の挙動に影響を及ぼすような作り込みができてしまうことから、
           当該APIの非推奨化がなされた。非推奨化にあわせて該当機能の利用方法の記述を削除した。 
 
-    * - 
-      - :doc:`../Overview/FrameworkStack`
-      - 記載内容の追加
-      
-        * 利用するOSSのバージョンににmybatis-typehandlers-jsr310 、jackson-datatype-jsr310を追加 (\ `guideline#1966 <https://github.com/terasolunaorg/guideline/issues/1966>`_\ )
+    * -
+      - :doc:`../ArchitectureInDetail/WebApplicationDetail/Internationalization`
+      - 記載内容の改善
 
-    * - 
-      - :doc:`../ArchitectureInDetail/DataAccessDetail/DataAccessMyBatis3`
-      - 記載内容の追加
-      
-        * JSR-310 Date and Time APIをMybatis3.3で使用するための設定方法を記載 (\ `guideline#1966 <https://github.com/terasolunaorg/guideline/issues/1966>`_\ )
-        * MyBatisをJava SE 7環境で使用する場合の注意点を記載 (\ `guideline#1966 <https://github.com/terasolunaorg/guideline/issues/1966>`_\ )
+        *   リクエストパラメータ(デフォルトのパラメータ名)の説明の位置を修正(\ `guideline#1354 <https://github.com/terasolunaorg/guideline/issues/1354>`_\ )
 
-    * - 
-      - :doc:`../ArchitectureInDetail/WebServiceDetail/REST`
-      - 記載内容の変更、追加
-      
-        * JSR-310 Date and Time API / Joda Timeを使う場合の設定の記述を変更 (\ `guideline#1966 <https://github.com/terasolunaorg/guideline/issues/1966>`_\ )
-        * JacksonをJava SE 7環境で使用する場合の注意点を記載 (\ `guideline#1966 <https://github.com/terasolunaorg/guideline/issues/1966>`_\ )
-
-    * - 
-      - :doc:`../ArchitectureInDetail/WebServiceDetail/RestClient`
-      - 記載内容の追加
-      
-        * JSONでJSR-310 Date and Time APIを使う場合の設定を記載 (\ `guideline#1966 <https://github.com/terasolunaorg/guideline/issues/1966>`_\ )
-
-    * - 
-      - :doc:`../ArchitectureInDetail/GeneralFuncDetail/Dozer`
-      - 記載内容の追加
-      
-        * JSR-310 Date and Time APIを使用する際の注意点を記載 (\ `guideline#1966 <https://github.com/terasolunaorg/guideline/issues/1966>`_\ )
-
-    * - 
-      - :doc:`../ImplementationAtEachLayer/ApplicationLayer`
-      - 記載内容の追加
-      
-        * JSR-310 Date and Time APIを使用する際の注意点を記載 (\ `guideline#1991 <https://github.com/terasolunaorg/guideline/issues/1991>`_\ )
-        
     * -
       - :doc:`../ArchitectureInDetail/WebApplicationDetail/FileUpload`
       - 記載内容の追加
-      
+
         * \ `CVE-2016-3092 <https://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2016-3092>`_\ (File Uploadの脆弱性)に関する注意喚起を追加(\ `guideline#1973 <https://github.com/terasolunaorg/guideline/issues/1973>`_\ )
+        * ディレクトリトラバーサル攻撃に関する記載を追加 (\ `guideline#2010 <https://github.com/terasolunaorg/guideline/issues/2010>`_\ )
+
+    * -
+      - :doc:`../ArchitectureInDetail/WebServiceDetail/REST`
+      - 記載内容の変更、追加
+
+        * JSR-310 Date and Time API / Joda Timeを使う場合の設定の記述を変更 (\ `guideline#1966 <https://github.com/terasolunaorg/guideline/issues/1966>`_\ )
+        * JacksonをJava SE 7環境で使用する場合の注意点を記載 (\ `guideline#1966 <https://github.com/terasolunaorg/guideline/issues/1966>`_\ )
+        * JSONでJSR-310 Date and Time APIを使う場合の設定を記載 (\ `guideline#1966 <https://github.com/terasolunaorg/guideline/issues/1966>`_\ )
+
+    * -
+      - :doc:`../ArchitectureInDetail/WebServiceDetail/RestClient`
+      - 記載内容の改善
+
+        * RestClientにおけるHTTP Proxyサーバの設定を追加(\ `guideline#1856 <https://github.com/terasolunaorg/guideline/issues/1856>`_\ )
+
+    * -
+      - :doc:`../ArchitectureInDetail/WebServiceDetail/SOAP`
+      - 記載内容の追加
+
+        * SOAPクライアント起動時にSOAPサーバに接続しないオプションを追加(\ `guideline#1871 <https://github.com/terasolunaorg/guideline/issues/1871>`_\ )
+        * SOAPクライアントのenvプロジェクトに関する説明の修正(\ `guideline#1901 <https://github.com/terasolunaorg/guideline/issues/1901>`_\ )
+        * SOAP Webサービス例外発生時のステータスコード取得方法について追加(\ `guideline#2007 <https://github.com/terasolunaorg/guideline/issues/2007>`_\ )
+
+    * -
+      - :doc:`../ArchitectureInDetail/DataAccessDetail/DataAccessMyBatis3`
+      - 記載内容の追加
+
+        * 暫定的なWARNログ出力回避方法を削除(\ `guideline#1292 <https://github.com/terasolunaorg/guideline/issues/1292>`_\ )
+        * JSR-310 Date and Time APIをMybatis3.3で使用するための設定方法を記載 (\ `guideline#1966 <https://github.com/terasolunaorg/guideline/issues/1966>`_\ )
+        * MyBatisをJava SE 7環境で使用する場合の注意点を記載 (\ `guideline#1966 <https://github.com/terasolunaorg/guideline/issues/1966>`_\ )
+
+    * -
+      - :doc:`../ArchitectureInDetail/DataAccessDetail/ExclusionControl`
+      - 記載内容の追加
+
+        *  ExclusionControlにwarningメッセージを追加(\ `guideline#1694 <https://github.com/terasolunaorg/guideline/issues/1694>`_\ )
+
+    * -
+      - :doc:`../ArchitectureInDetail/GeneralFuncDetail/Logging`
+      - 記載内容の追加
+        
+        * ID付きログメッセージを出力するための拡張方法を記載 (\ `guideline#1928 <https://github.com/terasolunaorg/guideline/issues/1928>`_\ )
+
+    * -
+      - :doc:`../ArchitectureInDetail/GeneralFuncDetail/StringProcessing`
+      - 記載内容の追加
+
+        * terasoluna-gfw-stringをdependencyに追加する例を追加(\ `guideline#1699 <https://github.com/terasolunaorg/guideline/issues/1699>`_\ )
+        * @Size アノテーションの説明にサロゲートペアについての注意を追加(\ `guideline#1874 <https://github.com/terasolunaorg/guideline/issues/1874>`_\ )
+        * JIS漢字\ ``U+2014``\(EM DASH)のUCS(Unicode)文字対応について記載を追加(\ `guideline#1914 <https://github.com/terasolunaorg/guideline/issues/1914>`_\ )
+
+    * -
+      - :doc:`../ArchitectureInDetail/GeneralFuncDetail/Dozer`
+      - 記載内容の追加
+
+        * JSR-310 Date and Time APIを使用する際の注意点を記載 (\ `guideline#1966 <https://github.com/terasolunaorg/guideline/issues/1966>`_\ )
+
+    * -
+      - :doc:`../Security/Authentication`
+      - Spring Security 4.0.4対応に伴う修正
+
+        * Spring 4.0.4にて authentication-failure-url の仕様が改善されたことによるコード例の修正とNoteの削除 (\ `guideline#1963 <https://github.com/terasolunaorg/guideline/issues/1963>`_\ )
+
+    * -
+      - :doc:`../Security/Authorization`
+      - 記載内容の追加
+
+        * \ `CVE-2016-5007 Spring Security / MVC Path Matching Inconsistency <https://pivotal.io/security/cve-2016-5007>`_\ の対応方法を追加 (\ `guideline#1976 <https://github.com/terasolunaorg/guideline/issues/1976>`_\ )
 
     * -
       - :doc:`../Security/SecureLoginDemo`
@@ -87,49 +188,12 @@
         * 「セキュリティ観点での入力値チェック」を追加
         * 「監査ログ出力」を追加
 
-
-    * - 2016-07-26
-      - :doc:`../ArchitectureInDetail/WebApplicationDetail/FileUpload`
-      - 記載内容の追加
-
-        * ディレクトリトラバーサル攻撃に関する記載を追加 (\ `guideline#2010 <https://github.com/terasolunaorg/guideline/issues/2010>`_\ )
-
-    * - 2016-07-20
-      - :doc:`../ArchitectureInDetail/WebApplicationDetail/ExceptionHandling`
-      - Spring Framework 4.2.7対応に伴う修正
-      
-        * HTTPレスポンスヘッダー出力に関する説明内容を修正(\ `guideline#1965 <https://github.com/terasolunaorg/guideline/issues/1965>`_\ )
-
-    * - 
-      - :doc:`../Security/Authentication`
-      - Spring Security 4.0.4対応に伴う修正
-      
-        * Spring 4.0.4にて authentication-failure-url の仕様が改善されたことによるコード例の修正とNoteの削除 (\ `guideline#1963 <https://github.com/terasolunaorg/guideline/issues/1963>`_\ )
-
-    * - 2016-06-31
-      - :doc:`../ArchitectureInDetail/GeneralFuncDetail/StringProcessing`
-      - 記載内容の追加
-      
-        * JIS漢字\ ``U+2014``\(EM DASH)のUCS(Unicode)文字対応について記載を追加(\ `guideline#1914 <https://github.com/terasolunaorg/guideline/issues/1914>`_\ )
-
-    * - 
-      - :doc:`../ArchitectureInDetail/WebApplicationDetail/Validation`
-      - 記載内容の追加
-      
-        * OSコマンドインジェクションに関する記載を追加 (\ `guideline#1957 <https://github.com/terasolunaorg/guideline/issues/1957>`_\ )
-
     * -
-      - :doc:`../ArchitectureInDetail/GeneralFuncDetail/Logging`
+      - :doc:`../Appendix/ReferenceBooks`
       - 記載内容の追加
-        
-        * ID付きログメッセージを出力するための拡張方法を記載 (\ `guideline#1928 <https://github.com/terasolunaorg/guideline/issues/1928>`_\ )
 
-    * - 2016-05-19
-      - \-
-      - 章立てを全面見直し
-      
-        * 更新内容の詳細は、\ `Optimize the order of chapters and sections #1683 <https://github.com/terasolunaorg/guideline/issues/1683>`_\ を参照されたい。
-      
+        * 「Spring徹底入門」を参考書籍として追加(\ `guideline#2043 <https://github.com/terasolunaorg/guideline/issues/2043>`_\ )
+
     * - 2016-02-24
       - \-
       - 5.1.0 RELEASE版公開
