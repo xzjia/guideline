@@ -15,7 +15,7 @@
 
 * TERASOLUNA Server Framework for Java (5.x)を利用して代表的なセキュリティ要件を満たすための実装方法の例
 * :ref:`app-description-sec` に示すサンプルアプリケーションを題材として、実装方法とソースコードの説明を行う
-  
+
 .. warning::
     * この章で説明している実装方法はあくまでも一例であり、実際の開発においては個別の要件を考慮して実装する必要がある
     * セキュリティ対策の網羅的な実施を保証するものではないため、必要に応じて追加の対策を検討すること
@@ -57,12 +57,12 @@
       - 初期パスワード使用時のパスワード変更の強制
       - 初期パスワードを使用して認証成功した際に、パスワードの変更を強制する
     * - | (2)
-      - 
+      -
       - 期限切れパスワードの変更の強制
       - | 一定期間パスワードを変更していないユーザに対して、認証成功時にパスワードの変更を強制する
         | 本アプリケーションでは、管理ユーザのみを対象とする
     * - | (3)
-      - 
+      -
       - パスワード変更を促すメッセージの表示
       - 一定期間パスワードを変更していないユーザに対して、認証成功時にパスワードの変更を促すメッセージを表示する
     * - | (4)
@@ -70,15 +70,15 @@
       - パスワードの最小文字数指定
       - パスワードとして設定できる文字数の最小値を指定する
     * - | (5)
-      - 
+      -
       - パスワードの文字種別指定
       - パスワード中に含めなければならない文字種別（英大文字、英小文字、数字、記号）を指定する
     * - | (6)
-      - 
+      -
       - ユーザ名を含むパスワードの禁止
       - パスワード中にアカウントのユーザ名を含めることを禁止する
     * - | (7)
-      - 
+      -
       - 管理ユーザパスワードの再使用禁止
       - 管理ユーザが、以前使用したパスワードを短期間のうちに再使用することを禁止する
     * - | (8)
@@ -86,11 +86,11 @@
       - アカウントロックアウト
       - あるアカウントが短期間の間に一定回数以上認証に失敗した場合、そのアカウントを認証不能な状態（ロックアウト状態）にする
     * - | (9)
-      - 
+      -
       - アカウントロックアウト期間の指定
       - アカウントのロックアウト状態の継続時間を指定する
     * - | (10)
-      - 
+      -
       - 管理ユーザによるロックアウトの解除
       - 管理ユーザは任意のアカウントのロックアウト状態を解除できる
     * - | (11)
@@ -102,7 +102,7 @@
       - パスワード再発行用URLへのランダム文字列の付与
       - 不正なアクセスを防ぐため、パスワード再発行画面にアクセスするためのURLに十分に推測困難な文字列を付与する
     * - | (13)
-      - 
+      -
       - パスワード再発行用秘密情報の発行
       - パスワード再発行時のユーザ確認に用いるために、事前に十分に推測困難な秘密情報（ランダム文字列）を生成する
     * - | (14)
@@ -110,7 +110,7 @@
       - パスワード再発行画面URLのメール送付
       - パスワード再発行ページにアクセスするためのURLは、アカウントの登録済みメールアドレスへ送付する
     * - | (15)
-      - 
+      -
       - パスワード再発行画面のURLと秘密情報の別配布
       - パスワード再発行画面のURLの漏えいに備え、秘密情報はメール以外の方法でユーザに配布する
     * - | (16)
@@ -121,6 +121,38 @@
       - :ref:`パスワード再発行の失敗上限回数の設定 <reissue-info-invalidate>`
       - パスワード再発行の失敗上限回数の設定
       - パスワード再発行時の認証に一定回数失敗した場合、パスワード再発行画面のURLと秘密情報を使用不能にする
+    * - | (18)
+      - :ref:`セキュリティ観点での入力値チェック <secure-input-validation>`
+      - リクエストパラメータに対する共通的な禁止文字の設定
+      - リクエストパラメータに含まれる文字列に対し、アプリケーション全体で共通の禁止文字を設定する
+    * - | (19)
+      -
+      - アップロードファイル名に対する共通的な禁止文字列の設定
+      - アップロードされるファイル名に対し、アプリケーション全体で共通の禁止文字を設定する
+    * - | (20)
+      -
+      - 制御文字の入力チェック
+      - 入力値に制御文字が含まれていないかをチェックする
+    * - | (21)
+      -
+      - ファイル拡張子の入力チェック
+      - アップロードされるファイルの拡張子がアプリケーションで許可されたものであるかをチェックする
+    * - | (22)
+      -
+      - ファイル名の入力チェック
+      - アップロードされるファイルのファイル名がアプリケーションで許可されたパターンと一致するかをチェックする
+    * - | (23)
+      -
+      - URLのドメインに対する入力チェック
+      - 入力されたURLのドメインがアプリケーションで許可されたものであるかをチェックする
+    * - | (24)
+      -
+      - メールアドレスのドメインに対する入力チェック
+      - 入力されたメールアドレスのドメインがアプリケーションで許可されたものであるかをチェックする
+    * - | (25)
+      - :ref:`監査ログ出力 <audit-logging>`
+      - 監査ログ出力
+      - 各リクエストに対し、日時、ユーザ名、操作内容、操作結果をログ出力する
 
 機能
 --------------------------------------------------------------------------------
@@ -134,6 +166,8 @@
 
     * - 機能名
       - 説明
+    * - アカウント新規作成機能
+      - アカウントを新規作成する機能
     * - パスワード変更機能
       - ログイン済みのユーザが、自分のアカウントのパスワードを変更する機能
     * - アカウントロックアウト機能
@@ -144,8 +178,7 @@
       - ユーザがパスワードを忘れてしまった場合に、ユーザ確認を行った後、新しいパスワードを設定できる機能
 
 .. note::
-  本アプリケーションはセキュリティ対策に関するサンプルであるため、本来は当然必要となる
-  ユーザ登録の機能やパスワード以外の登録情報の更新機能を作成していない。
+  本アプリケーションはセキュリティ対策に関するサンプルであるため、本来は当然必要となるパスワード以外の登録情報の更新機能等を作成していない。
 
 認証・認可に関する仕様
 --------------------------------------------------------------------------------
@@ -160,11 +193,11 @@
 認可
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 
-* ログイン画面とパスワード再発行に使用する画面以外の画面へのアクセスには、認証が必要
+* ログイン画面、アカウント作成に使用する画面、パスワード再発行に使用する画面以外の画面へのアクセスには、認証が必要
 * 「一般ユーザ」と「管理ユーザ」の二種類のロールが存在する
     * 一つのアカウントが複数のロールを持つことができる
 * アカウントロックアウト解除機能は、管理ユーザの権限を持つアカウントのみが使用できる
-      
+
 パスワード再発行時の認証
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 
@@ -176,7 +209,7 @@
         * {baseUrl} : アプリケーションのベースURL
         * {token} : UUID version4形式の文字列（ハイフン込みで36文字、128bit）
 * パスワード再発行画面のURLには30分の有効期限を設け、有効期限内のみ認証可能
-      
+
 設計情報
 --------------------------------------------------------------------------------
 
@@ -202,35 +235,44 @@
       - | ログイン画面
       - | -
     * - | (2)
-      - | トップ画面
-      - | 認証済みユーザのみ
+      - | アカウント新規作成画面
+      - | -
     * - | (3)
-      - | アカウント情報表示画面
-      - | 認証済みユーザのみ
+      - | アカウント新規作成入力確認画面
+      - | -
     * - | (4)
-      - | パスワード変更画面
-      - | 認証済みユーザのみ
+      - | アカウント新規作成完了画面
+      - | -
     * - | (5)
-      - | パスワード変更完了画面
-      - | 認証済みユーザのみ
-    * - | (6)
-      - | ロックアウト解除画面
-      - | 管理ユーザのみ
-    * - | (7)
-      - | ロックアウト解除完了画面
-      - | 管理ユーザのみ
-    * - | (8)
       - | パスワード再発行のための認証情報生成画面
       - | -
-    * - | (9)
+    * - | (6)
       - | パスワード再発行のための認証情報生成完了画面
       - | -
-    * - | (10)
+    * - | (7)
       - | パスワード再発行画面
       - | -
-    * - | (11)
+    * - | (8)
       - | パスワード再発行完了画面
       - | -
+    * - | (9)
+      - | トップ画面
+      - | 認証済みユーザのみ
+    * - | (10)
+      - | アカウント情報表示画面
+      - | 認証済みユーザのみ
+    * - | (11)
+      - | ロックアウト解除画面
+      - | 管理ユーザのみ
+    * - | (12)
+      - | ロックアウト解除完了画面
+      - | 管理ユーザのみ
+    * - | (13)
+      - | パスワード変更画面
+      - | 認証済みユーザのみ
+    * - | (14)
+      - | パスワード変更完了画面
+      - | 認証済みユーザのみ
 
 URL一覧
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
@@ -269,64 +311,84 @@ URL一覧を以下に示す。
     * - 5
       - アカウント情報表示
       - GET
-      - /account
+      - /accounts
       - ログインユーザーのアカウント情報を表示する
     * - 6
+      - アカウント新規作成画面
+      - GET
+      - /accounts/create?form
+      - アカウント新規作成画面を表示する
+    * - 7
+      - アカウント新規作成入力確認画面
+      - POST
+      - /accounts/create?confirm
+      - アカウント新規作成入力確認画面を表示する
+    * - 8
+      - アカウント新規作成
+      - POST
+      - /accounts/create
+      - 入力された内容でアカウントを新規に作成する
+    * - 9
+      - アカウント新規作成完了画面
+      - GET
+      - /accounts/create?complete
+      - アカウント新規作成完了画面を表示する
+    * - 10
       - パスワード変更画面表示
       - GET
       - /password?form
       - パスワード変更画面を表示する
-    * - 7
+    * - 11
       - パスワード変更
       - POST
       - /password
       - パスワード変更画面で入力された情報を使用して、アカウントのパスワードを変更する
-    * - 8
+    * - 12
       - パスワード変更完了画面表示
       - GET
       - /password?complete
       - パスワード変更完了画面を表示する
-    * - 9
+    * - 13
       - ロックアウト解除画面表示
       - GET
       - /unlock?form
       - ロックアウト解除画面を表示する
-    * - 10
+    * - 14
       - ロックアウト解除
       - POST
       - /unlock
       - ロック解除画面に入力された情報を使用してアカウントのロックアウトを解除する
-    * - 11
+    * - 15
       - ロックアウト解除完了画面表示
       - GET
       - /unlock?complete
       - ロックアウト解除完了画面を表示する
-    * - 12
+    * - 16
       - パスワード再発行のための認証情報生成画面表示
       - GET
       - /reissue/create?form
       - パスワード再発行のための認証情報生成画面を表示する
-    * - 13
+    * - 17
       - パスワード再発行のための認証情報生成
       - POST
       - /reissue/create
       - パスワード再発行のための認証情報を生成する
-    * - 14
+    * - 18
       - パスワード再発行のための認証情報生成完了画面表示
       - GET
       - /reissue/create?complete
       - パスワード再発行のための認証情報生成完了画面を表示する
-    * - 15
+    * - 19
       - パスワード再発行画面表示
       - GET
       - /reissue/resetpassword?form&token={token}
       - 二つのリクエストパラメータを使用して、ユーザ専用のパスワード再発行画面表示を表示する
-    * - 16
+    * - 20
       - パスワード再発行
       - POST
       - /reissue/resetpassword
       - パスワード再発行画面に入力された情報を使用してパスワードを再発行する
-    * - 17
+    * - 21
       - パスワード再発行完了画面表示
       - GET
       - /reissue/resetpassword?complete
@@ -359,36 +421,44 @@ ER図
         | firstName : 名
         | lastName : 姓
         | email : E-mailアドレス
+        | url : 個人のWebサイトやブログのURL
+        | profile : プロフィール
         | roles : ロール(複数可)
     * - | (2)
+      - | アカウント画像
+      - | アカウントに対してユーザが登録する画像
+      - | username : アカウント画像に対応するアカウントのユーザ名
+        | body : 画像ファイルのバイナリ
+        | extension : 画像ファイルの拡張子
+    * - | (3)
       - | ロール
       - | 認可に使用する権限
       - | roleValue : ロールの識別子
         | roleLabel : ロールの表示名
-    * - | (3)
+    * - | (4)
       - | 認証成功イベント
       - | アカウントの最終ログイン日時を取得するために、認証成功時に残す情報
       - | username : ユーザ名
         | authenticationTimestamp : 認証成功日時
-    * - | (4)
+    * - | (5)
       - | 認証失敗イベント
       - | アカウントのロックアウト機能で用いるために、認証失敗時に残す情報
       - | username : ユーザ名
         | authenticationTimestamp : 認証失敗日時
-    * - | (5)
+    * - | (6)
       - | パスワード変更履歴
       - | パスワードの有効期限の判定等に用いるために、パスワード変更時に残す情報
       - | username : ユーザ名
         | useFrom : 変更後のパスワードの使用開始日時
         | password : 変更後のパスワード
-    * - | (6)
+    * - | (7)
       - | パスワード再発行用の認証情報
       - | パスワード再発行時に、ユーザの確認に用いる情報
       - | token : パスワード再発行画面のURLを一意かつ推測不能にするために用いる文字列
         | username : ユーザ名
         | secret : ユーザの確認に用いる文字列
         | experyDate : パスワード再発行用の認証情報の有効期限
-    * - | (7)
+    * - | (8)
       - | パスワード再発行失敗イベント
       - | パスワード再発行用の試行回数を制限するために、パスワード再発行失敗に残す情報
       - | token : パスワード再発行に失敗した際に使用したtoken
@@ -462,7 +532,7 @@ ER図
   \ ``org.springframework.web.servlet.handler.HandlerInterceptor`` \ を利用して、Controllerのハンドラメソッド実行前に上記の条件に該当するかどうかの判定を行う。
 
   .. tip ::
-     
+
      認証後にパスワード変更画面へリダイレクトさせる方法は他にもあるが、方法によってはリダイレクト後にURLを直打ちすることでパスワード変更を避けて別画面にアクセスできてしまう可能性がある。
      \ ``HandlerInterceptor`` \を使用する方法ではハンドラメソッド実行前に処理を行うため、URLを直打ちするなどの方法で回避することはできない。
 
@@ -508,7 +578,7 @@ ER図
     .. list-table::
        :header-rows: 1
        :widths: 10 90
-    
+
        * - 項番
          - 説明
        * - | (1)
@@ -532,11 +602,11 @@ ER図
 
            int create(PasswordHistory history); // (1)
 
-           List<PasswordHistory> findByUseFrom(@Param("username") String username,  
+           List<PasswordHistory> findByUseFrom(@Param("username") String username,
                    @Param("useFrom") LocalDateTime useFrom); // (2)
 
-           List<PasswordHistory> findLatest(
-                   @Param("username") String username, @Param("limit") int limit); // (3)
+           List<PasswordHistory> findLatest(@Param("username") String username,
+                   @Param("limit") int limit); // (3)
 
        }
 
@@ -544,7 +614,7 @@ ER図
     .. list-table::
        :header-rows: 1
        :widths: 10 90
-    
+
        * - 項番
          - 説明
        * - | (1)
@@ -703,7 +773,7 @@ ER図
     .. list-table::
        :header-rows: 1
        :widths: 10 90
-    
+
        * - 項番
          - 説明
        * - | (1)
@@ -779,7 +849,7 @@ ER図
   .. list-table::
      :header-rows: 1
      :widths: 10 90
-  
+
      * - 項番
        - 説明
      * - | (1)
@@ -806,7 +876,7 @@ ER図
      isInitialPassword および isCurrentPasswordExpired に付与されている \ ``@Cacheable``\ は Spring の Cache Abstraction 機能を使用するためのアノテーションである。
      \ ``@Cacheable`` \ アノテーションを付与することで、メソッドの引数に対する結果をキャッシュすることができる。
      ここでは、キャッシュの使用により初期パスワード判定、パスワード期限切れ判定のたびにデータベースへのアクセスが発生することを防止し、パフォーマンスの低下を防いでいる。
-     Cache Abstraction については `公式ドキュメント <http://docs.spring.io/spring/docs/4.2.7.RELEASE/spring-framework-reference/html/cache.html>`_ を参照すること。
+     Cache Abstraction については `公式ドキュメント - Cache <http://docs.spring.io/spring/docs/4.2.7.RELEASE/spring-framework-reference/html/cache.html>`_ を参照すること。
 
      尚、キャッシュを使用する際には、必要なタイミングでキャッシュをクリアする必要があることに注意すること。
      本アプリケーションではパスワード変更時や、ログアウト時には再度初期パスワード判定、パスワード期限切れ判定を行うためにキャッシュをクリアする。
@@ -844,7 +914,7 @@ ER図
                              .isCurrentPasswordExpired(userDetails.getUsername())) // (5)
                              || accountSharedService.isInitialPassword(userDetails
                                      .getUsername())) { // (6)
-                         response.sendRedirect(request.getContextPath() 
+                         response.sendRedirect(request.getContextPath()
                                  + "/password?form"); // (7)
                          return false; // (8)
                      }
@@ -859,7 +929,7 @@ ER図
   .. list-table::
      :header-rows: 1
      :widths: 10 90
-  
+
      * - 項番
        - 説明
      * - | (1)
@@ -911,7 +981,7 @@ ER図
   .. list-table::
      :header-rows: 1
      :widths: 10 90
-  
+
      * - 項番
        - 説明
      * - | (1)
@@ -947,14 +1017,16 @@ ER図
              Account account = userDetails.getAccount(); // (2)
 
              model.addAttribute("account", account);
-             
-             if(accountSharedService.isCurrentPasswordExpired(account.getUsername())){ // (3)
-                 ResultMessages messages = ResultMessages.warning().add("w.sl.pe.0001");
+
+             if (accountSharedService
+                    .isCurrentPasswordExpired(account.getUsername())) { // (3)
+                 ResultMessages messages = ResultMessages.warning().add(
+                         "w.sl.pe.0001");
                  model.addAttribute(messages);
              }
 
-             // omitted        
-             
+             // omitted
+
              return "welcome/home";
 
          }
@@ -965,7 +1037,7 @@ ER図
   .. list-table::
      :header-rows: 1
      :widths: 10 90
-  
+
      * - 項番
        - 説明
      * - | (1)
@@ -1000,7 +1072,7 @@ ER図
   .. list-table::
      :header-rows: 1
      :widths: 10 90
-  
+
      * - 項番
        - 説明
      * - | (1)
@@ -1102,12 +1174,12 @@ ER図
   .. list-table::
      :header-rows: 1
      :widths: 10 90
-  
+
      * - 項番
        - 説明
      * - | (1)
        - | パスワードが過去に使用したパスワードに含まれないをチェックするための\ ``org.passay.HistoryRule`` \を拡張する。
-     * - | (2) 
+     * - | (2)
        - | パスワードのハッシュ化に用いている\ ``PasswordEncoder`` \ をインジェクションする。
      * - | (3)
        - | 過去のパスワードとの比較を行うメソッドをオーバーライドする。
@@ -1121,7 +1193,7 @@ ER図
   .. code-block:: xml
 
      <bean id="lengthRule" class="org.passay.LengthRule"> <!-- (1) -->
-         <property name="minimumLength" value="${security.passwordMinimumLength}" /> 
+         <property name="minimumLength" value="${security.passwordMinimumLength}" />
      </bean>
      <bean id="upperCaseRule" class="org.passay.CharacterRule"> <!-- (2) -->
          <constructor-arg name="data">
@@ -1168,12 +1240,12 @@ ER図
   .. list-table::
      :header-rows: 1
      :widths: 10 90
-  
+
      * - 項番
        - 説明
      * - | (1)
        - | パスワードの長さをチェックするための\ ``org.passay.LengthRule`` \のプロパティに、プロパティファイルから取得したパスワードの最短長を設定する。
-     * - | (2) 
+     * - | (2)
        - | 半角英大文字を一文字以上含むことをチェックする検証規則。パスワードに含まれる文字種別に関するチェックを行うための\ ``org.passay.CharacterRule`` \のコンストラクタに、\ ``org.passay.EnglishCharacterData.UpperCase`` \と数値の1を設定する。
      * - | (3)
        - | 半角英小文字を一文字以上含むことをチェックする検証規則。パスワードに含まれる文字種別に関するチェックを行うための\ ``org.passay.CharacterRule`` \のコンストラクタに、\ ``org.passay.EnglishCharacterData.LowerCase`` \と数値の1を設定する。
@@ -1217,7 +1289,7 @@ ER図
   .. list-table::
      :header-rows: 1
      :widths: 10 90
-  
+
      * - 項番
        - 説明
      * - | (1)
@@ -1266,7 +1338,7 @@ ER図
     .. list-table::
        :header-rows: 1
        :widths: 10 90
-    
+
        * - 項番
          - 説明
        * - | (1)
@@ -1328,7 +1400,7 @@ ER図
     .. list-table::
        :header-rows: 1
        :widths: 10 90
-    
+
        * - 項番
          - 説明
        * - | (1)
@@ -1381,7 +1453,7 @@ ER図
     .. list-table::
        :header-rows: 1
        :widths: 10 90
-    
+
        * - 項番
          - 説明
        * - | (1)
@@ -1460,7 +1532,7 @@ ER図
                if (!passwordEncoder.matches(newPassword, currentPassword)) {
                    return true;
                } else {
-       	           context.disableDefaultConstraintViolation();
+                   context.disableDefaultConstraintViolation();
                    context.buildConstraintViolationWithTemplate(message)
                            .addPropertyNode(newPasswordPropertyName).addConstraintViolation();
                    return false;
@@ -1492,7 +1564,7 @@ ER図
                if (result.isValid()) { // (10)
                    return true;
                } else {
-       	           context.disableDefaultConstraintViolation();
+                   context.disableDefaultConstraintViolation();
                    context.buildConstraintViolationWithTemplate(
                            encodedPasswordHistoryValidator.getMessages(result).get(0)) // (11)
                            .addPropertyNode(newPasswordPropertyName).addConstraintViolation();
@@ -1505,7 +1577,7 @@ ER図
     .. list-table::
        :header-rows: 1
        :widths: 10 90
-    
+
        * - 項番
          - 説明
        * - | (1)
@@ -1550,10 +1622,10 @@ ER図
      @StrongPassword(usernamePropertyName = "username", newPasswordPropertyName = "newPassword") // (2)
      @NotReusedPassword(usernamePropertyName = "username", newPasswordPropertyName = "newPassword") // (3)
      @ConfirmOldPassword(usernamePropertyName = "username", oldPasswordPropertyName = "oldPassword") // (4)
-     public class PasswordChangeForm implements Serializable{
+     public class PasswordChangeForm implements Serializable {
 
          private static final long serialVersionUID = 1L;
-         
+
          @NotNull
          private String username;
 
@@ -1572,7 +1644,7 @@ ER図
   .. list-table::
      :header-rows: 1
      :widths: 10 90
-  
+
      * - 項番
        - 説明
      * - | (1)
@@ -1605,8 +1677,8 @@ ER図
                  Model model) {
 
              Account account = userDetails.getAccount();
-             if (bindingResult.hasErrors() ||
-                     !account.getUsername().equals(form.getUsername())) { // (2)
+             if (bindingResult.hasErrors()
+                     || !account.getUsername().equals(form.getUsername())) { // (2)
                  model.addAttribute(account);
                  return "passwordchange/changeForm";
              }
@@ -1625,7 +1697,7 @@ ER図
   .. list-table::
      :header-rows: 1
      :widths: 10 90
-  
+
      * - 項番
        - 説明
      * - | (1)
@@ -1709,12 +1781,12 @@ ER図
    :alt: Account Lockout
    :width: 60%
    :align: center
-  
+
 .. tabularcolumns:: |p{0.10\linewidth}|p{0.90\linewidth}|
 .. list-table::
    :header-rows: 1
    :widths: 10 90
-  
+
    * - 項番
      - 説明
    * - | (1)
@@ -1735,13 +1807,13 @@ ER図
 .. list-table::
    :header-rows: 1
    :widths: 10 90
-  
+
    * - 項番
      - 説明
    * - | (1)
      - | 過去10分以内に、誤ったパスワードでの認証が3回試行されている。
        | その後、認証失敗イベントエンティティが消去されているため、データベースには認証失敗イベントエンティティが保存されておらず、ロックアウト状態ではないと判定される。
-   
+
 コード解説
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 
@@ -1749,31 +1821,31 @@ ER図
 
   本アプリケーションにおいて、アカウントのロックアウトに関する機能を実現するためには、データベースに対する認証失敗イベントエンティティの登録、検索、削除が共通的に必要となる。
   そのため、まずは認証失敗イベントエンティティに関するドメイン層・インフラストラクチャ層の実装を示す。
-  
+
   * Entityの実装
-  
+
     ユーザ名と認証試行日時を持つ認証失敗イベントエンティティの実装を以下に示す。
-  
+
     .. code-block:: java
-  
+
       package org.terasoluna.securelogin.domain.model;
-      
+
       // omitted
-      
+
       @Data
       public class FailedAuthentication implements Serializable {
         private static final long serialVersionUID = 1L;
-      
+
         private String username; // (1)
-      
+
         private LocalDateTime authenticationTimestamp; // (2)
       }
-      
+
     .. tabularcolumns:: |p{0.10\linewidth}|p{0.90\linewidth}|
     .. list-table::
        :header-rows: 1
        :widths: 10 90
-    
+
        * - 項番
          - 説明
        * - | (1)
@@ -1782,30 +1854,30 @@ ER図
          - | 認証を試行した日時
 
   * Repositoryの実装
-  
+
     認証失敗イベントエンティティの検索、登録、削除のためのRepositoryを以下に示す。
-  
+
     .. code-block:: java
-  
+
       package org.terasoluna.securelogin.domain.repository.authenticationevent;
-      
+
       // omitted
-      
+
       public interface FailedAuthenticationRepository {
-      
+
         int create(FailedAuthentication event); // (1)
-      
-        List<FailedAuthentication> findLatest(
-                        @Param("username") String username, @Param("count") long count); // (2)
-      
+
+        List<FailedAuthentication> findLatest(@Param("username") String username,
+                @Param("count") long count); // (2)
+
         int deleteByUsername(@Param("username") String username); // (3)
       }
-    
+
     .. tabularcolumns:: |p{0.10\linewidth}|p{0.90\linewidth}|
     .. list-table::
        :header-rows: 1
        :widths: 10 90
-    
+
        * - 項番
          - 説明
        * - | (1)
@@ -1814,24 +1886,24 @@ ER図
          - | 引数として与えられたユーザ名をキーとして、指定された個数の\ ``FailedAuthentication``\ オブジェクトを新しい順に取得するメソッド
        * - | (3)
          - | 引数として与えられたユーザ名をキーとして、認証失敗イベントエンティティのレコードを一括削除するメソッド
-    
+
     マッピングファイルは以下の通り。
-  
+
     .. code-block:: xml
-    
+
       <?xml version="1.0" encoding="UTF-8"?>
       <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
       "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
-     
+
       <mapper
         namespace="org.terasoluna.securelogin.domain.repository.authenticationevent.FailedAuthenticationRepository">
-      
+
         <resultMap id="failedAuthenticationResultMap"
                 type="FailedAuthentication">
                 <id property="username" column="username" />
                 <id property="authenticationTimestamp" column="authentication_timestamp" />
         </resultMap>
-      
+
         <insert id="create" parameterType="FailedAuthentication">
           <![CDATA[
               INSERT INTO failed_authentication (
@@ -1843,7 +1915,7 @@ ER図
               )
           ]]>
         </insert>
-      
+
         <select id="findLatest" resultMap="failedAuthenticationResultMap">
              <![CDATA[
                   SELECT
@@ -1857,7 +1929,7 @@ ER図
                   LIMIT #{count}
              ]]>
         </select>
-      
+
         <delete id="deleteByUsername">
            <![CDATA[
                 DELETE FROM
@@ -1867,11 +1939,11 @@ ER図
            ]]>
         </delete>
       </mapper>
-      
+
   * Serviceの実装
-  
+
     作成したRepositoryのメソッドを呼び出すServiceを以下の通り定義する。
-  
+
     .. code-block:: java
 
        package org.terasoluna.securelogin.domain.service.authenticationevent;
@@ -1881,13 +1953,13 @@ ER図
        @Service
        @Transactional
        public class AuthenticationEventSharedServiceImpl implements
-                       AuthenticationEventSharedService {
+               AuthenticationEventSharedService {
 
            // omitted
 
            @Inject
            ClassicDateFactory dateFactory;
-           
+
            @Inject
            FailedAuthenticationRepository failedAuthenticationRepository;
 
@@ -1898,26 +1970,26 @@ ER図
            @Override
            public List<FailedAuthentication> findLatestFailureEvents(
                            String username, int count) {
-                   return failedAuthenticationRepository.findLatestEvents(username, count);
+               return failedAuthenticationRepository.findLatestEvents(username, count);
            }
 
 
            @Transactional(propagation = Propagation.REQUIRES_NEW)
            @Override
            public void authenticationFailure(String username) { // (1)
-                if (accountSharedService.exists(username)){
-                    FailedAuthentication failureEvents = new FailedAuthentication();
-                    failureEvents.setUsername(username);
-                    failureEvents.setAuthenticationTimestamp(dateFactory.newTimestamp()
-                            .toLocalDateTime());
-                
-                    failedAuthenticationRepository.create(failureEvents);
-                }
-            }
+               if (accountSharedService.exists(username)) {
+                   FailedAuthentication failureEvents = new FailedAuthentication();
+                   failureEvents.setUsername(username);
+                   failureEvents.setAuthenticationTimestamp(dateFactory.newTimestamp()
+                           .toLocalDateTime());
+
+                   failedAuthenticationRepository.create(failureEvents);
+               }
+           }
 
            @Override
            public int deleteFailureEventByUsername(String username) {
-                   return failedAuthenticationRepository.deleteByUsername(username);
+               return failedAuthenticationRepository.deleteByUsername(username);
            }
 
            // omitted
@@ -1928,14 +2000,14 @@ ER図
     .. list-table::
        :header-rows: 1
        :widths: 10 90
-    
+
        * - 項番
          - 説明
        * - | (1)
          - | 認証失敗イベントエンティティを作成してデータベースに登録するメソッド。
            | 引数として受け取ったユーザ名のアカウントが存在しない場合、データベースの外部キー制約に違反するため、データベースへの登録処理をスキップする。
            | 本メソッド実行後の例外により認証失敗イベントエンティティが登録されない可能性を考慮し、トランザクションの伝搬方法に\ ``REQUIRES_NEW`` \を指定している。
-           
+
 以下、実装方法に従って実装されたコードについて順に解説する。
 
 * 認証失敗イベントエンティティの保存
@@ -1950,7 +2022,7 @@ ER図
      // omitted
 
      @Component
-     public class AccountAuthenticationFailureBadCredentialsEventListener{ 
+     public class AccountAuthenticationFailureBadCredentialsEventListener{
 
          @Inject
          AuthenticationEventSharedService authenticationEventSharedService;
@@ -1965,12 +2037,12 @@ ER図
          }
 
      }
-         
+
   .. tabularcolumns:: |p{0.10\linewidth}|p{0.90\linewidth}|
   .. list-table::
      :header-rows: 1
      :widths: 10 90
-  
+
      * - 項番
        - 説明
      * - | (1)
@@ -2012,7 +2084,7 @@ ER図
          @Override
          public boolean isLocked(String username) {
              List<FailedAuthentication> failureEvents = authenticationEventSharedService
-                             .findLatestFailureEvents(username, lockingThreshold); // (3)
+                     .findLatestFailureEvents(username, lockingThreshold); // (3)
 
              if (failureEvents.size() < lockingThreshold) { // (4)
                  return false;
@@ -2023,7 +2095,7 @@ ER図
                      .getAuthenticationTimestamp()
                      .isBefore(
                              dateFactory.newTimestamp().toLocalDateTime()
-                             .minusSeconds(lockingDurationSeconds))) {
+                                     .minusSeconds(lockingDurationSeconds))) {
                  return false;
              }
 
@@ -2037,7 +2109,7 @@ ER図
   .. list-table::
      :header-rows: 1
      :widths: 10 90
-  
+
      * - 項番
        - 説明
      * - | (1)
@@ -2055,7 +2127,7 @@ ER図
   | 本アプリケーションでは以下のように\ ``User`` \を継承したクラスと、\ ``org.springframework.security.core.userdetails.UserDetailsService`` \を実装したクラスを用いる。
 
   .. code-block:: java
-  
+
      package org.terasoluna.securelogin.domain.service.userdetails;
 
      // omitted
@@ -2067,9 +2139,10 @@ ER図
         private final Account account;
 
         public LoggedInUser(Account account, boolean isLocked,
-                        LocalDateTime lastLoginDate, List<SimpleGrantedAuthority> authorities) {
+                LocalDateTime lastLoginDate,
+                List<SimpleGrantedAuthority> authorities) {
             super(account.getUsername(), account.getPassword(), true, true, true,
-                        !isLocked, authorities); // (1)
+                    !isLocked, authorities); // (1)
             this.account = account;
 
             // omitted
@@ -2143,16 +2216,16 @@ ER図
   .. code-block:: xml
 
     <!-- omitted -->
-  
+
     <sec:authentication-manager>
         <sec:authentication-provider
             user-service-ref="loggedInUserDetailsService"> <!-- (1) -->
             <sec:password-encoder ref="passwordEncoder" />
         </sec:authentication-provider>
     </sec:authentication-manager>
-    
+
     <!-- omitted -->
-  
+
   .. tabularcolumns:: |p{0.10\linewidth}|p{0.90\linewidth}|
   .. list-table::
      :header-rows: 1
@@ -2179,7 +2252,7 @@ ER図
        @Service
        @Transactional
        public class AuthenticationEventSharedServiceImpl implements
-                       AuthenticationEventSharedService {
+               AuthenticationEventSharedService {
 
            // omitted
 
@@ -2200,7 +2273,7 @@ ER図
     .. list-table::
        :header-rows: 1
        :widths: 10 90
-    
+
        * - 項番
          - 説明
        * - | (1)
@@ -2216,7 +2289,7 @@ ER図
        // omitted
 
        @Component
-       public class AccountAuthenticationSuccessEventListener{ 
+       public class AccountAuthenticationSuccessEventListener{
 
            @Inject
            AuthenticationEventSharedService authenticationEventSharedService;
@@ -2233,20 +2306,20 @@ ER図
            }
 
        }
-           
+
     .. tabularcolumns:: |p{0.10\linewidth}|p{0.90\linewidth}|
     .. list-table::
        :header-rows: 1
        :widths: 10 90
-    
+
        * - 項番
          - 説明
        * - | (1)
          - | \ ``@EventListener`` \アノテーションを付与することで、認証が成功した際に\ ``onApplicationEvent`` \メソッドが実行される。
        * - | (2)
          - | \ ``AuthenticationSuccessEvent`` \からユーザ名を取得し、認証失敗イベントエンティティを削除する処理を呼び出す。
-    
-    
+
+
   * ロックアウト状態の解除
 
     ロックアウト状態の判定に認証失敗イベントエンティティを使用しているため、認証失敗イベントエンティティを削除することでロックアウト状態を解除することができる。
@@ -2264,13 +2337,13 @@ ER図
 
           <sec:http pattern="/resources/**" security="none" />
           <sec:http>
-          
+
               <!-- omitted -->
-              
+
               <sec:intercept-url pattern="/unlock/**" access="hasRole('ADMIN')" /> <!-- (1) -->
-              
+
               <!-- omitted -->
-              
+
           </sec:http>
 
         <!-- omitted -->
@@ -2279,7 +2352,7 @@ ER図
       .. list-table::
          :header-rows: 1
          :widths: 10 90
-    
+
          * - 項番
            - 説明
          * - | (1)
@@ -2305,17 +2378,16 @@ ER図
 
              @Override
              public void unlock(String username) {
-                 authenticationEventSharedService
-                        .deleteFailureEventByUsername(username); // (1)
+                 authenticationEventSharedService.deleteFailureEventByUsername(username); // (1)
              }
 
          }
-        
+
       .. tabularcolumns:: |p{0.10\linewidth}|p{0.90\linewidth}|
       .. list-table::
          :header-rows: 1
          :widths: 10 90
-    
+
          * - 項番
            - 説明
          * - | (1)
@@ -2325,7 +2397,7 @@ ER図
 
       .. code-block:: java
 
-        package org.terasoluna.securelogin.app.unlock;    
+        package org.terasoluna.securelogin.app.unlock;
 
         @Data
         public class UnlockForm implements Serializable {
@@ -2335,7 +2407,7 @@ ER図
             @NotEmpty
             private String username;
         }
-        
+
     * Viewの実装
 
       **トップ画面(home.jsp)**
@@ -2347,7 +2419,7 @@ ER図
         <body>
             <div id="wrapper">
 
-                <!-- omitted -->        
+                <!-- omitted -->
 
                 <sec:authorize url="/unlock"> <!-- (1) -->
                 <div>
@@ -2368,7 +2440,7 @@ ER図
       .. list-table::
          :header-rows: 1
          :widths: 10 90
-    
+
          * - 項番
            - 説明
          * - | (1)
@@ -2377,7 +2449,7 @@ ER図
       **ロックアウト解除フォーム(unlokcForm.jsp)**
 
       .. code-block:: jsp
-      
+
         <!-- omitted -->
 
         <body>
@@ -2415,7 +2487,7 @@ ER図
                   <a href="${f:h(pageContext.request.contextPath)}/">go to Top</a>
             </div>
         </body>
-        
+
         <!-- omitted -->
 
     * Controllerの実装
@@ -2467,7 +2539,7 @@ ER図
       .. list-table::
          :header-rows: 1
          :widths: 10 90
-    
+
          * - 項番
            - 説明
          * - | (1)
@@ -2512,13 +2584,13 @@ ER図
 
   本アプリケーションにおいて、前回ログイン日時を表示するためには、データベースに対する認証成功イベントエンティティの登録、検索が必要となる。
   そのため、まずは認証成功イベントエンティティに関するドメイン層・インフラストラクチャ層の実装から解説を行う。
-  
+
   * Entityの実装
-  
+
     ユーザ名と認証成功日時を持つ認証成功イベントエンティティの実装は以下の通り。
-  
+
     .. code-block:: java
-  
+
        package org.terasoluna.securelogin.domain.model;
 
        // omitted
@@ -2533,12 +2605,12 @@ ER図
            private LocalDateTime authenticationTimestamp; // (2)
 
        }
-    
+
     .. tabularcolumns:: |p{0.10\linewidth}|p{0.90\linewidth}|
     .. list-table::
        :header-rows: 1
        :widths: 10 90
-    
+
        * - 項番
          - 説明
        * - | (1)
@@ -2547,11 +2619,11 @@ ER図
          - | 認証を試行した日時
 
   * Repositoryの実装
-  
+
     認証成功イベントエンティティの検索、登録を行うためのRepositoryを以下に示す。
-  
+
     .. code-block:: java
-                  
+
        package org.terasoluna.securelogin.domain.repository.authenticationevent;
 
        // omitted
@@ -2560,26 +2632,26 @@ ER図
 
            int create(SuccessfulAuthentication event); // (1)
 
-           List<SuccessfulAuthentication> findLatestEvents(
+           List<SuccessfulAuthentication> findLatest(
                   @Param("username") String username, @Param("count") long count); // (2)
        }
-      
+
     .. tabularcolumns:: |p{0.10\linewidth}|p{0.90\linewidth}|
     .. list-table::
        :header-rows: 1
        :widths: 10 90
-    
+
        * - 項番
          - 説明
        * - | (1)
          - | 引数として与えられた\ ``SuccessfulAuthentication``\ オブジェクトをデータベースのレコードとして登録するメソッド
        * - | (2)
          - | 引数として与えられたユーザ名をキーとして、指定された個数の\ ``SuccessfulAuthentication``\ オブジェクトを新しい順に取得するメソッド
-  
+
     マッピングファイルは以下の通り。
-  
+
     .. code-block:: xml
-  
+
        <?xml version="1.0" encoding="UTF-8"?>
        <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
@@ -2605,7 +2677,7 @@ ER図
            ]]>
            </insert>
 
-           <select id="findLatestEvents" resultMap="successfulAuthenticationResultMap">
+           <select id="findLatest" resultMap="successfulAuthenticationResultMap">
            <![CDATA[
                SELECT
                    username,
@@ -2619,13 +2691,13 @@ ER図
            ]]>
            </select>
        </mapper>
-      
+
   * Serviceの実装
-  
+
     作成したRepositoryのメソッドを呼び出すServiceを以下に示す。
-  
+
     .. code-block:: java
-    
+
        package org.terasoluna.securelogin.domain.service.authenticationevent;
 
        // omitted
@@ -2633,10 +2705,10 @@ ER図
        @Service
        @Transactional
        public class AuthenticationEventSharedServiceImpl implements
-       		AuthenticationEventSharedService {
+            AuthenticationEventSharedService {
 
            // omitted
-           
+
            @Inject
            ClassicDateFactory dateFactory;
 
@@ -2646,8 +2718,8 @@ ER図
            @Transactional(readOnly = true)
            @Override
            public List<SuccessfulAuthentication> findLatestSuccessEvents(
-                           String username, int count) {
-               return successAuthenticationRepository.findLatestEvents(username, count);
+                   String username, int count) {
+               return successAuthenticationRepository.findLatest(username, count);
            }
 
            @Transactional(propagation = Propagation.REQUIRES_NEW)
@@ -2655,14 +2727,15 @@ ER図
              public void authenticationSuccess(String username) {
                  SuccessfulAuthentication successEvent = new SuccessfulAuthentication();
                  successEvent.setUsername(username);
-                 successEvent.setAuthenticationTimestamp(dateFactory.newTimestamp().toLocalDateTime());
+                 successEvent.setAuthenticationTimestamp(dateFactory.newTimestamp()
+                         .toLocalDateTime());
 
                  successAuthenticationRepository.create(successEvent);
                  deleteFailureEventByUsername(username);
              }
 
        }
-  
+
 以下、実装方法に従って実装されたコードについて順に解説する。
 
 * 認証成功イベントエンティティの保存
@@ -2684,9 +2757,10 @@ ER図
          @EventListener // (1)
          public void onApplicationEvent(AuthenticationSuccessEvent event) {
              LoggedInUser details = (LoggedInUser) event.getAuthentication()
-                             .getPrincipal(); // (2)
+                     .getPrincipal(); // (2)
 
-             authenticationEventSharedService.authenticationSuccess(details.getUsername()); // (3)
+             authenticationEventSharedService.authenticationSuccess(details
+                     .getUsername()); // (3)
          }
 
      }
@@ -2695,7 +2769,7 @@ ER図
   .. list-table::
      :header-rows: 1
      :widths: 10 90
-  
+
      * - 項番
        - 説明
      * - | (1)
@@ -2728,7 +2802,7 @@ ER図
           @Override
           public LocalDateTime getLastLoginDate(String username) {
               List<SuccessfulAuthentication> events = authenticationEventSharedService
-                          .findLatestSuccessEvents(username, 1); // (1)
+                      .findLatestSuccessEvents(username, 1); // (1)
 
               if (events.isEmpty()) {
                   return null; // (2)
@@ -2740,12 +2814,12 @@ ER図
           // omitted
 
       }
-    
+
   .. tabularcolumns:: |p{0.10\linewidth}|p{0.90\linewidth}|
   .. list-table::
      :header-rows: 1
      :widths: 10 90
-  
+
      * - 項番
        - 説明
      * - | (1)
@@ -2770,27 +2844,28 @@ ER図
          private final LocalDateTime lastLoginDate; // (1)
 
          public LoggedInUser(Account account, boolean isLocked,
-                         LocalDateTime lastLoginDate, List<SimpleGrantedAuthority> authorities) {
+                 LocalDateTime lastLoginDate,
+                 List<SimpleGrantedAuthority> authorities) {
 
              super(account.getUsername(), account.getPassword(), true, true, true,
-                             !isLocked, authorities);
+                     !isLocked, authorities);
              this.account = account;
              this.lastLoginDate = lastLoginDate; // (2)
          }
 
-         // omitted    
+         // omitted
 
          public LocalDateTime getLastLoginDate() { // (3)
              return lastLoginDate;
          }
 
      }
-    
+
   .. tabularcolumns:: |p{0.10\linewidth}|p{0.90\linewidth}|
   .. list-table::
      :header-rows: 1
      :widths: 10 90
-  
+
      * - 項番
        - 説明
      * - | (1)
@@ -2815,18 +2890,18 @@ ER図
          @Transactional(readOnly = true)
          @Override
          public UserDetails loadUserByUsername(String username)
-                     throws UsernameNotFoundException {
+                 throws UsernameNotFoundException {
              try {
                  Account account = accountSharedService.findOne(username);
                  List<SimpleGrantedAuthority> authorities = new ArrayList<>();
                  for (Role role : account.getRoles()) {
                          authorities.add(new SimpleGrantedAuthority("ROLE_"
-                                         + role.getRoleValue()));
+                                + role.getRoleValue()));
                  }
                  return new LoggedInUser(account,
-                                 accountSharedService.isLocked(username),
-                                 accountSharedService.getLastLoginDate(username), // (1)
-                                 authorities);
+                         accountSharedService.isLocked(username),
+                         accountSharedService.getLastLoginDate(username), // (1)
+                         authorities);
              } catch (ResourceNotFoundException e) {
                  throw new UsernameNotFoundException("user not found", e);
              }
@@ -2838,7 +2913,7 @@ ER図
   .. list-table::
      :header-rows: 1
      :widths: 10 90
-  
+
      * - 項番
        - 説明
      * - | (1)
@@ -2855,25 +2930,25 @@ ER図
      @Controller
      public class HomeController {
 
-     	@Inject
-     	AccountSharedService accountSharedService;
+        @Inject
+        AccountSharedService accountSharedService;
 
-     	@RequestMapping(value = "/", method = { RequestMethod.GET,
-     			RequestMethod.POST })
-     	public String home(@AuthenticationPrincipal LoggedInUser userDetails, // (1)
-     			Model model) {
+        @RequestMapping(value = "/", method = { RequestMethod.GET,
+                RequestMethod.POST })
+        public String home(@AuthenticationPrincipal LoggedInUser userDetails, // (1)
+                Model model) {
 
             // omitted
-     		
-     		LocalDateTime lastLoginDate = userDetails.getLastLoginDate(); // (2)
-     		if (lastLoginDate != null) {
-     			model.addAttribute("lastLoginDate", lastLoginDate
-     					.format(DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss"))); // (3)
-     		}
-     		
-     		return "welcome/home";
 
-     	}
+            LocalDateTime lastLoginDate = userDetails.getLastLoginDate(); // (2)
+            if (lastLoginDate != null) {
+                model.addAttribute("lastLoginDate", lastLoginDate
+                        .format(DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss"))); // (3)
+            }
+
+            return "welcome/home";
+
+        }
 
      }
 
@@ -2881,7 +2956,7 @@ ER図
   .. list-table::
      :header-rows: 1
      :widths: 10 90
-  
+
      * - 項番
        - 説明
      * - | (1)
@@ -2915,14 +2990,14 @@ ER図
   .. list-table::
      :header-rows: 1
      :widths: 10 90
-  
+
      * - 項番
        - 説明
      * - | (1)
        - | 前回ログイン日時がnullの場合は表示しない。
      * - | (2)
        - | Controllerから渡された前回ログイン日時を表示する。
-      
+
 .. _reissue-info-create:
 
 パスワード再発行のための認証情報の生成
@@ -2931,12 +3006,12 @@ ER図
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 * :ref:`パスワード再発行用URLへのランダム文字列の付与 <sec-requirements>`
 * :ref:`パスワード再発行用秘密情報の発行 <sec-requirements>`
-  
+
 動作イメージ
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 
 .. figure:: ./images/SecureLogin_password_reissue_generate.png
-   :alt: Generate Password Reissue Information 
+   :alt: Generate Password Reissue Information
    :width: 80%
    :align: center
 
@@ -2966,7 +3041,7 @@ ER図
   * 有効期限：パスワード再発行のための認証情報の有効期限
 
   トークンの生成には\ ``java.util.UUID`` \クラスの\ ``randomUUID`` \メソッドを用い、秘密情報の生成にはPassayのパスワード生成機能を用いる。
-  
+
   秘密情報については、パスワードと同様にハッシュ化してデータベースへ保存する。
   有効期限の設定と確認処理については、:ref:`パスワード再発行実行時の検査 <reissue-info-validate>` に記す。
   パスワード再発行のための認証情報をユーザに配布する方法については、:ref:`パスワード再発行のための認証情報の配布 <reissue-info-delivery>` を参照。
@@ -3006,7 +3081,7 @@ ER図
     .. list-table::
        :header-rows: 1
        :widths: 10 90
-    
+
        * - 項番
          - 説明
        * - | (1)
@@ -3017,7 +3092,7 @@ ER図
          - | パスワード再発行時にユーザを確認するための文字列（秘密情報）
        * - | (2)
          - | パスワード再発行のための認証情報の有効期限
-           
+
   * Repositoryの実装
 
     パスワード再発行のための認証情報の検索、登録、削除を行うためのRepositoryを以下に示す。
@@ -3044,7 +3119,7 @@ ER図
    .. list-table::
       :header-rows: 1
       :widths: 10 90
-   
+
       * - 項番
         - 説明
       * - | (1)
@@ -3128,7 +3203,7 @@ ER図
     .. list-table::
        :header-rows: 1
        :widths: 10 90
-    
+
        * - 項番
          - 説明
        * - | (1)
@@ -3186,15 +3261,15 @@ ER図
 
            @Override
            public String createAndSendReissueInfo(String username) {
-               
+
                String rowSecret = passwordGenerator.generatePassword(10, passwordGenerationRules); // (4)
 
-               if(!accountSharedService.exists(username)){ // (5)
-                   return rowSecret;           
+               if (!accountSharedService.exists(username)) { // (5)
+                   return rowSecret;
                }
-               
+
                Account account= accountSharedService.findOne(username); // (6)
-               
+
                String token = UUID.randomUUID().toString(); // (7)
 
                LocalDateTime expiryDate = dateFactory.newTimestamp().toLocalDateTime()
@@ -3222,7 +3297,7 @@ ER図
     .. list-table::
        :header-rows: 1
        :widths: 10 90
-    
+
        * - 項番
          - 説明
        * - | (1)
@@ -3262,7 +3337,7 @@ ER図
        public class CreateReissueInfoForm implements Serializable {
 
            private static final long serialVersionUID = 1L;
-       
+
            @NotEmpty
            private String username;
        }
@@ -3339,13 +3414,13 @@ ER図
            // omitted
 
        }
-    
+
 
     .. tabularcolumns:: |p{0.10\linewidth}|p{0.90\linewidth}|
     .. list-table::
        :header-rows: 1
        :widths: 10 90
-    
+
        * - 項番
          - 説明
        * - | (1)
@@ -3360,12 +3435,12 @@ ER図
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 * :ref:`パスワード再発行画面のURLと秘密情報の別配布 <sec-requirements>`
 * :ref:`パスワード再発行画面のURLのメール送付 <sec-requirements>`
-  
+
 動作イメージ
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 
 .. figure:: ./images/SecureLogin_password_reissue_give.png
-   :alt: Givee Password Reissue Information 
+   :alt: Givee Password Reissue Information
    :width: 80%
    :align: center
 
@@ -3388,7 +3463,7 @@ ER図
 * パスワード再発行画面のURLのメール送付
 
   :ref:`パスワード再発行のための認証情報の生成 <reissue-info-create>` で生成したトークンを含むパスワード再発行画面のURLを、Spring FrameworkのMail連携用コンポーネントを用いて、メールで送付する。
-  
+
 
 コード解説
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
@@ -3422,7 +3497,8 @@ ER図
                  return showCreateReissueInfoForm(form);
              }
 
-             String rawSecret = passwordReissueService.createAndSendReissueInfo(form.getUsername()); // (1)
+             String rawSecret = passwordReissueService.createAndSendReissueInfo(form
+                     .getUsername()); // (1)
              attributes.addFlashAttribute("secret", rawSecret); // (2)
              return "redirect:/reissue/create?complete"; // (3)
          }
@@ -3440,7 +3516,7 @@ ER図
   .. list-table::
      :header-rows: 1
      :widths: 10 90
-  
+
      * - 項番
        - 説明
      * - | (1)
@@ -3472,7 +3548,7 @@ ER図
   .. list-table::
      :header-rows: 1
      :widths: 10 90
-  
+
      * - 項番
        - 説明
      * - | (1)
@@ -3490,7 +3566,8 @@ ER図
      // omitted
 
      @Service
-     public class PasswordReissueMailSharedServiceImpl implements PasswordReissueMailSharedService {
+     public class PasswordReissueMailSharedServiceImpl implements
+             PasswordReissueMailSharedService {
 
          @Inject
          JavaMailSender mailSender; // (1)
@@ -3515,7 +3592,7 @@ ER図
   .. list-table::
      :header-rows: 1
      :widths: 10 90
-  
+
      * - 項番
        - 説明
      * - | (1)
@@ -3561,15 +3638,16 @@ ER図
 
          @Override
          public String createAndSendReissueInfo(String username) {
-            
-             String rowSecret = passwordGenerator.generatePassword(10, passwordGenerationRules);
 
-             if(!accountSharedService.exists(username)){
-                 return rowSecret;           
+             String rowSecret = passwordGenerator.generatePassword(10,
+                     passwordGenerationRules);
+
+             if (!accountSharedService.exists(username)) {
+                 return rowSecret;
              }
-            
+
              Account account= accountSharedService.findOne(username);
-            
+
              String token = UUID.randomUUID().toString();
 
              LocalDateTime expiryDate = dateFactory.newTimestamp().toLocalDateTime()
@@ -3602,7 +3680,7 @@ ER図
   .. list-table::
      :header-rows: 1
      :widths: 10 90
-  
+
      * - 項番
        - 説明
      * - | (1)
@@ -3621,12 +3699,12 @@ ER図
 実装する要件一覧
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 * :ref:`パスワード再発行用の認証情報の有効期限の設定 <sec-requirements>`
-  
+
 動作イメージ
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 
 .. figure:: ./images/SecureLogin_password_reissue_execute.png
-   :alt: Use Password Reissue Information 
+   :alt: Use Password Reissue Information
    :width: 80%
    :align: center
 
@@ -3693,7 +3771,7 @@ URLに含まれるトークンと秘密情報の組が正しい場合にのみ�
 
            @Override
            public String createAndSendReissueInfo(String username) {
-               
+
                // omitted
 
                LocalDateTime expiryDate = dateFactory.newTimestamp().toLocalDateTime()
@@ -3719,7 +3797,7 @@ URLに含まれるトークンと秘密情報の組が正しい場合にのみ�
     .. list-table::
        :header-rows: 1
        :widths: 10 90
-    
+
        * - 項番
          - 説明
        * - | (1)
@@ -3766,7 +3844,8 @@ URLに含まれるトークンと秘密情報の組が正しい場合にのみ�
                            MessageKeys.E_SL_PR_5002, token));
                }
 
-               if (dateFactory.newTimestamp().toLocalDateTime().isAfter(info.getExpiryDate())) { // (2)
+               if (dateFactory.newTimestamp().toLocalDateTime()
+                        .isAfter(info.getExpiryDate())) { // (2)
                    throw new BusinessException(ResultMessages.error().add(
                            MessageKeys.E_SL_PR_2001));
                }
@@ -3784,7 +3863,7 @@ URLに含まれるトークンと秘密情報の組が正しい場合にのみ�
     .. list-table::
        :header-rows: 1
        :widths: 10 90
-    
+
        * - 項番
          - 説明
        * - | (1)
@@ -3828,7 +3907,7 @@ URLに含まれるトークンと秘密情報の組が正しい場合にのみ�
     .. list-table::
        :header-rows: 1
        :widths: 10 90
-    
+
        * - 項番
          - 説明
        * - | (1)
@@ -3864,7 +3943,7 @@ URLに含まれるトークンと秘密情報の組が正しい場合にのみ�
     .. list-table::
        :header-rows: 1
        :widths: 10 90
-    
+
        * - 項番
          - 説明
        * - | (1)
@@ -3872,7 +3951,7 @@ URLに含まれるトークンと秘密情報の組が正しい場合にのみ�
 
 
     .. code-block:: java
-                    
+
        package org.terasoluna.securelogin.domain.service.passwordreissue;
 
        // omitted
@@ -3919,7 +3998,7 @@ URLに含まれるトークンと秘密情報の組が正しい場合にのみ�
     .. list-table::
        :header-rows: 1
        :widths: 10 90
-    
+
        * - 項番
          - 説明
        * - | (1)
@@ -3934,7 +4013,7 @@ URLに含まれるトークンと秘密情報の組が正しい場合にのみ�
   * Formの実装
 
     クラスに付与されたアノテーションによってNullチェック以外の入力チェックが網羅されていることから、単項目チェックとしては\ ``@NotNull`` \のみを付与している。
-       
+
     .. code-block:: java
 
        package org.terasoluna.securelogin.app.passwordreissue;
@@ -3969,7 +4048,7 @@ URLに含まれるトークンと秘密情報の組が正しい場合にのみ�
     .. list-table::
        :header-rows: 1
        :widths: 10 90
-    
+
        * - 項番
          - 説明
        * - | (1)
@@ -4032,7 +4111,7 @@ URLに含まれるトークンと秘密情報の組が正しい場合にのみ�
     .. list-table::
        :header-rows: 1
        :widths: 10 90
-    
+
        * - 項番
          - 説明
        * - | (1)
@@ -4074,8 +4153,7 @@ URLに含まれるトークンと秘密情報の組が正しい場合にのみ�
            public String resetPassword(@Validated PasswordResetForm form,
                    BindingResult bindingResult, Model model) {
                if (bindingResult.hasErrors()) {
-                   return showPasswordResetForm(form, model, form.getUsername(),
-                           form.getToken());
+                   return showPasswordResetForm(form, model, form.getToken());
                }
 
                try {
@@ -4084,8 +4162,7 @@ URLに含まれるトークンと秘密情報の組が正しい場合にのみ�
                    return "redirect:/reissue/resetpassword?complete";
                } catch (BusinessException e) {
                    model.addAttribute(e.getResultMessages());
-                   return showPasswordResetForm(form, model, form.getUsername(),
-                           form.getToken());
+                   return showPasswordResetForm(form, model, form.getToken());
                }
            }
 
@@ -4102,7 +4179,7 @@ URLに含まれるトークンと秘密情報の組が正しい場合にのみ�
     .. list-table::
        :header-rows: 1
        :widths: 10 90
-    
+
        * - 項番
          - 説明
        * - | (1)
@@ -4178,7 +4255,7 @@ URLに含まれるトークンと秘密情報の組が正しい場合にのみ�
     .. list-table::
        :header-rows: 1
        :widths: 10 90
-    
+
        * - 項番
          - 説明
        * - | (1)
@@ -4212,7 +4289,7 @@ URLに含まれるトークンと秘密情報の組が正しい場合にのみ�
     .. list-table::
        :header-rows: 1
        :widths: 10 90
-    
+
        * - 項番
          - 説明
        * - | (1)
@@ -4231,9 +4308,9 @@ URLに含まれるトークンと秘密情報の組が正しい場合にのみ�
        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 
        <mapper
-       	namespace="org.terasoluna.securelogin.domain.repository.passwordreissue.FailedPasswordReissueRepository">
+        namespace="org.terasoluna.securelogin.domain.repository.passwordreissue.FailedPasswordReissueRepository">
 
-       	<select id="countByToken" resultType="_int">
+        <select id="countByToken" resultType="_int">
            <![CDATA[
                SELECT
                    COUNT(*)
@@ -4242,7 +4319,7 @@ URLに含まれるトークンと秘密情報の組が正しい場合にのみ�
                WHERE
                    token = #{token}
            ]]>
-       	</select>
+        </select>
 
         <insert id="create" parameterType="FailedPasswordReissue">
            <![CDATA[
@@ -4250,20 +4327,20 @@ URLに含まれるトークンと秘密情報の組が正しい場合にのみ�
                    token,
                    attempt_date
                ) VALUES (
-       	        #{token},
+                #{token},
                    #{attemptDate}
                )
            ]]>
-       	</insert>
+        </insert>
 
-       	<delete id="deleteByToken">
+        <delete id="deleteByToken">
            <![CDATA[
-           	DELETE FROM
-           		failed_password_reissue
-           	WHERE
-           		token = #{token}
+            DELETE FROM
+                failed_password_reissue
+            WHERE
+                token = #{token}
            ]]>
-       	</delete>
+        </delete>
 
        </mapper>
 
@@ -4272,7 +4349,7 @@ URLに含まれるトークンと秘密情報の組が正しい場合にのみ�
 * パスワード再発行失敗イベントエンティティの保存
 
   パスワード再発行失敗時に行う処理を実装したクラスを以下に示す。
-  
+
   .. code-block:: java
 
      package org.terasoluna.securelogin.domain.service.passwordreissue;
@@ -4317,7 +4394,7 @@ URLに含まれるトークンと秘密情報の組が正しい場合にのみ�
   .. list-table::
      :header-rows: 1
      :widths: 10 90
-  
+
      * - 項番
        - 説明
      * - | (1)
@@ -4376,7 +4453,7 @@ URLに含まれるトークンと秘密情報の組が正しい場合にのみ�
   .. list-table::
      :header-rows: 1
      :widths: 10 90
-  
+
      * - 項番
        - 説明
      * - | (1)
@@ -4418,9 +4495,8 @@ URLに含まれるトークンと秘密情報の組が正しい場合にのみ�
          public PasswordReissueInfo findOne(String token) {
 
              // omitted
-              
-             int count = failedPasswordReissueRepository // (2)
-                     .countByToken(token);
+
+             int count = failedPasswordReissueRepository.countByToken(token); // (2)
              if (count >= tokenValidityThreshold) { // (3)
                  throw new BusinessException(ResultMessages.error().add(
                          MessageKeys.E_SL_PR_5004));
@@ -4437,7 +4513,7 @@ URLに含まれるトークンと秘密情報の組が正しい場合にのみ�
   .. list-table::
      :header-rows: 1
      :widths: 10 90
-  
+
      * - 項番
        - 説明
      * - | (1)
@@ -4446,6 +4522,1142 @@ URLに含まれるトークンと秘密情報の組が正しい場合にのみ�
        - | 引数として与えられたトークンをキーとして、データベースからパスワード再発行失敗イベントエンティティの数を取得。
      * - | (3)
        - | 取得したパスワード再発行の失敗イベントエンティティの数と失敗回数の上限値を比較し、上限値以上ならば例外をスローする。
+
+.. _secure-input-validation :
+
+セキュリティ観点での入力値チェック
+--------------------------------------------------------------------------------
+
+実装する要件一覧
+""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+
+* :ref:`リクエストパラメータに対する共通的な禁止文字の設定 <sec-requirements>`
+* :ref:`アップロードファイル名に対する共通的な禁止文字列の設定 <sec-requirements>`
+* :ref:`制御文字の入力チェック <sec-requirements>`
+* :ref:`ファイル拡張子の入力チェック <sec-requirements>`
+* :ref:`ファイル名の入力チェック <sec-requirements>`
+* :ref:`URLのドメインに対する入力チェック <sec-requirements>`
+* :ref:`メールアドレスのドメインに対する入力チェック <sec-requirements>`
+
+動作イメージ
+""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+
+* 共通的な禁止文字列の設定
+
+.. figure:: ./images/SecureLogin_common_input_validation.png
+   :alt: Common input validation
+   :width: 80%
+   :align: center
+
+* 個別の入力チェック
+
+.. figure:: ./images/SecureLogin_input_validation.png
+   :alt: Input validation
+   :width: 80%
+   :align: center
+
+実装方法
+""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+| アプリケーション全体の共通的な禁止文字列の設定と個別の入力チェックとではチェックの対象範囲が大きく異なるため、それぞれ別の方法で実装を行う。
+| 共通的な禁止文字列を設定するためには、:ref:`controller-common-process` に記した二つの方法を用いることができる。本アプリケーションでは、Controllerのハンドラメソッドにマッピングされるか否かに関わらずチェックを行うために、Servlet Filterを用いて実装を行う。入力エラーが発生した場合、通常のユーザ操作の結果としては想定できない入力値が入力されたことを意味するため、ユーザビリティの低下を考慮せずに共通的なエラー画面へ遷移させるように設定ファイルへ記述する。
+| 個別の入力チェックには :doc:`../ArchitectureInDetail/WebApplicationDetail/Validation` の機能を利用することができる。本アプリケーションではBean Validationを用いて入力値のチェックを実現する。個別の入力エラーに対しては、Bean Validation当該入力項目に対してエラーメッセージを表示して再入力を促すよう実装を行う。
+
+コード解説
+""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+
+上記の実装方法に従って実装されたコードについて順に解説する。
+
+* Servlet Filterの実装
+
+  | ユーザからの入力をアプリケーション内で使用する場合、SQLインジェクションやXSS、ディレクトリトラバーサル（パストラバーサル）といったインジェクション攻撃の対象となる可能性がある。
+  | これらの攻撃への対策として、アプリケーション全体でユーザからの入力を検証するためのServlet Filterの実装例を示す。
+  | 本アプリケーションでは、以下の項目に対してそれぞれ設定した禁止文字を含んでいないことを検証する。
+
+  .. tabularcolumns:: |p{0.10\linewidth}|p{0.20\linewidth}|p{0.70\linewidth}|
+  .. list-table::
+     :header-rows: 1
+     :widths: 10 20 70
+
+     * - 項番
+       - 項目
+       - 説明
+     * - | (1)
+       - | リクエストパラメータ
+       - | リクエストパラメータはユーザからの入力を受け付けるために一般的に利用されるため、入力チェックの対象とする
+         | パラメータ名と値の両方がユーザからの入力となる可能性があるため、両方をチェックする
+     * - | (2)
+       - | アップロードファイル名
+       - | 本アプリケーションではファイルアップロード機能を実装しているため、ユーザからの入力であるアップロードファイル名を入力チェックの対象とする
+
+  | 尚、以下のコードでは \ ``org.springframework.web.multipart.MultipartRequest`` \を使用するため、\ ``org.springframework.web.multipart.support.MultipartFilter`` \の使用を前提としている。\ ``MultipartFilter`` \ については \ :doc:`../ArchitectureInDetail/WebApplicationDetail/FileUpload`\を参照のこと。
+
+  .. code-block:: java
+
+     package org.terasoluna.securelogin.app.common.filter;
+
+     // omitted
+
+     public class InputValidationFilter extends OncePerRequestFilter { // (1)
+
+         private final List<Character> prohibitedChars;
+
+         private final List<Character> prohibitedCharsForFileName;
+
+         public InputValidationFilter(char[] prohibitedChars,
+                 char[] prohibitedCharsForFileName) {
+             this.prohibitedChars = Chars.asList(prohibitedChars); // (2)
+             this.prohibitedCharsForFileName = Chars
+                     .asList(prohibitedCharsForFileName); // (3)
+         }
+
+         @Override
+         protected void doFilterInternal(HttpServletRequest request,
+                 HttpServletResponse response, FilterChain filterChain)
+                 throws ServletException, IOException {
+             if (request != null) {
+                 validateRequestParams(request); // (4)
+
+                 if (request instanceof MultipartRequest) {
+                     validateFileNames((MultipartRequest) request); // (5)
+                 }
+             }
+
+             filterChain.doFilter(request, response); // (6)
+         }
+
+         private void validateRequestParams(HttpServletRequest request) {
+             Map<String, String[]> params = request.getParameterMap();
+             for (Map.Entry<String, String[]> entry : params.entrySet()) {
+                 validate(entry.getKey(), prohibitedChars); // (7)
+                 for (String value : entry.getValue()) {
+                     validate(value, prohibitedChars); // (8)
+                 }
+             }
+         }
+
+         private void validateFileNames(MultipartRequest request) {
+             for (Map.Entry<String, MultipartFile> entry : request.getFileMap()
+                     .entrySet()) {
+                 String filename = new File(entry.getValue().getOriginalFilename())
+                         .getName(); // (9)
+                 validate(filename, prohibitedCharsForFileName); // (10)
+             }
+         }
+
+         private void validate(String target, List<Character> prohibited) {
+             if (StringUtils.hasLength(target)) {
+                 List<Character> chars = Chars.asList(target.toCharArray());
+                 for(Character prohibitedChar : prohibited) { // (11)
+                     if (chars.contains(prohibitedChar)) {
+                         throw new InvalidCharacterException(
+                             "The request contains prohibited charcter.");
+                     }
+                 }
+             }
+         }
+
+     }
+
+  .. tabularcolumns:: |p{0.10\linewidth}|p{0.90\linewidth}|
+  .. list-table::
+     :header-rows: 1
+     :widths: 10 90
+
+     * - 項番
+       - 説明
+     * - | (1)
+       - | \ ``org.springframework.web.filter.OncePerRequestFilter`` \ を継承することで、リクエストに対して一度だけ処理が実行されることが保証される
+     * - | (2)
+       - | リクエストパラメータの禁止文字の一覧を文字列として受け取り、文字のリストとして保持する
+     * - | (3)
+       - | ファイル名の禁止文字の一覧を文字列として受け取り、文字のリストとして保持する
+     * - | (4)
+       - | リクエストパラメータの入力チェックを行うメソッドを呼び出す
+     * - | (5)
+       - | ファイルアップロードリクエスト(Content-Typeが\ ``multipart/form-data`` \のPOSTリクエスト)の場合、\ ``MultipartFilter`` \の機能によって、ここでの\ ``request`` \オブジェクトは\ ``MultipartRequest`` \を実装した\ ``StandardMultipartHttpServletRequest`` \のインスタンスとなる
+         | \ ``MultipartRequest`` \のAPIを用いてファイル名を取り出し、入力チェックを行うメソッドを呼び出す
+     * - | (6)
+       - | 入力チェックが完了した後、後続のServlte Filterの処理を実行するためのメソッドを呼び出す
+     * - | (7), (8)
+       - | \ ``HttpServletRequest`` \ からリクエストパラメータの一覧を取得し、各リクエストパラメータ名およびリクエストパラメータ値について、実際の入力チェックを行うメソッドを呼び出す
+     * - | (9)
+       - | \ ``MultipartRequest`` \ からアップロードされたファイルの一覧を取得し、実際のファイル名を取得する
+         | クライアントのブラウザやOSによってはファイル名にパスが含まれたり、パス区切り文字が異なるため、ファイル名のみを取得する際にこのような処理が必要となる
+     * - | (10)
+       - | アップロードされた各ファイルのファイル名について、実際の入力チェックを行うメソッドを呼び出す
+     * - | (11)
+       - | 入力チェック対象の文字列を一文字ずつ順に、禁止文字に含まれているかどうかをチェックし、含まれている場合は例外を投げる
+         | \ ``InvalidCharacterException`` \ は \ ``RuntimeException`` \を継承して作成した例外である。コードは省略する
+
+  .. tip::
+
+     本アプリケーションではリクエストパラメータおよびファイル名のチェックのみ共通的な禁止文字のチェックを行っている。
+     必要に応じて、\ ``HttpServletRequest`` \ の \ ``getHeaders`` \ や \ ``getCookies`` \ を用いてHTTPヘッダやCookieの値を取得することにより、HTTPヘッダやCookieに対しても同様の方法でチェックすることができる。
+
+* Servlet Filterの設定
+
+  | 作成した\ ``InputValidationFilter`` \を有効にするため、web.xmlに設定を行う。
+  | 禁止文字をプロパティファイルから読み込み、\ ``InputValidationFilter`` \ をBean定義した上で、\ ``org.springframework.web.filter.DelegatingFilterProxy`` \ を使用して設定する。
+
+  **web.xml**
+
+  .. code-block:: xml
+
+     <filter>
+         <filter-name>MultipartFilter</filter-name>
+         <filter-class>org.springframework.web.multipart.support.MultipartFilter</filter-class>  <!-- (1) -->
+     </filter>
+     <filter-mapping>
+         <filter-name>MultipartFilter</filter-name>
+         <url-pattern>/*</url-pattern>
+     </filter-mapping>
+
+     <filter>
+         <filter-name>inputValidationFilter</filter-name>
+         <filter-class>org.springframework.web.filter.DelegatingFilterProxy</filter-class>  <!-- (2) -->
+     </filter>
+     <filter-mapping>
+         <filter-name>inputValidationFilter</filter-name>
+         <url-pattern>/*</url-pattern>
+     </filter-mapping>
+
+     <!-- omitted -->
+
+     <error-page>
+         <exception-type>org.terasoluna.securelogin.app.common.filter.exception.InvalidCharacterException</exception-type>  <!-- (3) -->
+         <location>/WEB-INF/views/common/error/invalidCharacterError.jsp</location>
+     </error-page>
+
+  .. tabularcolumns:: |p{0.10\linewidth}|p{0.90\linewidth}|
+  .. list-table::
+     :header-rows: 1
+     :widths: 10 90
+
+     * - 項番
+       - 説明
+     * - | (1)
+       - | \ ``InputValidationFilter`` \ の使用の前提となっている \ ``MultipartFilter`` \ を設定する
+         | \ ``MultipartFilter`` \を\ ``InputValidationFilter`` \よりも前に定義する必要があることに注意すること
+     * - | (2) 
+       - | \ ``DelegatingFilterProxy`` \ を用いて、Bean定義した \ ``InputValidationFilter`` \ を設定する
+         | \ ``<filter-name>`` \にはBean名を指定すること
+     * - | (3) 
+       - | \ ``InvalidCharacterException`` \ がスローされた際に表示するエラー画面を設定する
+
+  .. note::
+
+     ファイル名の入力チェックのために\ ``MultipartFilter`` \を利用しているため、ここに記述した内容に加えて :ref:`file-upload_how_to_usr_application_settings` に記したServlet 3.0のアップロード機能を有効化するための設定が必要となる。
+
+  **invalidCharacterError.jsp**
+
+  .. code-block:: jsp
+
+     <% response.setStatus(HttpServletResponse.SC_BAD_REQUEST); %>  <!-- (1) -->
+     <!DOCTYPE html>
+     <html>
+     <head>
+     <meta charset="utf-8">
+     <title>Invalid Character Error!</title>
+
+     <!-- omitted -->
+
+  .. tabularcolumns:: |p{0.10\linewidth}|p{0.90\linewidth}|
+  .. list-table::
+     :header-rows: 1
+     :widths: 10 90
+
+     * - 項番
+       - 説明
+     * - | (1)
+       - | \ ``InvalidCharacterException`` \はクライアントの入力に起因して発生する例外であるため、のHTTPステータスコードを\ ``"400"`` \(Bad Request)に設定する
+
+  **applicationContext.xml**
+
+  .. code-block:: xml
+
+     <bean id="inputValidationFilter" class="org.terasoluna.securelogin.app.common.filter.InputValidationFilter">
+         <constructor-arg index="0" value="${app.security.prohibitedChars}"/>  <!-- (1) -->
+         <constructor-arg index="1" value="${app.security.prohibitedCharsForFileName}"/>  <!-- (2) -->
+     </bean>
+
+  .. tabularcolumns:: |p{0.10\linewidth}|p{0.90\linewidth}|
+  .. list-table::
+     :header-rows: 1
+     :widths: 10 90
+
+     * - 項番
+       - 説明
+     * - | (1)
+       - | リクエストパラメータの禁止文字の一覧を文字列としてプロパティから取得する
+     * - | (2)
+       - | ファイル名の禁止文字の一覧を文字列としてプロパティから取得する
+
+  **application.properties**
+
+  .. code-block:: properties
+
+     ## (1)
+     app.security.prohibitedChars=&\\!"<>*
+
+     ## (2)
+     app.security.prohibitedCharsForFileName=&\\!"<>*;:
+
+  .. tabularcolumns:: |p{0.10\linewidth}|p{0.90\linewidth}|
+  .. list-table::
+     :header-rows: 1
+     :widths: 10 90
+
+     * - 項番
+       - 説明
+     * - | (1)
+       - | 本アプリケーションにおいて、リクエストパラメータに含まれることを想定していない文字のリストを文字列として指定する
+     * - | (2)
+       - | 本アプリケーションにおいて、アップロードファイル名に含まれることを想定していない文字のリストを文字列として指定する
+
+* Bean Validationのアノテーションの作成
+
+  アプリケーションの仕様で想定していない入力値を入力されることによるセキュリティ上のリスクを軽減するために、要件に合わせて入力値を検証するBean Validationのアノテーションを作成する。
+
+  * 制御文字が含まれないことを検証するアノテーション
+
+    | 入力値に制御文字が含まれている場合、アプリケーションが予期しない問題を引き起こす可能性がある。そのため、制御文字を入力する必要がない入力項目に対して制御文字が含まれていないことをチェックする。
+    | 文章の入力の際には制御文字のうち改行コードのみを許容する場合も多いため、改行コードを許可するアノテーションも別途作成する。
+    | 正規表現を用いたチェックを行うことで制御文字が含まれていないことを検証することができる。
+
+    .. code-block:: java
+
+       package org.terasoluna.securelogin.app.common.validation;
+
+       // omitted
+       @Documented
+       @Constraint(validatedBy = {})
+       @Target({ FIELD })
+       @Retention(RUNTIME)
+       @ReportAsSingleViolation  // (1)
+       @Pattern(regexp = "^\\P{Cntrl}*$") // (2)
+       public @interface NotContainControlChars {
+           String message() default "{org.terasoluna.securelogin.app.common.validation.NotContainControlChars.message}";
+
+           Class<?>[] groups() default {};
+
+           @Target({ FIELD })
+           @Retention(RUNTIME)
+           @Documented
+           public @interface List {
+               NotContainControlChars[] value();
+           }
+
+           Class<? extends Payload>[] payload() default {};
+       }
+
+    .. tabularcolumns:: |p{0.10\linewidth}|p{0.90\linewidth}|
+    .. list-table::
+       :header-rows: 1
+       :widths: 10 90
+
+       * - 項番
+         - 説明
+       * - | (1)
+         - | エラーメッセージとして、このアノテーションで指定したメッセージのみを出力するために\ ``@ReportAsSingleViolation`` \アノテーションを付与する
+       * - | (2)
+         - | 正規表現を用いた入力チェックを行うために\ ``@Pattern`` \アノテーションを付与する
+           | \ ``\P{Cntrl}`` \はJavaの正規表現において「制御文字以外の文字」を意味するため、\ ``^\\P{Cntrl}*$`` \は最初から最後まで制御文字を含まない文字列のみにマッチする
+
+    | 同様に、改行コードを許容する場合のアノテーションをの実装例を以下に示す。
+
+    .. code-block:: java
+
+       package org.terasoluna.securelogin.app.common.validation;
+
+       // omitted
+       @Documented
+       @Constraint(validatedBy = {})
+       @Target({ FIELD })
+       @Retention(RUNTIME)
+       @ReportAsSingleViolation
+       @Pattern(regexp = "^[\\r\\n\\P{Cntrl}]*$") // (1)
+       public @interface NotContainControlCharsExceptNewlines {
+           String message() default "{org.terasoluna.securelogin.app.common.validation.NotContainControlCharsExceptNewlines.message}";
+
+           Class<?>[] groups() default {};
+
+           @Target({ FIELD })
+           @Retention(RUNTIME)
+           @Documented
+           public @interface List {
+               NotContainControlCharsExceptNewlines[] value();
+           }
+
+           Class<? extends Payload>[] payload() default {};
+       }
+
+    .. tabularcolumns:: |p{0.10\linewidth}|p{0.90\linewidth}|
+    .. list-table::
+       :header-rows: 1
+       :widths: 10 90
+
+       * - 項番
+         - 説明
+       * - | (1)
+         - | 「制御文字以外の文字(\ ``\P{Cntrl}`` \)」と改行コード(\ ``\r`` \, \ ``\n`` \)のみで構成される文字列にマッチするように、正規表現を指定する。
+
+  * アップロードされるファイルの拡張子が許容されているものであることを検証するアノテーション
+
+    | ユーザからのファイルのアップロードを受け付ける際、受け付けるファイルの形式を制限したい場合がある。そのような場合に、許容するファイルの拡張子の一覧を設定し、アップロードされたファイルの拡張子が一覧に含まれているかをチェックする。
+    | 拡張子の大文字・小文字を区別するか否かを切り替えられる仕様とする。
+
+    .. warning::
+       ファイルの拡張子は容易に偽装され得るため、拡張子のチェックを行った場合であっても無条件にファイル形式を信用してはならない。
+
+    .. code-block:: java
+
+       package org.terasoluna.securelogin.app.common.validation;
+
+       // omitted
+
+       @Documented
+       @Constraint(validatedBy = { FileExtensionValidator.class })
+       @Target({ ElementType.FIELD })
+       @Retention(RetentionPolicy.RUNTIME)
+       public @interface FileExtension {
+           String message() default "{org.terasoluna.securelogin.app.common.validation.FileExtension.message}";
+
+           Class<?>[] groups() default {};
+
+           Class<? extends Payload>[] payload() default {};
+
+           String[] extensions();  // (1)
+
+           boolean ignoreCase() default true;  // (2)
+
+           @Target({ ElementType.FIELD })
+           @Retention(RetentionPolicy.RUNTIME)
+           @Documented
+           public @interface List {
+               FileExtension[] value();
+           }
+       }
+
+    .. tabularcolumns:: |p{0.10\linewidth}|p{0.90\linewidth}|
+    .. list-table::
+       :header-rows: 1
+       :widths: 10 90
+
+       * - 項番
+         - 説明
+       * - | (1)
+         - | 許容する拡張子の一覧を設定する
+       * - | (2)
+         - | 大文字・小文字の違いを無視するか否か。デフォルト値は \ ``true`` \ （無視する）
+
+    .. code-block :: java
+
+       package org.terasoluna.securelogin.app.common.validation;
+
+       // omitted
+
+       public class FileExtensionValidator implements
+               ConstraintValidator<FileExtension, MultipartFile> {
+
+           private Set<String> extensions;
+
+           private boolean ignoreCase;
+
+           @Override
+           public void initialize(FileExtension constraintAnnotation) {
+               this.extensions = new HashSet<String>(
+                       Arrays.asList(constraintAnnotation.extensions()));
+               this.ignoreCase = constraintAnnotation.ignoreCase();
+           }
+
+           @Override
+           public boolean isValid(MultipartFile value,
+                   ConstraintValidatorContext context) {
+               if (value == null) {  // (1)
+                   return true;
+               }
+
+               String fileNameExtension = StringUtils.getFilenameExtension(value
+                       .getOriginalFilename());  // (2)
+               if (!StringUtils.hasLength(fileNameExtension)) {  // (3)
+                   return false;
+               }
+
+               for (String extension : extensions) {  // (4)
+                   if (fileNameExtension.equals(extension) || ignoreCase
+                           && fileNameExtension.equalsIgnoreCase(extension)) {
+                       return true;
+                   }
+               }
+               return false;
+           }
+
+       }
+
+    .. tabularcolumns:: |p{0.10\linewidth}|p{0.90\linewidth}|
+    .. list-table::
+       :header-rows: 1
+       :widths: 10 90
+
+       * - 項番
+         - 説明
+       * - | (1)
+         - | \ ``null`` \ チェックは他のアノテーションを用いて行うため、\ ``null`` \ の場合は \ ``true`` \ を返す
+       * - | (2)
+         - | \ ``org.springframework.util.StringUtils`` \ の \ ``getFilenameExtension`` \ メソッドを用いてファイル名から拡張子を取得する
+       * - | (3)
+         - | 拡張子の無いファイルは許容しないため、拡張子が無い場合は \ ``false`` \ を返す
+       * - | (4)
+         - | 許容する拡張子の一覧から拡張子を一つずつ取り出し、ファイル名から取得した文字列と比較する
+           | 一つでも一致するものがあれば \ ``true`` \ を返し、いずれとも一致しなければ　\ ``false`` \ を返す。
+
+  * アップロードされるファイルのファイル名が許容されているパターンと一致することを検証するアノテーション
+
+    ユーザからのファイルのアップロードを受け付ける際、受け付けるファイル名の形式を制限したい場合がある。そのような場合に、許容するファイル名のパターンを正規表現で設定し、アップロードされたファイルのファイル名がパターンと一致するかをチェックする。
+
+    .. code-block:: java
+
+       package org.terasoluna.securelogin.app.common.validation;
+
+       // omitted
+
+       @Documented
+       @Constraint(validatedBy = { FileNamePatternValidator.class })
+       @Target({ ElementType.FIELD })
+       @Retention(RetentionPolicy.RUNTIME)
+       public @interface FileNamePattern {
+
+           String message() default "{org.terasoluna.securelogin.app.common.validation.FileNamePattern.message}";
+
+           Class<?>[] groups() default {};
+
+           Class<? extends Payload>[] payload() default {};
+
+           String pattern() default "";  // (1)
+
+           @Target({ ElementType.FIELD })
+           @Retention(RetentionPolicy.RUNTIME)
+           @Documented
+           public @interface List {
+               FileNamePattern[] value();
+           }
+
+       }
+
+    .. tabularcolumns:: |p{0.10\linewidth}|p{0.90\linewidth}|
+    .. list-table::
+       :header-rows: 1
+       :widths: 10 90
+
+       * - 項番
+         - 説明
+       * - | (1)
+         - | 許容するファイル名のパターン
+
+    .. code-block:: java
+
+       package org.terasoluna.securelogin.app.common.validation;
+
+       // omitted
+
+       public class FileNamePatternValidator implements
+               ConstraintValidator<FileNamePattern, MultipartFile> {
+
+           private Pattern pattern;
+
+           @Override
+           public void initialize(FileNamePattern constraintAnnotation) {
+               this.pattern = Pattern.compile(constraintAnnotation.pattern());  // (1)
+           }
+
+           @Override
+           public boolean isValid(MultipartFile value,
+                   ConstraintValidatorContext context) {
+               if (value == null) {  // (2)
+                   return true;
+               }
+
+               String filename = new File(value.getOriginalFilename()).getName();  // (3)
+               return pattern.matcher(filename).matches();  // (4)
+           }
+
+       }
+
+    .. tabularcolumns:: |p{0.10\linewidth}|p{0.90\linewidth}|
+    .. list-table::
+       :header-rows: 1
+       :widths: 10 90
+
+       * - 項番
+         - 説明
+       * - | (1)
+         - | チェックする正規表現のパターンを \ ``Pattern`` \ として作成し、保持する
+       * - | (2)
+         - | \ ``null`` \ チェックは他のアノテーションを用いて行うため、\ ``null`` \ の場合は \ ``true`` \ を返す
+       * - | (3)
+         - | \ ``MultipartRequest`` \ から実際のファイル名を取得する。クライアントのブラウザやOSによってはファイル名にパスが含まれたり、パス区切り文字が異なるため、ファイル名のみを取得する際にこのような処理が必要となる
+       * - | (4)
+         - | (1)で作成した \ ``Pattern`` \ とファイル名がマッチする場合は \ ``true`` \ を返し、マッチしない場合は\ ``false`` \ を返す
+
+
+  * 入力されたURLのドメインが許容されているものであることを検証するアノテーション
+
+    | ユーザからURLの入力を受け付ける際、許容するドメインを制限したい場合がある。そのような場合に、許容するドメインの一覧を設定し、入力されたURLのドメインが一覧に含まれているドメインかまたはそのサブドメインであるかをチェックする。
+    | 同時にURL形式であることをチェックするため、\ ``org.hibernate.validator.constraints.URL`` \ と組み合わせて実装する。
+
+    .. code-block:: java
+
+       package org.terasoluna.securelogin.app.common.validation;
+
+       // omitted
+
+       @Documented
+       @Constraint(validatedBy = { DomainRestrictedURLValidator.class })
+       @Target({ FIELD })
+       @Retention(RUNTIME)
+       @URL  // (1)
+       public @interface DomainRestrictedURL {
+
+           String message() default "{org.terasoluna.securelogin.app.common.validation.DomainRestrictedURL.message}";
+
+           Class<?>[] groups() default {};
+
+           String[] allowedDomains() default {};  // (2)
+
+           @Target({ FIELD })
+           @Retention(RUNTIME)
+           @Documented
+           public @interface List {
+               DomainRestrictedURL[] value();
+           }
+
+           Class<? extends Payload>[] payload() default {};
+
+       }
+
+    .. tabularcolumns:: |p{0.10\linewidth}|p{0.90\linewidth}|
+    .. list-table::
+       :header-rows: 1
+       :widths: 10 90
+
+       * - 項番
+         - 説明
+       * - | (1)
+         - | URL形式であることをチェックするために、\ ``@URL`` \ を付与する
+       * - | (2)
+         - | 許容するドメインの一覧
+
+    .. code-block:: java
+
+       package org.terasoluna.securelogin.app.common.validation;
+
+       // omitted
+
+       public class DomainRestrictedURLValidator implements
+               ConstraintValidator<DomainRestrictedURL, String> {
+
+           private static final Pattern URL_REGEX = Pattern  // (1)
+               .compile( "(?i)^(?:[a-z](?:[-a-z0-9\\+\\.])*)" + // protocol
+                        ":(?:\\/\\/([^\\/:]+)" + // auth+host/ip
+                        "(?::([0-9]*))?" + // port
+                        "(?:\\/.*)*)$"
+                );
+
+           private Set<String> allowedDomains;
+
+           @Override
+           public void initialize(DomainRestrictedURL constraintAnnotation) {
+               allowedDomains = new HashSet<String>(Arrays.asList(constraintAnnotation
+                       .allowedDomains()));  // (2)
+           }
+
+           @Override
+           public boolean isValid(String value, ConstraintValidatorContext context) {
+               Matcher urlMatcher = URL_REGEX.matcher(value);
+               if (urlMatcher.matches()) {  // (3)
+                   String host = urlMatcher.group(1);
+                   for(String domain : allowedDomains) {  // (4)
+                       if (StringUtils.hasLength(host) && host.endsWith("."+domain)) {
+                           return true;
+                       }
+                   }
+                   return false;
+               } else {
+                   return true;
+               }
+           }
+
+       }
+
+    .. tabularcolumns:: |p{0.10\linewidth}|p{0.90\linewidth}|
+    .. list-table::
+       :header-rows: 1
+       :widths: 10 90
+
+       * - 項番
+         - 説明
+       * - | (1)
+         - | URLのドメインを取得するための正規表現のパターンを \ ``Pattern`` \ として作成し、保持する
+           | 正しいURL形式であるかどうかの検証は\ ``@URL`` \で行うため、ここでは必要最小限の正規表現を指定している
+       * - | (2)
+         - | 許容するドメインの一覧を取得し、保持する
+       * - | (3)
+         - | URL形式であるかどうかをチェックする。不正な形式の場合は、組み合わせて利用している\ ``URL`` \アノテーションによって検証エラーとなるため、ここでは \ ``true`` \ を返す
+       * - | (4)
+         - | 許容されるドメインの一覧から一つずつ取り出し、URLのホスト部の末尾と一致するかをチェックする。一つでも一致すれば \ ``true`` \ を返し、一つも一致しなければ \ ``false`` \ を返す
+
+
+  * 入力されたメールアドレスのドメインが許容されているものであることを検証するアノテーション
+
+    | ユーザからメールアドレスの入力を受け付ける際、許容するドメインを制限したい場合がある。そのような場合に、許容するドメインの一覧を設定し、入力されたメールアドレスのドメインが一覧に含まれているかをチェックする。許容するドメインのサブドメインまで許すか否かを切り替えられる仕様とする。
+    | 同時にメールアドレス形式であることをチェックするため、\ ``org.hibernate.validator.constraints.Email`` \ と組み合わせて実装する。
+
+    .. code-block:: java
+
+       package org.terasoluna.securelogin.app.common.validation;
+
+       // omitted
+
+       @Documented
+       @Constraint(validatedBy = { DomainRestrictedEmailValidator.class })
+       @Target({ FIELD })
+       @Retention(RUNTIME)
+       @Email  // (1)
+       public @interface DomainRestrictedEmail {
+           String message() default "{org.terasoluna.securelogin.app.common.validation.DomainRestrictedEmail.message}";
+
+           Class<?>[] groups() default {};
+
+           String[] allowedDomains() default {};  // (2)
+
+           boolean allowSubDomain() default false;  // (3)
+
+           @Target({ FIELD })
+           @Retention(RUNTIME)
+           @Documented
+           public @interface List {
+               DomainRestrictedEmail[] value();
+           }
+
+           Class<? extends Payload>[] payload() default {};
+       }
+
+    .. tabularcolumns:: |p{0.10\linewidth}|p{0.90\linewidth}|
+    .. list-table::
+       :header-rows: 1
+       :widths: 10 90
+
+       * - 項番
+         - 説明
+       * - | (1)
+         - | メールアドレス形式であることをチェックするために、\ ``@Email`` \ を付与する
+       * - | (2)
+         - | 許容するドメインの一覧
+       * - | (3)
+         - | サブドメインを許容するか否か。デフォルト値は \ ``false`` \ （許容しない）
+
+    .. code-block:: java
+
+       package org.terasoluna.securelogin.app.common.validation;
+
+       // omitted
+
+       public class DomainRestrictedEmailValidator implements
+               ConstraintValidator<DomainRestrictedEmail, CharSequence> {
+
+           private Set<String> allowedDomains;
+
+           private boolean allowSubDomain;
+
+           @Override
+           public void initialize(DomainRestrictedEmail constraintAnnotation) {
+               allowedDomains = new HashSet<String>(Arrays.asList(constraintAnnotation
+                       .allowedDomains()));  // (1)
+               allowSubDomain = constraintAnnotation.allowSubDomain();  // (2)
+           }
+
+           @Override
+           public boolean isValid(CharSequence value,
+                   ConstraintValidatorContext context) {
+               if (value == null) {  // (3)
+                   return true;
+               }
+
+               for (String domain : allowedDomains) {  // (4)
+                   if (value.toString().endsWith("@" + domain)
+                           || (allowSubDomain && value.toString().endsWith(
+                                   "." + domain))) {
+                       return true;
+                   }
+               }
+               return false;
+           }
+
+       }
+
+    .. tabularcolumns:: |p{0.10\linewidth}|p{0.90\linewidth}|
+    .. list-table::
+       :header-rows: 1
+       :widths: 10 90
+
+       * - 項番
+         - 説明
+       * - | (1)
+         - | 許容するドメインの一覧を取得し、保持する
+       * - | (2)
+         - | サブドメインを許容するかどうかを表す真理値を取得し、保持する
+       * - | (3)
+         - | \ ``null`` \ チェックは他のアノテーションを用いて行うため、\ ``null`` \ の場合は \ ``true`` \ を返す
+       * - | (4)
+         - | 許容されるドメインの一覧から一つずつ取り出し、メールアドレスのドメイン部と一致するかをチェックする。一つでも一致すれば \ ``true`` \ を返し、一つも一致しなければ \ ``false`` \ を返す
+
+* Formクラスへのアノテーションの付与
+
+  作成したアノテーションをアカウント新規作成のFormクラスのフィールドに付与する。
+
+  .. code-block:: java
+
+     package org.terasoluna.securelogin.app.account;
+
+     // omitted
+
+     public class AccountCreateForm implements Serializable {
+
+         // omitted
+
+         @NotNull
+         @NotContainControlChars  // (1)
+         @Size(min=4, max=128)
+         private String username;
+
+         // omitted
+
+         @NotNull
+         @NotContainControlChars
+         @Size(min=1, max=128)
+         @DomainRestrictedEmail(allowedDomains={ "domainexample.co.jp",
+                  "somedomainexample.co.jp" }, allowSubDomain=true)  // (2)
+         private String email;
+
+         // omitted
+
+         @NotNull
+         @NotContainControlChars
+         @DomainRestrictedURL(allowedDomains={ "jp" })  // (3)
+         private String url;
+
+         @UploadFileRequired
+         @UploadFileNotEmpty
+         @UploadFileMaxSize
+         @FileExtension(extensions = { "jpg", "png", "gif" })  // (4)
+         @FileNamePattern(pattern = "[a-zA-Z0-9_-]+\\.[a-zA-Z]{3}")  // (5)
+         private MultipartFile image;
+
+         @NotNull
+         @NotContainControlCharsExceptNewlines  // (6)
+         private String profile;
+
+     }
+
+  .. tabularcolumns:: |p{0.10\linewidth}|p{0.90\linewidth}|
+  .. list-table::
+     :header-rows: 1
+     :widths: 10 90
+
+     * - 項番
+       - 説明
+     * - | (1)
+       - | 制御文字が含まれないことをチェックする
+     * - | (2)
+       - | メールアドレスのドメインが "ntt.co.jp", "nttdata.co.jp" またはそのサブドメインであることチェックする
+     * - | (3)
+       - | URLのドメインが "jp" またはそのサブドメインであることをチェックする
+     * - | (4)
+       - | ファイルの拡張子が "jpg", "png", "gif" のどれかであることをチェックする
+     * - | (5)
+       - | ファイル名が『「半角英数字, "_", "-" の1文字以上の繰り返し」 + 「 "." 」 + 「半角英字3文字」』というパターンとなっていることをチェックする
+     * - | (6)
+       - | 改行コード以外の制御文字が含まれないことをチェックする
+
+.. _audit-logging:
+
+監査ログ出力
+--------------------------------------------------------------------------------
+
+実装する要件一覧
+""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+* :ref:`監査ログ出力 <sec-requirements>`
+
+動作イメージ
+""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+
+.. figure:: ./images/SecureLogin_logging.png
+   :alt: Logging
+   :width: 80%
+   :align: center
+
+
+監査目的で、アプリケーションに対していつ、誰が、どのような操作を行ったのかといった情報を確認できるようにするため、サービスクラスのメソッドを呼び出す際に、呼び出し日時、呼び出し元ユーザ名、メソッド名をログ出力する。
+また、メソッド実行の結果として例外が発生しなければ操作成功としてログを出力し、例外が発生した場合は操作失敗としてログを出力する。
+
+ログのフォーマットは以下の通りとする。
+
+\ ``｛メソッド呼び出し日時｝｛スレッド｝｛呼び出し元ユーザ名｝｛X-Track｝｛ログレベル｝｛ロガー｝｛メッセージ｝`` \
+
+.. tabularcolumns:: |p{0.30\linewidth}|p{0.70\linewidth}|
+.. list-table::
+   :header-rows: 1
+   :widths: 30 70
+
+   * - 項目
+     - 説明
+   * - | メソッド呼び出し日時
+     - | サービスクラスのメソッドを呼び出した日時を"yyyy-MM-dd HH:mm:ss"形式で出力
+   * - | スレッド
+     - | ログ出力を行ったスレッド
+   * - | 呼び出し元ユーザ名
+     - | サービスクラスのメソッドを呼び出したSpring Securityのユーザ名を出力
+       | 未ログインの場合には空欄とする
+   * - | X-Track
+     - | トレーサビリティ向上のために、リクエストごとに設定するID
+       | 詳細は\ :doc:`../ArchitectureInDetail/GeneralFuncDetail/Logging` \を参照すること
+   * - | ログレベル
+     - | 出力されたログのレベル
+       | 本アプリケーションにおいては\ ``info`` \レベルで出力する
+   * - | ロガー
+     - | ログを出力したロガー
+   * - | メッセージ
+     - | メソッド呼び出し時："[START SERVICE] ServiceClassName.methodName"
+       | メソッド正常終了時："[COMPLETE SERVICE] ServiceClassName.methodName"
+       | 例外発生時："[SERVICE THROWS EXCEPTION] ExceptionClassName.methodName"
+
+実装方法
+""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+| ログにユーザ名を出力するために、Spring Securityの認証情報からユーザ名を取得する。 ユーザ名の取得およびログ出力は\ :doc:`../ArchitectureInDetail/GeneralFuncDetail/Logging` \ で解説している \ ``org.terasoluna.gfw.security.web.logging.UserIdMDCPutFilter`` \ を用いて実現する。
+| さらに、本アプリケーションにおいて、リクエストに対する操作内容と操作結果をそれぞれ以下の通り定義し、ログに出力する。
+
+* 操作内容：呼び出されたサービスクラスのメソッド名
+* 操作結果：メソッドの処理を実行した結果例外が発生したか否か
+
+| すべてのサービスクラスのメソッド呼び出しに対してログ出力を行うといった、横断的な機能を実現するためには、Springが提供するAOP(Aspect Oriented Programming)の機能を利用することができる。
+| Springが提供しているAOPの実装方法は複数あるが、本アプリケーションでは `共通ライブラリ <https://github.com/terasolunaorg/terasoluna-gfw>`_ で提供しているロギング関連の部品の実装と合わせることを重視し、\ ``org.aopalliance.intercept.MethodInterceptor`` \を実装する方式を採用する。
+| 具体的には以下の実装・設定を行うことで要件を実現する。
+
+* \ ``UserIdMDCPutFilter`` \ を設定する
+
+* メソッド呼び出し時および実行後にログ出力を行うアドバイスを作成する
+
+* 上記で定義したアドバイスを\ ``@Service`` \ の付与されたクラスに対して適用するための設定を行う
+
+ .. note::
+
+    アドバイスとは、AOPにおいて指定されたタイミングで実行する処理のことを指す。
+    また、アドバイスを織り込むことのできる箇所のことをジョインポイントと呼び、どのジョインポイントにアドバイスを織り込むかを定義したものポイントカットと呼ぶ。
+    Springが提供するAOP機能に関しては、`公式ドキュメント - AOP <http://docs.spring.io/spring/docs/4.2.7.RELEASE/spring-framework-reference/html/aop.html>`_ を参照すること。
+
+コード解説
+""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+
+上記の実装方法に従って実装されたコードについて順に解説する。
+
+* \ ``UserIdMDCPutFilter`` \ を設定する
+
+  ログにSpring Securityの認証ユーザ名を出力するための設定を以下に示す。
+
+  **spring-security.xml**
+
+  .. code-block:: xml
+
+     <!-- omitted -->
+
+     <sec:http>
+         <!-- omitted -->
+         <sec:custom-filter ref="userIdMDCPutFilter" after="ANONYMOUS_FILTER" />
+         <!-- omitted -->
+     </sec:http>
+
+     <!-- omitted -->
+     <bean id="userIdMDCPutFilter" class="org.terasoluna.gfw.security.web.logging.UserIdMDCPutFilter">
+     </bean>
+
+  .. tabularcolumns:: |p{0.10\linewidth}|p{0.90\linewidth}|
+  .. list-table::
+     :header-rows: 1
+     :widths: 10 90
+
+     * - 項番
+       - 説明
+     * - | (1)
+       - | ユーザ情報が生成された後すぐにログ出力するために、Spring SecurityのFilter Chainに\ ``UserIdMDCPutFilter`` \ を設定する
+         | \ ``UserIdMDCPutFilter`` \を設定することによって、MDCに\ ``USER`` \というキーで認証ユーザ名が追加される。
+
+  **logback.xml**
+
+  .. code-block:: xml
+
+     <!-- omitted -->
+
+     <appender name="AUDIT_LOG_FILE"
+         class="ch.qos.logback.core.rolling.RollingFileAppender">  <!-- (1) -->
+         <file>log/security-audit.log</file>
+         <rollingPolicy class="ch.qos.logback.core.rolling.TimeBasedRollingPolicy">
+             <fileNamePattern>log/security-audit-%d{yyyyMMdd}.log</fileNamePattern>
+             <maxHistory>7</maxHistory>
+         </rollingPolicy>
+         <encoder>
+             <charset>UTF-8</charset>
+             <pattern><![CDATA[date:%d{yyyy-MM-dd HH:mm:ss}\tthread:%thread\tUSER:%X{USER}\tX-Track:%X{X-Track}\tlevel:%-5level\tlogger:%-48logger{48}\tmessage:%msg%n]]></pattern>  <!-- (2) -->
+         </encoder>
+     </appender>
+
+     <!-- omitted -->
+
+     <logger 
+        name="org.terasoluna.securelogin.domain.common.interceptor.ServiceCallLoggingInterceptor"
+        additivity="false">  <!-- (3) -->
+        <level value="info" />
+        <appender-ref ref="AUDIT_LOG_FILE" />
+     </logger>
+
+     <!-- omitted -->
+
+  .. tabularcolumns:: |p{0.10\linewidth}|p{0.90\linewidth}|
+  .. list-table::
+     :header-rows: 1
+     :widths: 10 90
+
+     * - 項番
+       - 説明
+     * - | (1)
+       - | 監査ログ出力用のappenderを定義する
+     * - | (2)
+       - | pattern定義内に"USER:%X{USER}"を記述する
+     * - | (3)
+       - | 監査ログ出力用のloggerを定義する
+         | \ ``org.terasoluna.securelogin.domain.common.interceptor.ServiceCallLoggingInterceptor`` \の実装については以降で説明する
+
+* メソッド呼び出し時および実行後にログ出力を行うアドバイスを作成する
+
+  操作内容と操作結果をログ出力するための実装および設定を以下に示す。
+
+  .. code-block:: java
+
+     package org.terasoluna.securelogin.domain.common.interceptor;
+
+     // omitted
+
+     public class ServiceCallLoggingInterceptor implements MethodInterceptor {  // (1)
+
+       private static final Logger logger = LoggerFactory
+               .getLogger(ServiceCallLoggingInterceptor.class);
+
+       @Override
+       public Object invoke(MethodInvocation invocation) throws Throwable {  // (2)
+           String methodName = invocation.getMethod().getName();
+           String className = invocation.getMethod().getDeclaringClass()
+                   .getSimpleName();
+           logger.info("[START SERVICE]{}.{}", className, methodName);  // (3)
+           try {
+               Object result = invocation.proceed();  // (4)
+               logger.info("[COMPLETE SERVICE]{}.{}", className, methodName);  // (5)
+               return result;  // (6)
+           } catch (Throwable e) {
+               logger.info("[SERVICE THROWS EXCEPTION]{}.{}", className,  // (7)
+                       methodName);
+               logger.info(Exception : {}, Message : {}, e.getClass().getName(),
+                       e.getMessage()); // (8)
+               throw e;  // (9)
+           }
+       }
+   }
+
+  .. tabularcolumns:: |p{0.10\linewidth}|p{0.90\linewidth}|
+  .. list-table::
+     :header-rows: 1
+     :widths: 10 90
+
+     * - 項番
+       - 説明
+     * - | (1)
+       - | メソッド呼び出しの前後で行う処理を記述するために、\ ``MethodInterceptor`` \ を実装する
+     * - | (2)
+       - | \ ``MethodInterceptor`` \ に定義されている、\ ``invoke`` \メソッドをオーバーライドする
+         | 引数の \ ``org.aopalliance.intercept.MethodInvocation`` \ オブジェクトから、呼び出すメソッドの名前等の情報を取得することができる
+     * - | (3)
+       - | メソッド呼び出しを行う前に、呼び出すメソッド名をログ出力する
+     * - | (4)
+       - | 実際のメソッド呼び出しを行い、結果を取得する
+     * - | (5)
+       - | メソッド呼び出しの結果例外が発生しなければ、操作成功のログメッセージを出力する
+     * - | (6)
+       - | メソッド呼び出しの結果のオブジェクトを返す
+     * - | (7)
+       - | メソッド呼び出しの結果例外が発生した場合、操作失敗のログメッセージを出力する
+     * - | (8)
+       - | 発生した例外クラスと例外メッセージを出力する
+         | 監査目的であることから、ログが冗長になることを避けるためスタックトレースは出力していない
+     * - | (9)
+       - | 発生した例外オブジェクトを投げる
+
+  .. tip::
+
+     本アプリケーションの例を拡張することで、メソッド呼び出し時の引数などより詳細な内容を出力することも可能である。
+     ただし、その場合はハッシュ化されていないパスワード等がログ出力される可能性があるため、マスキングを行う等の対策が必要となることに注意すること。
+
+* アドバイスを\ ``@Service`` \ の付与されたクラスに対して適用するための設定を行う
+
+  アドバイスに対するポイントカットの設定を以下に示す。
+
+  **secure-login-domain.xml**
+
+  .. code-block:: xml
+
+     <!-- omitted -->
+
+     <bean id="serviceCallLoggingInterceptor"
+         class="org.terasoluna.securelogin.domain.common.interceptor.ServiceCallLoggingInterceptor" />  <!-- (1) -->
+     <aop:config>
+         <aop:advisor advice-ref="serviceCallLoggingInterceptor"
+             pointcut="@within(org.springframework.stereotype.Service)" />  <!-- (2) -->
+     </aop:config>
+
+     <!-- omitted -->
+
+  .. tabularcolumns:: |p{0.10\linewidth}|p{0.90\linewidth}|
+  .. list-table::
+     :header-rows: 1
+     :widths: 10 90
+
+     * - 項番
+       - 説明
+     * - | (1)
+       - | 上記で作成したアドバイスクラス(\ ``MethodInterceptor`` \の実装クラス)をBean定義する
+     * - | (2)
+       - | \ ``aop:advisor`` \ タグの \ ``advice-ref`` \ 属性にアドバイスが実装されているBeanを、 \ ``pointcut`` \ 属性にポイントカットをそれぞれ設定する
+         | \ ``@within(org.springframework.stereotype.Service)`` \ というポイントカットの定義により、 \ ``@Service`` \ の付与されたクラスのメソッド呼び出しがアドバイスの対象となる
+
+  .. note::
+
+     SpringのAOPは、自動的に作成されたプロキシクラスがメソッド呼び出しをハンドリングする、プロキシ方式を採用している。
+     プロキシ方式のAOPの制限として、可視性が\ ``public`` \以外のメソッドの呼び出しや、同一クラス内のメソッド呼び出しの際にはアドバイスが実行されない点に注意する必要がある。
+     詳細は `公式ドキュメント <http://docs.spring.io/spring/docs/4.2.7.RELEASE/spring-framework-reference/html/aop.html#aop-understanding-aop-proxies>`_ を参照すること。
+
+  ログの出力結果を以下に示す。
+
+  .. code-block:: console
+
+     date:2016-08-18 13:45:42   thread:tomcat-http--7   USER:demo   X-Track:f514cc4159324ba28d8393f2c3062d89    level:INFO  logger:o.t.s.d.c.i.ServiceCallLoggingInterceptor        message:[START SERVICE]AccountSharedService.isInitialPassword
+     date:2016-08-18 13:45:42   thread:tomcat-http--7   USER:demo   X-Track:f514cc4159324ba28d8393f2c3062d89    level:INFO  logger:o.t.s.d.c.i.ServiceCallLoggingInterceptor        message:[START SERVICE]PasswordHistorySharedService.findLatest
+     date:2016-08-18 13:45:42   thread:tomcat-http--7   USER:demo   X-Track:f514cc4159324ba28d8393f2c3062d89    level:INFO  logger:o.t.s.d.c.i.ServiceCallLoggingInterceptor        message:[COMPLETE SERVICE]PasswordHistorySharedService.findLatest
+     date:2016-08-18 13:45:42   thread:tomcat-http--7   USER:demo   X-Track:f514cc4159324ba28d8393f2c3062d89    level:INFO  logger:o.t.s.d.c.i.ServiceCallLoggingInterceptor        message:[COMPLETE SERVICE]AccountSharedService.isInitialPassword
+
+  例外発生時のログは以下のようになる。ログイン前に行われた処理に対するログであるため、ユーザ名が表示されていない。
+
+  .. code-block:: console
+
+     date:2016-08-18 13:52:32   thread:tomcat-http--10  USER:   X-Track:1a37a9a280014216a300b61e2f4bbb66    level:INFO  logger:o.t.s.d.c.i.ServiceCallLoggingInterceptor        message:[SERVICE THROWS EXCEPTION]AccountSharedService.findOne
+     date:2016-08-18 13:52:32   thread:tomcat-http--10  USER:   X-Track:1a37a9a280014216a300b61e2f4bbb66    level:INFO  logger:o.t.s.d.c.i.ServiceCallLoggingInterceptor        message:[SERVICE THROWS EXCEPTION]UserDetailsService.loadUserByUsername
+     date:2016-08-18 13:52:32   thread:tomcat-http--10  USER:   X-Track:1a37a9a280014216a300b61e2f4bbb66    level:INFO  logger:o.t.s.d.c.i.ServiceCallLoggingInterceptor        message:user not found
 
 おわりに
 ================================================================================
@@ -4506,7 +5718,7 @@ Overview
 .. list-table::
    :header-rows: 1
    :widths: 10 90
-  
+
    * - 項番
      - 説明
    * - | (1)
@@ -4603,7 +5815,7 @@ How to use
      - 説明
    * - | (1)
      - | パスワードに含まれるべき文字種別と、その文字種別の最低文字数を規定するための検証規則のBean定義
-   * - | (2) 
+   * - | (2)
      - | 文字種別を指定する。ここでは、\ ``org.passay.EnglishCharacterData.UpperCase`` \を渡しているため、半角英大文字に関する検証規則となる。
    * - | (3)
      - | 文字数を指定する。ここでは"1"を渡しているため、半角英大文字を一文字以上含むことをチェックする検証規則となる。
@@ -4623,7 +5835,7 @@ How to use
 
    // omitted
 
-   public void validatePassword(String password){
+   public void validatePassword(String password) {
 
        PasswordData pd = new PasswordData(password); // (1)
        RuleResult result = characterPasswordValidator.validate(pd); // (2)
@@ -4647,7 +5859,7 @@ How to use
      - 説明
    * - | (1)
      - | 検証対象のパスワードを \ ``PasswordData`` \ のコンストラクタに渡し、インスタンスを作成する。
-   * - | (2) 
+   * - | (2)
      - | \ ``PasswordValidator`` \ の \ ``validate`` \ メソッドに \ ``PasswordData`` \を引数として渡し、パスワード入力チェックを実行する。
    * - | (3)
      - | \ ``RuleResult`` \ の \ ``isValid`` \ メソッドを使用して、パスワード入力チェックの結果を真理値で取得する。
@@ -4710,7 +5922,7 @@ How to use
      - 説明
    * - | (1)
      - | パスワードに含まれるべき文字種別と、その文字種別の最低文字数を規定するための検証規則のBean定義
-   * - | (2) 
+   * - | (2)
      - | 文字種別を指定する。ここでは、\ ``org.passay.EnglishCharacterData.UpperCase`` \を渡しているため、半角英大文字に関する検証規則となる。
    * - | (3)
      - | 文字数を指定する。ここでは"1"を渡しているため、半角英大文字を一文字以上含むことをチェックする検証規則となる。
@@ -4735,7 +5947,7 @@ How to use
 
    // omitted
 
-   public void generatePassword(){
+   public void generatePassword() {
 
        String password = passwordGenerator.generatePassword(10, passwordGenerationRules); // (1)
 
@@ -4752,7 +5964,7 @@ How to use
      - | \ ``PasswordGenerator`` \の\ ``generatePassword`` \メソッドに、生成するパスワードの長さと生成規則を引数として渡すと、生成規則を満たしたパスワードが生成される。
 
 .. tip::
-     
+
    Bean定義したコレクションをDIする際には、\ ``@Inject`` \ + \ ``@Named`` \では期待した動作をしない。
    そのため、代わりに\ ``@Resource`` \を使用してBean名でDIする。
 

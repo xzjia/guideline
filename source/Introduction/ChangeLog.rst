@@ -80,6 +80,14 @@
       
         * \ `CVE-2016-3092 <https://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2016-3092>`_\ (File Uploadの脆弱性)に関する注意喚起を追加(\ `guideline#1973 <https://github.com/terasolunaorg/guideline/issues/1973>`_\ )
 
+    * -
+      - :doc:`../Security/SecureLoginDemo`
+      - 記載内容の追加
+
+        * 「セキュリティ観点での入力値チェック」を追加
+        * 「監査ログ出力」を追加
+
+
     * - 2016-07-26
       - :doc:`../ArchitectureInDetail/WebApplicationDetail/FileUpload`
       - 記載内容の追加
