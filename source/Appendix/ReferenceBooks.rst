@@ -34,7 +34,7 @@
    * - `Spring3入門―Javaフレームワーク・より良い設計とアーキテクチャ <http://gihyo.jp/book/2012/978-4-7741-5380-3>`_
      - 技術評論社
      - 日本語
-   * - `Beginning Java EE 6 GlassFish 3で始めるエンタープライズJava <http://books.shoeisha.co.jp/book/b92647.html>`_
+   * - `Beginning Java EE 6 GlassFish 3で始めるエンタープライズJava <http://www.shoeisha.co.jp/book/detail/9784798124605>`_
      - 翔泳社
      - 日本語
    * - Seasar2とHibernateで学ぶデータベースアクセス JPA入門
