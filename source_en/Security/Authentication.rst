@@ -395,8 +395,6 @@ to control the response when the authentication fails.
       - | Implementation class which can map authentication exception and \ ``AuthenticationFailureHandler``\ . 
         | Although it resembles \ ``ExceptionMappingAuthenticationFailureHandler``\ , a flexible behaviour can be supported by specifying \ ``AuthenticationFailureHandler``\  for each authentication exception.
 
-.. _SpringSecurityAuthenticationScreenFlowOnFailureDefaultBehavior: 
-
 Default operation
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 
