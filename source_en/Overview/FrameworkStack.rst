@@ -28,13 +28,13 @@ DI Container
 Spring Framework is used as DI Container.
 
 
-* `Spring Framework 3.2 <http://docs.spring.io/spring/docs/3.2.x/spring-framework-reference/html/beans.html>`_
+* `Spring Framework 3.2 <http://docs.spring.io/spring/docs/3.2.17.RELEASE/spring-framework-reference/html/beans.html>`_
 
 MVC Framework
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 Spring MVC is used as Web MVC Framework.
 
-* `Spring MVC 3.2 <http://docs.spring.io/spring/docs/3.2.x/spring-framework-reference/html/mvc.html>`_
+* `Spring MVC 3.2 <http://docs.spring.io/spring/docs/3.2.17.RELEASE/spring-framework-reference/html/mvc.html>`_
 
 O/R Mapper
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
@@ -86,7 +86,7 @@ Validation
 
   * For implementation, \ `Hibernate Validator 4.3 <http://docs.jboss.org/hibernate/validator/4.3/reference/en-US/html/>`_\ is used.
 
-* For correlated items check, \ `BeanValidation <http://download.oracle.com/otn-pub/jcp/bean_validation-1.0-fr-oth-JSpec/bean_validation-1_0-final-spec.pdf>`_\  or \ `Spring Validation <http://docs.spring.io/spring/docs/3.2.x/spring-framework-reference/html/validation.html>`_
+* For correlated items check, \ `BeanValidation <http://download.oracle.com/otn-pub/jcp/bean_validation-1.0-fr-oth-JSpec/bean_validation-1_0-final-spec.pdf>`_\  or \ `Spring Validation <http://docs.spring.io/spring/docs/3.2.17.RELEASE/spring-framework-reference/html/validation.html>`_
 
   * Refer to \ :doc:`../ArchitectureInDetail/Validation`\  for determining which of the two is to be used in which sitation. 
 

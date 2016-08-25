@@ -167,7 +167,7 @@ spring-security.xml settings
       .. note::
           For the Spring EL expressions enabled by use-expressions="true", please refer the following.
 
-          \ `Expression-Based Access Control <http://static.springsource.org/spring-security/site/docs/3.1.x/reference/el-access.html>`_\
+          \ `Expression-Based Access Control <http://static.springsource.org/spring-security/site/docs/3.1.4.RELEASE/reference/el-access.html>`_\
 
 
 .. raw:: latex
