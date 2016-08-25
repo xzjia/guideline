@@ -2051,6 +2051,7 @@ SystemExceptionResolverの設定項目について
     * - | (2)
       - | SystemExceptionResolverに設定した値(exceptionForExceptionResolver)を、例外オブジェクトからメッセージを取得するための変数名として、指定する。
 
+.. _exception-handling-http-response-cache:
 
 HTTPレスポンスのキャッシュ制御有無
 '''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''

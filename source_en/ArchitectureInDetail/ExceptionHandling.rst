@@ -2047,6 +2047,7 @@ Attribute name of exception object
     * - | (2)
       - | Specify the value (exceptionForExceptionResolver) set in SystemExceptionResolver as a variable name for fetching message from exception object.
 
+.. _exception-handling-http-response-cache:
 
 Cache control flag of HTTP response
 '''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''
