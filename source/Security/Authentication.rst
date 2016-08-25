@@ -398,8 +398,6 @@ Spring Securityは、認証失敗時のレスポンスを制御するための�
       - | 認証例外と\ ``AuthenticationFailureHandler``\ をマッピングすることができる実装クラス。 
         | \ ``ExceptionMappingAuthenticationFailureHandler``\ と似ているが、認証例外毎に\ ``AuthenticationFailureHandler``\ を指定できるので、より柔軟な振る舞いをサポートすることができる。
 
-.. _SpringSecurityAuthenticationScreenFlowOnFailureDefaultBehavior:
-
 デフォルトの動作
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 
