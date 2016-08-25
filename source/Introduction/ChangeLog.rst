@@ -34,10 +34,15 @@
 
         * 更新内容の詳細は、\ `Check Version  #2076 <https://github.com/terasolunaorg/guideline/issues/2076>`_\ を参照されたい。
 
+        記載内容の改善
+
+        * 共通ライブラリのpomの依存性について追加 (\ `guideline#1982 <https://github.com/terasolunaorg/guideline/issues/1982>`_\ )
+
     * -
       - :doc:`../Overview/FrameworkStack`
       - 記載内容の追加
 
+        * ブランクプロジェクトの共通ライブラリ標準の組込状況を追加(\ `guideline#1700 <https://github.com/terasolunaorg/guideline/issues/1700>`_\ )
         * 利用するOSSのバージョンにmybatis-typehandlers-jsr310 、jackson-datatype-jsr310を追加 (\ `guideline#1966 <https://github.com/terasolunaorg/guideline/issues/1966>`_\ )
         * spring-jmsおよびその依存ライブラリをOSSスタックに追加 (\ `guideline#1992 <https://github.com/terasolunaorg/guideline/issues/1992>`_\ )
 
@@ -50,16 +55,27 @@
         Spring IO Platformのバージョン更新に伴い利用するOSSのバージョンを更新
 
     * -
+      - :doc:`../ImplementationAtEachLayer/DomainLayer`
+      - 記載内容の追加
+
+        * MyBatis 3.3 + MyBatis-Spring 1.2 だと、 @Transactinal  の  timeout  属性に指定した値は使用されない旨を追加(\ `guideline#1777 <https://github.com/terasolunaorg/guideline/issues/1777>`_\ )
+
+    * -
       - :doc:`../ImplementationAtEachLayer/ApplicationLayer`
       - 記載内容の追加
 
+        * HttpSessionは他で代替できる場合は極力使用しないことを推奨する旨を追加(\ `guideline#1313 <https://github.com/terasolunaorg/guideline/issues/1313>`_\ )
         * JSR-310 Date and Time APIを使用する際の注意点を記載 (\ `guideline#1991 <https://github.com/terasolunaorg/guideline/issues/1991>`_\ )
 
     * -
       - :doc:`../ArchitectureInDetail/WebApplicationDetail/Validation`
       - 記載内容の改善
 
+        * MessageSourceと連携し、日本語メッセージをNative to Asciiせずに直接扱う方法を追加(\ `guideline#994 <https://github.com/terasolunaorg/guideline/issues/994>`_\ )
+        * cross-field validationについて追加(\ `guideline#1561 <https://github.com/terasolunaorg/guideline/issues/1561>`_\ )
+        * @DateTimeFormat  の説明を追加(\ `guideline#1873 <https://github.com/terasolunaorg/guideline/issues/1873>`_\ )
         * ValidationMessages.propertiesについての説明を修正 (\ `guideline#1948 <https://github.com/terasolunaorg/guideline/issues/1948>`_\ )
+        * Method Validationを利用した入力チェックの注意事項を追加(\ `guideline#1998 <https://github.com/terasolunaorg/guideline/issues/1998>`_\ )
 
         記載内容の追加
 
@@ -85,6 +101,12 @@
           当該APIの非推奨化がなされた。非推奨化にあわせて該当機能の利用方法の記述を削除した。 
 
     * -
+      - :doc:`../ArchitectureInDetail/WebApplicationDetail/Internationalization`
+      - 記載内容の改善
+
+        *   リクエストパラメータ(デフォルトのパラメータ名)の説明の位置を修正(\ `guideline#1354 <https://github.com/terasolunaorg/guideline/issues/1354>`_\ )
+
+    * -
       - :doc:`../ArchitectureInDetail/WebApplicationDetail/FileUpload`
       - 記載内容の追加
 
@@ -100,9 +122,17 @@
         * JSONでJSR-310 Date and Time APIを使う場合の設定を記載 (\ `guideline#1966 <https://github.com/terasolunaorg/guideline/issues/1966>`_\ )
 
     * -
+      - :doc:`../ArchitectureInDetail/WebServiceDetail/RestClient`
+      - 記載内容の改善
+
+        * RestClientにおけるHTTP Proxyサーバの設定を追加(\ `guideline#1856 <https://github.com/terasolunaorg/guideline/issues/1856>`_\ )
+
+    * -
       - :doc:`../ArchitectureInDetail/WebServiceDetail/SOAP`
       - 記載内容の追加
 
+        * 接続先サーバの起動状態を考慮しない設定方法をオプションとして追加(\ `guideline#1871 <https://github.com/terasolunaorg/guideline/issues/1871>`_\ )
+        * SOAPクライアントのenvプロジェクトに関する説明の修正(\ `guideline#1901 <https://github.com/terasolunaorg/guideline/issues/1901>`_\ )
         * Webサービス例外発生時のステータスコード取得方法について追加(\ `guideline#2007 <https://github.com/terasolunaorg/guideline/issues/2007>`_\ )
 
     * -
@@ -136,6 +166,8 @@
       - :doc:`../ArchitectureInDetail/GeneralFuncDetail/StringProcessing`
       - 記載内容の追加
 
+        * 一部共通ライブラリにpomに設定するdependencyの設定例を追加(\ `guideline#1699 <https://github.com/terasolunaorg/guideline/issues/1699>`_\ )
+        * @Size アノテーションの説明にサロゲートペアについての注意を追加(\ `guideline#1874 <https://github.com/terasolunaorg/guideline/issues/1874>`_\ )
         * JIS漢字\ ``U+2014``\(EM DASH)のUCS(Unicode)文字対応について記載を追加(\ `guideline#1914 <https://github.com/terasolunaorg/guideline/issues/1914>`_\ )
 
     * -
@@ -143,6 +175,12 @@
       - 記載内容の追加
 
         * JSR-310 Date and Time APIを使用する際の注意点を記載 (\ `guideline#1966 <https://github.com/terasolunaorg/guideline/issues/1966>`_\ )
+
+    * -
+      - :doc:`../Security/Authentication`
+      - Spring Security 4.0.4対応に伴う修正
+
+        * Spring 4.0.4にて authentication-failure-url の仕様が改善されたことによるコード例の修正とNoteの削除 (\ `guideline#1963 <https://github.com/terasolunaorg/guideline/issues/1963>`_\ )
 
     * -
       - :doc:`../Security/Authorization`
