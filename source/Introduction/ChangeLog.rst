@@ -139,16 +139,9 @@
       - :doc:`../ArchitectureInDetail/DataAccessDetail/DataAccessMyBatis3`
       - 記載内容の追加
 
-    * -
-      - :doc:`../Security/SecureLoginDemo`
-      - 記載内容の追加
-
-        * 「セキュリティ観点での入力値チェック」を追加
-        * 「監査ログ出力」を追加
-
-    * - 2016-07-26
-      - :doc:`../ArchitectureInDetail/WebApplicationDetail/FileUpload`
-      - 記載内容の追加
+        * 暫定的なWARNログ出力回避方法を削除(\ `guideline#1292 <https://github.com/terasolunaorg/guideline/issues/1292>`_\ )
+        * JSR-310 Date and Time APIをMybatis3.3で使用するための設定方法を記載 (\ `guideline#1966 <https://github.com/terasolunaorg/guideline/issues/1966>`_\ )
+        * MyBatisをJava SE 7環境で使用する場合の注意点を記載 (\ `guideline#1966 <https://github.com/terasolunaorg/guideline/issues/1966>`_\ )
 
     * -
       - :doc:`../ArchitectureInDetail/DataAccessDetail/ExclusionControl`
@@ -187,6 +180,13 @@
       - 記載内容の追加
 
         * \ `CVE-2016-5007 Spring Security / MVC Path Matching Inconsistency <https://pivotal.io/security/cve-2016-5007>`_\ の対応方法を追加 (\ `guideline#1976 <https://github.com/terasolunaorg/guideline/issues/1976>`_\ )
+
+    * -
+      - :doc:`../Security/SecureLoginDemo`
+      - 記載内容の追加
+
+        * 「セキュリティ観点での入力値チェック」を追加
+        * 「監査ログ出力」を追加
 
     * -
       - :doc:`../Appendix/ReferenceBooks`
