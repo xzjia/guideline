@@ -9,16 +9,41 @@
     * - 更新日付
       - 更新箇所
       - 更新内容
+
     * - 2016-08-31
-      - :doc:`../ArchitectureInDetail/FileUpload`
-      - 記載内容の追加
-      
-        * \ `CVE-2016-3092 <https://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2016-3092>`_\ (File Uploadの脆弱性)に関する注意喚起を追加(\ `guideline#1973 <https://github.com/terasolunaorg/guideline/issues/1973>`_\ ) 
+      - \-
+      - 1.0.5 RELEASE版公開
+
+        * 更新内容の詳細は、\ `1.0.5のIssue一覧 <https://github.com/terasolunaorg/guideline/issues?utf8=%E2%9C%93&q=label%3A1.0.5%20is%3Aissue%20is%3Aclosed%20>`_\ を参照されたい。
+
+    * -
+      - 全般
+      - 記載内容の改善
+
+        * 改善内容の詳細は、\ `1.0.5のIssue一覧(improvement) <https://github.com/terasolunaorg/guideline/issues?utf8=%E2%9C%93&q=label%3A1.0.5%20label%3Aimprovement%20is%3Aclosed%20>`_\ を参照されたい。
+
+        共通ライブラリのバージョンを1.0.5.RELEASEに更新
+
+        * 更新内容の詳細は、\ `Check Version  #2076 <https://github.com/terasolunaorg/guideline/issues/2076>`_\ を参照されたい。
+
     * -
       - :doc:`../Overview/FrameworkStack`
       - 利用するOSSのバージョンを更新
 
         * GroupId「\ ``org.springframework``\」のバージョンを3.2.14.RELEASEから3.2.17.RELEASEに更新
+
+    * -
+      - :doc:`../ArchitectureInDetail/FileUpload`
+      - 記載内容の追加
+      
+        * \ `CVE-2016-3092 <https://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2016-3092>`_\ (File Uploadの脆弱性)に関する注意喚起を追加(\ `guideline#1973 <https://github.com/terasolunaorg/guideline/issues/1973>`_\ ) 
+
+    * -
+      - :doc:`../Security/Authorization`
+      - 記載内容の追加
+
+        * \ `CVE-2016-5007 Spring Security / MVC Path Matching Inconsistency <https://pivotal.io/security/cve-2016-5007>`_\ の対応方法を追加 (\ `guideline#1976 <https://github.com/terasolunaorg/guideline/issues/1976>`_\ )
+
     * - 2016-02-24
       - \-
       - 1.0.4 RELEASE版公開
