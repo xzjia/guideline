@@ -295,6 +295,8 @@ Defining access policy
 
 How to define an access policy for a Web resource using a bean definition file is explained.
 
+.. _access_policy_designate_web_resource: 
+
 Specifying a Web resource for applying access policy
 ''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''
 

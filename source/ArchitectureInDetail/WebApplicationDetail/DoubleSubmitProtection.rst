@@ -722,6 +722,8 @@ PRG(Post-Redirect-Get)パターンの適用
 
 |
 
+.. _transaction_token_check_attribute:
+
 ``@TransactionTokenCheck``\ アノテーションの属性について
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 
