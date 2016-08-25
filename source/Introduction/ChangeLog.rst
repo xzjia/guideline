@@ -14,6 +14,13 @@
       - 記載内容の追加
       
         * \ `CVE-2016-3092 <https://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2016-3092>`_\ (File Uploadの脆弱性)に関する注意喚起を追加(\ `guideline#1973 <https://github.com/terasolunaorg/guideline/issues/1973>`_\ )
+
+    * -
+      - :doc:`../Security/Authorization`
+      - 記載内容の追加
+
+        * \ `CVE-2016-5007 Spring Security / MVC Path Matching Inconsistency <https://pivotal.io/security/cve-2016-5007>`_\ の対応方法を追加 (\ `guideline#1976 <https://github.com/terasolunaorg/guideline/issues/1976>`_\ )
+
     * - 2016-02-24
       - \-
       - 5.0.2 RELEASE版公開
