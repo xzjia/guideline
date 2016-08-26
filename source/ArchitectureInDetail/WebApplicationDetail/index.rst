@@ -19,6 +19,7 @@ Webアプリ開発機能
    TilesLayout
    TagLibAndELFunctions
    Ajax
+   HealthCheck
 
 .. raw:: latex
 

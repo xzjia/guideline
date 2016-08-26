@@ -114,6 +114,12 @@
         * ディレクトリトラバーサル攻撃に関する記載を追加 (\ `guideline#2010 <https://github.com/terasolunaorg/guideline/issues/2010>`_\ )
 
     * -
+      - :doc:`../ArchitectureInDetail/WebApplicationDetail/HealthCheck`
+      - 新規追加
+
+        * ヘルスチェックを追加(\ `guideline#1698 <https://github.com/terasolunaorg/guideline/issues/1698>`_\ )
+
+    * -
       - :doc:`../ArchitectureInDetail/WebServiceDetail/REST`
       - 記載内容の変更、追加
 
