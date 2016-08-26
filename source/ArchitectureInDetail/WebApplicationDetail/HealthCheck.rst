@@ -283,7 +283,7 @@ Controllerクラス
     * - | (1)
       - | \ ``value``\属性は、稼動状態を調べるためのヘルスチェック用のURLとなる。
     * - | (2)
-      - | Apache Tilesの設定を受けないようにするため、JSPファイルを配置するディレクトリを1階層深くしている。詳細は、\ :ref:`HealthCheckAppendix`\を参照されたい。
+      - | Apache Tilesの設定を受けないようにするため、JSPファイルを配置するディレクトリを1階層深くしている。詳細は、\ :ref:`HealthCheckAppendixAppatchTiles`\を参照されたい。
 
 .. _HealthCheckHowToUseJsp:
 
@@ -300,7 +300,7 @@ JSPファイル
 
    <%@page contentType="text/plain; charset=utf-8" language="java" pageEncoding="utf-8" %>OK.
 
-| レスポンスのデータ量を最低限にするにあたり、他にも注意するべき点が存在する。詳細は\ :ref:`HealthCheckAppendix`\を参照されたい。
+| レスポンスのデータ量を最低限にするにあたり、他にも注意するべき点が存在する。詳細は\ :ref:`HealthCheckAppendixMinResponce`\を参照されたい。
 
 .. _HealthCheckHowToUseSecurity:
 
@@ -310,7 +310,7 @@ JSPファイル
 | ヘルスチェック処理を使用する際は、認証・認可機能などによりヘルスチェック用のURLがアクセス不可にならないように注意する必要がある。
 | 例えば、どのロールでもアクセスできるようにするには、spring-security.xmlの\ ``<sec:intercept-url>``\を設定する。
 | \ ``/common/healthcheck``\ 配下の除外設定を行う例を以下に示す。
-| 詳細は\ :doc:`../../../Security/index`\を参照されたい。
+| 詳細は\ :doc:`../../../Security/Authorization`\を参照されたい。
 
 **spring-security.xml**
 
