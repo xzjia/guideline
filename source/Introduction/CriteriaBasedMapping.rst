@@ -25,11 +25,21 @@
        (クエリにパラメータを埋め込む場合は、バインド変数を使用する旨を記載)
    * - A1
      - `Injection <https://www.owasp.org/index.php/Top_10_2013-A1-Injection>`_ XXE(XML External Entity) Injection
-     - * \ :doc:`../ArchitectureInDetail/WebApplicationDetail/Ajax`\ 
+     - * \ :doc:`../ArchitectureInDetail/WebApplicationDetail/Ajax`\
+   * - A1
+     - `Injection <https://www.owasp.org/index.php/Top_10_2013-A1-Injection>`_ OS Command Injection
+     - * \ :doc:`../ArchitectureInDetail/WebApplicationDetail/Validation`\
+   * - A1
+     - `Injection <https://www.owasp.org/index.php/Top_10_2013-A1-Injection>`_ Directory Traversal
+     - * \ :doc:`../ArchitectureInDetail/WebApplicationDetail/FileUpload`\
+   * - A1
+     - `Injection <https://www.owasp.org/index.php/Top_10_2013-A1-Injection>`_
+     - * \ :doc:`../Security/SecureLoginDemo`\
+
+       (外部からの入力全般に対する入力チェック方法を記載)
    * - A2
      - `Broken Authentication and Session Management <https://www.owasp.org/index.php/Top_10_2013-A2-Broken_Authentication_and_Session_Management>`_
      - * \ :doc:`../Security/Authentication`\ 
-     
    * - A3
      - `Cross-Site Scripting (XSS) <https://www.owasp.org/index.php/Top_10_2013-A3-Cross-Site_Scripting_(XSS)>`_
      - * \ :doc:`../Security/XSS`\ 
@@ -55,7 +65,7 @@
      - 特に言及なし
    * - A10
      - `Unvalidated Redirects and Forwards <https://www.owasp.org/index.php/Top_10_2013-A10-Unvalidated_Redirects_and_Forwards>`_
-     - * \ :doc:`../Security/Authentication`\ (オープンリダイレクタ脆弱性対策について言及)
+     - 特に言及なし
 
 .. raw:: latex
 
