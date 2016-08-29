@@ -740,17 +740,24 @@ How to use
             \ `JMS (Java Message Service)のIntroduction <http://docs.spring.io/spring/docs/4.2.7.RELEASE/javadoc-api/org/springframework/jms/core/JmsTemplate.html>`_\ で触れられているように、Spring Frameworkでは検査例外を非検査例外に変換している。
             そのため、業務ロジック内でJMSの例外をハンドリングする場合は、非検査例外を扱う必要がある。
 
-             .. tabularcolumns:: |p{0.20\linewidth}|p{0.80\linewidth}|
+             .. tabularcolumns:: |p{0.20\linewidth}|p{0.60\linewidth}|p{0.20\linewidth}|
              .. list-table::
                 :header-rows: 1
-                :widths: 20 80
+                :widths: 20 60 20
 
                 * - Templateクラス
                   - 例外の変換を行うメソッド
+                  - 変換後の例外
                 * - | \ ``JmsMessagingTemplate``\ 
                   - | \ ``JmsMessagingTemplate``\ の\ ``convertJmsException``\ メソッド
+                  - | \ ``MessagingException``\ (\*1)及びそのサブ例外
                 * - | \ ``JmsTemplate``\ 
                   - | \ ``JmsAccessor``\ の\ ``convertJmsAccessException``\ メソッド
+                  - | \ ``JmsException``\ (\*2)及びそのサブ例外
+
+            (\*1) \ ``org.springframework.messaging.MessagingException``\ 
+
+            (\*2) \ ``org.springframework.jms.JmsException``\ 
 
 |
 
