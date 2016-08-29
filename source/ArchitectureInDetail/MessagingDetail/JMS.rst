@@ -2279,24 +2279,6 @@ DBのトランザクション管理を行う必要があるアプリケーショ
         | \ ``receiveAndConvert``\ メソッドは、第2引数に変換先のクラスを指定することで型変換したクラスが取得できる。
         | ヘッダ項目を参照する場合は\ ``receive``\ メソッドを使用することにより、Spring Frameworkの\ ``Message``\ オブジェクトで取得することができる。
 
-         .. note:: **業務ロジック内でJMSの例外ハンドリング**
-            
-            \ `JMS (Java Message Service)のIntroduction <http://docs.spring.io/spring/docs/4.2.7.RELEASE/javadoc-api/org/springframework/jms/core/JmsTemplate.html>`_\ で触れられているように、Spring Frameworkでは検査例外を非検査例外に変換している。
-            そのため、業務ロジック内でJMSの例外をハンドリングする場合は、非検査例外を扱う必要がある。
-
-             .. tabularcolumns:: |p{0.20\linewidth}|p{0.80\linewidth}|
-             .. list-table::
-                :header-rows: 1
-                :widths: 20 80
-
-                * - Templateクラス
-                  - 例外の変換を行うメソッド
-                * - | \ ``JmsMessagingTemplate``\ 
-                  - | \ ``JmsMessagingTemplate``\ の\ ``convertJmsException``\ メソッド
-                * - | \ ``JmsTemplate``\ 
-                  - | \ ``JmsAccessor``\ の\ ``convertJmsAccessException``\ メソッド
-
-
 |
 
 Appendix
