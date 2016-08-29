@@ -100,7 +100,7 @@ Overview
  .. note::
 
      ログにIDを含めることにより、ログの可読性が高まるため、システム運用時は、故障解析の一次切り分けの短時間化につながる。
-     ログIDの体系は、\ :doc:`../WebApplicationDetail/MessageManagement`\ を参考にすると良い。
+     ログIDの体系は、\ 
      ただし、すべてのログにIDを付与する必要はなく、debug時には、IDは不要である。運用時に、素早く切り分け可能になることを推奨する。
 
      障害発生時に、ログID(またはメッセージID)を、エラー画面に表示して、システム利用者に通知し、
@@ -109,7 +109,7 @@ Overview
      ただし、障害の内容までエラーが画面に表示してしまうと、システムの脆弱性を晒してしまう可能性があるため、注意すること。
 
      例外が発生した際に、ログや画面にメッセージID(例外コード)を含めるための仕組み(コンポーネント)を共通ライブラリから提供している。
-     詳細については、「:doc:`../WebApplicationDetail/ExceptionHandling`」を参照されたい。
+     詳細については、「
 
 2. | トレーサビリティ
    | トレーサビリティ向上のために、各ログにリクエスト単位で、一意となるようなTrack ID(以降X-Trackと呼ぶ)を出力させることを推奨する。
@@ -169,14 +169,14 @@ Overview
        | 通常は、AOPで実装する。
        |
        | 共通ライブラリでは、業務処理実行時に\ `org.terasoluna.gfw.common.exception.BusinessException`\ がスローされた場合に、WARNログを出力する\ ``org.terasoluna.gfw.common.exception.ResultMessagesLoggingInterceptor``\ を提供している。
-       | 詳細は  :doc:`../WebApplicationDetail/ExceptionHandling` を参照。
+       | 詳細は  
    * - | システムエラーログ
      - | システム例外や、予期せぬ例外が発生した際に、ERRORログを出力する。
        | 通常は、AOPやサーブレットフィルタ等で実装する。
        |
        | 共通ライブラリでは、\ ``org.terasoluna.gfw.web.exception.HandlerExceptionResolverLoggingInterceptor``\ や、
        | \ ``org.terasoluna.gfw.web.exception.ExceptionLoggingFilter``\ を提供している。
-       | 詳細は、\ :doc:`../WebApplicationDetail/ExceptionHandling` \ を参照されたい。
+       | 詳細は、\ 
    * - 監視ログ
      - 業務エラーログ、システムエラーログの出力タイミングと同様である。
 
@@ -341,7 +341,7 @@ logback.xml
    * - | (9)
      - | ロガー名は、com.example.sample以下のロガーが、debugレベル以上のログを出力するように設定する。
    * - | (10)
-     - | 監視ログの設定を行う。\ :doc:`../WebApplicationDetail/ExceptionHandling`\ の\ :ref:`exception-handling-how-to-use-application-configuration-common-label`\ を参照されたい。
+     - | 監視ログの設定を行う。\ 
 
        .. warning:: **additivityの設定値について**
 
@@ -762,7 +762,7 @@ How to extend
    * - | (4)
      - | プロパティファイルをパースする際に使用する文字コードを設定する。
        | 本実装ではプロパティファイルはUTF-8エンコードとしたのでUTF-8を指定する。
-       | 詳細は、\ :doc:`../../ArchitectureInDetail/WebApplicationDetail/MessageManagement`\ の\ :ref:`properties-display`\ を参照されたい。
+       | 詳細は、\ 
    * - | (5)
      - | 国際化を考慮し\ ``setBasenames``\ メソッドを使用してプロパティファイルを指定する。
        | \ ``setBasenames``\ の詳細は\ `ReloadableResourceBundleMessageSourceクラスのsetBasenamesのJavaDoc <http://docs.spring.io/spring/docs/4.2.7.RELEASE/javadoc-api/org/springframework/context/support/ReloadableResourceBundleMessageSource.html#setBasenames-java.lang.String...->`_\を参照されたい。
@@ -1356,7 +1356,7 @@ ExceptionLogger
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 例外発生時のロガーとして、\ ``org.terasoluna.gfw.common.exception.ExceptionLogger``\ が提供されている。
 
-使用方法は、"\ :doc:`../WebApplicationDetail/ExceptionHandling`\ "の"\ :ref:`exception-handling-how-to-use-label`\ "を参照されたい。
+使用方法は、"\ 
 
 .. raw:: latex
 

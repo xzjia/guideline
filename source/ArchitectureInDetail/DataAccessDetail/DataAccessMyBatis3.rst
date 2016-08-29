@@ -1111,7 +1111,7 @@ MyBatis3でJSR-310 Date and Time APIから提供されている日付や時刻�
 
 * 容量の大きいファイルデータ(バイナリデータ)を\ ``java.io.InputStream`` \型で保持し、JDBC型の\ ``BLOB`` \型にマッピングする
 * 容量の大きいテキストデータを\ ``java.io.Reader`` \型として保持し、JDBC型の\ ``CLOB`` \型にマッピングする
-* 本ガイドラインで利用を推奨している「:doc:`../GeneralFuncDetail/JodaTime`」の\ ``org.joda.time.DateTime`` \型と、JDBC型の\ ``TIMESTAMP`` \型をマッピングする
+* 本ガイドラインで利用を推奨している「
 * etc ...
 
 場合に、\ ``TypeHandler`` \の作成が必要となる。
@@ -3317,7 +3317,7 @@ Entityを1件更新する際の実装例を以下に示す。
      以降の説明では、バージョンカラムを使用して楽観ロックを行う実装例となっているが、
      楽観ロックの必要がない場合は、楽観ロック関連の処理を行う必要はない。
 
-     排他制御の詳細については、「:doc:`ExclusionControl`」を参照されたい。
+     排他制御の詳細については、「
 
 |
 
@@ -3478,7 +3478,7 @@ Entityを1件更新する際の実装例を以下に示す。
       - 更新対象のEntityに対して、更新内容を反映する。
 
         上記例では、「タイトル」「完了フラグ」を反映している。更新項目が少ない場合は上記実装例のままでもよいが、
-        更新項目が多い場合は、「:doc:`../GeneralFuncDetail/Dozer`」を使用することを推奨する。
+        更新項目が多い場合は、「
     * - (6)
       - Repositoryインターフェースのメソッドを呼び出し、Entityを1件更新する。
     * - (7)
@@ -3603,7 +3603,7 @@ JDBCのバッチ更新機能を使用する方法については、「:ref:`Data
       - バージョンカラムを使用して楽観ロックを行う場合は、バージョンカラムを更新する。
 
         更新しないと、楽観ロック制御が正しく動作しなくなる。
-        排他制御の詳細については、「:doc:`ExclusionControl`」を参照されたい。
+        排他制御の詳細については、「
     * - (3)
       - \-
       - WHERE句に複数レコードを更新するための更新条件を指定する。
@@ -3650,7 +3650,7 @@ Entityを1件削除する際の実装例を以下に示す。
      以降の説明では、バージョンカラムを使用した楽観ロックを行う実装例となっているが、
      楽観ロックの必要がない場合は、楽観ロック関連の処理を行う必要はない。
 
-     排他制御の詳細については、「:doc:`ExclusionControl`」を参照されたい。
+     排他制御の詳細については、「
 
 |
 
@@ -4759,8 +4759,8 @@ MyBatis3では、SQLに値を埋め込む仕組みとして、以下の2つの�
         todoRepository.findAllByCriteria(criteria, direction);
 
     上記例では\ ``Map``\を使用しているが、
-    共通ライブラリから提供している「\ :doc:`../WebApplicationDetail/Codelist` \」を使用しても良い。
-    「\ :doc:`../WebApplicationDetail/Codelist` \」を使用すると、入力チェックと連動する事ができるため、
+    共通ライブラリから提供している「\ 
+    「\ 
     より安全に値の埋め込みを行う事ができる。
 
     - :file:`projectName-domain/src/main/resources/META-INF/spring/projectName-codelist.xml`
@@ -7438,7 +7438,7 @@ OrderStatusオブジェクトへのマッピングの実装
     「:ref:`domainlayer_entity`」のEntityクラスの作成方針では、
     「コード系テーブルは、Entityとして扱うのではなく、java.lang.Stringなどの基本型で扱う。」としている。
     これは、コード系テーブルで保持しているデータは、
-    「:doc:`../WebApplicationDetail/Codelist`」などの別の仕組みを使用するケースが多いためである。
+    「
 
     本節では、関連Entity(JavaBean)へのマッピング方法を説明する事が目的なので、
     コード系テーブルもEntityとして扱っている点を補足しておく。

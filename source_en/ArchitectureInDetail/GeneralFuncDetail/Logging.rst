@@ -101,7 +101,7 @@ Output contents of log
  .. note::
 
      The readability of log is enhanced by including an ID in the log thereby reducing the time required for primary isolation of failure analysis.
-     Refer to \ :doc:`../WebApplicationDetail/MessageManagement`\  for log ID structure.
+     Refer to \ 
      However, there is no need to assign an ID to all the logs. ID is not required at the time of debugging. It is recommended when the system is operational so as to isolate the log quickly.
 
      During failure, when a system user is notified by displaying a log ID (or a message ID) on the error screen and the ID is then notified to the call center, for that user,
@@ -110,7 +110,7 @@ Output contents of log
      However, note that the vulnerabilities of the system may be exposed if errors are displayed on the screen along with the failure details.
 
      In common library, the mechanism(component) is provided to include the message ID(exception code) into the log and the screen when an exception is occurred.
-     Details refer to ":doc:`../WebApplicationDetail/ExceptionHandling`".
+     Details refer to "
 
 2. | Traceability
    | To improve the traceability, it is recommended to output a unique track ID (hereafter referred to as X-Track) at request level in each log.
@@ -169,14 +169,14 @@ Log output points
        | It is usually implemented in AOP.
        |
        | In common library, when \ `org.terasoluna.gfw.common.exception.BusinessException`\  is thrown at the time of business process execution, \ ``org.terasoluna.gfw.common.exception.BusinessExceptionLoggingInterceptor``\  that outputs WARN log is provided.
-       | Refer to :doc:`../WebApplicationDetail/ExceptionHandling` for details.
+       | Refer to 
    * - | System error log
      - | An ERROR log is output when system exception or unexpected exception occurs.
        | It is usually implemented in AOP or Servlet filter.
        |
        | In common library, \ ``org.terasoluna.gfw.web.exception.HandlerExceptionResolverLoggingInterceptor``\  and
        | \ ``org.terasoluna.gfw.web.exception.ExceptionLoggingFilter``\  are provided.
-       | Refer to \ :doc:`../WebApplicationDetail/ExceptionHandling` \  for details. 
+       | Refer to \ 
    * - Monitoring log
      - It is output at the same time as business error log and system error log.
 
@@ -341,7 +341,7 @@ logback.xml
    * - | (9)
      - | The logger name is set so that logger under com.example.sample outputs the log above debug level.
    * - | (10)
-     - | A monitoring log is set. Refer to \ :ref:`exception-handling-how-to-use-application-configuration-common-label`\  of \ :doc:`../WebApplicationDetail/ExceptionHandling`\ .
+     - | A monitoring log is set. Refer to \ :ref:`exception-handling-how-to-use-application-configuration-common-label`\  of \ 
 
        .. warning:: **About additivity setting value**
 
@@ -943,7 +943,7 @@ ExceptionLogger
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 ``org.terasoluna.gfw.common.exception.ExceptionLogger``\  is provided as a logger when an exception occurs.
 
-Refer to \ :ref:`exception-handling-how-to-use-label`\  of \ :doc:`../WebApplicationDetail/ExceptionHandling`\  for the usage method.
+Refer to \ :ref:`exception-handling-how-to-use-label`\  of \ 
 
 .. raw:: latex
 

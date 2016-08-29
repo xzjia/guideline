@@ -252,7 +252,7 @@ Spring MVCとTilesの連携
   title.staff.createForm = Create Staff Information
 
  .. note::
-   メッセージプロパティファイルの記載方法については、 :doc:`../WebApplicationDetail/MessageManagement` を参照されたい。
+   メッセージプロパティファイルの記載方法については、 
 
 
 Tilesを設定したときのファイル構成を以下に示す。

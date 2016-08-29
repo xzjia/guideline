@@ -1040,7 +1040,7 @@ Basically, it is necessary to create a TypeHandler in the following cases
 
 * A file data with large capacity (binary data) is retained in \ ``java.io.InputStream`` \  type and mapped in \ ``BLOB`` \  type of JDBC type.
 * A large capacity text data is retained as \ ``java.io.Reader`` \  type and mapped in \ ``CLOB`` \  type of JDBC type.
-* \ ``org.joda.time.DateTime`` \  type of ":doc:`../GeneralFuncDetail/JodaTime`" that is recommended to be used in this guideline is mapped with \ ``TIMESTAMP`` \  type of JDBC type.
+* \ ``org.joda.time.DateTime`` \  type of "
 * etc ...
 
 
@@ -3245,7 +3245,7 @@ Implementation example for updating a single Entity is given below.
      Hereafter, an implementation example is explained wherein optimistic locking is performed by using version column.
      However, process related to optimistic locking need not be performed when optimistic locking is not required.
 
-     Refer to ":doc:`ExclusionControl` for details of exclusive control.
+     Refer to "
 
 |
 
@@ -3406,7 +3406,7 @@ Implementation example for updating a single Entity is given below.
       - Reflect update details for the Entity to be updated.
 
         In the above example, "Title" and "Complete flag" are reflected. When there are few update items, the process can be performed as per the implementation example given above.
-        However, when update items are more in number, it is recommended to use ":doc:`../GeneralFuncDetail/Dozer`".
+        However, when update items are more in number, it is recommended to use "
     * - (6)
       - Call the Repository interface method and update single Entity record.
     * - (7)
@@ -3531,7 +3531,7 @@ How to execute UPDATE statement that concurrently updates multiple records is ex
       - Updates version column when an optimistic locking is applied using a version column.
 
         If the version is not updated, optimistic locking control does not operate properly.
-        Refer to ":doc:`ExclusionControl`" for details of exclusive control.
+        Refer to "
     * - (3)
       - \-
       - Specifies the update conditions for updating multiple records in WHERE clause.
@@ -3578,7 +3578,7 @@ Implementation example for deleting a single Entity is given below.
      Explanation hereafter shows an implementation example wherein an optimistic locking is performed by using version column.
      However, it is not necessary to perform the processes related to optimistic locking when optimistic locking is not required.
 
-     Refer to ":doc:`ExclusionControl`" for details of exclusive control.
+     Refer to "
 
 |
 
@@ -4687,8 +4687,8 @@ How to use a substitution variable is described below.
         todoRepository.findAllByCriteria(criteria, direction);
 
     In the above example, \ ``Map``\  is used.
-    However, "\ :doc:`../WebApplicationDetail/Codelist` \"  provided by common library can also be used.
-    If "\ :doc:`../WebApplicationDetail/Codelist` \" is used, the value entered can be checked.
+    However, "\ 
+    If "\ 
     Hence, the value can be safely embedded.
 
     - :file:`projectName-domain/src/main/resources/META-INF/spring/projectName-codelist.xml`
@@ -7404,7 +7404,7 @@ Perform mapping to \ ``OrderStatus``\  object.
 
     For creating Entity class of ":ref:`domainlayer_entity`",
     "Code table is handled as a basic type of java.lang.String rather than handling as an Entity.".
-    This is because the data stored in the code table uses a different mechanism like ":doc:`../WebApplicationDetail/Codelist`" etc.
+    This is because the data stored in the code table uses a different mechanism like "
 
 
     The purpose of this section is to explain how to map to a related Entity (JavaBean), 

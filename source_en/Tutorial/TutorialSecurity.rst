@@ -19,12 +19,12 @@ Topics covered in this tutorial
 
 Target Audience
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
-* Completed implementation of :doc:`./TutorialTodo`\ (MyBatis3 should be used for implementing infrastructure layer) 
+* Completed implementation of 
 * Understands the basic operations of Maven
 
 Verification environment
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
-* Similar to :doc:`./TutorialTodo`\ . 
+* Similar to 
 
 |
 
@@ -92,7 +92,7 @@ Create \ `A blank project of TERASOLUNA Server Framework for Java (5.x) <https:/
 In this tutorial, a blank project is created for MyBatis3.
 
 Basic knowledge such as how to import to Spring Tool Suite(STS), how to start an application server, etc. is omitted in this tutorial,
-since it is already described in :doc:`./TutorialTodo`.
+since it is already described in 
 
 .. code-block:: console
 

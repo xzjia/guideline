@@ -727,7 +727,7 @@ webプロジェクト内にWebServiceインターフェースの実装クラス�
       - 説明
     * - | (1)
       - | Bean ValidationでJavaBeanの入力チェックを定義する。
-        | 詳細は「\ :doc:`../WebApplicationDetail/Validation`\ 」を参照されたい。
+        | 詳細は「\ 
     * - | (2)
       - | バリデーションのグループ化を行うために使用するインターフェースを定義する。
 
@@ -740,7 +740,7 @@ webプロジェクト内にWebServiceインターフェースの実装クラス�
 
 | SOAPの認証・認可方式に関して、本ガイドラインではSpring SecurityでBasic認証を行う方法とServiceでの認可の方法のみ紹介する。
 | WS-Securityは扱わない。
-| 詳細な利用方法は、「\ :doc:`../../Security/Authentication`\ 」と「\ :doc:`../../Security/Authorization`\ 」を参照されたい。
+| 詳細な利用方法は、「\ 
 
 以下にSOAP Web Serviceに対して、Basic認証を行うSpring Securityの設定例を示す。
 
@@ -776,14 +776,14 @@ webプロジェクト内にWebServiceインターフェースの実装クラス�
     * - | (2)
       - | \ ``authentication-provider``\を利用して、認証方式を定義する。
         | 実際の認証およびユーザ情報取得は\ ``UserDetailsService``\を作成して実施する必要がある。
-        | 詳細は「\ :doc:`../../Security/Authentication`\」を参照されたい。
+        | 詳細は「\ 
 
 |
 
 **認可処理**
 
 | 認可はServiceごとにアノテーションを付けて行う。
-| 詳細は「\ :doc:`../../Security/Authorization`\ 」のアクセス認可(Method)を参照されたい。
+| 詳細は「\ 
 
 *[server projectName]-web/src/main/resources/META-INF/spring/spring-security.xml*
 
@@ -840,7 +840,7 @@ webプロジェクト内にWebServiceインターフェースの実装クラス�
 
 | SOAP Web Serviceはセッションを利用せず、ステートレスな通信にすべきである。
 | そのため、セッションを利用するCSRF対策を行わないようにするための設定方法について以下に記述する。
-| CSRFの詳細は「\ :doc:`../../Security/CSRF`\」を参照されたい。
+| CSRFの詳細は「\ 
 | ブランクプロジェクトのデフォルトの設定では、CSRF対策が有効化されている。
 | そのため、以下の設定を追加し、SOAP Web Serviceのリクエストに対して、CSRF対策の処理が行われないようにする。
 
@@ -1251,10 +1251,10 @@ Serviceからスローされる例外は以下を想定している。必要に�
       - | 出力するメッセージを取得するために\ ``MessageSource``\ を使用する。
     * - | (3)
       - | 共通ライブラリが提供する\ ``ExceptionCodeResolverMessageSource``\ を使用して例外の種類と例外コードをマッピングする。
-        | 詳細は、「\ :doc:`../WebApplicationDetail/ExceptionHandling`\」を参照されたい。
+        | 詳細は、「\ 
     * - | (4)
       - | 共通ライブラリが提供する\ ``ExceptionLogger``\ を使用して例外情報を例外に出力する。
-        | 詳細は、「\ :doc:`../WebApplicationDetail/ExceptionHandling`\ 」を参照されたい。
+        | 詳細は、「\ 
     * - | (5)
       - | Serviceから発生しうる各例外について、\ ``SOAPFault``\へのラップを行う。
         | 例外のマッピングは冒頭の表を参考されたい。
@@ -1866,7 +1866,7 @@ SOAPサーバ用にプロジェクトの設定を変更する
 
 | ブランクプロジェクトの初期状態では、ControllerなどWebアプリケーションの簡易実装が含まれている。
 | そのままにしてもSOAP Web Serviceは実現可能だが、不要であるため、削除することを推奨する。
-| 削除対象は、「:doc:`../../ImplementationAtEachLayer/CreateWebApplicationProject` の :ref:`CreateWebApplicationProjectConfigurationMulti`」を参照されたい。
+| 削除対象は、「
 
 |
 
@@ -2054,7 +2054,7 @@ SOAPサーバのパッケージ構成
         <artifactId>artifactId-model</artifactId>
     </dependency>
 
-その他のパッケージ構成は、通常のdomainプロジェクトと変わらないため、「:doc:`../../Overview/ApplicationLayering` の :ref:`application-layering_project-structure`」を参照されたい。
+その他のパッケージ構成は、通常のdomainプロジェクトと変わらないため、「
 
 |
 
@@ -2157,7 +2157,7 @@ SOAPサーバのパッケージ構成
 [server projectName]-env
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 
-[server projectName]-envについては、通常のenvプロジェクトと変わらないため、「:doc:`../../Overview/ApplicationLayering` の :ref:`application-layering_project-structure`」を参照されたい。
+[server projectName]-envについては、通常のenvプロジェクトと変わらないため、「
 
 |
 
@@ -2273,14 +2273,14 @@ SOAPサーバから提供される[server projectName]-webserviceの依存関係
 
     [server projectName]-webと同様に、この\ ``pom.xml``\ には、[server projectName]-modelの依存関係の定義は不要である。これは[server projectName]-webserviceから[server projectName]-modelへの依存関係が定義されているため、推移的に依存関係が追加されるためである。
 
-その他のパッケージ構成は、通常のdomainプロジェクトと変わらないため、「:doc:`../../Overview/ApplicationLayering` の :ref:`application-layering_project-structure`」を参照されたい。
+その他のパッケージ構成は、通常のdomainプロジェクトと変わらないため、「
 
 |
 
 [client projectName]-web
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 
-[client projectName]-webについては、通常のwebプロジェクトと変わらないため、「:doc:`../../Overview/ApplicationLayering` の :ref:`application-layering_project-structure`」を参照されたい。
+[client projectName]-webについては、通常のwebプロジェクトと変わらないため、「
   
   
 

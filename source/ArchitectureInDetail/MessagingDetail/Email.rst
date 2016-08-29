@@ -275,7 +275,7 @@ JNDI経由で取得したメールセッションをBeanとして登録するた
 
 .. note::
 
-   プロパティファイルについての詳細は、:doc:`../GeneralFuncDetail/PropertyManagement` を参照されたい。
+   プロパティファイルについての詳細は、
 
 
 アプリケーションサーバ提供のメールセッションを使用しない場合（認証あり）
@@ -317,7 +317,7 @@ JNDI経由で取得したメールセッションをBeanとして登録するた
 
 .. note::
 
-   プロパティファイルについての詳細は、:doc:`../GeneralFuncDetail/PropertyManagement` を参照されたい。
+   プロパティファイルについての詳細は、
 
 .. tip::
 
@@ -779,7 +779,7 @@ HTMLメールの送信
 
 .. note::
 
-   特定の例外に対するエラー画面遷移については、 :doc:`../WebApplicationDetail/ExceptionHandling` を参照されたい。
+   特定の例外に対するエラー画面遷移については、 
 
 |
 

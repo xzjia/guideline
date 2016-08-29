@@ -106,7 +106,7 @@ terasoluna-gfw-jodatime
 
 .. note::
 
-    Joda Timeについては、 :doc:`./JodaTime` を参照されたい。
+    Joda Timeについては、 
 
 |
 
@@ -367,7 +367,7 @@ DBから取得した固定の時刻を返却する
     18. SELECT now FROM system_date {executed in 0 msec}
 
 Date Factoryのメソッドを呼び出すと、DBへのアクセスログが出力される。
-SQLログを出力するために、 :doc:`../DataAccessDetail/DataAccessCommon` で説明した\ ``Log4jdbcProxyDataSource``\ を使用している。
+SQLログを出力するために、 
 
 |
 
@@ -772,7 +772,7 @@ Unit Testでは、時刻を登録してその時刻が想定通りに更新さ�
    * - 項番
      - 説明
    * - | (1)
-     - | 現在日時を取得する。``LocalDate`` については :doc:`./JodaTime` を参照されたい。
+     - | 現在日時を取得する。``LocalDate`` については 
    * - | (2)
      - | 対象のツアーのキャンセル期限日を計算する。
    * - | (3)

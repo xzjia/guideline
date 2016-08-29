@@ -625,8 +625,8 @@ Process flow when using pagination functionality of Spring Data and JSP tag libr
 
    For implementation example refer to:
 
-   * :doc:`../DataAccessDetail/DataAccessMyBatis3`
-   * :doc:`../DataAccessDetail/DataAccessJpa`
+   * 
+   * 
 
 
 |

@@ -35,7 +35,7 @@ The image of switching locale is as follows:
 
 .. note::
 
-    For internationalization of Codelist, refer to :doc:`../WebApplicationDetail/Codelist`.
+    For internationalization of Codelist, refer to 
 
 .. note::
 
@@ -87,7 +87,7 @@ The information here explains an example of using the \ ``ResourceBundleMessageS
       - | Specify \ ``i18n/application-messages``\  as base name of properties file.
         | It is recommended to store message properties file under i18n directory to support internationalization.
         |
-        | For MessageSource details and definition methods, refer to :doc:`../WebApplicationDetail/MessageManagement`.
+        | For MessageSource details and definition methods, refer to 
 
 
 |
@@ -124,7 +124,7 @@ When creating property files as above, it is determined which to use the file as
 
 .. tip::
 
-   For description of message properties file, refer to :doc:`../WebApplicationDetail/MessageManagement`.
+   For description of message properties file, refer to 
 
 |
 

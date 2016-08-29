@@ -220,12 +220,12 @@ Maven Archetypeで作成したプロジェクトには、アプリケーショ�
 
     上記以外のカスタマイズポイントとしては、
 
-    * :doc:`../Security/Authentication`・:doc:`../Security/Authorization` の設定
-    * :doc:`../ArchitectureInDetail/WebApplicationDetail/FileUpload` を有効化するための設定
-    * :doc:`../ArchitectureInDetail/WebApplicationDetail/Internationalization` を有効化するための設定
-    * :doc:`../ArchitectureInDetail/GeneralFuncDetail/Logging` の定義
-    * :doc:`../ArchitectureInDetail/WebApplicationDetail/ExceptionHandling` の定義
-    * :doc:`../ArchitectureInDetail/WebServiceDetail/REST` 向けの設定の適用
+    * 
+    * 
+    * 
+    * 
+    * 
+    * 
 
     などがある。
 
@@ -343,7 +343,7 @@ Maven Archetypeで作成したプロジェクトでは、\ ``x.xx.fw.9999``\ 形
 |
 
 \ ``x.xx.fw.9999``\ 形式のメッセージIDは、
-本ガイドラインの「:doc:`../ArchitectureInDetail/WebApplicationDetail/MessageManagement`」で紹介しているメッセージID体系であるが、
+本ガイドラインの「
 プロジェクト区分の値が暫定値「\ ``xx``\ 」の状態になっている。
 
 .. note::
@@ -493,7 +493,7 @@ Maven Archetypeで作成したプロジェクトでは、エラーの種類毎�
         ``artifactId/artifactId-web/src/main/webapp/WEB-INF/views/common/error/*.jsp``
       - アプリケーション要件(UI規約など)に合わせて修正する。
 
-        エラー画面を表示するJSPをカスタマイズする際は、「:doc:`../ArchitectureInDetail/WebApplicationDetail/ExceptionHandling` の :ref:`exception-handling-how-to-use-codingpoint-jsp-label`」を参照されたい。
+        エラー画面を表示するJSPをカスタマイズする際は、「
     * - 2.
       - エラー画面用のHTML
 
@@ -669,7 +669,7 @@ Maven Archetypeで作成したプロジェクトでは、インメモリデー�
     開発環境ではApache Commons DBCPのデータソースを使用して、
     テスト環境及び商用環境ではアプリケーションサーバから提供されているデータソースを使用するといった使い分けを行うケースもある。
 
-    データソースの設定方法については、「:doc:`../ArchitectureInDetail/DataAccessDetail/DataAccessCommon` の :ref:`data-access-common_howtouse_datasource`」を参照されたい。
+    データソースの設定方法については、「
 
 |
 
@@ -714,7 +714,7 @@ Maven Archetypeで作成したプロジェクトでは、インメモリデー�
         ``artifactId/artifactId-env/src/main/resources/META-INF/spring/artifactId-env.xml``
       - アプリケーションサーバから提供されているデータソースを使用する場合は、JNDI経由で取得したデータソースを使用するように設定を変更する。
 
-        データソースの設定方法については、「:doc:`../ArchitectureInDetail/DataAccessDetail/DataAccessCommon` の :ref:`data-access-common_howtouse_datasource`」を参照されたい。
+        データソースの設定方法については、「
 
 .. note:: **環境依存する設定値を定義するプロパティファイルのdatabaseプロパティについて**
 
@@ -814,7 +814,7 @@ Maven Archetypeで作成したプロジェクトは、以下の構成になっ�
     伝統的なWebアプリケーション(リクエストパラメータを受け取ってHTMLを応答するアプリケーション)を構築する際に必要となる推奨設定が行われている。
 
     そのため、JSONやXMLを扱うREST APIを構築する際には不要な設定が存在する。
-    REST APIを構築するためのプロジェクトを作成する場合は、「:doc:`../ArchitectureInDetail/WebServiceDetail/REST` の :ref:`RESTHowToUseApplicationSettings`」を参照し、
+    REST APIを構築するためのプロジェクトを作成する場合は、「
     REST API向けの設定を適用してほしい。
 
 .. note::
@@ -1056,7 +1056,7 @@ webモジュールの構成
       - Welcomeページを表示するためのリクエストを受け取るためのControllerクラス。
     * - | (4)
       - Dozer(Bean Mapper)のマッピング定義ファイルを格納するディレクトリ。
-        Dozerについては、「:doc:`../ArchitectureInDetail/GeneralFuncDetail/Dozer`」を参照されたい。
+        Dozerについては、「
 
         作成時点では空のディレクトリである。
         マッピングファイルが必要になった場合(高度なマッピングが必要になった場合)は、
@@ -1109,7 +1109,7 @@ webモジュールの構成
         .. note::
 
             **メッセージについては、アプリケーションの要件(メッセージ規約など)にあわせて必ず修正すること。**
-            メッセージ定義については、「:doc:`../ArchitectureInDetail/WebApplicationDetail/MessageManagement`」を参照されたい。
+            メッセージ定義については、「
 
 .. note::
 
@@ -1160,7 +1160,7 @@ webモジュールの構成
       - | 説明
     * - | (12)
       - Tilesの設定ファイルを格納するディレクトリ。
-        Tilesの設定ファイルについては、「:doc:`../ArchitectureInDetail/WebApplicationDetail/TilesLayout`」を参照されたい。
+        Tilesの設定ファイルについては、「
     * - | (13)
       - Viewを構築するテンプレートファイル(JSPなど)を格納するディレクトリ。
     * - | (14)
@@ -1180,7 +1180,7 @@ webモジュールの構成
         インクルード用の共通JSPファイルについては、「:ref:`view_jsp_include-label`」を参照されたい。
     * - | (16)
       - Tilesのレイアウト用のJSPファイルを格納するディレクトリ。
-        Tilesのレイアウト用のJSPファイルについては、「:doc:`../ArchitectureInDetail/WebApplicationDetail/TilesLayout`」を参照されたい。
+        Tilesのレイアウト用のJSPファイルについては、「
     * - | (17)
       - Welcomeページを表示するJSPファイル。
     * - | (18)
@@ -1263,7 +1263,7 @@ domainモジュールの構成
       - ドメイン層のクラスを格納するためのパッケージ。
     * - | (3)
       - Dozer(Bean Mapper)のマッピング定義ファイルを格納するディレクトリ。
-        Dozerについては、「:doc:`../ArchitectureInDetail/GeneralFuncDetail/Dozer`」を参照されたい。
+        Dozerについては、「
 
         作成時点では空のディレクトリである。
         マッピングファイルが必要になった場合(高度なマッピングが必要になった場合)は、
@@ -1458,7 +1458,7 @@ envモジュールの構成
         **実際のアプリケーション開発で使用することは想定していないので、基本的にはこのディレクトリは削除すること。**
     * - | (8)
       - Dozer(Bean Mapper)のグローバル設定を行うためのプロパティファイル。
-        Dozerについては、「:doc:`../ArchitectureInDetail/GeneralFuncDetail/Dozer`」を参照されたい。
+        Dozerについては、「
 
         作成時点では、空のファイルである。(ファイルがないと起動時に警告ログが出力されるため、これを防ぐために空のファイルを用意している)
     * - | (9)
@@ -1468,7 +1468,7 @@ envモジュールの構成
         作成時点では、ログに出力するSQLの改行に関する設定のみ指定されている。
     * - | (10)
       - Logback(ログ出力)の設定ファイル。
-        ログ出力については、「:doc:`../ArchitectureInDetail/GeneralFuncDetail/Logging`」を参照されたい。
+        ログ出力については、「
 
 |
 

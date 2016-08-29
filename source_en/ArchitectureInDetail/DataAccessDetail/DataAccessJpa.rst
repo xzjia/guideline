@@ -881,7 +881,7 @@ If entity specific Repository interface is created by inheriting ``JpaRepository
       * void deleteAll()
       * void flush()
 
-     For details on optimistic locking of JPA, refer to :doc:`ExclusionControl`.
+     For details on optimistic locking of JPA, refer to 
 
 .. _how_to_create_repository_extends_springdata_flush_timing_note1:
 
@@ -1111,7 +1111,7 @@ Specifying query to be executed
 Fetching entity lock
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 | To fetch entity lock, add ``@org.springframework.data.jpa.repository.Lock`` annotation to query method and specify the lock mode.
-| For details, refer to :doc:`ExclusionControl`.
+| For details, refer to 
 
  .. code-block:: java
 
@@ -1352,7 +1352,7 @@ Specify the query(JPQL) to be executed in value attribute of ``@Query`` annotati
     Search condition values should be escaped during LIKE search.
 
     The method for escaping these values is provided in ``org.terasoluna.gfw.common.query.QueryEscapeUtils`` class; this class can be used if it meets the requirements.
-    For details on ``QueryEscapeUtils`` class, refer to ":ref:`data-access-common_appendix_like_escape`" of ":doc:`DataAccessCommon`".
+    For details on ``QueryEscapeUtils`` class, refer to ":ref:`data-access-common_appendix_like_escape`" of "
 
  .. note:: **When the type of matching needs to be changed dynamically**
 
@@ -1361,7 +1361,7 @@ Specify the query(JPQL) to be executed in value attribute of ``@Query`` annotati
 
     The method for converting into search condition value corresponding to the type of matching is provided in ``org.terasoluna.gfw.common.query.QueryEscapeUtils`` class;
     this class can be used if it meets the requirements.
-    For details on ``QueryEscapeUtils`` class, refer to ":ref:`data-access-common_appendix_like_escape`" of ":doc:`DataAccessCommon`".
+    For details on ``QueryEscapeUtils`` class, refer to ":ref:`data-access-common_appendix_like_escape`" of "
 
 | Sort conditions can be directly specified in query.
 | See the example below.
@@ -1828,7 +1828,7 @@ Amongst the entities matching the conditions, call a query method to fetch the e
       - Description
     * - | (2)
       - | Create object (``org.springframework.data.domain.Pageable``) for paging search provided by Spring Data.
-        | For details, refer to ":doc:`../WebApplicationDetail/Pagination`".
+        | For details, refer to "
 
 
 - Service
@@ -3361,7 +3361,7 @@ Escaping at the time of LIKE search
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 | Escaping the values to be used as search criteria should be done for LIKE search.
 | Escaping for LIKE search can be done using ``org.terasoluna.gfw.common.query.QueryEscapeUtils`` class method of the common library.
-| For specifications of escaping in common library, refer to ":ref:`data-access-common_appendix_like_escape`" of ":doc:`DataAccessCommon`".
+| For specifications of escaping in common library, refer to ":ref:`data-access-common_appendix_like_escape`" of "
 
 For the escaping method provided by common library, see the description below.
 
@@ -4238,7 +4238,7 @@ Extended example of changing the method to create the values to be used is shown
     * - | (3)
       - | Return the instances to be set in the properties of entity operation date-time (Created Date-Time or Last Modified Date-Time).
         | In the above example, the instances fetched from ``org.terasoluna.gfw.common.date.jodatime.JodaTimeDateFactory`` of common library are returned as Operation Date-Time.
-        | For details on ``JodaTimeDateFactory``, refer to ":doc:`../GeneralFuncDetail/SystemDate`".
+        | For details on ``JodaTimeDateFactory``, refer to "
 
 - ``infra.xml``
 

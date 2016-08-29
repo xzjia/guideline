@@ -211,7 +211,7 @@ Overview
 
     .. tip::
 
-       本例は、Tilesを利用する場合に有効である。詳細は :doc:`../WebApplicationDetail/TilesLayout` を参照されたい。
+       本例は、Tilesを利用する場合に有効である。詳細は 
        Tilesを利用しない場合は、次に説明する\ :ref:`message-management_label-rule`\ の規約を利用しても良い。
 
 |
@@ -633,7 +633,7 @@ How to use
                                 └ application-messages_ja.properties (日本語メッセージ)
 
         というように各言語用のpropertiesファイルを作成すればよい。
-        詳細は、\ :doc:`../WebApplicationDetail/Internationalization`\ を参照されたい。
+        詳細は、\ 
 
 
 .. _message-display:
@@ -1504,7 +1504,7 @@ ResultMessagesを使用しない結果メッセージの表示
 
     .. tip::
 
-        ログイン用のJSPの内容については、\ :doc:`../../Security/Authentication`\ を参照されたい。
+        ログイン用のJSPの内容については、\ 
 
 .. _message-management-messagekeysgen:
 

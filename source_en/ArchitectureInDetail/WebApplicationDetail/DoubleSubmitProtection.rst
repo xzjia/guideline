@@ -1521,7 +1521,7 @@ This is an example of Internet Explorer 11.
 
 There is no problem because the double submit itself is prevented.
 
-In \ :doc:`blank projects <../../ImplementationAtEachLayer/CreateWebApplicationProject>`\  after 5.0.0.RELEASE,
+In \ 
 it is configured so that the cache is disabled by \ :ref:`Spring Security <SpringSecurityLinkageWithBrowser>`\ .
 
 If showing the transaction error screen is preferred instead of the screen above,

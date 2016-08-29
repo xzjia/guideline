@@ -28,8 +28,8 @@ Overview
 
 O/R Mapperに依存する部分については、
 
-* \ :doc:`DataAccessMyBatis3`\
-* \ :doc:`DataAccessJpa`\
+* \ 
+* \ 
 
 を参照されたい。
 
@@ -120,19 +120,19 @@ Spring Framework提供のJDBCデータソース
 トランザクションの管理方法について
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 | Spring Frameworkの機能を使って、トランザクション管理を行う場合、プロジェクト要件や、デプロイ環境にあったPlatformTransactionManagerの選定が必要になる。
-| 詳細は、\ :doc:`../../ImplementationAtEachLayer/DomainLayer`\ の\ :ref:`service_enable_transaction_management`\ を参照されたい。
+| 詳細は、\ 
 
 
 トランザクション境界/属性の宣言について
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 | トランザクション境界及びトランザクション属性の宣言は、Serviceにて、\ ``@Transactional``\ アノテーションを指定することで実現する。
-| 詳細は、\ :doc:`../../ImplementationAtEachLayer/DomainLayer`\ の\ :ref:`service_transaction_management`\ を参照されたい。
+| 詳細は、\ 
 
 
 データの排他制御について
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 | データを更新する場合、データの一貫性および整合性を保障するために、排他制御を行う必要がある。
-| データの排他制御については、\ :doc:`ExclusionControl`\ を参照されたい。
+| データの排他制御については、\ 
 
 
 例外ハンドリングについて
@@ -375,12 +375,12 @@ Bean定義したDataSouceを使用する場合の設定
 
 トランザクション管理を有効化するための設定
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
-トランザクション管理を有効化するための基本的な設定は、\ :doc:`../../ImplementationAtEachLayer/DomainLayer`\ の\ :ref:`service_enable_transaction_management`\ を参照されたい。
+トランザクション管理を有効化するための基本的な設定は、\ 
 
 PlatformTransactionManagerについては、使用するO/R Mapperによって使うクラスがかわるので、詳細設定は、
 
-* \ :doc:`DataAccessMyBatis3`\
-* \ :doc:`DataAccessJpa`\
+* \ 
+* \ 
 
 を参照されたい。
 
@@ -600,7 +600,7 @@ AbstractRoutingDataSourceの実装
     * - | (1)
       - \ ``AbstractRoutingDataSource``\ を継承する。
     * - | (2)
-      - 時刻を取得するため、\ ``JodaTimeDateFactory``\ を使用する。詳細は、\ :doc:`../GeneralFuncDetail/SystemDate`\ を参照のこと。
+      - 時刻を取得するため、\ ``JodaTimeDateFactory``\ を使用する。詳細は、\ 
     * - | (3)
       - \ ``determineCurrentLookupKey``\ メソッドを実装する。このメソッドの返り値と後述するbean定義ファイル内の\ ``targetDataSources``\ に定義した\ ``key``\ をマッピングすることにより使用するデータソースが決定される。
     * - | (4)
@@ -611,7 +611,7 @@ AbstractRoutingDataSourceの実装
 .. note
 
     認証ユーザー情報(IDや権限)によってデータソースを切り替えたい場合には、\ ``determineCurrentLookupKey``\ メソッド内で、\ ``org.springframework.security.core.context.SecurityContext``\ を使用して取得すれば良い。
-    \ ``org.springframework.security.core.context.SecurityContext``\ クラスの詳細は\ :doc:`../Security/Authentication`\ を参照のこと。
+    \ ``org.springframework.security.core.context.SecurityContext``\ クラスの詳細は\ 
 
 データソースの定義
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
@@ -973,8 +973,8 @@ LIKE検索を行う場合は、検索条件として使用する値を、LIKE検
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 LIKE検索時のエスケープ処理の実装例については、使用するO/R Mapper向けのドキュメントを参照されたい。
 
-* MyBatis3を使用する場合は、\ :doc:`DataAccessMyBatis3`\ の\ :ref:`DataAccessMyBatis3HowToUseLikeEscape`\ を参照されたい。
-* JPA(Spring Data JPA)を使用する場合は、\ :doc:`DataAccessJpa`\ の\ :ref:`data-access-jpa_howtouse_like_escape`\ を参照されたい。
+* MyBatis3を使用する場合は、\ 
+* JPA(Spring Data JPA)を使用する場合は、\ 
 
 .. note::
 
@@ -1030,7 +1030,7 @@ Sequencerについて
     Sequencerを用意した理由は、JPAの機能として提供されているID採番機能において、シーケンス値を文字列としてフォーマットする仕組みがないためである。
     実際のアプリケーション開発では、フォーマットされた文字列をプライマリキーに設定するケースもあるため、共通ライブラリとしてSequencerを提供している。
 
-    プライマリキーに設定する値が数値の場合は、JPAの機能として提供されているID採番機能を使用することを推奨する。JPAのID採番機能については、\ :doc:`DataAccessJpa`\ の\ :ref:`data-access-jpa_how_to_use_way_to_add_entity`\ を参照されたい。
+    プライマリキーに設定する値が数値の場合は、JPAの機能として提供されているID採番機能を使用することを推奨する。JPAのID採番機能については、\ 
 
     Sequencerを用意した主な目的は、JPAでサポートされていない機能の補完であるが、JPAと関係ない処理で、シーケンス値が必要な場合に、使用することもできる。
 

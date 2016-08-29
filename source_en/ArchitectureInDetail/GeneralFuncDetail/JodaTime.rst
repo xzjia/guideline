@@ -73,7 +73,7 @@ Fetching current time
 
                 DateTime dateTime = dataFactory.newDateTime();
 
-        Refer to :doc:`./SystemDate` for using ``JodaTimeDateFactory``.
+        Refer to 
 
         LocalDate and LocalTime can be generated in the following way.
 

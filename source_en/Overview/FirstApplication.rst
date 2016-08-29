@@ -615,7 +615,7 @@ Create output screen (src/main/webapp/WEB-INF/views/echo/hello.jsp).
 .. note::
 
     Here, XSS countermeasure taken using ``c:out`` standard tag, however, ``f:h()`` function provided in common library can be used easily.
-    Refer to :doc:`../Security/XSS` for details.
+    Refer to 
 
 |
 

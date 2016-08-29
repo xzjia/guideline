@@ -324,7 +324,7 @@ Customization method and extension method required in real application developme
 .. note::
 
     When the development project is created from \ `Blank project <https://github.com/terasolunaorg/terasoluna-gfw-web-multi-blank>`_\  , the setting described here is already configured.
-    For how to create a development project, refer ':doc:`../ImplementationAtEachLayer/CreateWebApplicationProject`' .
+    For how to create a development project, refer '
 
 |
 

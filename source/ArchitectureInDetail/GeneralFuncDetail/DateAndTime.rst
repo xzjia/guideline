@@ -19,7 +19,7 @@ Overview
 
         JSR-310 Date and Time APIはJava8から導入されたため、
         Java8未満の環境は、Joda Timeの利用を推奨している。
-        Joda Timeの利用方法は、 :doc:`./JodaTime` を参照されたい。
+        Joda Timeの利用方法は、 
 
 
 How to use
@@ -440,7 +440,7 @@ java.sql パッケージとの相互運用性
 org.terasoluna.gfw.common.date パッケージの利用方法
 ''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''
 
-| 現在、Date and Time API用のDate Factoryは共通ライブラリから提供されていない。（参照： :doc:`SystemDate` ）
+| 現在、Date and Time API用のDate Factoryは共通ライブラリから提供されていない。（参照： 
 | ただし、暫定対処として、 ``org.terasoluna.gfw.common.date.ClassicDateFactory`` と ``java.sql.Date`` を利用することで、 ``java.time.LocalDate`` を生成できる。
 | ``java.time.LocalTime`` , ``java.time.LocalDateTime`` クラスに関しても、 ``java.time.LocalDate`` から変換することで生成できる。
 | 以下に例を示す。

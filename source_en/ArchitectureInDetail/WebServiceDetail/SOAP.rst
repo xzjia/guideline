@@ -727,7 +727,7 @@ Input check implementation
       - Description
     * - | (1)
       - | Define JavaBean input check in the Bean Validation.
-        | For details, refer "\ :doc:`../WebApplicationDetail/Validation`\ ".
+        | For details, refer "\ 
     * - | (2)
       - | Define an interface used for grouping of validation.
 
@@ -740,7 +740,7 @@ Security measures
 
 | How to carry out Basic authentication in Spring Security and how to authorize in Service are introduced in the guideline as the methods of authentication and authorization for SOAP.
 | WS-Security is not addressed.
-| For details of how to use, refer "\ :doc:`../../Security/Authentication`\ " and "\ :doc:`../../Security/Authorization`\ ".
+| For details of how to use, refer "\ 
 
 A configuration example of Spring Security carrying out Basic authentication for SOAP Web Service is shown below.
 
@@ -775,14 +775,14 @@ A configuration example of Spring Security carrying out Basic authentication for
     * - | (2)
       - | Define authentication method by using \ ``authentication-provider``\ .
         | Actual authentication and fetching user information must be implemented by creating \ ``UserDetailsService``\ .
-        | For details, refer "\ :doc:`../../Security/Authentication`\ ".
+        | For details, refer "\ 
 
 |
 
 **Authorization process**
 
 | Authorization is carried out by applying annotation for each Service.
-| For details, refer access authorization of "\ :doc:`../../Security/Authorization`\ (method)".
+| For details, refer access authorization of "\ 
 
 *[server projectName]-web/src/main/resources/META-INF/spring/spring-security.xml*
 
@@ -839,7 +839,7 @@ A configuration example of Spring Security carrying out Basic authentication for
 
 | SOAP Web Service should be used in the stateless communication without using a session.
 | Therefore, a configuration method wherein CSRF measures using the session are not employed is explained below.
-| For details of CSRF, refer "\ :doc:`../../Security/CSRF`\ ".
+| For details of CSRF, refer "\ 
 | CSRF measures are enabled in the default configuration of Blank project.
 | Therefore, CSRF measures processing is disabled for SOAP Web Service request by adding following configuration.
 
@@ -1250,10 +1250,10 @@ Exception thrown from Service assumes the following. It should be added when req
       - | Use \ ``MessageSource``\  to fetch the message to be output.
     * - | (3)
       - | Use \ ``ExceptionCodeResolverMessageSource``\  provided by common library and map exception types and exception codes.
-        | For details, refer "\ :doc:`../WebApplicationDetail/ExceptionHandling`\ ".
+        | For details, refer "\ 
     * - | (4)
       - | Use \ ``ExceptionLogger``\  provided by common library and output exception information in the exception.
-        | For details, refer "\ :doc:`../WebApplicationDetail/ExceptionHandling`\ ".
+        | For details, refer "\ 
     * - | (5)
       - | Each exception occurring in Service is wrapped in \ ``SOAPFault``\ .
         | Refer table at the beginning for exception mapping.
@@ -1857,7 +1857,7 @@ Changing existing project
 
 | A simple implementation of Web application like Controller etc is included in the default state of the blank project.
 | SOAP web service can be used as it is, however, it is recommended to delete the same since it is not required.
-| For deletion target, refer ":ref:`CreateWebApplicationProjectConfigurationMulti` of :doc:`../../ImplementationAtEachLayer/CreateWebApplicationProject` ".
+| For deletion target, refer ":ref:`CreateWebApplicationProjectConfigurationMulti` of 
 
 |
 
@@ -2039,7 +2039,7 @@ Following is added to \ ``pom.xml``\  for adding dependency of [server projectNa
         <artifactId>artifactId-model</artifactId>
     </dependency>
 
-Refer ":ref:`application-layering_project-structure` of :doc:`../../Overview/ApplicationLayering` " since package configuration besides these is not different from the usual domain project.
+Refer ":ref:`application-layering_project-structure` of 
 
 |
 
@@ -2142,7 +2142,7 @@ Recommended configuration for [server projectName]-web project is shown below.
 [server projectName]-env
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 
-Since [server projectName]-env does not differ from normal env project, refer ":ref:`application-layering_project-structure` of :doc:`../../Overview/ApplicationLayering`".
+Since [server projectName]-env does not differ from normal env project, refer ":ref:`application-layering_project-structure` of 
 
 |
 
@@ -2258,14 +2258,14 @@ Following is added to \ ``pom.xml``\  for adding dependency of [server projectNa
 
     Similar to [server projectName]-web, it is not necessary to define dependency of [server projectName]-model in \ ``pom.xml``\  because a transitive dependency is added since dependency relation to [server projectName]-model is defined from [server projectName]-webservice.
 
-Since package configuration other than this is not different from the usual domain project, refer ":ref:`application-layering_project-structure` of :doc:`../../Overview/ApplicationLayering` ".
+Since package configuration other than this is not different from the usual domain project, refer ":ref:`application-layering_project-structure` of 
 
 |
 
 [client projectName]-web
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 
-Since [client projectName]-web is not different from the usual web project, refer ":ref:`application-layering_project-structure` of :doc:`../../Overview/ApplicationLayering`".
+Since [client projectName]-web is not different from the usual web project, refer ":ref:`application-layering_project-structure` of 
   
   
 

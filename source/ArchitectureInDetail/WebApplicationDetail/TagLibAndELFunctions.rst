@@ -127,7 +127,7 @@ How to use
 ページ検索の結果(\ ``org.springframework.data.domain.Page``\ )に格納されている情報を参照して、
 ページネーションリンクを出力するJSP Tag Libraryである。
 
-ページネーション機能の説明及び本タグの使用方法は、「:doc:`./Pagination`」の以下の節を参照されたい。
+ページネーション機能の説明及び本タグの使用方法は、「
 
 * ページネーションリンクについては、「:ref:`pagination_overview_paginationlink`」
 * 本タグのパラメータ値については、「:ref:`pagination_overview_paginationlink_taglibparameters`」
@@ -143,7 +143,7 @@ How to use
 \ ``<t:messagesPanel>``\ タグは、
 処理結果メッセージ(\ ``org.terasoluna.gfw.common.message.ResultMessage``\ や例外が保持するメッセージなど)を出力するJSP Tag Libraryである。
 
-本タグの使用方法は、「:doc:`../WebApplicationDetail/MessageManagement`」の以下の節を参照されたい。
+本タグの使用方法は、「
 
 * 本タグを使用したメッセージの表示方法については、「:ref:`message-display`」
 * 本タグのパラメータ値については、「:ref:`message-management-messagepanel-attribute`」
@@ -156,7 +156,7 @@ How to use
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 \ ``<t:transaction>``\ タグは、トランザクショントークンをhidden項目(\ ``<input type="hidden">"``\ )として出力するJSP Tag Libraryである。
 
-トランザクショントークンチェック機能の説明及び本タグの使用方法は、「:doc:`./DoubleSubmitProtection`」の以下の節を参照されたい。
+トランザクショントークンチェック機能の説明及び本タグの使用方法は、「
 
 * トランザクショントークンチェック機能については、「:ref:`doubleSubmit_how_to_use_transaction_token_check`」
 * 本タグの使用方法については、「:ref:`doubleSubmit_how_to_use_transaction_token_check_jsp`」
@@ -638,7 +638,7 @@ f:link() 使用方法
     また、戻り値の説明でも記載しているが、引数のURL文字列の形式が適切でない場合は、
     ハイパーリンクを生成せず入力値の文字列を返却する仕様としている。
     そのため、引数に指定するURL文字列としてユーザからの入力値を使用する場合は、
-    文字列出力処理と同様のHTML特殊文字のエスケープ処理(:doc:`../../Security/XSS`)が必要になるケースがある。
+    文字列出力処理と同様のHTML特殊文字のエスケープ処理(
 
 |
 
@@ -709,7 +709,7 @@ f:br() 使用方法
 
 .. note::
 
-    文字列を画面上に表示する際は、「:doc:`../../Security/XSS`」としてHTML特殊文字をエスケープする必要がある。
+    文字列を画面上に表示する際は、「
 
     \ ``f:br()``\ 関数を使用して改行コードを\ ``<br />``\ タグに変換する場合は、
     上記例のように、HTML特殊文字をエスケープした文字列を\ ``f:br()``\ の引数として渡す必要がある。
@@ -784,7 +784,7 @@ f:cut() 使用方法
 
 .. note::
 
-    切り出した文字列を画面上に表示する際は、「:doc:`../../Security/XSS`」としてHTML特殊文字をエスケープする必要がある。
+    切り出した文字列を画面上に表示する際は、「
     上記例では、\ ``f:h()``\ 関数を使用してエスケープしている。
 
 .. raw:: latex

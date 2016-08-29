@@ -488,7 +488,7 @@ Determining the status of using a session
 --------------------------------------------------------------------------------
 
 When the information needs to be retained on multiple screens, implementation is easy by using a session. At the same time, when the session is used, its demerits also need to be considered.
-Refer to the guideline :doc:'../ArchitectureInDetail/WebApplicationDetail/SessionManagement' and
+Refer to the guideline 
 determine whether to use the session in this tutorial.
 
 It is described in the guideline that it is recommended to use the session first and to store only the data that is necessary, in the session.
@@ -589,7 +589,7 @@ Implement passing the data using hidden as an example when the session is not us
 
 Further, when the session is used, sometimes method to maintain the data integrity and replication settings are required.
 
-The guideline mentions a method to avoid it using transaction token check. However, note that it becomes a low-usability application in this case. \ :doc:`../ArchitectureInDetail/WebApplicationDetail/DoubleSubmitProtection`\  should be referred for the specific implementation method.
+The guideline mentions a method to avoid it using transaction token check. However, note that it becomes a low-usability application in this case. \ 
 
 Since replication settings depend on AP server, when replication needs to be considered, configuration of AP server needs to be checked.
 
@@ -609,7 +609,7 @@ Method of implementation to use data during the session
 Method of implementation to use the data during the session for each data is determined in this section.
 
 The guideline provides 2 implementation methods corresponding to the locations of using data.
-:doc:`../ArchitectureInDetail/WebApplicationDetail/SessionManagement` classifies the methods to be used depending on whether the data is contained within 1 Controller.
+
 Therefore, the implementation method needs to be decided considering the lifecycle of data to be stored in the session and URL mapping.
 Further, when the data is associated with the authentication information, session management should be implemented by the Spring Security function.
 
@@ -641,7 +641,7 @@ Considering these, the final result for which the data handled in the session is
 Account information is already created in the project provided as initial material and
 is managed using the Spring Security function.
 Therefore, this tutorial does not describe any specific method of using.
-:doc:'../Security/Authentication' should be referred for the specific method of using.
+
 
 
 Considerations while using session
@@ -657,7 +657,7 @@ Session synchronization
 Object stored in the session can be simultaneously accessed by means of multiple requests of the same user.
 Therefore, when session synchronization is not performed, it can cause unexpected error or operation.
 
-Since the guideline mentions a method of implementing synchronization where BeanProcessor is used in :doc:`../ArchitectureInDetail/WebApplicationDetail/SessionManagement`, use this in this tutorial.
+Since the guideline mentions a method of implementing synchronization where BeanProcessor is used in 
 
 
 
@@ -672,7 +672,7 @@ Therefore, appropriate time needs to be set as per the requirement.
 This tutorial is also well-equipped with memory resources, set the default value of AP server to 30 minutes.
 
 Further, handling the requests after session timeout also needs to be reviewed.
-The guideline mentions a method to handle the requests after session timeout in :doc:`../ArchitectureInDetail/WebApplicationDetail/SessionManagement`.
+The guideline mentions a method to handle the requests after session timeout in 
 
 
 Settings are done so as to transit to the login screen after timeout in this tutorial.
@@ -708,7 +708,7 @@ Created project can be fetched with the following procedure.
 #. Extract zip file and import the project in it.
 
 
-Note that since the method to import the project is described in :doc:`./TutorialTodo`,
+Note that since the method to import the project is described in 
 the description is omitted in this tutorial.
 
 
@@ -915,7 +915,7 @@ Operation verification
 Check the operation of project fetched before the application development.
 Start the application server with the project imported in STS as the target
 The method to start the application server is omitted in this tutorial
-since it is described in :doc:`./TutorialTodo`.
+since it is described in 
 
 The following screen is displayed when `<http://localhost:8080/session-tutorial-init-web/loginForm>`_ is accessed after the application server is started.
 
@@ -1677,7 +1677,7 @@ Defining the Bean for session scope
 Object to retain the cart information is already created as "Cart.java".
 Therefore, add the settings so as to enable handling this object as the Bean for session scope.
 
-There are 2 types of configuration methods mentioned in :doc:`../ArchitectureInDetail/WebApplicationDetail/SessionManagement` as the methods to use the Bean for session scope.
+There are 2 types of configuration methods mentioned in 
 Define the Bean using component-scan in this tutorial.
 
 

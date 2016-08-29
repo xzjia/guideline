@@ -20,7 +20,7 @@ and knowledge of the following.
 This guideline is not for beginners.
 
 In order to check whether the readers have basic knowledge of Spring Framework,
-refer to \ :doc:`../Appendix/SpringComprehensionCheck`\ .
+refer to \ 
 It is recommended to study the following books if one is not able to answer 40% of the comprehension test.
 
 * `Spring3入門―Javaフレームワーク・より良い設計とアーキテクチャ（技術評論社）[Japanese] <http://gihyo.jp/book/2012/978-4-7741-5380-3>`_
@@ -29,39 +29,39 @@ It is recommended to study the following books if one is not able to answer 40% 
 Structure of this document
 ================================================================================
 
-* \ :doc:`../Overview/index`\ 
+* \ 
     Overview of Spring MVC and basic concepts of TERASOLUNA Server Framework for Java (5.x) is explained.
-* \ :doc:`../ImplementationAtEachLayer/index`\ 
+* \ 
     Knowledge and methods for application development using TERASOLUNA Server Framework for Java (5.x) are explained.
-* \ :doc:`../ArchitectureInDetail/index`\
+* \ 
     Method to implement the functions required for general application development using TERASOLUNA Server Framework for Java (5.x) or features of each function is explained.
-* \ :doc:`../Security/index`\ 
+* \ 
     Security measures are explained focusing on Spring Security.
-* \ :doc:`../Tutorial/index`\ 
+* \ 
     Experience in application development using TERASOLUNA Server Framework for Java (5.x) through simple application development.
-* \ :doc:`../Appendix/index`\
+* \ 
     Describing the additional information when TERASOLUNA Server Framework for Java (5.x) is being used.
 
 Reading this document
 ================================================================================
 
-| Firstly read "\ :doc:`../Overview/index`\ ".
-| Implement "\ :doc:`../Overview/FirstApplication`\ " for beginners of Spring MVC.
-| Read "\ :doc:`../Overview/ApplicationLayering`\ " as the terminology and concepts used in this guideline are explained here.
+| Firstly read "\ 
+| Implement "\ 
+| Read "\ 
 | 
-| Then continue with "\ :doc:`../Tutorial/index`\ ".
+| Then continue with "\ 
 | Get a feel of application development using TERASOLUNA Global
 | Framework by firstly trying it as per the proverb "Practice makes perfect".
 | 
-| Use this tutorial to study the details of application development in "\ :doc:`../ImplementationAtEachLayer/index`\ ".
-| Since the knowhow for development is explained using Spring MVC in "\ :doc:`../ImplementationAtEachLayer/ApplicationLayer`\ ",
+| Use this tutorial to study the details of application development in "\ 
+| Since the knowhow for development is explained using Spring MVC in "\ 
 | it is recommended to read it again and again several times.
-| One can get a better understanding by studying "\ :doc:`../Tutorial/index`\ " once again after reading this chapter.
+| One can get a better understanding by studying "\ 
 | 
 | **It is strongly recommended that all the developers who use TERASOLUNA Server Framework for Java (5.x) read it.**
 | 
-| Refer to "\ :doc:`../ArchitectureInDetail/index`\ " and "\ :doc:`../Security/index`\ "
-| as per the requirement. However, read ":doc:`../ArchitectureInDetail/WebApplicationDetail/Validation`" since it is normally required for application development.
+| Refer to "\ 
+| as per the requirement. However, read "
 | 
 | The technical leader understands all the contents and checks the type of policy to be decided in the project.
 
@@ -70,12 +70,12 @@ Reading this document
 
     If you do not have sufficient time, first go through the following.
     
-    #. \ :doc:`../Overview/FirstApplication`\ 
-    #. \ :doc:`../Overview/ApplicationLayering`\ 
-    #. \ :doc:`../Tutorial/TutorialTodo`\ 
-    #. \ :doc:`../ImplementationAtEachLayer/index`\ 
-    #. \ :doc:`../Tutorial/TutorialTodo`\ 
-    #. \ :doc:`../ArchitectureInDetail/WebApplicationDetail/Validation`\ 
+    #. \ 
+    #. \ 
+    #. \ 
+    #. \ 
+    #. \ 
+    #. \ 
 
 Tested environments of this document
 ================================================================================

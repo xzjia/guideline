@@ -336,7 +336,7 @@ Repository has following 2 roles.
    | Entity object should persist irrespective of the lifecycle (start and stop of server) of application.
    | Mostly relational database is the permanent destination of Entity. However, NoSQL database, cache server, external system and file (shared disk) can also be the permanent destination.
    | The actual persistence processing is done using O/R Mapper API.
-   | This role is implemented in the RepositoryImpl of the infrastructure layer. Refer to \ :doc:`InfrastructureLayer`\  for details.
+   | This role is implemented in the RepositoryImpl of the infrastructure layer. Refer to \ 
 
  .. figure:: images/repository_responsibility_2.png
     :alt: persist entity
@@ -374,7 +374,7 @@ Repository consists of Repository interface and RepositoryImpl and performs the 
      - | Implements the methods defined in Repository interface.
      - | Implements CRUD operations of the Entity and is dependent on persistence layer. Performs actual CRUD processes using API that performs persistence provided by Spring Framework, O/R Mapper and middleware.
        | RepositoryImpl belongs to infrastructure layer since it plays the role of implementing the operations defined in Repository interface.
-       | Refer to \ :doc:`InfrastructureLayer`\  for the implementation of RepositoryImpl.
+       | Refer to \ 
 
 
 | In case of multiple destinations in persistence layer, the resulting configuration as follows.
@@ -652,7 +652,7 @@ Method definition of Repository interface
 
 Creation of RepositoryImpl
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
-Refer to \ :doc:`InfrastructureLayer`\  for the implementation of RepositoryImpl.
+Refer to \ 
 
 
 .. _service-label:
@@ -1450,8 +1450,8 @@ Operate on business data
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 Refer to the following for the examples of data (Entity) fetch and update.
 
-* When using MyBatis3, \ :doc:`../ArchitectureInDetail/DataAccessDetail/DataAccessMyBatis3`\ 
-* When using JPA, \ :doc:`../ArchitectureInDetail/DataAccessDetail/DataAccessJpa`\ 
+* When using MyBatis3, \ 
+* When using JPA, \ 
 
 
 .. _service-return-message-label:
@@ -1460,7 +1460,7 @@ Returning messages
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 | Warning message and business error message are the two type of messages which must be resolved in Service (refer to the figure in red broken line below).
 | Other messages should be resolved in application layer.
-| Refer to \ :doc:`../ArchitectureInDetail/WebApplicationDetail/MessageManagement`\  for message types and message pattern.
+| Refer to \ 
 
  .. figure:: images/service_target-resolving-message.png
    :alt: target of resolving message
@@ -1597,7 +1597,7 @@ Notifying business error
    * - | (1)
      - Business exception is thrown since reservation date is past the deadline at the time of making reservation.
 
-Refer to \ :doc:`../ArchitectureInDetail/WebApplicationDetail/ExceptionHandling`\  for details of entire exception handling.
+Refer to \ 
 
 .. _service-return-systemerrormessage-label:
 
@@ -1670,7 +1670,7 @@ Example that throws system exception while catching IO exception while copying t
     \ ``org.springframework.dao.DataAccessException``\  and thrown.
     Error can be handled in application layer instead of catching in business logic.
     However, some errors like unique constraints violation error should be handled in business logic as per business requirements.
-    Refer to \ :doc:`../ArchitectureInDetail/DataAccessDetail/DataAccessCommon`\  for details.
+    Refer to \ 
 
 .. _service_transaction_management:
 
@@ -1767,7 +1767,7 @@ Information required for "Declarative transaction management"
         | Isolates transactions completely.
         |
         | Isolation level of transaction is considered as the parameter related to exclusion control.
-        | Refer to \ :doc:`../ArchitectureInDetail/DataAccessDetail/ExclusionControl`\  for exclusion control.
+        | Refer to \ 
     * - 3
       - timeout
       - | Specify timeout of transaction (seconds).
@@ -2121,7 +2121,7 @@ Method of dealing with violation of business rules as field error
 
 | When it is necessary to output the error of business rules for each field, the mechanism of (Bean Validation or Spring Validator) on the Controller side should be used.
 | In this case, It is recommended to implement check logic as Service class and then to call the method of Service class from Bean Validation or Spring Validator.
-| Refer to \ :doc:`../ArchitectureInDetail/WebApplicationDetail/Validation`\  business logic approach for details.
+| Refer to \ 
 
 
 .. raw:: latex

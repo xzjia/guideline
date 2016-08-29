@@ -690,7 +690,7 @@ Implementing Controller
     When uploading files, it is recommended to perform transaction token check and screen transition based on PRG pattern.
     With this, upload of same files caused due to double submission can be prevented.
 
-    For more details on how to prevent double submission, refer to \ :doc:`../WebApplicationDetail/DoubleSubmitProtection`\ .
+    For more details on how to prevent double submission, refer to \ 
 
  .. note:: **About MultipartFile**
 
@@ -703,7 +703,7 @@ Bean Validation of file upload
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
 | In the above implementation example, uploaded file is validated as a Controller process. However, here the uploaded file is validated using Bean Validation.
-| For validation details, refer to \ :doc:`Validation`\ . 
+| For validation details, refer to \ 
 
  .. note::
 
@@ -1445,7 +1445,7 @@ Example for temporarily saving the uploaded file in a temporary directory, is sh
  .. note::
 
     Directory of temporary directories should be fetched from external properties as it may differ with the environment in which the application is deployed.
-    For details on external properties, refer to \ :doc:`../GeneralFuncDetail/PropertyManagement`\ .
+    For details on external properties, refer to \ 
 
  .. warning::
  
@@ -1558,7 +1558,7 @@ Implement a component class to delete unnecessary files.
  .. note::
 
     Directory path in which files to be deleted are stored or the time criteria for deletion etc. may differ depending upon the environment in which application is to be deployed. Hence they should be fetched from external properties.
-    For details on external properties, refer to \ :doc:`../GeneralFuncDetail/PropertyManagement`\ .
+    For details on external properties, refer to \ 
 
 
 Scheduling settings of the process for deleting unnecessary files
@@ -1629,7 +1629,7 @@ Carry out bean registration and task schedule settings for the POJO class that d
     For details on specified value of cron, refer to \ `CronSequenceGenerator - JavaDoc <http://docs.spring.io/spring/docs/4.2.7.RELEASE/javadoc-api/org/springframework/scheduling/support/CronSequenceGenerator.html>`_\ .
 
     Execution time should be fetched from external properties as it may differ depending on the environment in which the application is to be deployed.
-    For details on external properties, refer to \ :doc:`../GeneralFuncDetail/PropertyManagement`\ .
+    For details on external properties, refer to \ 
 
  .. tip::
 

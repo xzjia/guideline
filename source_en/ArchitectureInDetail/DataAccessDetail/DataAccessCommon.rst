@@ -27,8 +27,8 @@ This chapter explains the method of accessing the data stored in RDBMS.
 
 For the O/R Mapper dependent part, refer to
 
-* \ :doc:`DataAccessMyBatis3`\
-* \ :doc:`DataAccessJpa`\
+* \ 
+* \ 
 
 
 About JDBC DataSource
@@ -117,19 +117,19 @@ JDBC datasource provided by Spring Framework
 About transaction management
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 | When transactions are to be stored using Spring Framework functionality, PlatformTransactionManager needs to be selected based on project requirements and deployment environment.
-| For details, refer to \ :ref:`service_enable_transaction_management`\  of \ :doc:`../../ImplementationAtEachLayer/DomainLayer`\ .
+| For details, refer to \ :ref:`service_enable_transaction_management`\  of \ 
 
 
 About declaration of transaction boundary/attribute
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 | Transaction boundary and transaction attributes should be declared by specifying  \ ``@Transactional``\  annotation in Service.
-| For details, refer to \ :ref:`service_transaction_management`\  of \ :doc:`../../ImplementationAtEachLayer/DomainLayer`\  .
+| For details, refer to \ :ref:`service_transaction_management`\  of \ 
 
 
 About exclusion control of data
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 | When updating data, it is necessary to execute exclusion control to ensure data consistency and integrity.
-| For details on exclusion control of data, refer to \ :doc:`ExclusionControl`\ .
+| For details on exclusion control of data, refer to \ 
 
 
 About exception handling
@@ -372,12 +372,12 @@ Settings when using DataSource for which Bean is defined
 
 Settings to enable transaction management
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
-For basic settings to enable transaction management, refer to \ :ref:`service_enable_transaction_management`\  of \ :doc:`../../ImplementationAtEachLayer/DomainLayer`\ .
+For basic settings to enable transaction management, refer to \ :ref:`service_enable_transaction_management`\  of \ 
 
 For PlatformTransactionManager, the class to be used changes depending on the O/R Mapper used; hence for detailed settings, refer to:
 
-* \ :doc:`DataAccessMyBatis3`\
-* \ :doc:`DataAccessJpa`\
+* \ 
+* \ 
 
 
 .. _DataAccessCommonDataSourceDebug:
@@ -595,7 +595,7 @@ Implementation of AbstractRoutingDataSource
     * - | (1)
       - Inherit \ ``AbstractRoutingDataSource``\ .
     * - | (2)
-      - Use \ ``JodaTimeDateFactory``\ to fetch time. For details, refer to \ :doc:`../GeneralFuncDetail/SystemDate`\ .
+      - Use \ ``JodaTimeDateFactory``\ to fetch time. For details, refer to \ 
     * - | (3)
       - Implement \ ``determineCurrentLookupKey``\  method. The datasource to be used is defined by mapping the return value of this method and the \ ``key``\  defined in \ ``targetDataSources``\  of the bean definition file described later.
     * - | (4)
@@ -606,7 +606,7 @@ Implementation of AbstractRoutingDataSource
 .. note
 
     When switching the datasource based on authenticated user information (ID or privileges), it is advisable to fetch it using \ ``org.springframework.security.core.context.SecurityContext``\  in \ ``determineCurrentLookupKey``\  method.
-    For details on \ ``org.springframework.security.core.context.SecurityContext``\  class, refer to \ :doc:`../Security/Authentication`\ .
+    For details on \ ``org.springframework.security.core.context.SecurityContext``\  class, refer to \ 
 
 Datasource definition
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
@@ -969,8 +969,8 @@ How to use common library
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 For example of escaping at the time of LIKE search, refer to the document for O/R Mapper to be used.
 
-* When using MyBatis3, refer to \ :ref:`DataAccessMyBatis3HowToUseLikeEscape`\  of \ :doc:`DataAccessMyBatis3`\ .
-* When using JPA (Spring Data JPA), refer to \ :ref:`data-access-jpa_howtouse_like_escape`\ of \ :doc:`DataAccessJpa`\ .
+* When using MyBatis3, refer to \ :ref:`DataAccessMyBatis3HowToUseLikeEscape`\  of \ 
+* When using JPA (Spring Data JPA), refer to \ :ref:`data-access-jpa_howtouse_like_escape`\ of \ 
 
 .. note::
 
@@ -1026,7 +1026,7 @@ About Sequencer
     The reason for creating Sequencer is that there is no mechanism to format the sequence value as string in ID generator functionality of JPA.
     In actual application development, sometimes the formatted string is also set as primary key; hence Sequencer is provided as common library.
 
-    When value set as primary key is number, it is recommended to use ID generator functionality of JPA. For ID generator functionality of JPA, refer to \ :ref:`data-access-jpa_how_to_use_way_to_add_entity`\  of \ :doc:`DataAccessJpa`\ .
+    When value set as primary key is number, it is recommended to use ID generator functionality of JPA. For ID generator functionality of JPA, refer to \ :ref:`data-access-jpa_how_to_use_way_to_add_entity`\  of \ 
 
     The primary objective of creating Sequencer is to supplement functions which are not supported by JPA; but it can also be used when sequence value is required in the processes not relating to JPA.
 

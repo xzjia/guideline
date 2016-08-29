@@ -33,7 +33,7 @@ Localeの切り替えイメージを以下に示す。
 
 .. note::
 
-    Codelistの国際化方法については、 :doc:`../WebApplicationDetail/Codelist` を参照されたい。
+    Codelistの国際化方法については、 
 
 .. note::
 
@@ -87,7 +87,7 @@ How to use
       - | プロパティファイルの基底名として、\ ``i18n/application-messages``\ を指定する。
         | 国際化対応を行う場合、i18nディレクトリ配下にメッセージプロパティファイルを格納することを推奨する。
         |
-        | \ ``MessageSource``\ の詳細や定義方法は、 :doc:`../WebApplicationDetail/MessageManagement` を参照されたい。
+        | \ ``MessageSource``\ の詳細や定義方法は、 
 
 |
 
@@ -122,7 +122,7 @@ How to use
 
 .. tip::
 
-   メッセージプロパティファイルの記載方法については、 :doc:`../WebApplicationDetail/MessageManagement` を参照されたい。
+   メッセージプロパティファイルの記載方法については、 
 
 |
 

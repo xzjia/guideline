@@ -13,7 +13,7 @@ This chapter explains implementation of application layer of a web application t
 
    Refer to the following page for the implementation required for Ajax development and REST API.
 
-   - :doc:`../ArchitectureInDetail/WebApplicationDetail/Ajax`
+   - 
 
 |
 
@@ -283,7 +283,7 @@ Mapping using request header
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 Refer to the details on the following page to mainly use the controller to map REST API and Ajax requests.
 
-- :doc:`../ArchitectureInDetail/WebApplicationDetail/Ajax`
+- 
 
 
 .. _controller-mapping-contenttype-label:
@@ -292,7 +292,7 @@ Mapping using Content-Type header
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 Refer to the details on the following page to mainly use the controller to map REST API and Ajax requests.
 
-- :doc:`../ArchitectureInDetail/WebApplicationDetail/Ajax`
+- 
 
 
 .. _controller-mapping-accept-label:
@@ -301,7 +301,7 @@ Mapping using Accept header
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 Refer to the details on the following page to mainly use the controller to map REST API and Ajax requests.
 
-- :doc:`../ArchitectureInDetail/WebApplicationDetail/Ajax`
+- 
 
 |
 |
@@ -763,7 +763,7 @@ Create  the view (JSP) for user input confirmation screen.
 
  .. note::
     In the above example, HTML escaping is performed as an XSS countermeasure using ``f:h()`` function while displaying the user input values.
-    For details, refer to :doc:`Cross Site Scripting <../Security/XSS>`.
+    For details, refer to 
 
 |
 
@@ -852,7 +852,7 @@ Implementing 'create new user' business logic
 | Since the state of database changes in this process, it should not be executed multiple times due to double submission.
 | Therefore, it is 'redirected' to the next screen (create complete screen) instead of directly displaying View (screen) after 
 | completing this process. This pattern is called as POST-Redirect-GET(PRG) pattern. For the details of :abbr:`PRG (Post-Redirect-Get)` pattern 
-| refer to :doc:`../ArchitectureInDetail/WebApplicationDetail/DoubleSubmitProtection` .
+| refer to 
 
  .. code-block:: java
     :emphasize-lines: 1,7
@@ -884,7 +884,7 @@ Implementing 'create new user' business logic
 .. warning::
     PRG pattern is used to avoid double submission when the browser gets reloaded by clicking F5 button. However, as a countermeasure for double submission,
     it is necessary to use TransactionTokenCheck functionality.
-    For details of TransactionTokenCheck, refer to :doc:`../ArchitectureInDetail/WebApplicationDetail/DoubleSubmitProtection` .
+    For details of TransactionTokenCheck, refer to 
 
 |
 
@@ -1157,7 +1157,7 @@ add the data (Object) to \ ``Model``\  object.
    * - | (4)
      - | In View (JSP), it is possible to acquire the data added to \ ``Model``\  object by specifying "${Attribute name}".
        | For example, HTML escaping is performed using  "${f:h(Attribute name)}" function of EL expression.
-       | For details of functions of EL expression that perform HTML escaping, refer to :doc:`Cross Site Scripting <../Security/XSS>`.
+       | For details of functions of EL expression that perform HTML escaping, refer to 
    * - | (5)
      - | The values of JavaBean stored in \ ``Model``\  can be acquired by specifying "${Attribute name.property name}".
    * - | (6)
@@ -1379,7 +1379,7 @@ Performing input validation
 When performing input validation for the form object, add \ ``@Validated``\  annotation to form object argument, and specify \ ``org.springframework.validation.BindingResult``\  (Hereafter 
 called as \ ``BindingResult``\ ) to argument immediately after form object argument.
 
-Refer to :doc:`../ArchitectureInDetail/WebApplicationDetail/Validation`  for the details of input validation.
+Refer to 
 
 Add annotations required in input validation to the fields of form object class.
 
@@ -1503,7 +1503,7 @@ and add the data to ``RedirectAttributes`` object.
    * - | (6)
      - | In the View (JSP) side, the data added to \ ``RedirectAttributes``\  object can be obtained by specifying "${attribute name}".
        | For example, HTML escaping is performed using "${f:h(attribute name)}" function of EL expression.
-       | For the details of functions of EL expression that performs HTML escaping, refer to :doc:`Cross Site Scripting <../Security/XSS>`.
+       | For the details of functions of EL expression that performs HTML escaping, refer to 
    * - | (7)
      - | The value stored in \ ``RedirectAttributes``\  can be obtained from JavaBean by using "${Attribute name.Property name}". 
    * - | (8)
@@ -1679,7 +1679,7 @@ Retrieving pagination information
 | Pagination related information is required for the requests performing list search. 
 | Fetching ``org.springframework.data.domain.Pageable``\  (henceforth called as \ ``Pageable``\ ) object as an argument of handler method enables to handle pagination related information (page count, fetch record count) easily.
 
- Refer to :doc:`../ArchitectureInDetail/WebApplicationDetail/Pagination`  for details.
+ Refer to 
 
 |
 
@@ -1692,7 +1692,7 @@ Uploaded file can be obtained in 2 ways.
 - Provide ``MultipartFile`` property in form object.
 - Use \ ``org.springframework.web.multipart.MultipartFile``\  as an argument of handler method having \ ``@RequestParam``\  annotation.
 
-Refer to :doc:`../ArchitectureInDetail/WebApplicationDetail/FileUpload`  for details.
+Refer to 
 
 |
 
@@ -1704,7 +1704,7 @@ Displaying result message on the screen
 result message of business logic execution can be displayed by adding \ ``ResultMessages``\  object to Model or RedirectAttributes.
 
 
-Refer to :doc:`../ArchitectureInDetail/WebApplicationDetail/MessageManagement`  for details.
+Refer to 
 
 |
 |
@@ -1734,7 +1734,7 @@ HTML response
 | \ ``ViewResolver``\  when generating HTML using JSP will be an inherited class of \ ``UrlBasedViewResolver``\  (\ ``InternalViewResolver``\  and``TilesViewResolver``\ , etc).
 
 | An example using \ ``InternalViewResolver``\  for JSP is given below; however, it is recommended to use \ ``TilesViewResolver``\  when the screen layout is in a templated format.
-| Refer to :doc:`../ArchitectureInDetail/WebApplicationDetail/TilesLayout`  for the usage of \ ``TilesViewResolver``\ .
+| Refer to 
 
 - spring-mvc.xml
 
@@ -1819,7 +1819,7 @@ Responding to downloaded data
 | name of the view which performs the actual download process.
 
 | The solution to create a separate ViewResolver to resolve a view using its view name, however, \ ``BeanNameViewResolver``\  provided by Spring Framework is recommended.
-| Refer to :doc:`../ArchitectureInDetail/WebApplicationDetail/FileDownload`  for the details of download processing.
+| Refer to 
 
 - spring-mvc.xml
 
@@ -1929,7 +1929,7 @@ Implementing the process
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 | The point here is that **do not implement business logic in controller** .
 | Business logic must be implemented in Service. Controller must call the service methods in which the business logic is implemented.
-| Refer to :doc:`DomainLayer`  for the details of implementation of business logic.
+| Refer to 
 
 .. note::
     Controller should be used only for routing purposes (mapping requests to corresponding business logic) and deciding the screen transition for each request as well as setting model data. Thereby, controller should be simple as much as possible.
@@ -1952,7 +1952,7 @@ Correlation check of input value
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 | Correlation check of input values should be done using ``Validation`` class which implements \ ``org.springframework.validation.Validator``\  interface. 
 | Bean Validation can also be used for correlation check of input values.
-| Refer to :doc:`../ArchitectureInDetail/WebApplicationDetail/Validation`  for the details of implementation of correlation check.
+| Refer to 
 
 | The implementation of correlation check itself should not be written in the handler method of controller. However, it is necessary to add the  \ ``Validator``\  to \ ``org.springframework.web.bind.WebDataBinder``\ . 
 
@@ -2114,7 +2114,7 @@ Reflecting values to domain object
 
  .. note::
     Bean conversion functionality can be used as an alternative way to delegate the process of reflecting form object values, to Helper class.
-    Refer to :doc:`../ArchitectureInDetail/GeneralFuncDetail/Dozer`  for the details of Bean conversion functionality.
+    Refer to 
 
 |
 
@@ -2205,7 +2205,7 @@ However considering the readability of handler method in case of large amount of
 
  .. note::
     Bean conversion functionality can be used as an alternative method to delegate the process to Helper class.
-    Refer to :doc:`../ArchitectureInDetail/GeneralFuncDetail/Dozer`  for the details of Bean conversion functionality.
+    Refer to 
 
 |
 |
@@ -2421,7 +2421,7 @@ DataType conversion in controller
 Specifying annotation for input validation
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 Since form object is validated using Bean Validation, it is necessary to specify the annotation which indicates constraints of the field.
-Refer to :doc:`../ArchitectureInDetail/WebApplicationDetail/Validation`  for the details of input validation.
+Refer to 
 
 |
 
@@ -2706,7 +2706,7 @@ In this chapter, usage of main JSP tag libraries are described. However, refer t
      - - `<http://download.oracle.com/otndocs/jcp/jstl-1.2-mrel2-eval-oth-JSpec/>`_\
    * - 4.
      - Common library's tags & el functions
-     - - [:doc:`../ArchitectureInDetail/WebApplicationDetail/TagLibAndELFunctions`] of this guideline
+     - - [
 
  .. warning::
 
@@ -2827,7 +2827,7 @@ Display using EL expressions.
 
  .. note::
     Since HTML escaping function (``f:h``) is provided in the common components, always use it if EL expressions are used to output values in HTML.
-    For details of function of EL expression that perform HTML escaping, refer to :doc:`Cross Site Scripting <../Security/XSS>`.
+    For details of function of EL expression that perform HTML escaping, refer to 
 
 Display using ``<c:out>`` tag provided by JSP tag library of JSTL.
 
@@ -2909,7 +2909,7 @@ Display using ``<fmt:formatDate>`` tag provided by JSP tag library of JSTL.
 
 .. note::
     JSP tag library provided by Joda Time should be used to use ``org.joda.time.DateTime`` as date and time object type.
-    Refer to :doc:`../ArchitectureInDetail/GeneralFuncDetail/JodaTime`  for the details of Joda Time.
+    Refer to 
 
 |
 
@@ -3112,7 +3112,7 @@ Displaying input validation errors
 To display the contents of input validation error, use JSP tag library provided by Spring Framework.
 
 | Display using ``<form:errors>`` tag provided by Spring Framework.
-| Refer to :doc:`../ArchitectureInDetail/WebApplicationDetail/Validation` for details.
+| Refer to 
 
  .. code-block:: jsp
     :emphasize-lines: 3
@@ -3141,7 +3141,7 @@ Displaying message of processing result
 To display the message notifying the output of processing the request, use JSP tag library provided in common components.
 
 | Use ``<t:messagesPanel>`` tag provided in common components.
-| Refer to :doc:`../ArchitectureInDetail/WebApplicationDetail/MessageManagement`  for details.
+| Refer to 
 
  .. code-block:: jsp
     :emphasize-lines: 3
@@ -3170,7 +3170,7 @@ Displaying codelist
 To display the codelist (provided in common components), use JSP tag library provided by Spring Framework.
 
 | Codelist can be referred from JSP in the same way as ``java.util.Map`` interface.
-| Refer to :doc:`../ArchitectureInDetail/WebApplicationDetail/Codelist`  for details.
+| Refer to 
 
 Display codelist in select box.
 
@@ -3221,7 +3221,7 @@ Displaying fixed text content
 | However, when internationalization is required, display the values acquired from property file using JSP tag library provided by Spring Framework.
 
 | Display using ``<spring:message>`` tag provided by Spring Framework.
-| Refer to :doc:`../ArchitectureInDetail/WebApplicationDetail/Internationalization`  for details.
+| Refer to 
 
 - properties
 
@@ -3372,7 +3372,7 @@ Displaying link for pagination
 To display links of pagination on the screen while displaying the list, use JSP tag library provided in common components.
 
 Display the link for pagination using ``<t:pagination>`` provided in common components.
-Refer to :doc:`../ArchitectureInDetail/WebApplicationDetail/Pagination`  for details.
+Refer to 
 
 
 |
@@ -3384,7 +3384,7 @@ Switching display according to authority
 To switch display according to authority of the user who has logged in, use JSP tag library provided by Spring Security.
 
 Switch display using ``<sec:authorize>`` provided by Spring Security.
-Refer to :doc:`../Security/Authorization`  for details.
+Refer to 
 
 
 |
@@ -4023,7 +4023,7 @@ Prevention of double submission
 Measures should be taken to prevent double submission as the same process gets executed multiple times by clicking Send button multiple times or 
 refreshing (refresh using F5 button) the Finish screen.
 
-For the problems occurring when countermeasures are not taken and details of implementation method, refer to :doc:`../ArchitectureInDetail/WebApplicationDetail/DoubleSubmitProtection` .
+For the problems occurring when countermeasures are not taken and details of implementation method, refer to 
 
 |
 
@@ -4035,7 +4035,7 @@ Usage of session
 | can be shared between multiple requests for executing a series of screen transitions.
 | However, whether to use \ ``@SessionAttributes``\  annotation should be determined after confirming the warning signs of using the session.
 
-For details of session usage policy and implementation at the time of session usage, refer to :doc:`../ArchitectureInDetail/WebApplicationDetail/SessionManagement` .
+For details of session usage policy and implementation at the time of session usage, refer to 
 
 
 .. raw:: latex

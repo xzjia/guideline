@@ -627,8 +627,8 @@ Spring Dataより提供されているページネーション機能と、共通
 
     具体的な実装例については、
 
-    * :doc:`../DataAccessDetail/DataAccessMyBatis3`
-    * :doc:`../DataAccessDetail/DataAccessJpa`
+    * 
+    * 
 
     を参照されたい。
 

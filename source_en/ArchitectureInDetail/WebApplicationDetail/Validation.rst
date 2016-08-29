@@ -20,7 +20,7 @@ whether order count is within the count of the available stock.
 
 In this section, 1. is explained and this check is called "Input validation".
 2. is called "Business logic check". For business logic check,
-refer to \ :doc:`../../ImplementationAtEachLayer/DomainLayer`\ .
+refer to \ 
 
 In this guideline, validation check should be performed in application layer
 whereas business logic check should be performed in domain layer.

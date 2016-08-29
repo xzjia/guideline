@@ -1150,7 +1150,7 @@ JSPからコードリストを参照する場合は、 ``java.util.Map`` イン�
 入力値がコードリスト内に定義されたコード値であるかどうかチェックするような場合、
 共通ライブラリでは、BeanValidation用のアノテーション、 ``org.terasoluna.gfw.common.codelist.ExistInCodeList`` を提供している。
 
-BeanValidationや、メッセージ出力方法の詳細については、 :doc:`../WebApplicationDetail/Validation` を参照されたい。
+BeanValidationや、メッセージ出力方法の詳細については、 
 
 \ ``@ExistInCodeList``\ アノテーションを使用して入力チェックを行う場合は、
 \ ``@ExistInCodeList``\ 用の「:ref:`Validation_message_def`」を行う必要がある。

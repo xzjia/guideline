@@ -690,7 +690,7 @@ Controllerの実装
     ファイルのアップロードを行う場合は、PRGパターンによる画面遷移と、トランザクショントークンチェックを行うことを推奨する。
     PRGパターンによる画面遷移と、トランザクショントークンチェックを行うことで、重複送信に伴う、同一ファイルのアップロードを防ぐことができる。
 
-    重複送信の防止方法について、詳細は、\ :doc:`../WebApplicationDetail/DoubleSubmitProtection`\ を参照されたい。
+    重複送信の防止方法について、詳細は、\ 
 
  .. note:: **MultipartFileについて**
 
@@ -703,7 +703,7 @@ Controllerの実装
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
 | 上記の実装例では、アップロードファイルのバリデーションをControllerの処理として行っていたが、ここでは、Bean Validationの仕組みを使ってバリデーションする方法について説明する。
-| バリデーションの詳細は、\ :doc:`Validation`\ を参照されたい。
+| バリデーションの詳細は、\ 
 
  .. note::
 
@@ -1445,7 +1445,7 @@ Controllerの実装
  .. note::
 
     仮ディレクトリのディレクトリは、アプリケーションをデプロイする環境によって異なる可能性があるため、外部プロパティから取得すること。
-    外部プロパティの詳細については、\ :doc:`../GeneralFuncDetail/PropertyManagement`\ を参照されたい。
+    外部プロパティの詳細については、\ 
 
  .. warning::
  
@@ -1558,7 +1558,7 @@ How to extend
  .. note::
 
     削除対象ファイルが格納されているディレクトリのパスや、削除基準となる時間などは、アプリケーションをデプロイする環境によって異なる可能性があるため、外部プロパティから取得すること。
-    外部プロパティの詳細については、\ :doc:`../GeneralFuncDetail/PropertyManagement`\ を参照されたい。
+    外部プロパティの詳細については、\ 
 
 
 不要ファイルを削除する処理のスケジューリング設定
@@ -1629,7 +1629,7 @@ How to extend
     cronの指定値の詳細については、\ `CronSequenceGeneratorのJavaDoc <http://docs.spring.io/spring/docs/4.2.7.RELEASE/javadoc-api/org/springframework/scheduling/support/CronSequenceGenerator.html>`_\ を参照されたい。
 
     実行タイミングは、アプリケーションをデプロイする環境によって異なる可能性があるため、外部プロパティから取得すること。
-    外部プロパティの詳細については、\ :doc:`../GeneralFuncDetail/PropertyManagement`\ を参照されたい。
+    外部プロパティの詳細については、\ 
 
  .. tip::
 

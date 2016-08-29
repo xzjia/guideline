@@ -13,7 +13,7 @@ The flow of development in this guideline with be as follows.
    ApplicationLayer
    CreateProject
 
-For the definition of layers, refer to  :doc:`Application Layering <../Overview/ApplicationLayering>` .
+For the definition of layers, refer to  
 
 .. raw:: latex
 

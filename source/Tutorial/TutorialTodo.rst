@@ -15,7 +15,7 @@
 
 * TERASOLUNA Server Framework for Java (5.x)による基本的なアプリケーションの開発方法
 * MavenおよびSTS(Eclipse)プロジェクトの構築方法
-* TERASOLUNA Server Framework for Java (5.x)の :doc:`../Overview/ApplicationLayering` に従った開発方法
+* TERASOLUNA Server Framework for Java (5.x)の 
 
 
 対象読者
@@ -361,7 +361,7 @@ Root Directoryに \ ``C:\work\todo``\ を設定し、Projectsにtodoのpom.xml�
 
     **ただし、実プロジェクトで適用する場合は、マルチプロジェクト構成を強く推奨する。**
 
-    マルチプロジェクトの作成方法は、「:doc:`../ImplementationAtEachLayer/CreateWebApplicationProject`」を参照されたい。
+    マルチプロジェクトの作成方法は、「
 
 |
 
@@ -1221,7 +1221,7 @@ Package Explorer上で右クリック -> New -> Class を選択し、「New Java
 
     本節では、説明を単純化するため、エラーメッセージをハードコードしているが、メンテナンスの観点で本来は好ましくない。
     通常、メッセージは、プロパティファイルに外部化することが推奨される。
-    プロパティファイルに外部化する方法は、\ :doc:`../ArchitectureInDetail/GeneralFuncDetail/PropertyManagement`\ を参照されたい。
+    プロパティファイルに外部化する方法は、\ 
 
 |
 
@@ -1538,7 +1538,7 @@ Package Explorer上で右クリック -> New -> File を選択し、「New File�
      - | 完了かどうか(\ ``finished``\ )で、打ち消し線(\ ``text-decoration: line-through;``\ )を装飾するかどうかを判断する。
    * - | (5)
      - | **文字列値を出力する際は、XSS対策のため、必ずf:h()関数を使用してHTMLエスケープを行うこと。**
-       | XSS対策についての詳細は、\ :doc:`../Security/XSS`\ を参照されたい。
+       | XSS対策についての詳細は、\ 
 
 
 |
@@ -1940,7 +1940,7 @@ Formクラスに以下のプロパティを追加する。
      - 説明
    * - | (1)
      - | 入力チェックルールをグループ化するためのインタフェースを作成する。
-       | 入力チェックルールのグループ化ついては、\ :doc:`../ArchitectureInDetail/WebApplicationDetail/Validation`\ を参照されたい。
+       | 入力チェックルールのグループ化ついては、\ 
        |
        | ここでは、新規作成処理用のインタフェースとして\ ``TodoCreate``\を、完了処理用のインタフェースとして\ ``TodoFinish``\ を作成している。
    * - | (2)
@@ -2917,7 +2917,7 @@ Package Explorer上で右クリック -> New -> File を選択し、「New File�
      - | \ ``mapper``\ 要素の\ ``namespace``\ 属性に、Repositoryインタフェースの完全修飾クラス名(FQCN)を指定する。
    * - | (2)
      - | \ ``<resultMap>``\ 要素に、検索結果(\ ``ResultSet``\ )とJavaBeanのマッピング定義を行う。
-       | マッピングファイルの詳細は\ :doc:`../ArchitectureInDetail/DataAccessDetail/DataAccessMyBatis3`\ を参照されたい。
+       | マッピングファイルの詳細は\ 
    * - | (3)
      - | \ ``todoId``\ (PK)が一致するレコードを1件取得するSQLを実装する。
        | \ ``<select>``\ 要素の\ ``resultMap``\ 属性には、適用するマッピング定義のIDを指定する。
@@ -3184,12 +3184,12 @@ Service及びアプリケーション層を作成後にAPサーバーを起動�
 本チュートリアルで作成したTODO管理アプリケーションには、以下の改善点がある。
 アプリケーションの修正を学習課題として、ガイドライン中の該当する説明を参照されたい。
 
-* プロパティ(未完了TODOの上限数)を外部化する → :doc:`../ArchitectureInDetail/GeneralFuncDetail/PropertyManagement`
-* メッセージを外部化する → :doc:`../ArchitectureInDetail/WebApplicationDetail/MessageManagement`
-* ページネーション機能を追加する → :doc:`../ArchitectureInDetail/WebApplicationDetail/Pagination`
-* 例外ハンドリングを加える → :doc:`../ArchitectureInDetail/WebApplicationDetail/ExceptionHandling`
-* 二重送信を防止する(トランザクショントークンチェックを追加する) → :doc:`../ArchitectureInDetail/WebApplicationDetail/DoubleSubmitProtection`
-* システム日時の取得元を変更する → :doc:`../ArchitectureInDetail/GeneralFuncDetail/SystemDate`
+* プロパティ(未完了TODOの上限数)を外部化する → 
+* メッセージを外部化する → 
+* ページネーション機能を追加する → 
+* 例外ハンドリングを加える → 
+* 二重送信を防止する(トランザクショントークンチェックを追加する) → 
+* システム日時の取得元を変更する → 
 
 |
 
@@ -4207,7 +4207,7 @@ spring-security.xml
 \ :file:`spring-security.xml`\ には、Spring Securityに関する定義を行う。
 
 | 作成したブランクプロジェクトの\ :file:`src/main/resources/META-INF/spring/spring-security.xml`\ は、以下のような設定となっている。
-| なお、本チュートリアルではSpring Securityの設定ファイルの説明は割愛する。Spring Securityの設定ファイルについては、「:doc:`./TutorialSecurity`」を参照されたい。
+| なお、本チュートリアルではSpring Securityの設定ファイルの説明は割愛する。Spring Securityの設定ファイルについては、「
 
 .. code-block:: xml
 

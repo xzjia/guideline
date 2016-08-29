@@ -337,7 +337,7 @@ Repositoryは、以下2つの役割を担う。
    | Entityオブジェクトは、アプリケーションのライフサイクル(サーバの起動や、停止など)に依存しないレイヤに、永続化しておく必要がある。
    | Entityの永続先は、リレーショナルデータベースになることが多いが、NoSQLデータベース、キャッシュサーバ、外部システム、ファイル（共有ディスク）などになることもある。
    | 実際の永続化処理は、O/R Mapperなどから提供されているAPIを使って行う。
-   | この役割は、インフラストラクチャ層のRepositoryImplで実装することになる。詳細については、\ :doc:`InfrastructureLayer`\ を参照されたい。
+   | この役割は、インフラストラクチャ層のRepositoryImplで実装することになる。詳細については、\ 
 
  .. figure:: images/repository_responsibility_2.png
     :alt: persist entity
@@ -375,7 +375,7 @@ Repositoryは、RepositoryインタフェースとRepositoryImplで構成され�
      - | Repositoryインタフェースで定義されたメソッドの実装を行う。
      - | 永続先に依存したEntityのCRUD操作の実装を行う。実際のCRUD処理は、Spring Framework、O/R Mapper、ミドルウェアなどから提供されている永続処理用のAPIを利用して行う。
        | RepositoryImplは、Repositoryインタフェースで定義された操作の実装を行う役割を担うので、インフラストラクチャ層に属することになる。
-       | RepositoryImplの実装については、\ :doc:`InfrastructureLayer`\ を参照されたい。
+       | RepositoryImplの実装については、\ 
 
 
 | 永続先が複数になる場合、以下のような構成となる。
@@ -651,7 +651,7 @@ Repositoryインタフェースのメソッド定義
 
 RepositoryImplの作成
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
-RepositoryImplの実装については、\ :doc:`InfrastructureLayer`\ を参照されたい。
+RepositoryImplの実装については、\ 
 
 
 .. _service-label:
@@ -1436,8 +1436,8 @@ ServiceおよびSharedServiceでは、アプリケーションで使用する業
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 業務データ(Entity)の取得、更新の実装例については、
 
-* MyBatis3を使う場合は、\ :doc:`../ArchitectureInDetail/DataAccessDetail/DataAccessMyBatis3`\
-* JPAを使う場合は、\ :doc:`../ArchitectureInDetail/DataAccessDetail/DataAccessJpa`\
+* MyBatis3を使う場合は、\ 
+* JPAを使う場合は、\ 
 
 を参照されたい。
 
@@ -1448,7 +1448,7 @@ ServiceおよびSharedServiceでは、アプリケーションで使用する業
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 | Serviceで解決すべきメッセージは、警告メッセージ、業務エラーメッセージの２つとなる(下図赤破線部参照)。
 | それ以外のメッセージは、アプリケーション層で解決される。
-| メッセージの種類とメッセージのパターンについては、\ :doc:`../ArchitectureInDetail/WebApplicationDetail/MessageManagement`\ を参照されたい。
+| メッセージの種類とメッセージのパターンについては、\ 
 
  .. figure:: images/service_target-resolving-message.png
    :alt: target of resolving message
@@ -1583,7 +1583,7 @@ ServiceおよびSharedServiceでは、アプリケーションで使用する業
    * - | (1)
      - 旅行を予約する際に、予約日が期限を過ぎているので、ビジネス例外をスローしている。
 
-例外ハンドリング全体の詳細は、\ :doc:`../ArchitectureInDetail/WebApplicationDetail/ExceptionHandling`\ を参照されたい。
+例外ハンドリング全体の詳細は、\ 
 
 .. _service-return-systemerrormessage-label:
 
@@ -1655,7 +1655,7 @@ ServiceおよびSharedServiceでは、アプリケーションで使用する業
     業務ロジック実行中に、RepositoryやO/R Mapperでデータアクセスエラーが発生した場合、\ ``org.springframework.dao.DataAccessException``\ のサブクラスに変換されてスローされる。
     基本的には、業務ロジックではキャッチせず、アプリケーション層でエラーハンドリングすればよいが、
     一意制約違反などの一部のエラーについては、業務要件によっては、業務ロジックでハンドリングする必要がある。
-    詳細は、\ :doc:`../ArchitectureInDetail/DataAccessDetail/DataAccessCommon`\ を参照されたい。
+    詳細は、\ 
 
 .. _service_transaction_management:
 
@@ -1753,7 +1753,7 @@ Spring Frameworkから提供されている「宣言型トランザクション�
         | トランザクションを完全に独立させる。
         |
         | トランザクションの独立レベルは、排他制御に関連するパラメータとなる。
-        | 排他制御については、\ :doc:`../ArchitectureInDetail/DataAccessDetail/ExclusionControl`\ を参照されたい。
+        | 排他制御については、\ 
     * - 3
       - timeout
       - | トランザクションのタイムアウト時間(秒)を指定する。
@@ -2112,7 +2112,7 @@ Tips
 
 | ビジネスルールのエラーをフィールド毎に出力する必要がある場合、Controller側(Bean ValidationまたはSpring Validator)の仕組みを利用する必要がある。
 | このケースの場合、チェックロジック自体はServiceとして実装し、Bean ValidationまたはSpring ValidatorからServiceのメソッドを呼び出す方式で実現することを推奨する。
-| 詳細は、\ :doc:`../ArchitectureInDetail/WebApplicationDetail/Validation`\ の業務ロジックチェックを参照されたい。
+| 詳細は、\ 
 
 .. raw:: latex
 

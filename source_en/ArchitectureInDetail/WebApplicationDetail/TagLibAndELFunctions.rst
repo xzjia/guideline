@@ -127,7 +127,7 @@ The \ ``<t:pagination>`` \ tag is a
 JSP Tag Library to output the pagination link
 by referring the information stored in page search results (\ ``org.springframework.data.domain.Page``\).
 
-For detail description of pagination and how to use this tag, Refer the following section [:doc:`./Pagination`].
+For detail description of pagination and how to use this tag, Refer the following section [
 
 * For pagination link, [:ref:`pagination_overview_paginationlink`]
 * For parameter values of this tag, [:ref:`pagination_overview_paginationlink_taglibparameters`]
@@ -143,7 +143,7 @@ For detail description of pagination and how to use this tag, Refer the followin
 The \ ``<t:messagesPanel>`` \ tag is a JSP Tag Library to output the processing result message, 
 (Such as \ ``org.terasoluna.gfw.common.message.ResultMessage`` \ or message having exception).
 
-Refer the following section [:doc:`../WebApplicationDetail/MessageManagement`] for how to use this tag.
+Refer the following section [
 
 * For how to display messages using this tag, [:ref:`message-display`]
 * For parameter values of this tag, [:ref:`message-management-messagepanel-attribute`]
@@ -156,7 +156,7 @@ Refer the following section [:doc:`../WebApplicationDetail/MessageManagement`] f
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 The \ ``<t:transaction>`` \ tag is a JSP Tag Library to output the transaction token as hidden item (\ ``<input type="hidden">"``\ ).
 
-Refer the following section [:doc:`./DoubleSubmitProtection`] for the transaction token check feature and how to use this tag.
+Refer the following section [
 
 * For transaction token check feature, [:ref:`doubleSubmit_how_to_use_transaction_token_check`]
 * For how to use this tag, [:ref:`doubleSubmit_how_to_use_transaction_token_check_jsp`]
@@ -637,7 +637,7 @@ f:link() how to use
     In addition, it has been described in the return value description, if the format of the URL string specified in the argument is not appropriate,
     it returns the input string value without generating a hyperlink.
     Therefore, if you want to use the input value from the user as a URL string in the argument, 
-    similar to string output process, the escaping process of the HTML special characters (:doc:`../../Security/XSS`) are required.
+    similar to string output process, the escaping process of the HTML special characters (
 
 |
 
@@ -708,7 +708,7 @@ f:br() how to use
 
 .. note::
 
-    When you display a string on the screen, there is a need to escape the HTML special character as [:doc:`../../Security/XSS`].
+    When you display a string on the screen, there is a need to escape the HTML special character as [
     
     if you are converting new line code into \ ``<br />`` \ tag using \ ``f:br()`` \ function,
     as in the above example, a string that has escaped the HTML special characters need to pass as an argument to \ ``f:br()`` \ function.
@@ -782,7 +782,7 @@ f:cut() how to use
 
 .. note::
 
-    There is a need to escape the HTML special character as [:doc:`../../Security/XSS`] while displaying the extracted string on the screen.
+    There is a need to escape the HTML special character as [
     In the above example, string is escaped by using \ ``f:h()`` \ function.
 
 .. raw:: latex

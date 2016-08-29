@@ -1143,7 +1143,7 @@ Input validation of code value using codelist
 When checking whether the input value is the code value defined in codelist,
 ``org.terasoluna.gfw.common.codelist.ExistInCodeList`` annotation for BeanValidation is provided in common library.
 
-For details on BeanValidation and message output method, refer to :doc:`../WebApplicationDetail/Validation`.
+For details on BeanValidation and message output method, refer to 
 
 For input validation using \ ``@ExistInCodeList``\  annotation,
 it is necessary to carry out ":ref:`Validation_message_def`" for \ ``@ExistInCodeList``\  .

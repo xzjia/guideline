@@ -218,12 +218,12 @@ The customization required locations are described below.
 
     The customization points other than the above are,
 
-    * Settings of :doc:`../Security/Authentication`・:doc:`../Security/Authorization`
-    * Settings to enable :doc:`../ArchitectureInDetail/WebApplicationDetail/FileUpload`
-    * Setting to activate :doc:`../ArchitectureInDetail/WebApplicationDetail/Internationalization`
-    * Definition of :doc:`../ArchitectureInDetail/GeneralFuncDetail/Logging`
-    * Definition of :doc:`../ArchitectureInDetail/WebApplicationDetail/ExceptionHandling`
-    * Apply settings of :doc:`../ArchitectureInDetail/WebServiceDetail/REST`
+    * Settings of 
+    * Settings to enable 
+    * Setting to activate 
+    * Definition of 
+    * Definition of 
+    * Apply settings of 
 
     For these customizations, Refer to "How to use" of each section and customize if required.
 
@@ -339,7 +339,7 @@ Actual point-of-use (sampling) indicated below.
 |
 
 The \ ``x.xx.fw.9999`` \ format message ID is
-a message ID system that is introduced in [:doc:`../ArchitectureInDetail/WebApplicationDetail/MessageManagement`] of this guideline but,
+a message ID system that is introduced in [
 the value of the project division is in the state of provisional value [\ ``xx``\].
 
 .. note::
@@ -489,7 +489,7 @@ Customization method and customization targeted files are indicated below.
         ``artifactId/artifactId-web/src/main/webapp/WEB-INF/views/common/error/*.jsp``
       - Modify depending upon the application requirements (such as UI terms).
 
-        Refer [:ref:`exception-handling-how-to-use-codingpoint-jsp-label` of :doc:`../ArchitectureInDetail/WebApplicationDetail/ExceptionHandling`] for customizing the JSP to display an error screen.
+        Refer [:ref:`exception-handling-how-to-use-codingpoint-jsp-label` of 
     * - 2.
       - HTML for the error screen
 
@@ -664,7 +664,7 @@ Therefore it is necessary to change the DataSource settings for accessing the ac
     Again there are some cases where Apache Commons DBCP is used on development environment and 
     DataSource provided by the application server is used on test as well as production environment.
 
-    For how to set-up the DataSource, Refer [:ref:`data-access-common_howtouse_datasource` of :doc:`../ArchitectureInDetail/DataAccessDetail/DataAccessCommon`].
+    For how to set-up the DataSource, Refer [:ref:`data-access-common_howtouse_datasource` of 
 
 |
 
@@ -709,7 +709,7 @@ Customization method and customization targeted files are indicated below.
         ``artifactId/artifactId-env/src/main/resources/META-INF/spring/artifactId-env.xml``
       - If DataSource provided by the application server is used, change the configuration to use the DataSource that is obtained via JNDI.
 
-        For how to set-up the DataSource, Refer [:ref:`data-access-common_howtouse_datasource` of :doc:`../ArchitectureInDetail/DataAccessDetail/DataAccessCommon`].
+        For how to set-up the DataSource, Refer [:ref:`data-access-common_howtouse_datasource` of 
 
 .. note:: **About the database property of the property file for defining environment dependent setting**
 
@@ -811,7 +811,7 @@ etc are provided.
 
     Therefore, unnecessary setting exists in building a REST API for handling JSON or XML.
     If you want to create a project for building REST API, 
-    need to apply the REST API related settings by referring to the [:ref:`RESTHowToUseApplicationSettings` of :doc:`../ArchitectureInDetail/WebServiceDetail/REST`].
+    need to apply the REST API related settings by referring to the [:ref:`RESTHowToUseApplicationSettings` of 
 
 .. note::
 
@@ -1054,7 +1054,7 @@ Module that manages the application layer (Web layer) components are explained.
       - The controller class for receiving a request to display the Welcome page.
     * - | (4)
       - The directory in which a mapping definition file of Dozer (Bean Mapper) is stored, 
-        Refer to [:doc:`../ArchitectureInDetail/GeneralFuncDetail/Dozer`] for Dozer.
+        Refer to [
 
         It is an empty directory at the time of creation. 
         If the mapping file is required (if high mapping is required), 
@@ -1107,7 +1107,7 @@ Module that manages the application layer (Web layer) components are explained.
         .. note::
 
             **Messages should be modified according to the application requirements (Such as message Terms).**
-            For the message definition, Refer [:doc:`../ArchitectureInDetail/WebApplicationDetail/MessageManagement`].
+            For the message definition, Refer [
 
 .. note::
 
@@ -1157,7 +1157,7 @@ Module that manages the application layer (Web layer) components are explained.
       - | Description
     * - | (12)
       - Directory that contains the Tiles configuration files.
-        Refer [:doc:`../ArchitectureInDetail/WebApplicationDetail/TilesLayout`] for the Tiles configuration files.
+        Refer [
     * - | (13)
       - Directory that contains the View generation templates (jsp etc).
     * - | (14)
@@ -1177,7 +1177,7 @@ Module that manages the application layer (Web layer) components are explained.
         Refer [:ref:`view_jsp_include-label`] for common JSP files for include.
     * - | (16)
       - Directory that contains the JSP files for the Tiles layout.
-        Refer [:doc:`../ArchitectureInDetail/WebApplicationDetail/TilesLayout`] for JSP files for the Tiles layout.
+        Refer [
     * - | (17)
       - JSP file that displays the Welcome page.
     * - | (18)
@@ -1259,7 +1259,7 @@ Module that manages the domain layer components are explained.
       - Package for storing the  domain layer classes.
     * - | (3)
       - The directory in which a mapping definition file of Dozer (Bean Mapper) is stored, 
-        Refer to [:doc:`../ArchitectureInDetail/GeneralFuncDetail/Dozer`] for Dozer.
+        Refer to [
 
         It is an empty directory at the time of creation. 
         If the mapping file is required (if high mapping is required), 
@@ -1453,7 +1453,7 @@ Module that manages the environment dependent configuration files are explained.
         This directory is prepared while performing small operation verification .
         **Basically remove this directory because this directory is not intended to use in the actual application development.**
     * - | (8)
-      - Property file for carrying out the Dozer (Bean Mapper) global settings. For Dozer refer [:doc:`../ArchitectureInDetail/GeneralFuncDetail/Dozer`].
+      - Property file for carrying out the Dozer (Bean Mapper) global settings. For Dozer refer [
 
         It is an empty file at the time of creation. (The warning log appears at the start-up time if file is not exist, the empty file is prepared in order to prevent it)
     * - | (9)
@@ -1462,7 +1462,7 @@ Module that manages the environment dependent configuration files are explained.
         At the time of creation, new line character related setting are specified for those SQLs which are going to be printed in log.
     * - | (10)
       - Configuration file of the Logback (log output).
-        For the log output refer [:doc:`../ArchitectureInDetail/GeneralFuncDetail/Logging`].
+        For the log output refer [
 
 |
 

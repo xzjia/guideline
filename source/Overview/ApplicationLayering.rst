@@ -85,7 +85,7 @@ Spring MVCでは、\ ``View``\ クラスが該当する。
 
     REST APIやAjax向けのリクエストでJSONやXML形式の出力を行う場合は、\ ``HttpMessageConverter``\ クラスが\ ``View``\の役割を担う。
 
-    詳細は、「:doc:`../ArchitectureInDetail/WebServiceDetail/REST`」を参照されたい。
+    詳細は、「
 
 |
 
@@ -113,14 +113,14 @@ Spring MVCでは、Formオブジェクトは、リクエストパラメータを
     Controller内のソースコードをシンプルな状態に保つこと推奨する。
 
     * Helperクラスを作成して変換処理を委譲する
-    * :doc:`Dozer <../ArchitectureInDetail/GeneralFuncDetail/Dozer>` を使用する
+    * 
 
 .. tip::
 
     REST APIやAjax向けのリクエストでJSONやXML形式の入力を受ける場合は、\ ``Resource``\ クラスが\ ``Form``\の役割を担う。
     また、JSONやXML形式の入力データを\ ``Resource``\ クラスに変換する役割は、\ ``HttpMessageConverter``\ クラスが担う。
 
-    詳細は、「:doc:`../ArchitectureInDetail/WebServiceDetail/REST`」を参照されたい。
+    詳細は、「
 
 |
 
@@ -381,7 +381,7 @@ Repositoryを使用する時の処理の流れ
 注意するべきことは、\ **基本的にServiceからServiceの呼び出しは、禁止している**\ 点である。
 
 もし他のサービスからも利用可能なサービスが必要な場合は、呼び出し可否を明確にするために、SharedServiceを作成すること。
-詳細については、\ :doc:`../ImplementationAtEachLayer/DomainLayer`\ を参照されたい。
+詳細については、\ 
 
 
 .. note::

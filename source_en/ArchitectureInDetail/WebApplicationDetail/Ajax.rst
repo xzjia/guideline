@@ -339,7 +339,7 @@ Following example serves as the Ajax communication that returns a list matching 
    * - | (6)
      - | Specify the JavaBean that receives request data, as an argument.
        | If input validation is required, specify ``@Validated``. For error handling of input validation, refer to ":ref:`ajax_how_to_use_input_error`".
-       | For details on input validation, refer to ":doc:`../WebApplicationDetail/Validation`".
+       | For details on input validation, refer to "
    * - | (7)
      - | Create the JavaBean object to store the data to be returned.
    * - | (8)
@@ -623,7 +623,7 @@ Following example is about the Ajax communication of receiving two numbers and r
    * - | (4)
      - | Specify the JavaBean for receiving form data as an argument.
        | Specify ``@Validated``  when input validation is required. For handling input validation errors, refer to ":ref:`ajax_how_to_use_input_error`".
-       | For details on input validation, refer to ":doc:`../WebApplicationDetail/Validation`".
+       | For details on input validation, refer to "
    * - | (5)
      - | Store the processing result in the object created for the same.
        | In the above example, calculation result of the two numbers fetched from form object, is stored.
@@ -727,7 +727,7 @@ Following example is about the Ajax communication of receiving two numbers and r
    * - | (9)
      - | To send the request using POST method, CSRF token needs to be set to HTTP header.
        | In the above example, the header name and token value are set in the ``<meta>`` element of HTML and value is fetched by JavaScript.
-       | For details on CSRF measures, refer to :doc:`../../Security/CSRF`.
+       | For details on CSRF measures, refer to 
    * - | (10)
      - | Ajax function that converts the numerical value specified in form, to request parameter and sends the request for ``/ajax/plusForForm`` using POST method.
        | In the above example, clicking the button acts as the trigger for Ajax communication however, real time calculation can be implemented by setting lost focus of the text box as the trigger.
@@ -873,7 +873,7 @@ Difference between this method and  "Posting form data" method, is explained.
      - | Assign ``@org.springframework.web.bind.annotation.RequestBody`` as the argument annotation of JavaBean for receiving form data.
        | By assigning this annotation, data in JSON format stored in the request body is unmarshalled and converted to object.
        | Specify ``@Validated`` when input validation is required. For error handling of input validation, refer to ":ref:`ajax_how_to_use_input_error`".
-       | For details on input validation, refer to :doc:`../WebApplicationDetail/Validation`.
+       | For details on input validation, refer to 
 
 |
 

@@ -72,7 +72,7 @@ Joda Time, Joda Time JSP tags の利用方法を、以下で説明する。
 
                 DateTime dateTime = dataFactory.newDateTime();
 
-        DateFactoryの利用方法は、 :doc:`./SystemDate` を参照されたい。
+        DateFactoryの利用方法は、 
 
         LocalDateやLocalTimeの生成は
 

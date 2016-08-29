@@ -883,7 +883,7 @@ Spring Dataから提供されているインタフェースを継承してEntity
       * void deleteAll()
       * void flush()
 
-     JPAの楽観ロックの詳細については :doc:`ExclusionControl` を参照されたい。
+     JPAの楽観ロックの詳細については 
 
 .. _how_to_create_repository_extends_springdata_flush_timing_note1:
 
@@ -1115,7 +1115,7 @@ Queryメソッドは、Entity毎のRepositoryインタフェースのメソッ�
 Entityのロックを取得する
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 | Entityのロックを取得する必要がある場合は、Queryメソッドに ``@org.springframework.data.jpa.repository.Lock`` アノテーションを追加し、ロックモードを指定する。
-| 詳細については、 :doc:`ExclusionControl` を参照されたい。
+| 詳細については、 
 
  .. code-block:: java
 
@@ -1356,7 +1356,7 @@ Queryメソッド呼び出し時に実行するQueryの指定方法について�
     LIKE検索を行う場合は、検索条件となる値をLIKE検索用にエスケープする必要がある。
 
     ``org.terasoluna.gfw.common.query.QueryEscapeUtils`` クラスにエスケープするためのメソッドが用意されているため、要件を充たせる場合は使用を検討すること。
-    ``QueryEscapeUtils`` クラスの詳細については、「:doc:`DataAccessCommon`」の「:ref:`data-access-common_appendix_like_escape`」を参照されたい。
+    ``QueryEscapeUtils`` クラスの詳細については、「
 
  .. note:: **一致方法を動的に変化させる必要がある場合**
 
@@ -1365,7 +1365,7 @@ Queryメソッド呼び出し時に実行するQueryの指定方法について�
 
     ``org.terasoluna.gfw.common.query.QueryEscapeUtils`` クラスに一致方法に対応する検索条件値に変換するメソッドが用意されているため、
     要件を充たせる場合は、使用を検討すること。
-    ``QueryEscapeUtils`` クラスの詳細については、「:doc:`DataAccessCommon`」の「:ref:`data-access-common_appendix_like_escape`」を参照されたい。
+    ``QueryEscapeUtils`` クラスの詳細については、「
 
 | ソート条件は、Query内に直接指定することができる。
 | 以下に、実装例を示す。
@@ -1832,7 +1832,7 @@ Entityの検索方法について、目的別に説明する。
       - 説明
     * - | (2)
       - | Spring Dataより提供されているページング検索用のオブジェクト（  ``org.springframework.data.domain.Pageable`` ）を生成する。
-        | 詳細は「:doc:`../WebApplicationDetail/Pagination`」を参照されたい。
+        | 詳細は「
 
 
 - Service
@@ -3365,7 +3365,7 @@ LIKE検索時のエスケープについて
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 | LIKE検索を行う場合は、検索条件として使用する値をLIKE検索用にエスケープする必要がある。
 | LIKE検索用のエスケープ処理は、共通ライブラリから提供している ``org.terasoluna.gfw.common.query.QueryEscapeUtils`` クラスのメソッドを使用する事で実現することができる。
-| 共通ライブラリから提供しているエスケープ処理の仕様については、「:doc:`DataAccessCommon`」の「:ref:`data-access-common_appendix_like_escape`」を参照されたい。
+| 共通ライブラリから提供しているエスケープ処理の仕様については、「
 
 以下に、共通ライブラリから提供しているエスケープ処理の使用方法について説明する。
 
@@ -4158,7 +4158,7 @@ Spring Data JPAでは、新たに作成されたEntityと更新されたEntity�
     * - | (3)
       - | Entityの操作日時(作成日時、最終更新日時)のプロパティに設定するインスタンスを返却する。
         | 上記例では、共通ライブラリから提供している ``org.terasoluna.gfw.common.date.jodatime.JodaTimeDateFactory`` から取得したインスタンスを操作日時として返却している。
-        | ``JodaTimeDateFactory`` の詳細については、「:doc:`../GeneralFuncDetail/SystemDate`」を参照されたい。
+        | ``JodaTimeDateFactory`` の詳細については、「
 
 - ``infra.xml``
 

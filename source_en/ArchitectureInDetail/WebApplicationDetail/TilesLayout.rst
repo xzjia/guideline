@@ -252,7 +252,7 @@ How to configure is shown below.
   title.staff.createForm = Create Staff Information
 
  .. note::
-   For details on message properties file, refer to :doc:`../WebApplicationDetail/MessageManagement`.
+   For details on message properties file, refer to 
 
 
 Following is the file structure when Tiles is set.

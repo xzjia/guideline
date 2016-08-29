@@ -1247,7 +1247,7 @@ The method of generating Business Exception is given below.
       - | Check whether there is any violation of a business rule.
     * - | (2)
       - | If there is a violation, generate ResultMessages. In the above example, ResultMessages of error level are being generated.
-        | For the details on method of generating ResultMessages, refer to \ :doc:`../WebApplicationDetail/MessageManagement`\ .
+        | For the details on method of generating ResultMessages, refer to \ 
     * - | (3)
       - | Add ResultMessage to ResultMessages. Specify message ID as 1st argument (mandatory) and value to be inserted in message as 2nd argument (optional).
         | The value to be inserted in message is a variable-length parameter; hence multiple values can be specified.
@@ -1627,7 +1627,7 @@ The example below illustrates implementation at the time of outputting ResultMes
     * - Sr. No.
       - Description
     * - | (1)
-      -  <t:messagesPanel> tag should be specified at a location where the message is to be output. For details on usage of <t:messagesPanel> tag, refer to \ :doc:`../WebApplicationDetail/MessageManagement`\ .
+      -  <t:messagesPanel> tag should be specified at a location where the message is to be output. For details on usage of <t:messagesPanel> tag, refer to \ 
 
 
 .. _exception-handling-how-to-use-codingpoint-jsp-exceptioncode-label:
@@ -1687,7 +1687,7 @@ The example below illustrates implementation at the time of displaying exception
 How to use (Ajax)
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
-For the exception handling of Ajax, refer to \ :doc:`../WebApplicationDetail/Ajax`\ .
+For the exception handling of Ajax, refer to \ 
 
 |
 
@@ -1753,7 +1753,7 @@ Exception handling classes provided by the common library
        |   2. "w", treat it as ``ExceptionLevel.WARN``
        |   3. "e", treat it as ``ExceptionLevel.ERROR``
        |   4. a character other than the above, treat as ``ExceptionLevel.ERROR`` level.
-       | This class is implemented in accordance with the rules of the message ID described in \ :doc:`Message <../WebApplicationDetail/MessageManagement>`\  guidelines.
+       | This class is implemented in accordance with the rules of the message ID described in \ 
    * - | (6)
      - | ExceptionLogger
      - | A class to output log of exceptions.

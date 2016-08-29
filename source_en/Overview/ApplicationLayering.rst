@@ -82,7 +82,7 @@ In Spring MVC, all this is done by ``View`` class.
     If use the JSON or XML format output results for the REST API or Ajax request,
     \ ``HttpMessageConverter``\  class plays View's responsibility.
 
-    Details refer to ":doc:`../ArchitectureInDetail/WebServiceDetail/REST`".
+    Details refer to "
 
 |
 
@@ -108,7 +108,7 @@ In Spring MVC, form object are the POJO class that store request parameters. It 
     recommend to perform of either or both of the following measures and keep Controller's source code in simple state.
 
     * Create helper class and delegate conversion logic to helper classes.
-    * Use the :doc:`Dozer <../ArchitectureInDetail/GeneralFuncDetail/Dozer>`.
+    * Use the 
 
 
 .. tip::
@@ -117,7 +117,7 @@ In Spring MVC, form object are the POJO class that store request parameters. It 
     \ ``Resource``\  class plays Form's responsibility.
     Also, \ ``HttpMessageConverter``\  class plays responsibility to convert JSON or XML input data into \ ``Resource``\  class.
 
-    Details refer to ":doc:`../ArchitectureInDetail/WebServiceDetail/REST`".
+    Details refer to "
 
 |
 
@@ -371,7 +371,7 @@ Note that \ **calling a Service from another Service is basically prohibited**\.
 
 If services that can be used even from other services are required,
 SharedService should be created in order to clarify such a possibility.
-Refer to \ :doc:`../ImplementationAtEachLayer/DomainLayer`\  for the details.
+Refer to \ 
 
 .. note::
 

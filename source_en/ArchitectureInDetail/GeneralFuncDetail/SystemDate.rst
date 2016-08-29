@@ -104,7 +104,7 @@ Below interface provided as a component of terasoluna-gfw-jodatime.
 
 .. note::
 
-    For Joda Time, refer :doc:`./JodaTime`.
+    For Joda Time, refer 
 
 |
 
@@ -360,7 +360,7 @@ Records need to be added by creating a table as shown below.
     18. SELECT now FROM system_date {executed in 0 msec}
 
 Access log is output to DB if Date Factory is called. 
-In order to output SQL log, \ ``Log4jdbcProxyDataSource`` \ described in :doc:`../DataAccessDetail/DataAccessCommon` is used.
+In order to output SQL log, \ ``Log4jdbcProxyDataSource`` \ described in 
 
 |
 
@@ -764,7 +764,7 @@ The example below illustrates a Service class which is implemented with the spec
    * - Sr. No.
      - Description
    * - | (1)
-     - | Fetch current date and time. For ``LocalDate``, refer to :doc:`./JodaTime`.
+     - | Fetch current date and time. For ``LocalDate``, refer to 
    * - | (2)
      - | Calculate the last date up to which the tour can be cancelled.
    * - | (3)

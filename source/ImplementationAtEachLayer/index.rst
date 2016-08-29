@@ -13,7 +13,7 @@ TERASOLUNA Server Framework for Java (5.x)を使用する上での各種ルー�
    ApplicationLayer
    CreateProject
 
-レイヤ定義については、 :doc:`アプリケーションのレイヤ化 <../Overview/ApplicationLayering>` を参照。
+レイヤ定義については、 
 
 .. raw:: latex
 

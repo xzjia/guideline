@@ -362,7 +362,7 @@ Below is the structure of the project to be created in this tutorial.
 
     **However, when in a real project, multi project configuration is strongly recommended.**
 
-    For creating multi-project, Refer [:doc:`../ImplementationAtEachLayer/CreateWebApplicationProject`].
+    For creating multi-project, Refer [
 
 |
 
@@ -1222,7 +1222,7 @@ Created class stored in the following directory.
 
     In this chapter, error messages are hard coded for simplification, but in reality it is not preferred from maintenance viewpoint.
     Usually, it is recommended to create message externally in property file.
-    The method for creating the external property file is described in \ :doc:`../ArchitectureInDetail/GeneralFuncDetail/PropertyManagement`\.
+    The method for creating the external property file is described in \ 
 
 |
 
@@ -1539,7 +1539,7 @@ First, implement necessary JSP for following display.
      - | Determine whether to decorate text using strike through(\ ``text-decoration: line-through;``\ ) to display, if it is completed (\ ``finished``\ ).
    * - | (5)
      - | **To take XSS countermeasures at the time of output of character string, HTML escape should be performed using f:h() function.**
-       | Regarding XSS measures, refer to \ :doc:`../Security/XSS`\.
+       | Regarding XSS measures, refer to \ 
 
 
 |
@@ -1941,7 +1941,7 @@ Add below property in Form class.
      - Description
    * - | (1)
      - | Create an interface for grouping the input check rules.
-       | For grouping the input check rules, Refer \ :doc:`../ArchitectureInDetail/WebApplicationDetail/Validation`\.
+       | For grouping the input check rules, Refer \ 
        |
        | However as a new creation prcess \ ``TodoCreate`` \ interface and as a completion process \ ``TodoFinish`` \ interface is created.
    * - | (2)
@@ -2902,7 +2902,7 @@ Describe the SQL to be executed when the \ ``TodoRepository`` \ methods defined 
      - | Specify the fully qualified class name of the Repository interfaces (FQCN) in the \ ``namespace`` \ attribute of \ ``mapper`` \ element.
    * - | (2)
      - | Define JavaBean mapping with search result (\ ``ResultSet``\ ) in the \ ``<resultMap>`` \ element.
-       | For the mapping file details, Refer \ :doc:`../ArchitectureInDetail/DataAccessDetail/DataAccessMyBatis3`\.
+       | For the mapping file details, Refer \ 
    * - | (3)
      - | Implement the SQL to get one record which matches with the \ ``todoId`` \(PK).
        | Specify the ID of applicable mapping definition in the \ ``resultMap`` \ attribute of \ ``<select>`` \ element.
@@ -3172,12 +3172,12 @@ In this tutorial, following contents have been learnt.
 The following improvement can be done in the TODO management application.
  As a learning challenge of the application improvement refer the appropriate description of the guidelines.
 
-* To externalize the property (Maximum number of uncompleted TODO) -> :doc:`../ArchitectureInDetail/GeneralFuncDetail/PropertyManagement`
-* To externalize the messages -> :doc:`../ArchitectureInDetail/WebApplicationDetail/MessageManagement`
-* To add pagination -> :doc:`../ArchitectureInDetail/WebApplicationDetail/Pagination`
-* To add exception handling -> :doc:`../ArchitectureInDetail/WebApplicationDetail/ExceptionHandling`
-* To add double submit protection (Support the transaction token check) -> :doc:`../ArchitectureInDetail/WebApplicationDetail/DoubleSubmitProtection`
-* To change how to get the system date time -> :doc:`../ArchitectureInDetail/GeneralFuncDetail/SystemDate`
+* To externalize the property (Maximum number of uncompleted TODO) -> 
+* To externalize the messages -> 
+* To add pagination -> 
+* To add exception handling -> 
+* To add double submit protection (Support the transaction token check) -> 
+* To change how to get the system date time -> 
 
 |
 
@@ -4194,7 +4194,7 @@ spring-security.xml
 The Spring Security related definitions are done in \ :file:`spring-security.xml`\.
 
 | Following settings are done in created blank project \ :file:`src/main/resources/META-INF/spring/spring-security.xml`\.
-| In addition, a description of the Spring Security configuration file is omitted in the tutorial. For the Spring Security configuration file, Refer [:doc:`./TutorialSecurity`].
+| In addition, a description of the Spring Security configuration file is omitted in the tutorial. For the Spring Security configuration file, Refer [
 
 .. code-block:: xml
 

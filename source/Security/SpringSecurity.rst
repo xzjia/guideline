@@ -324,7 +324,7 @@ WebアプリケーションにSpring Securityを適用するためのセット�
 .. note::
 
     開発プロジェクトを\ `ブランンクプロジェクト <https://github.com/terasolunaorg/terasoluna-gfw-web-multi-blank>`_\ から作成すると、ここで説明する各設定はセットアップ済みの状態になっている。
-    開発プロジェクトの作成方法については、「:doc:`../ImplementationAtEachLayer/CreateWebApplicationProject`」を参照されたい。
+    開発プロジェクトの作成方法については、「
 
 |
 

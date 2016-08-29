@@ -104,7 +104,7 @@ Overview
        | これは、データベースアクセスを伴うアプリケーションの場合、アプリケーションが稼動していても、データベースに異常がある場合は正常に業務を行うことができないためである。
    * - | (3)
      - | レスポンスを返すViewとしてJSPを使用する。
-       | 本ガイドラインではJSPを例にとって説明するが、RESTやSOAPを用いる場合など、アプリケーションの特性に合わせて通信方式やレスポンス形式は適宜変更すること。詳細は、\ :doc:`../../../ArchitectureInDetail/WebServiceDetail/REST`\や、\ :doc:`../../../ArchitectureInDetail/WebServiceDetail/SOAP`\を参照されたい。
+       | 本ガイドラインではJSPを例にとって説明するが、RESTやSOAPを用いる場合など、アプリケーションの特性に合わせて通信方式やレスポンス形式は適宜変更すること。詳細は、\ 
 
 | 本ガイドラインの実装例で返却されるステータスコードおよびレスポンスは以下の通りである。
 
@@ -123,7 +123,7 @@ Overview
      - | 例外ハンドリング機能で設定されたステータスコード
      - | 例外ハンドリング機能で設定されたレスポンス
 
-| 例外ハンドリングの設定を変更する場合は、\ :doc:`../../../ArchitectureInDetail/WebApplicationDetail/ExceptionHandling`\を参照されたい。
+| 例外ハンドリングの設定を変更する場合は、\ 
 
 
 .. _HealthCheckHowToUse:
@@ -139,7 +139,7 @@ Repositoryインタフェース
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 
 | まず、\ ``HealthCheckRepository``\を作成する。\ ``HealthCheckRepository``\はヘルスチェック用のSQLを実行し、データベースの稼動を確認する
-| なお、ここではMyBatis3を用いてデータベースにアクセスする例を示す。他の方式を採用する場合は\ :doc:`../../../ArchitectureInDetail/DataAccessDetail/index`\を参照されたい。
+| なお、ここではMyBatis3を用いてデータベースにアクセスする例を示す。他の方式を採用する場合は\ 
 
 **HealthCheckRepository.java**
 
@@ -310,7 +310,7 @@ JSPファイル
 | ヘルスチェック処理を使用する際は、認証・認可機能などによりヘルスチェック用のURLがアクセス不可にならないように注意する必要がある。
 | 例えば、どのロールでもアクセスできるようにするには、spring-security.xmlの\ ``<sec:intercept-url>``\を設定する。
 | \ ``/common/healthcheck``\ 配下の除外設定を行う例を以下に示す。
-| 詳細は\ :doc:`../../../Security/Authorization`\を参照されたい。
+| 詳細は\ 
 
 **spring-security.xml**
 
@@ -351,7 +351,7 @@ Apache Tilesの設定を受けないようにする
 
 | \ :ref:`HealthCheckHowToUseController`\で示した通り、Apache Tilesの設定を受けないよう、tiles-definitions.xmlの\ ``<put-attribute>``\タグに従わないディレクトリ配下にJSPファイルを配置する必要がある。
 | ブランクプロジェクトのデフォルトの設定では、 \ ``/WEB-INF/views/{1}/{2}.jsp``\に該当するJSPにApache Tilesが適用される設定となっているため、1階層深いディレクトリを作成し、\ ``/WEB-INF/views/common/healthcheck/``\配下にJSPファイルを配置している。 
-| 詳細は\ :doc:`../../../ArchitectureInDetail/WebApplicationDetail/TilesLayout`\を参照されたい。
+| 詳細は\ 
 
 .. _HealthCheckAppendixHeader:
 

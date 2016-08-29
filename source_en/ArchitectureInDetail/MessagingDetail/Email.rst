@@ -275,7 +275,7 @@ Define a Bean for \ ``JavaMailSender``\ .
 
 .. note::
 
-   Refer :doc:`../GeneralFuncDetail/PropertyManagement` for details of property file.
+   Refer 
 
 
 When a mail session offered by application server is not used (authenticated)
@@ -317,7 +317,7 @@ Define a Bean for \ ``JavaMailSender``\ .
 
 .. note::
 
-   Refer :doc:`../GeneralFuncDetail/PropertyManagement` for details of property file.
+   Refer 
 
 .. tip::
 
@@ -779,7 +779,7 @@ The exception class that inherits \ ``MailException``\  and occurrence condition
 
 .. note::
 
-   Refer :doc:`../WebApplicationDetail/ExceptionHandling` for transition to error screen corresponding to specific exceptions.
+   Refer 
 
 |
 

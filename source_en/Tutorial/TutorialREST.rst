@@ -18,7 +18,7 @@ Points to study in this tutorial
 Target readers
 --------------------------------------------------------------------------------
 
-* Those who have Implemented the \ :doc:`./TutorialTodo`\.
+* Those who have Implemented the \ 
 
 
 Verification environment
@@ -37,14 +37,14 @@ Verification environment
     * - REST Client
       - \ `DHC REST Client <https://chrome.google.com/webstore/detail/dhc-resthttp-api-client/aejoelaoggembcahagimdiliamlcdmfm>`_\  1.2.3
     * - Product other than the above
-      - Similar to \ :doc:`./TutorialTodo`\
+      - Similar to \ 
 
 |
 
 Environment creation
 ================================================================================
 
-Assumes that Java, STS, Maven, Google Chrome are already installed since the \ :doc:`./TutorialTodo` \ is implemented.  
+Assumes that Java, STS, Maven, Google Chrome are already installed since the \ 
 
 Install DHC
 --------------------------------------------------------------------------------
@@ -104,15 +104,15 @@ Project creation
 --------------------------------------------------------------------------------
 
 In this tutorial, 
-the RESTful Web Services are created for [:doc:`./TutorialTodo`].
+the RESTful Web Services are created for [
 
 
-Therefore, if [:doc:`./TutorialTodo`] project is not exists,
-re-create project by executing [:doc:`./TutorialTodo`].
+Therefore, if [
+re-create project by executing [
 
 .. note::
 
-    If project is re-created by executing [:doc:`./TutorialTodo`],
+    If project is re-created by executing [
     it is possible to proceed further this tutorial by performing re-creation till the domain layer creation.
 
 |
@@ -309,7 +309,7 @@ Error Response
 | The response specification of typical errors are described below.
 | Error patterns other than the below are also exists but description in the tutorial are omitted.
 
-In the \ :doc:`./TutorialTodo`\, error messages are hardcoded in the program but in this tutorial, it is modified such a way that the error messages are retrieved from the property file based on error code.
+In the \ 
 
 **[Response specification at the time of input check error]**
 
@@ -1087,7 +1087,7 @@ If GET Todos gets executed now, newly created Todo Resource returns as an array.
 Implementation of GET Todo
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
-Since method (findOne) for retrieving single item is not created in \ ``TodoService`` \ of the \ :doc:`./TutorialTodo`\,
+Since method (findOne) for retrieving single item is not created in \ ``TodoService`` \ of the \ 
 add the following highlighted parts in \ ``TodoService`` \ and \ ``TodoServiceImpl``\.
 
 | Add the definition of \ ``findOne`` \ method.
@@ -1557,13 +1557,13 @@ Implementation of exception handling
 --------------------------------------------------------------------------------
 
 | In this tutorial, for easy understanding, the implementation of exception handling made a simpler than that are recommended in this guideline.
-| \ **It is strongly recommended that the actual exception handling should be handled in a way described** \ in the \ :doc:`../ArchitectureInDetail/WebServiceDetail/REST`\.
+| \ **It is strongly recommended that the actual exception handling should be handled in a way described** \ in the \ 
 
 Change Domain layer implementation
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^  
 
 | In this tutorial, the error messages are retrieved from the property file based on error code.
-| Therefore, modify the implementation of the Service class as follows which is created at \ :doc:`./TutorialTodo`\  before implementing the exception handling.
+| Therefore, modify the implementation of the Service class as follows which is created at \ 
 
 | Specify the error code instead of hard-coded error message.
 | ``src/main/java/todo/domain/service/todo/TodoServiceImpl.java``
@@ -2416,7 +2416,7 @@ In this tutorial, following contents have been learnt.
 * Method of handling a variety of exception with Spring MVC
 
 Here, explained how to implement the basic RESTful Web Services.
-To learn more about the architecture and design guidelines etc, Refer [:doc:`../ArchitectureInDetail/WebServiceDetail/REST`].
+To learn more about the architecture and design guidelines etc, Refer [
 
 .. raw:: latex
 

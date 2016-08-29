@@ -211,7 +211,7 @@ Title
 
     .. tip::
 
-       This example is valid when using Tiles. For details, refer to :doc:`../WebApplicationDetail/TilesLayout`.
+       This example is valid when using Tiles. For details, refer to 
        When not using Tiles, follow the \ :ref:`message-management_label-rule`\  rules explained later.
 
 |
@@ -626,7 +626,7 @@ Display of messages set in properties
                                 └ application-messages_ja.properties (Japanese message)
 
         properties file should be created for each language as shown above.
-        For details, refer to \ :doc:`../WebApplicationDetail/Internationalization`\  .
+        For details, refer to \ 
 
 
 .. _message-display:
@@ -1497,7 +1497,7 @@ and it will be displayed in the browser as follows:
 
     .. tip::
 
-        For details on JSP for login, refer to \ :doc:`../../Security/Authentication`\ .
+        For details on JSP for login, refer to \ 
 
 .. _message-management-messagekeysgen:
 
