@@ -5,6 +5,7 @@
    :maxdepth: 1
 
    Email
+   JMS
 
 .. raw:: latex
 

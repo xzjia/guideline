@@ -176,6 +176,12 @@
         * JSR-310 Date and Time APIを使用する際の注意点を記載 (\ `guideline#1966 <https://github.com/terasolunaorg/guideline/issues/1966>`_\ )
 
     * -
+      - :doc:`../ArchitectureInDetail/MessagingDetail/JMS`
+      - 新規追加
+
+        * JMSを追加(\ `guideline#1407 <https://github.com/terasolunaorg/guideline/issues/1407>`_\ )
+
+    * -
       - :doc:`../Security/Authentication`
       - Spring Security 4.0.4対応に伴う修正
 
