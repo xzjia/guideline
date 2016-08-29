@@ -1426,7 +1426,7 @@ DBのトランザクション管理を行う必要があるアプリケーショ
        * - | Consumer側
          - | メッセージ送信するオブジェクトを返却する。
 
-   ヘッダ属性\ ``JMSReplyTo``\ はデフォルトのDestinationよりも優先されることに注意されたい。
+   ヘッダ属性\ ``JMSReplyTo``\ はConsumer側で指定したデフォルトのDestinationよりも優先される。
    詳細については、\ `Response management <http://docs.spring.io/spring/docs/4.2.7.RELEASE/spring-framework-reference/htmlsingle/#jms-annotated-response>`_\ を参照されたい。
 
 
