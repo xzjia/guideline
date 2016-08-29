@@ -639,10 +639,10 @@ version 5.2.0.RELEASEで利用するOSSの一覧を以下に示す。
 基本的には、このライブラリがなくてもTERASOLUNA Server Framework for Java (5.x)によるアプリケーション開発は可能であるが、"あると便利"な存在である。
 また、提供している2種類の \ `マルチプロジェクト構成のブランクプロジェクト <https://github.com/terasolunaorg/terasoluna-gfw-web-multi-blank>`_\ および \ `シングルプロジェクト構成のブランクプロジェクト <https://github.com/terasolunaorg/terasoluna-gfw-web-blank>`_\ の共通ライブラリの標準の組込状況は以下の通りである。
 
-.. tabularcolumns:: |p{0.05\linewidth}|p{0.30\linewidth}|p{0.45\linewidth}|p{0.20\linewidth}|
+.. tabularcolumns:: |p{0.05\linewidth}|p{0.15\linewidth}|p{0.40\linewidth}|p{0.20\linewidth}|p{0.10\linewidth}|p{0.10\linewidth}|
 .. list-table::
     :header-rows: 1
-    :widths: 5 22 45 10 17 18
+    :widths: 5 15 40 20 10 10
 
     * - 項番
       - プロジェクト名
