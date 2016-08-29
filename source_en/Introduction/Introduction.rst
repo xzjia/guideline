@@ -23,6 +23,7 @@ In order to check whether the readers have basic knowledge of Spring Framework,
 refer to \ :doc:`../Appendix/SpringComprehensionCheck`\ .
 It is recommended to study the following books if one is not able to answer 40% of the comprehension test.
 
+* `Spring徹底入門 (翔泳社) [Japanese] <http://www.shoeisha.co.jp/book/detail/9784798142470>`_
 * `Spring3入門―Javaフレームワーク・より良い設計とアーキテクチャ（技術評論社）[Japanese] <http://gihyo.jp/book/2012/978-4-7741-5380-3>`_
 * `Pro Spring 4th Edition (Apress) <http://www.apress.com/9781430261513>`_
 
