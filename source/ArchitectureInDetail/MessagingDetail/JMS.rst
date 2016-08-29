@@ -733,31 +733,31 @@ How to use
     * - | (2)
       - | \ ``JmsMessagingTemplate``\ の\ ``convertAndSend``\ メソッドを使用して、引数のJavaBeanを\ ``org.springframework.messaging.Message``\ インタフェースの実装クラスに変換し、指定したDestinationに対しメッセージを同期送信する。
         | デフォルトで変換には、\ ``org.springframework.jms.support.converter.SimpleMessageConverter``\ が使用される。
-          \ ``SimpleMessageConverter``\ を使用すると、\ ``javax.jms.Message``\ 、\ ``java.lang.String``\ 、\ ``byte配列``\ 、\ ``java.util.Map``\ 、\ ``java.io.Serializable``\ インタフェースを実装したクラスを送信可能である。
+        | \ ``SimpleMessageConverter``\ を使用すると、\ ``javax.jms.Message``\ 、\ ``java.lang.String``\ 、\ ``byte配列``\ 、\ ``java.util.Map``\ 、\ ``java.io.Serializable``\ インタフェースを実装したクラスを送信可能である。
           
-         .. note:: **業務ロジック内でJMSの例外ハンドリング**
-            
-            \ `JMS (Java Message Service)のIntroduction <http://docs.spring.io/spring/docs/4.2.7.RELEASE/javadoc-api/org/springframework/jms/core/JmsTemplate.html>`_\ で触れられているように、Spring Frameworkでは検査例外を非検査例外に変換している。
-            そのため、業務ロジック内でJMSの例外をハンドリングする場合は、非検査例外を扱う必要がある。
+ .. note:: **業務ロジック内でJMSの例外ハンドリング**
+    
+    \ `JMS (Java Message Service)のIntroduction <http://docs.spring.io/spring/docs/4.2.7.RELEASE/javadoc-api/org/springframework/jms/core/JmsTemplate.html>`_\ で触れられているように、Spring Frameworkでは検査例外を非検査例外に変換している。
+    そのため、業務ロジック内でJMSの例外をハンドリングする場合は、非検査例外を扱う必要がある。
 
-             .. tabularcolumns:: |p{0.20\linewidth}|p{0.60\linewidth}|p{0.20\linewidth}|
-             .. list-table::
-                :header-rows: 1
-                :widths: 20 60 20
+     .. tabularcolumns:: |p{0.20\linewidth}|p{0.60\linewidth}|p{0.20\linewidth}|
+     .. list-table::
+        :header-rows: 1
+        :widths: 20 60 20
 
-                * - Templateクラス
-                  - 例外の変換を行うメソッド
-                  - 変換後の例外
-                * - | \ ``JmsMessagingTemplate``\ 
-                  - | \ ``JmsMessagingTemplate``\ の\ ``convertJmsException``\ メソッド
-                  - | \ ``MessagingException``\ (\*1)及びそのサブ例外
-                * - | \ ``JmsTemplate``\ 
-                  - | \ ``JmsAccessor``\ の\ ``convertJmsAccessException``\ メソッド
-                  - | \ ``JmsException``\ (\*2)及びそのサブ例外
+        * - Templateクラス
+          - 例外の変換を行うメソッド
+          - 変換後の例外
+        * - | \ ``JmsMessagingTemplate``\ 
+          - | \ ``JmsMessagingTemplate``\ の\ ``convertJmsException``\ メソッド
+          - | \ ``MessagingException``\ (\*1)及びそのサブ例外
+        * - | \ ``JmsTemplate``\ 
+          - | \ ``JmsAccessor``\ の\ ``convertJmsAccessException``\ メソッド
+          - | \ ``JmsException``\ (\*2)及びそのサブ例外
 
-            (\*1) \ ``org.springframework.messaging.MessagingException``\ 
+    (\*1) \ ``org.springframework.messaging.MessagingException``\ 
 
-            (\*2) \ ``org.springframework.jms.JmsException``\ 
+    (\*2) \ ``org.springframework.jms.JmsException``\ 
 
 |
 
