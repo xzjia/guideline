@@ -56,7 +56,7 @@ Overview
 .. tabularcolumns:: |p{0.10\linewidth}|p{0.20\linewidth}|p{0.70\linewidth}|
 .. list-table::
    :header-rows: 1
-   :widths: 10 20 80
+   :widths: 10 20 70
 
    * - 項番
      - ヘルスチェックの種類
