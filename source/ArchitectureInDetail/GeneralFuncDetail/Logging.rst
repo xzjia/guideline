@@ -853,10 +853,10 @@ How to extend
 | そのため出力ログフォーマットの統一には、ログ出力フォーマットをもう一方のフォーマットに合わせる、または、両方とも独自のフォーマットに統一する必要がある。
 | 本ガイドラインでは、業務ロジックで出力するログにフォーマットを定める例と、両方とも独自のフォーマット（[{例外コード(メッセージID)またはログID}], {メッセージまたはログメッセージ}）に統一する例を説明する。
 
-.. tabularcolumns:: |p{0.10\linewidth}|p{0.90\linewidth}|
+.. tabularcolumns:: |p{0.10\linewidth}|p{0.30\linewidth}|p{0.30\linewidth}|p{0.30\linewidth}|
 .. list-table::
    :header-rows: 1
-   :widths: 10 65 50 50
+   :widths: 10 30 30 30
 
    * - 項番
      - ログ出力方式
