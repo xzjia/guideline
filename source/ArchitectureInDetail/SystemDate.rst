@@ -156,10 +156,10 @@ DBから取得した固定の時刻を返却する
         <property name="currentTimestampQuery" value="SELECT now FROM system_date" />  <!-- (3) -->
     </bean>
 
-.. tabularcolumns:: |p{0.10\linewidth}|p{1.00\linewidth}|
+.. tabularcolumns:: |p{0.10\linewidth}|p{0.90\linewidth}|
 .. list-table::
    :header-rows: 1
-   :widths: 10 100
+   :widths: 10 90
 
    * - 項番
      - 説明
@@ -390,10 +390,10 @@ SQLログを出力するために、 :doc:`./DataAccessCommon` で説明した\ 
     <property name="useCache" value="true" /> <!-- (1) -->
   </bean>
 
-.. tabularcolumns:: |p{0.10\linewidth}|p{1.00\linewidth}|
+.. tabularcolumns:: |p{0.10\linewidth}|p{0.90\linewidth}|
 .. list-table::
    :header-rows: 1
-   :widths: 10 100
+   :widths: 10 90
 
    * - 項番
      - 説明
@@ -628,10 +628,10 @@ UnitTestでは、時刻を登録してその時刻が想定通りに更新され
         // omitted
     }
 
-.. tabularcolumns:: |p{0.10\linewidth}|p{1.00\linewidth}|
+.. tabularcolumns:: |p{0.10\linewidth}|p{0.90\linewidth}|
 .. list-table::
    :header-rows: 1
-   :widths: 10 100
+   :widths: 10 90
 
    * - 項番
      - 説明
