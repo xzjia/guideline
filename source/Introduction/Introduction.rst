@@ -34,8 +34,16 @@ Spring Frameworkに関して、本ドキュメントを読むための基礎知�
     Spring MVCの概要や、TERASOLUNA Server Framework for Java (5.x)の基本的な考え方を説明する。
 * \ :doc:`../ImplementationAtEachLayer/index`\ 
     TERASOLUNA Server Framework for Java (5.x)を利用してアプリケーション開発する上で必ず押さえておかなくてはならない知識や作法について説明する。
-* \ :doc:`../ArchitectureInDetail/index`\
-    一般的にアプリケーション開発で必要となる機能をTERASOLUNA Server Framework for Java (5.x)を利用してどう実装するか、何に気を付けるべきかを機能ごとに説明する。
+* \ :doc:`../ArchitectureInDetail/WebApplicationDetail/index`\
+    Webアプリケーション開発で必要となる機能をどう実装するか、何に気を付けるべきかを説明する。
+* \ :doc:`../ArchitectureInDetail/WebServiceDetail/index`\
+    Webサービス開発で必要となる機能をどう実装するか、何に気を付けるべきかを説明する。
+* \ :doc:`../ArchitectureInDetail/DataAccessDetail/index`\
+    データアクセス機能をどう実装するか、何に気を付けるべきかを説明する。
+* \ :doc:`../ArchitectureInDetail/GeneralFuncDetail/index`\
+    アプリケーション形態に依存しない汎用機能をどう実装するか、何に気を付けるべきかを説明する。
+* \ :doc:`../ArchitectureInDetail/MessagingDetail/index`\
+    メッセージ連携機能をどう実装するか、何に気を付けるべきかを説明する。
 * \ :doc:`../Security/index`\
     Spring Securityを中心としたセキュリティ対策について説明する。
 * \ :doc:`../Tutorial/index`\
@@ -61,7 +69,7 @@ Spring Frameworkに関して、本ドキュメントを読むための基礎知�
 
 **ここまではTERASOLUNA Server Framework for Java (5.x)を使用するすべての開発者が読むことを強く推奨する。**
 
-"\ :doc:`../ArchitectureInDetail/index`\ "、"\ :doc:`../Security/index`\ "については
+"\ :doc:`../ArchitectureInDetail/WebApplicationDetail/index`\ "、"\ :doc:`../ArchitectureInDetail/WebServiceDetail/index`\ "、"\ :doc:`../ArchitectureInDetail/DataAccessDetail/index`\ "、"\ :doc:`../ArchitectureInDetail/GeneralFuncDetail/index`\ "、"\ :doc:`../ArchitectureInDetail/MessagingDetail/index`\ "、"\ :doc:`../Security/index`\ "については
 目的に応じて必要なタイミングで参照すればよい。ただし、":doc:`../ArchitectureInDetail/WebApplicationDetail/Validation`"はアプリケーション開発で通常は必要となるため、基本的には読んでおくこと。
 
 テクニカルリーダーはこれらをすべて読み内容を把握した上で
