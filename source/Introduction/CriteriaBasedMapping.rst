@@ -25,25 +25,38 @@
        (クエリにパラメータを埋め込む場合は、バインド変数を使用する旨を記載)
    * - A1
      - `Injection <https://www.owasp.org/index.php/Top_10_2013-A1-Injection>`_ XXE(XML External Entity) Injection
-     - * \ :doc:`../ArchitectureInDetail/WebApplicationDetail/Ajax`\ 
+     - * \ :doc:`../ArchitectureInDetail/WebApplicationDetail/Ajax`\
+   * - A1
+     - `Injection <https://www.owasp.org/index.php/Top_10_2013-A1-Injection>`_ OS Command Injection
+     - * \ :doc:`../ArchitectureInDetail/WebApplicationDetail/Validation`\
+   * - A1
+     - `Injection <https://www.owasp.org/index.php/Top_10_2013-A1-Injection>`_ Email Header Injection
+     - * \ :ref:`email-header-injection`\
+   * - A1
+     - `Injection <https://www.owasp.org/index.php/Top_10_2013-A1-Injection>`_
+     - * \ :ref:`secure-input-validation`\
+
+       (外部からの入力全般に対する入力チェック方法を記載)
    * - A2
      - `Broken Authentication and Session Management <https://www.owasp.org/index.php/Top_10_2013-A2-Broken_Authentication_and_Session_Management>`_
-     - * \ :doc:`../Security/Authentication`\ 
-     
+     - * \ :doc:`../Security/SessionManagement`\
+       * \ :doc:`../Security/Authentication`\
    * - A3
      - `Cross-Site Scripting (XSS) <https://www.owasp.org/index.php/Top_10_2013-A3-Cross-Site_Scripting_(XSS)>`_
-     - * \ :doc:`../Security/XSS`\ 
+     - * \ :doc:`../Security/XSS`\
+       * \ :doc:`../Security/LinkageWithBrowser`\
    * - A4
-     - `Insecure Direct Object References <https://www.owasp.org/index.php/Top_10_2013-A4-Insecure_Direct_Object_References>`_
-     - 特に言及なし
+     - `Insecure Direct Object References <https://www.owasp.org/index.php/Top_10_2013-A4-Insecure_Direct_Object_References>`_ Directory Traversal
+     - * \ :ref:`file-upload_security_related_warning_points_directory_traversal`\
    * - A5
      - `Security Misconfiguration <https://www.owasp.org/index.php/Top_10_2013-A5-Security_Misconfiguration>`_
      - * \ :doc:`../ArchitectureInDetail/GeneralFuncDetail/Logging`\ (ログのメッセージ内容に言及)
        * \ :ref:`exception-handling-how-to-use-codingpoint-jsp-exceptioncode-label`\ (システム例外時に出力するメッセージ内容に言及)
    * - A6
      - `Sensitive Data Exposure <https://www.owasp.org/index.php/Top_10_2013-A6-Sensitive_Data_Exposure>`_
-     - * \ :doc:`../ArchitectureInDetail/GeneralFuncDetail/PropertyManagement`\ 
-       * \ :ref:`SpringSecurityAuthenticationPasswordHashing`\  (パスワードハッシュにのみ言及)
+     - * \ :doc:`../ArchitectureInDetail/GeneralFuncDetail/PropertyManagement`\
+       * \ :doc:`../Security/Encryption`\
+       * \ :ref:`SpringSecurityAuthenticationPasswordHashing`\
    * - A7
      - `Missing Function Level Access Control <https://www.owasp.org/index.php/Top_10_2013-A7-Missing_Function_Level_Access_Control>`_
      - * \ :doc:`../Security/Authorization`\ 
@@ -55,7 +68,7 @@
      - 特に言及なし
    * - A10
      - `Unvalidated Redirects and Forwards <https://www.owasp.org/index.php/Top_10_2013-A10-Unvalidated_Redirects_and_Forwards>`_
-     - * \ :doc:`../Security/Authentication`\ (オープンリダイレクタ脆弱性対策について言及)
+     - 特に言及なし
 
 .. raw:: latex
 
