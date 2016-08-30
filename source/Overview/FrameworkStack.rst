@@ -643,7 +643,7 @@ version 5.2.0.RELEASEで利用するOSSの一覧を以下に示す。
 .. list-table::
     :header-rows: 1
     :stub-columns: 1
-    :widths: 5 15 40 20 10 10
+    :widths: 5 15 40 15 10 10
 
     * - 項番
       - プロジェクト名
