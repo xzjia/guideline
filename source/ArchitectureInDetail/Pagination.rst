@@ -499,10 +499,10 @@ JSPタグライブラリのパラメータに値を指定することで、デ�
 
     ``pathTmpl`` 及び ``queryTmpl`` に指定できるパス変数は、以下の通り。
 
-        .. tabularcolumns:: |p{0.10\linewidth}|p{0.25\linewidth}|p{0.75\linewidth}|
+        .. tabularcolumns:: |p{0.10\linewidth}|p{0.25\linewidth}|p{0.65\linewidth}|
         .. list-table::
             :header-rows: 1
-            :widths: 10 25 75
+            :widths: 10 25 65
     
             * - 項番
               - パス変数名
