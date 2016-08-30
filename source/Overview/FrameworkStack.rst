@@ -642,8 +642,7 @@ version 5.2.0.RELEASEで利用するOSSの一覧を以下に示す。
 .. tabularcolumns:: |p{0.05\linewidth}|p{0.15\linewidth}|p{0.40\linewidth}|p{0.20\linewidth}|p{0.10\linewidth}|p{0.10\linewidth}|
 .. list-table::
     :header-rows: 1
-    :stub-columns: 1
-    :widths: 5 15 40 15 10 10
+    :widths: 5 15 40 20 10 10
 
     * - 項番
       - プロジェクト名
@@ -655,26 +654,26 @@ version 5.2.0.RELEASEで利用するOSSの一覧を以下に示す。
       - terasoluna-gfw-parent
       - 依存ライブラリの管理とビルド用プラグインの推奨設定を提供する。
       - 無
-      - 有*1
-      - 有*1
+      - 有\*1
+      - 有\*1
     * - \ (2)
       - terasoluna-gfw-common-libraries
       - 共通ライブラリのうち、Javaソースコードを含むプロジェクトの構成を定義する。依存関係としてpom.xmlに追加する必要はない。
       - 無
-      - 有*1
-      - 有*1
+      - 有\*1
+      - 有\*1
     * - \ (3)
       - terasoluna-gfw-dependencies
       - 共通ライブラリのうち、依存関係定義のみを提供するプロジェクト(terasoluna-gfw-parent以外)の構成を定義する。依存関係としてpom.xmlに追加する必要はない。
       - 無
-      - 有*1
-      - 有*1
+      - 有\*1
+      - 有\*1
     * - \ (4)
       - terasoluna-gfw-common
       - Webに依存しない汎用的に使用できる機能を提供する。本ライブラリを利用する場合は、依存関係としてterasoluna-gfw-common-dependenciesをpom.xmlに追加する。
       - 有
-      - 有*2
-      - 有*2
+      - 有\*2
+      - 有\*2
     * - \ (5)
       - terasoluna-gfw-common-dependencies
       - terasoluna-gfw-commonプロジェクトが提供する機能を使用する場合の依存関係定義を提供する。
@@ -685,8 +684,8 @@ version 5.2.0.RELEASEで利用するOSSの一覧を以下に示す。
       - terasoluna-gfw-jodatime
       - Joda Timeに依存する機能を提供する。本ライブラリを利用する場合は、依存関係としてterasoluna-gfw-jodatime-dependenciesをpom.xmlに追加する。(5.0.0から追加)
       - 有
-      - 有*2
-      - 有*2
+      - 有\*2
+      - 有\*2
     * - \ (7)
       - terasoluna-gfw-jodatime-dependencies
       - terasoluna-gfw-jodatimeプロジェクトが提供する機能を使用する場合の依存関係定義を提供する。
@@ -697,8 +696,8 @@ version 5.2.0.RELEASEで利用するOSSの一覧を以下に示す。
       - terasoluna-gfw-web
       - Webアプリケーションを作成する場合に使用する機能を提供する。Viewに依存しない機能を集約している。本ライブラリを利用する場合は、依存関係としてterasoluna-gfw-web-dependenciesをpom.xmlに追加する。
       - 有
-      - 有*2
-      - 有*2
+      - 有\*2
+      - 有\*2
     * - \ (9)
       - terasoluna-gfw-web-dependencies
       - terasoluna-gfw-webプロジェクトが提供する機能を使用する場合の依存関係定義を提供する。
@@ -709,8 +708,8 @@ version 5.2.0.RELEASEで利用するOSSの一覧を以下に示す。
       - terasoluna-gfw-web-jsp
       - ViewにJSPを採用するWebアプリケーションを作成する場合に使用する機能を提供する。本ライブラリを利用する場合は、依存関係としてterasoluna-gfw-web-jsp-dependenciesをpom.xmlに追加する。
       - 有
-      - 有*2
-      - 有*2
+      - 有\*2
+      - 有\*2
     * - \ (11)
       - terasoluna-gfw-web-jsp-dependencies
       - terasoluna-gfw-web-jspプロジェクトが提供する機能を使用する場合の依存関係定義を提供する。
@@ -721,8 +720,8 @@ version 5.2.0.RELEASEで利用するOSSの一覧を以下に示す。
       - terasoluna-gfw-security-web
       - Spring Securityの拡張部品を提供する。本ライブラリを利用する場合は、依存関係としてterasoluna-gfw-security-web-dependenciesをpom.xmlに追加する。
       - 有
-      - 有*2
-      - 有*2
+      - 有\*2
+      - 有\*2
     * - \ (13)
       - terasoluna-gfw-security-web-dependencies
       - Spring Securityを使用する場合の依存関係定義(Web関連)と、terasoluna-gfw-security-webプロジェクトが提供する機能を使用する場合の依存関係定義を提供する。
@@ -757,14 +756,14 @@ version 5.2.0.RELEASEで利用するOSSの一覧を以下に示す。
       - terasoluna-gfw-mybatis3-dependencies
       - MyBatis3を使用する場合の依存関係定義を提供する。
       - 無
-      - 有*3
-      - 有*3
+      - 有\*3
+      - 有\*3
     * - \ (19)
       - terasoluna-gfw-jpa-dependencies
       - JPAを使用する場合の依存関係定義を提供する。
       - 無
-      - 有*4
-      - 有*4
+      - 有\*4
+      - 有\*4
     * - \ (20)
       - terasoluna-gfw-recommended-dependencies
       - Webに依存しない推奨ライブラリへの依存関係定義を提供する。
