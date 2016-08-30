@@ -55,7 +55,7 @@
      - 特に言及なし
    * - A10
      - `Unvalidated Redirects and Forwards <https://www.owasp.org/index.php/Top_10_2013-A10-Unvalidated_Redirects_and_Forwards>`_
-     - * \ :doc:`../Security/Authentication`\ (オープンリダイレクタ脆弱性対策について言及)
+     - 特に言及なし
 
 .. raw:: latex
 
