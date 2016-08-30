@@ -642,6 +642,7 @@ version 5.2.0.RELEASEで利用するOSSの一覧を以下に示す。
 .. tabularcolumns:: |p{0.05\linewidth}|p{0.15\linewidth}|p{0.40\linewidth}|p{0.20\linewidth}|p{0.10\linewidth}|p{0.10\linewidth}|
 .. list-table::
     :header-rows: 1
+    :stub-columns: 1
     :widths: 5 15 40 20 10 10
 
     * - 項番
