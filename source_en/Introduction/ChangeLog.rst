@@ -10,6 +10,14 @@ Change Log
       - Modified locations
       - Modification details
 
+    * - 2016-06-31
+      - :doc:`../ArchitectureInDetail/GeneralFuncDetail/StringProcessing`
+      - Description details added
+
+        * Example to add dependency to terasoluna-gfw-string is added (\ `guideline#1699 <https://github.com/terasolunaorg/guideline/issues/1699>`_\ )
+        * Precautions for surrogate pair added to description of @Size annotation(\ `guideline#1874 <https://github.com/terasolunaorg/guideline/issues/1874>`_\ )
+        * Description added for corresponding UCS(Unicode)characters of JIS chinese characters \ ``U+2014``\(EM DASH)(\ `guideline#1914 <https://github.com/terasolunaorg/guideline/issues/1914>`_\ )
+
     * - 2016-08-04
       - :doc:`../Overview/FrameworkStack`
       - OSS version to be used (Spring IO Platform version) updated
