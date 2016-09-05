@@ -1359,7 +1359,7 @@ Javaからのアクセス
       | 認証に成功したセッションをセッション管理領域に登録するクラス。
 
     version 1.0.x.RELEASEで依存しているSpring Security 3.1では、\ ``org.springframework.security.web.authentication.session.ConcurrentSessionControlStrategy``\ というクラスが提供されていたが、
-    Spring Security 3.2より非推奨のAPIになっている。
+    Spring Security 3.2より非推奨のAPIになり、Spring Security 4.0より廃止になっている。
     Spring Security 3.1からSpring Security 3.2以降にバージョンアップする場合は、以下のクラスを組み合わせて使用するように変更する必要がある。
 
     * ``ConcurrentSessionControlAuthenticationStrategy`` (Spring Security 3.2で追加)
