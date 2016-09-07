@@ -48,7 +48,7 @@ copyright = u'2013-2016, NTT DATA'
 # built documents.
 #
 # The short X.Y version.
-version = '5.1.0'
+version = '5.3.0'
 # The full version, including alpha/beta/rc tags.
 release = '5.3.0-SNAPSHOT'
 
