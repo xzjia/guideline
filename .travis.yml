@@ -1,15 +1,20 @@
+os:
+  - linux
+dist: trusty
 sudo: required
 language: python
 python:
   - "3.4"
 
+before_install:
+  - wget https://raw.githubusercontent.com/y-yu/install-tex-travis/master/install-tex.sh
+  - chmod +x install-tex.sh
+
 install:
+  - . ./install-tex.sh
   - pip install --upgrade pip
   - pip install -r requirements.txt
   - mkdir -p $HOME/tmp/sphinx
-  - wget https://raw.githubusercontent.com/y-yu/install-tex-travis/master/install-tex.sh
-  - chmod +x install-tex.sh
-  - . ./install-tex.sh
 
 before_script:
   - ERROR_LOG_FILE=$HOME/tmp/sphinx/build-error.log
