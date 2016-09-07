@@ -7,6 +7,10 @@ install:
   - pip install --upgrade pip
   - pip install -r requirements.txt
   - mkdir -p $HOME/tmp/sphinx
+  - curl -O http://mirror.ctan.org/systems/texlive/tlnet/install-tl-unx.tar.gz
+  - tar xvf install-tl-unx.tar.gz
+  - cd install-tl*
+  - sudo ./install-tl --repository http://mirror.ctan.org/systems/texlive/tlnet/
 
 before_script:
   - ERROR_LOG_FILE=$HOME/tmp/sphinx/build-error.log
