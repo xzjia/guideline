@@ -7248,21 +7248,23 @@ SQLの実装
 
  .. tip::
 
-    1:Nの関連を持つ関連Entityを1回のSQLでまとめて取得する際にページネーション検索が必要な場合は、
-    MyBatis3から提供されている\ ``RowBounds``\を使用することが出来ない。
+    1:Nの関連を持つ関連Entityを1回のSQLでまとめて取得する場合、主Entityのページネーション検索が必要な場合は、\ ``RowBounds``\を使用することができない。
 
-    代替案としては、
+    MyBatis3から提供されている\ ``RowBounds``\では、\ :ref:`DataAccessMyBatis3HowToUseFindPageUsingMyBatisFunction`\ で説明したように、
+    検索結果(\ ``ResultSet``\)のカーソルを移動することで、取得範囲外のデータをスキップするが、1:Nの関連を持つ関連Entityを1回のSQLでまとめて取得する場合、
+    SQL実行結果は主Entityのレコード数と一致しない可能性があるためである。
 
-    * まず主Entityのみを検索するメソッドを呼び出し、関連Entityは別途のメソッドを呼び出して取得する
-    * SQLでページ範囲内の主Entityのみ格納されている仮想テーブルを作成し、仮想テーブルのレコードとJOINする事で、
-      マッピングに必要な全てのレコードを取得する(上記例の \ ``findPage``\は、このパターンで実装している)
-    * 関連Entityに検索条件があり、そのEntityから複数レコードを取得する場合、上記の主Entityのみの仮想テーブルを
-      次のようにして作成する。検索条件を適用した関連Entityの抽出レコードを集約し、主Entityのみの仮想テーブルとが
-      1:1の関係になるようにしてJOINする。これで検索条件を満たしたページ範囲内の仮想テーブルが作成される。
-      以下に特定の商品を含む注文を取得する例を記載しておく。
+    SQL絞込み方式においても、関連Entityを1回のSQLでまとめて取得した後に、ページネーションの範囲指定をすると同様の問題が発生するが、
+    SQLにてページ範囲内の主Entityのみ格納されている仮想テーブルを作成し、仮想テーブルのレコードとJOINする事で、
+    マッピングに必要な全てのレコードを取得することが可能である。(上記例の \ ``findPage``\は、このパターンで実装している)
+
+    また、関連Entityに検索条件がある場合には、検索条件を適用した関連Entityの抽出レコードを集約し、
+    主Entityのみの仮想テーブルと1:1の関係になるようにしてJOINすることで、検索条件を満たしたページ範囲内の仮想テーブルが作成可能である。
+
+    以下に、特定の商品を含む注文を取得する例を示す。
 
       .. code-block:: xml
-
+  
         <select id="findPage" resultMap="orderResultMap">
             <bind name="orderTable" value="
                 '(
@@ -7284,7 +7286,7 @@ SQLの実装
                                 close=")">
                             #{itemCode}
                         </foreach>
-                        GROOUP BY
+                        GROUP BY
                           voi.order_id
                        ) vvoi ON vvoi.order_id = vo.id
                   ORDER BY
@@ -7295,7 +7297,6 @@ SQLの実装
             <include refid="selectFromJoin"/>
             ...
 
-    等の方法が考えられる。
 
 |
 
