@@ -2,9 +2,6 @@ sudo: required
 language: python
 python:
   - "3.4"
-cache:
-  directories:
-    - /usr/local/textlive2016
 
 before_install:
   - export PATH=$PATH:/bin/sh
