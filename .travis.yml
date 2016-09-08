@@ -13,7 +13,7 @@ install:
   - curl -L -O http://mirror.ctan.org/systems/texlive/tlnet/install-tl-unx.tar.gz
   - tar -xvf install-tl-unx.tar.gz
   - cd install-tl*
-  - sudo ./install-tl --repository http://mirror.ctan.org/systems/texlive/tlnet/ < test.txt
+  - sudo ./install-tl --repository http://mirror.ctan.org/systems/texlive/tlnet/ < ./test.txt
 
 before_script:
   - ERROR_LOG_FILE=$HOME/tmp/sphinx/build-error.log
