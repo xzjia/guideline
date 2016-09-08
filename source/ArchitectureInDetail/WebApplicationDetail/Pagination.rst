@@ -1450,13 +1450,13 @@ Internet Explorerでは 2,083文字以上のURLに対応していないので、
  .. code-block:: java
 
         @Controller
-        @RequestMapping(value = "pagination")
+        @RequestMapping("pagination")
         @SessionAttributes(value = {"personSearchForSessionForm"}) // (1)
         public class PaginationInSessionController {
 
             // ...
 
-            @ModelAttribute(value = "personSearchForSessionForm") // (2)
+            @ModelAttribute("personSearchForSessionForm") // (2)
             public PersonSearchForSessionForm setUpForm() {
                 return new PersonSearchForSessionForm();
             }
