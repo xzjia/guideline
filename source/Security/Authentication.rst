@@ -1347,6 +1347,28 @@ Javaからのアクセス
     Spring MVCとの連携方法については、「:ref:`SpringSecurityAuthenticationIntegrationWithSpringMVC`」で説明する。
     **本ガイドラインではSpring MVCとの連携を使用して認証情報を取得することを推奨する。**
 
+.. note::
+
+    認証処理用のフィルタ(FORM_LOGIN_FILTER)をカスタマイズする場合は、
+    \ ``<sec:concurrency-control>``\ 要素の指定に加えて、以下の２つの\ ``SessionAuthenticationStrategy``\ クラスを有効化する必要がある。
+
+    * | ``org.springframework.security.web.authentication.session.ConcurrentSessionControlAuthenticationStrategy``
+      | 認証成功後にログインユーザ毎のセッション数をチェックするクラス。
+
+    * | ``org.springframework.security.web.authentication.session.RegisterSessionAuthenticationStrategy``
+      | 認証に成功したセッションをセッション管理領域に登録するクラス。
+
+    version 1.0.x.RELEASEで依存しているSpring Security 3.1では、\ ``org.springframework.security.web.authentication.session.ConcurrentSessionControlStrategy``\ というクラスが提供されていたが、
+    Spring Security 3.2より非推奨のAPIになり、Spring Security 4.0より廃止になっている。
+    Spring Security 3.1からSpring Security 3.2以降にバージョンアップする場合は、以下のクラスを組み合わせて使用するように変更する必要がある。
+
+    * ``ConcurrentSessionControlAuthenticationStrategy`` (Spring Security 3.2で追加)
+    * ``RegisterSessionAuthenticationStrategy`` (Spring Security 3.2で追加)
+    * ``org.springframework.security.web.authentication.session.SessionFixationProtectionStrategy``
+
+    具体的な定義方法については、
+    `Spring Security Reference -Web Application Security (Concurrency Control)- <http://docs.spring.io/spring-security/site/docs/4.0.4.RELEASE/reference/htmlsingle/#concurrent-sessions>`_ のサンプルコードを参考にされたい。
+
 |
 
 JSPからのアクセス
