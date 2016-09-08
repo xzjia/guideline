@@ -1046,6 +1046,8 @@ MyBatis3でJSR-310 Date and Time APIから提供されている日付や時刻�
           <typeHandler handler="org.apache.ibatis.type.OffsetDateTimeTypeHandler" />  <!-- (5) -->
           <typeHandler handler="org.apache.ibatis.type.OffsetTimeTypeHandler" />      <!-- (6) -->
           <typeHandler handler="org.apache.ibatis.type.ZonedDateTimeTypeHandler" />   <!-- (7) -->
+          <typeHandler handler="org.apache.ibatis.type.YearTypeHandler" />            <!-- (8) -->
+          <typeHandler handler="org.apache.ibatis.type.MonthTypeHandler" />           <!-- (9) -->
       </typeHandlers>
 
  .. tabularcolumns:: |p{0.10\linewidth}|p{0.80\linewidth}|
