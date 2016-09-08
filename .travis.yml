@@ -13,15 +13,15 @@ install:
   - curl -L -O http://mirror.ctan.org/systems/texlive/tlnet/install-tl-unx.tar.gz
   - tar -xvf install-tl-unx.tar.gz
   - cd install-tl*
-  - pwd
   - sudo ./install-tl --repository http://mirror.ctan.org/systems/texlive/tlnet/ < ../test.txt
+  - cd ..
 
 before_script:
   - ERROR_LOG_FILE=$HOME/tmp/sphinx/build-error.log
 
 script:
-  - sudo sh -c "../build-pdf.sh 2> $ERROR_LOG_FILE"
-  - sudo sh -c "../build-pdf_en.sh 2>> $ERROR_LOG_FILE"
+  - sudo sh -c "./build-pdf.sh 2> $ERROR_LOG_FILE"
+  - sudo sh -c "./build-pdf_en.sh 2>> $ERROR_LOG_FILE"
   - cat $ERROR_LOG_FILE
 
 after_script:
