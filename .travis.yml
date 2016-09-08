@@ -14,7 +14,7 @@ install:
   - tar -xvf install-tl-unx.tar.gz
   - cd install-tl*
   - pwd
-  - sudo ./install-tl --repository http://mirror.ctan.org/systems/texlive/tlnet/ < ../test.txt
+  - sudo ./install-tl --repository http://mirror.ctan.org/systems/texlive/tlnet/ < ../test.sh
 
 before_script:
   - ERROR_LOG_FILE=$HOME/tmp/sphinx/build-error.log
