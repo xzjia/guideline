@@ -1482,17 +1482,18 @@ Internet Explorerでは 2,083文字以上のURLに対応していないので、
  .. code-block:: jsp
 
         <%-- (1) --%>
-        <form class="center-content" method="post">
-          <spring:nestedPath path="personSearchForSessionForm">
-            <form:input path="name" />
+        <div id="criteriaPart">
+          <form:form action="${pageContext.request.contextPath}/article/list" method="post"
+                     modelAttribute="personSearchForSessionForm">
+            <form:input path="word" />
             <form:select path="sort">
               <form:option value="personId,DESC">Newest</form:option>
               <form:option value="personId,ASC">Oldest</form:option>
             </form:select>
-            <form:button id="searchButton">Search</form:button>
-            <sec:csrfInput />
-          </spring:nestedPath>
-        </form>
+            <form:button>Search</form:button>
+            <br>
+          </form:form>
+        </div>
 
         <%-- ... --%>
 
