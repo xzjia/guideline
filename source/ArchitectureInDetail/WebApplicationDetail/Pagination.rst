@@ -1380,9 +1380,9 @@ JSPの実装(基本編)
  .. warning:: **f:queryを使用して生成したクエリ文字列をqueryTmpl属性に指定した際の動作について**
 
     \ ``f:query``\を使用して生成したクエリ文字列をqueryTmpl属性に指定すると、URLエンコーディングが重複してしまい、特殊文字の引き継ぎが正しく行われないことが判明している。
-    
+
     URLエンコーディングが重複してしまう事象については、terasoluna-gfw-web 1.0.1.RELEASE以上で利用可能な\ ``criteriaQuery``\属性を使用することで回避する事が出来る。
-    
+
 |
 
 ページリンクでソート条件を引き継ぐ
@@ -1408,6 +1408,89 @@ JSPの実装(基本編)
       - | ページ移動時のリクエストにソート条件を引き継ぐ場合は、 ``queryTmpl`` を指定し、クエリ文字列にソート条件を追加する。
         | ソート条件を指定するためのパラメータの仕様については、「 :ref:`ページ検索用のリクエストパラメータについて <pagination_overview_pagesearch_requestparameter>` 」を参照されたい。
         | 上記例の場合、 ``"?page=0&size=20&sort=ソート項目,ソート順(ASC or DESC)"`` がクエリ文字列となる。
+
+
+|
+
+セッションで検索条件やソート条件などを引き継ぐ
+""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+Internet Explorerでは 2,083文字以上のURLに対応していないので、検索項目が非常に多い場合に\ ``f:query``\と\ ``<t:pagination>``\を組み合わせてページングをすることができない。
+
+その場合、\ ``@SessionAttributes``\と\ ``<t:pagination>``\を組み合わせて検索条件やソート条件などをページ遷移時にセッションへ格納して持ち回る方法で回避する事が出来る。
+
+セッション管理の詳細については、\ :doc:`SessionManagement`\ を参照されたい。
+
+- Controller
+
+ .. code-block:: java
+
+        @Controller
+        @RequestMapping(value = "pagination")
+        @SessionAttributes(value = {"personSearchForSessionForm"}) // (1)
+        public class PaginationInSessionController {
+
+            // ...
+
+            @ModelAttribute(value = "personSearchForSessionForm") // (2)
+            public PersonSearchForSessionForm setUpForm() {
+                return new PersonSearchForSessionForm();
+            }
+
+            // ...
+
+        }
+
+ .. tabularcolumns:: |p{0.10\linewidth}|p{0.90\linewidth}|
+ .. list-table::
+    :header-rows: 1
+    :widths: 10 90
+
+    * - 項番
+      - 説明
+    * - | (1)
+      - | \ ``@SessionAttributes``\アノテーションの\ ``value``\属性に、セッションに格納するオブジェクトの属性名を指定する。
+    * - | (2)
+      - | \ ``@ModelAttribute``\アノテーションを使用して、\ ``value``\属性で指定した\ ``"personSearchForSessionForm"``\ のオブジェクトをセッションに格納する。
+
+- JSP
+
+ .. code-block:: jsp
+
+        <%-- (1) --%>
+        <form class="center-content" method="post">
+          <spring:nestedPath path="personSearchForSessionForm">
+            <form:input path="name" />
+            <form:select path="sort">
+              <form:option value="personId,DESC">Newest</form:option>
+              <form:option value="personId,ASC">Oldest</form:option>
+            </form:select>
+            <form:button id="searchButton">Search</form:button>
+            <sec:csrfInput />
+          </spring:nestedPath>
+        </form>
+
+        <%-- ... --%>
+
+        <%-- (2) --%>
+        <t:pagination page="${page}"
+            outerElementClass="pagination" />
+
+ .. tabularcolumns:: |p{0.10\linewidth}|p{0.90\linewidth}|
+ .. list-table::
+    :header-rows: 1
+    :widths: 10 90
+
+    * - 項番
+      - 説明
+    * - | (1)
+      - | 検索条件を指定するフォーム。
+        | post通信時に検索条件の \ ``name`` \ と ソート条件の\ ``sort`` \ を保持したフォームをセッションに格納される。
+    * - | (2)
+      - |  \ ``name`` \ と \ ``sort`` \ はセッションに格納されているため、 \ ``criteriaQuery``\属性は使用しない。
+        | 上記例の場合、 \ ``"?page=ページ位置&size=取得件数"``\という形式のクエリ文字列が生成される。
+        | フォームに項目が用意されている場合、ページネーションリンクからの遷移時に \ ``page`` \ と \ ``size`` \ のページ情報がセッションに格納される。
+
+検索条件やソート条件などをセッションに格納しているため、\ **任意のタイミングで削除する**\必要がある。
 
 |
 
