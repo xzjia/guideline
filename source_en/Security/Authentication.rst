@@ -1347,6 +1347,28 @@ An audit log which records information like "When", "Who", "Which data" and "Typ
     How to coordinate with Spring MVC is explained in ":ref:`SpringSecurityAuthenticationIntegrationWithSpringMVC`".
     **This guideline recommends fetching authentication information by using coordination with Spring MVC.**
 
+.. note::
+
+    When a filter (FORM_LOGIN_FILTER) for authentication is to be customized,
+    it is necessary to disable the following 2 \ ``SessionAuthenticationStrategy``\  classes, apart from specifying \ ``<sec:concurrency-control>``\  element.
+
+    * | ``org.springframework.security.web.authentication.session.ConcurrentSessionControlAuthenticationStrategy``
+      | A class to check number of sessions for each logged in user after successful authentication.
+
+    * | ``org.springframework.security.web.authentication.session.RegisterSessionAuthenticationStrategy``
+      | A class to register a session with successful authentication, in session management area.
+
+    In version 1.0.x.RELEASE dependent Spring Security 3.1, \ ``org.springframework.security.web.authentication.session.ConcurrentSessionControlStrategy``\  class is provided; however,
+    it is deprecated API from Spring Security 3.2 and it is abolished API from Spring Security 4.0.
+    When upgrading version from Spring Security 3.1 to Spring Security 3.2 or later versions, changes need to be made so that it can be used with combination of following classes.
+
+    * ``ConcurrentSessionControlAuthenticationStrategy`` (added in Spring Security 3.2)
+    * ``RegisterSessionAuthenticationStrategy`` (added in Spring Security 3.2)
+    * ``org.springframework.security.web.authentication.session.SessionFixationProtectionStrategy``
+
+    For specific methods of definition,
+    refer to sample code of `Spring Security Reference -Web Application Security (Concurrency Control)- <http://docs.spring.io/spring-security/site/docs/3.2.9.RELEASE/reference/htmlsingle/#concurrent-sessions>`_.
+
 |
 
 Access from JSP
