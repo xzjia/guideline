@@ -1873,6 +1873,11 @@ Information required for "Declarative transaction management"
             at org.postgresql.jdbc2.AbstractJdbc2Connection.setReadOnly(AbstractJdbc2Connection.java:741) ~[postgresql-9.3-1102-jdbc41.jar:na]
             ...
 
+ .. note:: **timeout attribute of @Transactional annotation**
+
+    Although \ ``@Transactional``\ annotation consists of \ ``timeout``\ attribute, value specified in \ ``timeout``\ attribute is ignored
+    in MyBatis3.3 and MyBatis-Spring 1.2 combination and is not used.
+
 
 Propagation of transaction
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
