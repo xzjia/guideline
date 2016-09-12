@@ -2151,6 +2151,9 @@ This guideline classifies the definition as follows.
 
 When ValidationMessages.properties is not provided, \ :ref:`Default messages provided by Hibernate Validator<Validation_default_message_in_hibernate_validator>`\  is used.
 
+Japanese message can be handled directly without conversion from Native to Ascii by linking with \ ``MessageSource``\ .
+For details, refer \ :ref:`Validation_without_native2ascii`\ .
+
 
 .. _Validation_message_in_validationmessages:
 
@@ -3129,6 +3132,8 @@ An example of implementing, "whether the entered user name is already registered
        - | Return the result of business logic error check. Process should be delegated to service class. Logic must not be written directly in the \ ``isValid``\  method.
 
 |
+
+.. _MethodValidation:
 
 Method Validation 
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
@@ -4338,6 +4343,85 @@ With the help of this configuration, it can be specified in the controller wheth
 | Therefore it must be noted that, it becomes necessary to specify \ ``@NotNull``\  in case of mandatory check.
 
 
+.. _Validation_without_native2ascii:
+
+Reading messages which are not converted from Native to Ascii
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+A method to read Bean Validation message （\ ``ValidationMessage.properties``\ ） is introduced without converting the message from  Native to Ascii.
+
+When the Japanese message is to be handled directly without converting from  Native to Ascii, it can be easily implemented if it is linked with \ ``MessageSource``\  of Spring.
+
+
+If it is defined as below,, message read by \ ``MessageSource``\  function can be used in \ ``Hibernate Validator``\ .
+
+
+* Bean definition
+
+  \ ``*-domain.xml``\ 
+
+ .. code-block:: xml
+
+     <!-- (1) -->
+     <bean id="validator" class="org.springframework.validation.beanvalidation.LocalValidatorFactoryBean">
+         <property name="validationMessageSource">
+             <!-- (2) -->
+             <bean class="org.springframework.context.support.ResourceBundleMessageSource">
+                 <property name="basenames">
+                     <list>
+                         <value>ValidationMessages</value> <!-- (3) -->
+                     </list>
+                 </property>
+                 <property name="defaultEncoding" value="UTF-8" />
+             </bean>
+         </property>
+     </bean>
+
+     <!-- (4) -->
+     <bean class="org.springframework.validation.beanvalidation.MethodValidationPostProcessor">
+         <property name="validator" ref="validator" />
+     </bean>
+
+ \ ``spring-mvc.xml``\ 
+
+ .. code-block:: xml
+
+     <!-- (5) -->
+     <mvc:annotation-driven validator="validator">
+         <!-- ommited -->
+     </mvc:annotation-driven>
+
+     <!-- (6) -->
+     <bean class="org.springframework.validation.beanvalidation.MethodValidationPostProcessor">
+         <property name="validator" ref="validator" />
+     </bean>
+
+ .. tabularcolumns:: |p{0.10\linewidth}|p{0.90\linewidth}|
+ .. list-table::
+     :header-rows: 1
+     :widths: 10 90
+
+     * - Sr. No.
+       - Description
+     * - | (1)
+       - Define a Bean for \ ``LocalValidatorFactoryBean``\ .
+     * - | (2)
+       - Define \ ``MessageSource``\ . Here, \ ``ResourceBundleMessageSource``\  is used.
+     * - | (3)
+       - Specify a resource bundle to be read in \ ``ApplicationContext``\ .
+     * - | (4)
+       - | Specify a Bean defined by (1) in \ ``validator``\  property of \ ``MethodValidationPostProcessor``\  while using \ :ref:`MethodValidation`\ .
+         | When Method Validation is not used, the Bean definition is not required.
+     * - | (5)
+       - Specify a Bean defined in (1), in  \ ``validator``\ attribute of \ ``<mvc:annotation-driven>``\ element.
+     * - | (6)
+       - \ Same as (4).
+
+ .. note::
+
+     By using \ ``MessageSource``\ function,
+     property file is not necessarily restricted to be placed just under class path. Further, multiple property files can also be specified.
+     
 .. raw:: latex
 
    \newpage
