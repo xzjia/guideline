@@ -1503,12 +1503,12 @@ Internet Explorerでは 2,083文字以上のURLに対応していないので、
 
         <%-- (1) --%>
         <div id="criteriaPart">
-          <form:form action="${pageContext.request.contextPath}/article/list" method="post"
-                     modelAttribute="personSearchForSessionForm">
+          <form:form action="${pageContext.request.contextPath}/article/list"
+                     method="post" modelAttribute="personSearchForSessionForm">
             <form:input path="word" />
             <form:select path="sort">
-              <form:option value="personId,DESC">Newest</form:option>
-              <form:option value="personId,ASC">Oldest</form:option>
+              <form:option value="publishedDate,DESC">Newest</form:option>
+              <form:option value="publishedDate,ASC">Oldest</form:option>
             </form:select>
             <form:button>Search</form:button>
             <br>
