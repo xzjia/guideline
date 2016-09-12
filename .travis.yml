@@ -8,7 +8,9 @@ cache:
     - /usr/local/textlive2016
 
 before_install:
-  - export PATH=$PATH:/usr/texbin:/bin/sh
+  - echo $PATH
+  - export PATH=$PATH:/usr/texbin:/bin:$HOME/tmp/sphinx
+  - echo $PATH
 
 install:
   - pip install --upgrade pip
