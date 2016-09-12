@@ -1477,6 +1477,26 @@ Internet Explorerでは 2,083文字以上のURLに対応していないので、
     * - | (2)
       - | \ ``@ModelAttribute``\アノテーションを使用して、\ ``value``\属性で指定した\ ``"personSearchForSessionForm"``\ のオブジェクトをセッションに格納する。
 
+- From
+
+ .. code-block:: java
+
+        public class PersonSearchForSessionForm implements Serializable {
+
+            // ...
+
+            private int page;
+
+            private int size;
+
+            private String word;
+
+            private String sort;
+
+            // ...
+
+        }
+
 - JSP
 
  .. code-block:: jsp
@@ -1510,9 +1530,9 @@ Internet Explorerでは 2,083文字以上のURLに対応していないので、
       - 説明
     * - | (1)
       - | 検索条件を指定するフォーム。
-        | post通信時に検索条件の \ ``name`` \ と ソート条件の\ ``sort`` \ を保持したフォームをセッションに格納される。
+        | post通信時に検索条件の \ ``word`` \ と ソート条件の\ ``sort`` \ を保持したフォームをセッションに格納される。
     * - | (2)
-      - |  \ ``name`` \ と \ ``sort`` \ はセッションに格納されているため、 \ ``criteriaQuery``\属性は使用しない。
+      - |  \ ``word`` \ と \ ``sort`` \ はセッションに格納されているため、 \ ``criteriaQuery``\属性は使用しない。
         | 上記例の場合、 \ ``"?page=ページ位置&size=取得件数"``\という形式のクエリ文字列が生成される。
         | フォームに項目が用意されている場合、ページネーションリンクからの遷移時に \ ``page`` \ と \ ``size`` \ のページ情報がセッションに格納される。
 
