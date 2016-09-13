@@ -5,7 +5,7 @@ python:
 
 cache:
   directories:
-    - /usr/local/textlive2016
+    - /usr/local/texlive/2016
 
 before_install:
   - echo $PATH
@@ -29,8 +29,8 @@ before_script:
   - ERROR_LOG_FILE=$HOME/tmp/sphinx/build-error.log
 
 script:
-  - sudo sh -c "./build-html.sh 2> $ERROR_LOG_FILE"
-  - sudo sh -c "./build-html_en.sh 2>> $ERROR_LOG_FILE"
+  - sudo sh -c "./build-pdf.sh 2> $ERROR_LOG_FILE"
+  - sudo sh -c "./build-pdf_en.sh 2>> $ERROR_LOG_FILE"
   - cat $ERROR_LOG_FILE
 
 after_script:
