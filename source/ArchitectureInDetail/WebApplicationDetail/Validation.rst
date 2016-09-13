@@ -2686,30 +2686,29 @@ Bean Validationは標準で用意されているチェックルール以外に�
 コレクション内の値に対する入力チェック
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
+Java SE 8から追加された\ ``java.lang.annotation.ElementType.TYPE_USE``\ を使用することで、宣言に限らず型全般（ローカル変数の型等）にアノテーションを付加できる。
+これにより、\ ``List<@ExistInCodeListForTypeArgument(codeListId = "CL_ROLE") String>``\ のように、
+リスト内の型指定の部分にアノテーションを指定することができ、コレクションに対して入力チェックを行うことができるようになる。
+
+.. _Validation_for_parameter_object_in_collection_corresponding_annotation:
+
+コレクションに対応していないアノテーションをコレクションに対応させる方法
+""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+
 ここでは、コレクション内の値に対する入力チェックのうち、最もニーズがあると思われる「コレクション内のString」に対する入力チェックについて説明する。
 
 共通ライブラリでは、入力値がコードリスト内に定義されたコード値であるかどうかチェックするアノテーション、
 \ ``org.terasoluna.gfw.common.codelist.ExistInCodeList``\ を提供している。
 
-しかし、\ ``@ExistInCodeList``\ の入力チェックでサポートしている型は、\ ``String``\ または\ ``Character``\ のみである。
-そのままでは、\ ``String``\ の\ ``List``\ には\ ``@ExistInCodeList``\ を付加することはできない。
+\ ``@ExistInCodeList``\ の入力チェックでサポートしている型は、\ ``String``\ または\ ``Character``\ のみであるが、
+これをコレクションに対応させる方法を説明する。
 
-Controller及びJSPで特別な実装を行うことなく、
-複数選択可能な画面項目（チェックボックスや複数選択ドロップダウンなど）に\ ``@ExistInCodeList``\ アノテーションを対応させるための実装例を示す。
+* \ ``String``\ をJavaBeanでラップし、JSPで\ ``<c:forEach>``\ + \ ``<form:checkbox>``\ を使用した実装
+    この方法を用いることで\ ``@ExistInCodeList``\ をコレクションに対応させることができるが、JSP、ロジックが複雑になってしまう。
 
-* :ref:`Validation_exist_in_codelist_javase8`\
-    Java SE 8とHibernate Validatorを利用し、\ ``String``\ の\ ``List``\ に付加できる独自のアノテーションを実装する方式。
-    **後者と比べて簡単に実現できるので、Java SE 8が使用できる環境ではこちらの方式を推奨する。**
-
-* :ref:`Validation_exist_in_codelist_formatter`\
-    Java Beanクラスでラップしたプロパティに対して \ ``@ExistInCodeList``\ アノテーションを設定する方式。
-    Java SE 7以下ユーザ向け。Java SE 8が使用できる環境では :ref:`Validation_exist_in_codelist_javase8`\を推奨する。
-
-    Java Beanで\ ``String``\ をラップした実装例を以下に示す。
+    実装例を以下に示す。
 
     * JSP
-
-      \ ``<form:checkbox>``\ だと表現できないため、\ ``<c:forEach>``\ + \ ``<form:checkbox>``\ で実装する必要がある。
 
       .. code-block:: jsp
 
@@ -2726,9 +2725,19 @@ Controller及びJSPで特別な実装を行うことなく、
     チェックボックスにチェックすると対応するコード値が、チェックしないと\ ``null``\ が設定される。
     チェックボックスでチェックした値を取得するためには、ロジックで\ ``null``\ 値以外を取得するようにフィルタリングする必要がある。
 
-    **上記理由に加え、JSPが煩雑になることから** \ ``<c:forEach>``\ **は使用せずに本説記載の方法を利用することを推奨する。**
+    **上記理由に加え、JSPが煩雑になることから** \ ``<c:forEach>``\ **は使用せずに下記記載の方法を利用することを推奨する。**
 
-|
+
+Controller及びJSPで特別な実装を行うことなく、
+複数選択可能な画面項目（チェックボックスや複数選択ドロップダウンなど）に\ ``@ExistInCodeList``\ アノテーションを対応させるための実装方法を以下に示す。
+
+* :ref:`Validation_exist_in_codelist_javase8`\
+    Java SE 8とHibernate Validatorを利用し、\ ``String``\ の\ ``List``\ に付加できる独自のアノテーションを実装する方式。
+    **後者と比べて簡単に実現できるので、Java SE 8が使用できる環境ではこちらの方式を推奨する。**
+
+* :ref:`Validation_exist_in_codelist_formatter`\
+    Java Beanクラスでラップしたプロパティに対して \ ``@ExistInCodeList``\ アノテーションを設定する方式。
+    Java SE 7以下ユーザ向け。Java SE 8が使用できる環境では :ref:`Validation_exist_in_codelist_javase8`\を推奨する。
 
 
 .. _Validation_exist_in_codelist_javase8:
@@ -2736,16 +2745,19 @@ Controller及びJSPで特別な実装を行うことなく、
 Java SE 8とHibernate Validator 5.2+による実装
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 
-Java SE 8に対応したHibernate Validator 5.2+を導入し、
-Java SE 8から追加された\ ``java.lang.annotation.ElementType.TYPE_USE``\ を使用することで実装が可能である。
-
 共通ライブラリから標準で提供される\ ``@ExistInCodeList``\は、Java SE 7互換のため\ ``TYPE_USE``\に対応していない。
 
-\ ``TYPE_USE``\に対応するためには、独自にアノテーションを作成する必要がある。
+Java SE 8に対応したHibernate Validator 5.2+を導入し、
+Java SE 8から追加された\ ``java.lang.annotation.ElementType.TYPE_USE``\ を使用することで、
+コレクションに対応した独自のアノテーションを作成することが可能である。
+
+この実装により、\ ``List<@ExistInCodeListForTypeArgument(codeListId = "CL_ROLE") String>``\ のように、
+リスト内の型指定の部分にアノテーションを指定することができ、リスト内の値の入力チェックを行うことができるようになる。
+
 
 主な手順は以下の通り。
 
-* 「TYPE_USE」を使用し、型使用箇所に付加できる\ ``@ExistInCodeList``\ アノテーションを実装する。
+* 「TYPE_USE」を使用し、型使用箇所に付加できる\ ``@ExistInCodeList``\ を拡張したアノテーションを実装する。
 
 * チェック対象にアノテーションを設定する。
 
@@ -2883,11 +2895,6 @@ Java SE 8から追加された\ ``java.lang.annotation.ElementType.TYPE_USE``\ �
        - | 入力チェックを行いたいプロパティに対して\ ``@ExistInCodeListForTypeArgument``\ アノテーションを設定する。
          | リスト内の型指定部にアノテーションを指定し、\ ``codeListId``\ にチェック元となるコードリストを指定する。
 
-.. tip::
-
-  \ ``java.lang.annotation.ElementType.TYPE_USE``\ を使用することで、宣言に限らず型全般（ローカル変数の型等）にアノテーションを付加できる。
-  これにより、実装例（\ ``List<@ExistInCodeListForTypeArgument(codeListId = "CL_ROLE") String>``\）のように、
-  リスト内の型指定の部分にアノテーションを指定することができ、リスト内の値の入力チェックを行うことができるようになる。
 
 |
 
@@ -2906,7 +2913,8 @@ Java Beanを使ったStringのラッパークラスによる実装
 
 Java Beanで\ ``String``\ をラップし、ネストしたBeanのプロパティに対して\ ``@ExistInCodeList``\ を付加することによって入力チェックを行う。
 
-\ ``String``\ から\ ``Role``\ 、\ ``Role``\ から\ ``String``\ への型変換を追加することで、\ ``List<String>``\ にした時と同様に \ ``<form:checkboxes>``\ を使用した実装ができる。
+\ ``String``\ から\ ``Role``\ 、\ ``Role``\ から\ ``String``\ への型変換を追加することで、\ ``List<String>``\ にした時と同様に、
+複雑な実装をすることなく \ ``<form:checkboxes>``\ を使用した実装ができる。
 
 主な手順は以下の通り。
 
