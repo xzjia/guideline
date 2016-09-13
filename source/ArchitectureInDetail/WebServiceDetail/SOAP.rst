@@ -1072,53 +1072,6 @@ SOAPサーバで発生した例外はこれから記述する例外を実装し�
   
 |
 
-
-| この\ ``WebFaultException``\ を継承し、クライアントへ伝えたい種類分、子クラスを作成する。
-| たとえば以下のような子クラスを作成する。
-
-- 業務エラー例外
-- 入力エラー例外
-- リソース未検出エラー例外
-- 排他エラー例外
-- 認可エラー例外
-- システムエラー例外
-
-下記は、業務エラー例外の例である。
-
-*[server projectName]-webservice/src/main/java/com/example/ws/webfault/BusinessFaultException.java*
-
-.. code-block:: java
-
-    package com.example.ws.webfault;
-
-    import javax.xml.ws.WebFault;
-
-    @WebFault(name = "BusinessFault", targetNamespace = "http://example.com/todo") // (1)
-    public class BusinessFaultException extends WebFaultException {
-
-        public BusinessFaultException(String message, WebFaultBean faultInfo) {
-            super(message, faultInfo);
-        }
-
-        public BusinessFaultException(String message, WebFaultBean faultInfo, Throwable e) {
-            super(message, faultInfo, e);
-        }
-
-    }
-
-.. tabularcolumns:: |p{0.10\linewidth}|p{0.90\linewidth}|
-.. list-table::
-    :header-rows: 1
-    :widths: 10 90
-
-    * - 項番
-      - 説明
-    * - | (1)
-      - | \ ``WebFaultException``\ を継承し、コンストラクタのみ作成する。
-        | フィールドやその他メソッドは親クラスのメソッドを使用するため記述不要である。
-
-|
-
 **発生する例外をSOAPFaultでラップする例外ハンドラー**
 
 

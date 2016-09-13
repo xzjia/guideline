@@ -1069,53 +1069,6 @@ These exceptions are placed on [server projectName]-webservice since these are s
   
 |
 
-
-| This \ ``WebFaultException``\  is inherited, and types to be communicated to the client and child class are created.
-| For example, child classes are created as given below.
-
-- Business error exception
-- Input error exception
-- Resource not detected exception
-- Exclusive error exception
-- Authorization exception
-- System error exception
-
-Following is an example of business error exception.
-
-*[server projectName]-webservice/src/main/java/com/example/ws/webfault/BusinessFaultException.java*
-
-.. code-block:: java
-
-    package com.example.ws.webfault;
-
-    import javax.xml.ws.WebFault;
-
-    @WebFault(name = "BusinessFault", targetNamespace = "http://example.com/todo") // (1)
-    public class BusinessFaultException extends WebFaultException {
-
-        public BusinessFaultException(String message, WebFaultBean faultInfo) {
-            super(message, faultInfo);
-        }
-
-        public BusinessFaultException(String message, WebFaultBean faultInfo, Throwable e) {
-            super(message, faultInfo, e);
-        }
-
-    }
-
-.. tabularcolumns:: |p{0.10\linewidth}|p{0.90\linewidth}|
-.. list-table::
-    :header-rows: 1
-    :widths: 10 90
-
-    * - Sr. No.
-      - Description
-    * - | (1)
-      - | Inherit \ ``WebFaultException``\  and create only constructor.
-        | Field and other methods are not required to be described since parent class method is used.
-
-|
-
 **Exception handler which wraps exceptions that have occurred by SOAPFault**
 
 
