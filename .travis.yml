@@ -5,7 +5,7 @@ python:
 
 cache:
   directories:
-    - /usr/local/texlive/2016
+    - /usr/local/texlive/2016/bin/x86_64-linux
 
 before_install:
   - echo $PATH
