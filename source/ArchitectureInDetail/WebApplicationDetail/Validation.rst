@@ -2774,7 +2774,7 @@ Java SE 8から追加された\ ``java.lang.annotation.ElementType.TYPE_USE``\ �
 
     @Documented
     @Constraint(validatedBy = {})
-    @Target({ METHOD, FIELD, ANNOTATION_TYPE, PARAMETER, TYPE_USE }) // (1)
+    @Target(TYPE_USE) // (1)
     @Retention(RUNTIME)
     @ReportAsSingleViolation
     @ExistInCodeList(codeListId = "") // (2)
@@ -2789,7 +2789,7 @@ Java SE 8から追加された\ ``java.lang.annotation.ElementType.TYPE_USE``\ �
 
         Class<? extends Payload>[] payload() default {};
 
-        @Target({ METHOD, FIELD, ANNOTATION_TYPE, PARAMETER, TYPE_USE }) // (5)
+        @Target(TYPE_USE) // (5)
         @Retention(RUNTIME)
         @Documented
         @interface List {
