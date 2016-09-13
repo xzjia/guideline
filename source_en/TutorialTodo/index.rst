@@ -3187,7 +3187,7 @@ The following improvement can be done in the TODO management application.
 
 * To externalize the property (Maximum number of uncompleted TODO) -> :doc:`../ArchitectureInDetail/PropertyManagement`
 * To externalize the messages -> :doc:`../ArchitectureInDetail/MessageManagement`
-* To add pagination -> :doc:`../ArchitectureInDetail/Pagination`
+* To add pagination function -> :doc:`../ArchitectureInDetail/Pagination`
 * To add exception handling -> :doc:`../ArchitectureInDetail/ExceptionHandling`
 * To add double submit protection (Support the transaction token check) -> :doc:`../ArchitectureInDetail/DoubleSubmitProtection`
 * To change how to get the system date time -> :doc:`../ArchitectureInDetail/SystemDate`
