@@ -1445,58 +1445,6 @@ Internet Explorerでは 2,083文字以上のURLに対応していないので、
 
 セッション管理の詳細については、\ :doc:`SessionManagement`\ を参照されたい。
 
-- Controller
-
- .. code-block:: java
-
-        @Controller
-        @RequestMapping("pagination")
-        @SessionAttributes(value = {"personSearchForSessionForm"}) // (1)
-        public class PaginationInSessionController {
-
-            // ...
-
-            @ModelAttribute("personSearchForSessionForm") // (2)
-            public PersonSearchForSessionForm setUpForm() {
-                return new PersonSearchForSessionForm();
-            }
-
-            // ...
-
-        }
-
- .. tabularcolumns:: |p{0.10\linewidth}|p{0.90\linewidth}|
- .. list-table::
-    :header-rows: 1
-    :widths: 10 90
-
-    * - 項番
-      - 説明
-    * - | (1)
-      - | \ ``@SessionAttributes``\アノテーションの\ ``value``\属性に、セッションに格納するオブジェクトの属性名を指定する。
-    * - | (2)
-      - | \ ``@ModelAttribute``\アノテーションを使用して、\ ``value``\属性で指定した\ ``"personSearchForSessionForm"``\ のオブジェクトをセッションに格納する。
-
-- From
-
- .. code-block:: java
-
-        public class PersonSearchForSessionForm implements Serializable {
-
-            // ...
-
-            private int page;
-
-            private int size;
-
-            private String word;
-
-            private String sort;
-
-            // ...
-
-        }
-
 - JSP
 
  .. code-block:: jsp
@@ -1532,9 +1480,91 @@ Internet Explorerでは 2,083文字以上のURLに対応していないので、
       - | 検索条件を指定するフォーム。
         | post通信時に検索条件の \ ``word`` \ と ソート条件の\ ``sort`` \ を保持したフォームをセッションに格納される。
     * - | (2)
-      - |  \ ``word`` \ と \ ``sort`` \ はセッションに格納されているため、 \ ``criteriaQuery``\属性は使用しない。
+      - | \ ``word`` \ と \ ``sort`` \ はセッションに格納されているため、 \ ``criteriaQuery``\属性は使用しない。
         | 上記例の場合、 \ ``"?page=ページ位置&size=取得件数"``\という形式のクエリ文字列が生成される。
-        | フォームに項目が用意されている場合、ページネーションリンクからの遷移時に \ ``page`` \ と \ ``size`` \ のページ情報がセッションに格納される。
+
+- Controller
+
+ .. code-block:: java
+
+        @Controller
+        @RequestMapping("article")
+        @SessionAttributes(value = {"personSearchForSessionForm"}) // (1)
+        public class PaginationInSessionController {
+
+            // ...
+
+            @ModelAttribute("personSearchForSessionForm") // (2)
+            public PersonSearchForSessionForm setUpForm() {
+                return new PersonSearchForSessionForm();
+            }
+
+            // ...
+
+            @RequestMapping("list")
+            public String list(PersonSearchForSessionForm form,
+                BindingResult result,
+                Pageable pageable,
+                Model model) {
+
+                ArticleSearchCriteria criteria = beanMapper.map(form,
+                        ArticleSearchCriteria.class);
+
+                Page<Article> page = articleService.searchArticle(criteria, pageable); // (3)
+
+                model.addAttribute("page", page);
+
+                return "article/list";
+            }
+
+            // ...
+
+        }
+
+ .. tabularcolumns:: |p{0.10\linewidth}|p{0.90\linewidth}|
+ .. list-table::
+    :header-rows: 1
+    :widths: 10 90
+
+    * - 項番
+      - 説明
+    * - | (1)
+      - | \ ``@SessionAttributes``\アノテーションの\ ``value``\属性に、セッションに格納するオブジェクトの属性名を指定する。
+    * - | (2)
+      - | \ ``@ModelAttribute``\アノテーションを使用して、\ ``value``\属性で指定した\ ``"personSearchForSessionForm"``\ のオブジェクトをセッションに格納する。
+    * - | (3)
+      - | 下記に各画面遷移に応じたControllerでの利用方法を説明する。
+        |
+        | 検索ボタン押下によるpost通信の画面遷移の場合
+        | \ ``size`` \ を\ ``pageable`` \で取得する。
+        | \ ``word`` \ はフォームから取得する。
+        |
+        | ページネーションリンク押下によるget通信の画面遷移の場合
+        | \ ``page`` \ と \ ``size`` \ は\ ``criteriaQuery``\ を経由して \ ``pageable`` \で取得する。
+        | \ ``word`` \ と \ ``sort`` \ はセッションから取得する。
+        |
+        | 別画面（詳細画面など）から戻ってくる画面遷移の場合
+        | \ ``page`` \ と \ ``size`` \ 、 \ ``word`` \ 、 \ ``sort`` \ はセッションから取得する。
+
+- From
+
+ .. code-block:: java
+
+        public class PersonSearchForSessionForm implements Serializable {
+
+            // ...
+
+            private int page;
+
+            private int size;
+
+            private String word;
+
+            private String sort;
+
+            // ...
+
+        }
 
 以下の3リクエストでセッションに格納したフォームの削除を行う必要がある。
 
