@@ -18,12 +18,12 @@ install:
   - mkdir -p $HOME/tmp/sphinx
   - curl -L -O http://mirror.ctan.org/systems/texlive/tlnet/install-tl-unx.tar.gz
   - tar -xvf install-tl-unx.tar.gz
-  -pwd
+  - pwd
   - cd install-tl*
-  -pwd
+  - pwd
   - sudo ./install-tl --repository http://mirror.ctan.org/systems/texlive/tlnet/ < ../test.txt
   - cd ..
-  -pwd
+  - pwd
 
 before_script:
   - ERROR_LOG_FILE=$HOME/tmp/sphinx/build-error.log
