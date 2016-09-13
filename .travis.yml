@@ -9,7 +9,7 @@ cache:
 
 before_install:
   - echo $PATH
-  - export PATH=$PATH:/usr/texbin:/bin:$HOME/tmp/sphinx
+  - export PATH=$PATH:/usr/texbin
   - echo $PATH
 
 install:
@@ -18,16 +18,19 @@ install:
   - mkdir -p $HOME/tmp/sphinx
   - curl -L -O http://mirror.ctan.org/systems/texlive/tlnet/install-tl-unx.tar.gz
   - tar -xvf install-tl-unx.tar.gz
+  -pwd
   - cd install-tl*
+  -pwd
   - sudo ./install-tl --repository http://mirror.ctan.org/systems/texlive/tlnet/ < ../test.txt
   - cd ..
+  -pwd
 
 before_script:
   - ERROR_LOG_FILE=$HOME/tmp/sphinx/build-error.log
 
 script:
-  - sudo sh -c "./build-pdf.sh 2> $ERROR_LOG_FILE"
-  - sudo sh -c "./build-pdf_en.sh 2>> $ERROR_LOG_FILE"
+  - sudo sh -c "./build-html.sh 2> $ERROR_LOG_FILE"
+  - sudo sh -c "./build-html_en.sh 2>> $ERROR_LOG_FILE"
   - cat $ERROR_LOG_FILE
 
 after_script:
