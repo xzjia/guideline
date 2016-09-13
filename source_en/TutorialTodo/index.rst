@@ -2677,12 +2677,31 @@ In this tutorial, it explains how to implement the infrastructure layer using fo
 
 |
 
+.. _TutorialCreateORMapperBlankProject:
+
+Creating a blank project dependent on O/R Mapper
+--------------------------------------------------------------------------------
+
+Here, a blank project dependent on O/R Mapper is created.
+
+At first, recreate the project corresponding to O/R Mapper being used.
+
+* \ :ref:`TutorialCreateMyBatis3BlankProject`\
+* \ :ref:`TutorialCreateJPABlankProject`\
+
+Next, \ **copy a file other than **TodoRepositoryImpl class to a newly created project**\ under \ :file:`src`\ folder created upto \ :ref:`tutorial-todo_infra`\.
+
+
+\ **However, file to be copied must be a newly created file or file with added changes. A file without modifications must not be copied**\.
+
+|
+
 .. _Tutorial_Setup_Database:
 
 Database set-up
 --------------------------------------------------------------------------------
 
-First perform the Database set-up.
+Here, perform the Database set-up.
 
 In this tutorial, the H2 Database is used to save the database setup time.
 
@@ -2739,9 +2758,6 @@ Creating infrastructure layer with MyBatis3
 --------------------------------------------------------------------------------
 
 Here, How to create RepositoryImpl of infrastructure layer using MyBatis3 is explained.
-
-First, regenerate a project as \ :ref:`TutorialCreateMyBatis3BlankProject`\. And then,
-\ **copy all files other than TodoRepositoryImpl class under src folder into new project**\  which are created until \ :ref:`Tutorial_Setup_Database`\ .
 
 If you want to use the Spring Data JPA, you can skip this section and may proceed to the \ :ref:`using_SpringDataJPA`\.
 
@@ -2918,7 +2934,7 @@ Describe the SQL to be executed when the \ ``TodoRepository`` \ methods defined 
        | Specify the parameter of the class name (FQCN or alias name) in the \ ``parameterType`` \ attribute of \ ``<update>`` \ element.
    * - | (7)
      - | Implement the SQL to delete the Todo object specified in the argument.
-       | Specify the parameter of the class name (FQCN or alias name) in the \ ``parameterType`` \ attribute of \ ``<delete>`` \ element.
+       | Specify the parameter of the class name (FQCN or alias name) in the \ ``parameterType`` \ attribute of \ ``<delete>`` \ element.
    * - | (8)
      - | Implement the SQL to get all records matches with the \ ``finished`` \ status specified in the argument.
 
@@ -2963,9 +2979,6 @@ Creating infrastructure layer with Spring Data JPA
 --------------------------------------------------------------------------------
 
 Here, How to create RepositoryImpl of infrastructure layer using \ `Spring Data JPA <http://www.springsource.org/spring-data/jpa>`_ \ is explained.
-
-First, regenerate a project as \ :ref:`TutorialCreateJPABlankProject`\. And then,
-\ **copy all files other than TodoRepositoryImpl class under src folder into new project**\  which are created until \ :ref:`Tutorial_Setup_Database`\ .
 
 Modification in Entity
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
@@ -3174,7 +3187,7 @@ The following improvement can be done in the TODO management application.
 
 * To externalize the property (Maximum number of uncompleted TODO) -> :doc:`../ArchitectureInDetail/PropertyManagement`
 * To externalize the messages -> :doc:`../ArchitectureInDetail/MessageManagement`
-* To add pagination -> :doc:`../ArchitectureInDetail/Pagination`
+* To add pagination function -> :doc:`../ArchitectureInDetail/Pagination`
 * To add exception handling -> :doc:`../ArchitectureInDetail/ExceptionHandling`
 * To add double submit protection (Support the transaction token check) -> :doc:`../ArchitectureInDetail/DoubleSubmitProtection`
 * To change how to get the system date time -> :doc:`../ArchitectureInDetail/SystemDate`
