@@ -465,14 +465,16 @@ As a result, database initialization is necessary by executing SQL at the time o
 | ``src/main/resources/META-INF/spring/first-springsecurity-env.xml``
 
 .. code-block:: xml
-    :emphasize-lines: 3,6,44-49
+    :emphasize-lines: 4,6,30-36
 
     <?xml version="1.0" encoding="UTF-8"?>
     <beans xmlns="http://www.springframework.org/schema/beans"
-        xmlns:jdbc="http://www.springframework.org/schema/jdbc"
         xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-        xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd
-            http://www.springframework.org/schema/jdbc http://www.springframework.org/schema/jdbc/spring-jdbc.xsd">
+        xmlns:jdbc="http://www.springframework.org/schema/jdbc"
+        xsi:schemaLocation="
+            http://www.springframework.org/schema/jdbc http://www.springframework.org/schema/jdbc/spring-jdbc.xsd
+            http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd
+        ">
 
         <bean id="dateFactory" class="org.terasoluna.gfw.common.date.jodatime.DefaultJodaTimeDateFactory" />
 
@@ -489,9 +491,19 @@ As a result, database initialization is necessary by executing SQL at the time o
             <property name="maxWaitMillis" value="${cp.maxWait}" />
         </bean>
 
+
         <bean id="dataSource" class="net.sf.log4jdbc.Log4jdbcProxyDataSource">
             <constructor-arg index="0" ref="realDataSource" />
         </bean>
+
+        <!-- (1) -->
+        <jdbc:initialize-database data-source="dataSource"
+            ignore-failures="ALL">
+            <!-- (2) -->
+            <jdbc:script location="classpath:/database/${database}-schema.sql" encoding="UTF-8" />
+            <!-- (3) -->
+            <jdbc:script location="classpath:/database/${database}-dataload.sql" encoding="UTF-8" />
+        </jdbc:initialize-database>
 
         <!--  REMOVE THIS LINE IF YOU USE JPA
         <bean id="transactionManager"
@@ -499,24 +511,12 @@ As a result, database initialization is necessary by executing SQL at the time o
             <property name="entityManagerFactory" ref="entityManagerFactory" />
         </bean>
               REMOVE THIS LINE IF YOU USE JPA  -->
-        <!--  REMOVE THIS LINE IF YOU USE MyBatis2
+        <!--  REMOVE THIS LINE IF YOU USE MyBatis3
         <bean id="transactionManager"
             class="org.springframework.jdbc.datasource.DataSourceTransactionManager">
             <property name="dataSource" ref="dataSource" />
         </bean>
-              REMOVE THIS LINE IF YOU USE MyBatis2  -->
-        <bean id="transactionManager"
-            class="org.springframework.jdbc.datasource.DataSourceTransactionManager">
-            <property name="dataSource" ref="dataSource" />
-        </bean>
-
-        <!-- (1) -->
-        <jdbc:initialize-database data-source="dataSource" ignore-failures="ALL">
-            <!-- (2) -->
-            <jdbc:script location="classpath:/database/${database}-schema.sql" />
-            <jdbc:script location="classpath:/database/${database}-dataload.sql" />
-        </jdbc:initialize-database>
-
+              REMOVE THIS LINE IF YOU USE MyBatis3  -->
     </beans>
 
 .. tabularcolumns:: |p{0.10\linewidth}|p{0.90\linewidth}|
@@ -625,42 +625,33 @@ Following are URL patterns to be handled by the application created in this tuto
 | ``src/main/resources/META-INF/spring/spring-security.xml``
 
 .. code-block:: xml
-    :emphasize-lines: 22-23,27-28,32-33,34-35,42-47
+    :emphasize-lines: 12-15,16-19,23-24,31-33,34-35
 
     <?xml version="1.0" encoding="UTF-8"?>
     <beans xmlns="http://www.springframework.org/schema/beans"
-        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:sec="http://www.springframework.org/schema/security"
-        xmlns:context="http://www.springframework.org/schema/context"
-        xsi:schemaLocation="http://www.springframework.org/schema/security http://www.springframework.org/schema/security/spring-security.xsd
+        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xmlns:sec="http://www.springframework.org/schema/security"
+        xsi:schemaLocation="
+            http://www.springframework.org/schema/security http://www.springframework.org/schema/security/spring-security.xsd
             http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd
-            http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context.xsd">
+        ">
 
         <sec:http pattern="/resources/**" security="none"/>
         <sec:http>
-            <sec:headers>
-                <sec:cache-control />
-                <sec:content-type-options />
-                <sec:hsts />
-                <sec:frame-options />
-                <sec:xss-protection />
-            </sec:headers>
-            <sec:csrf />
-            <sec:access-denied-handler ref="accessDeniedHandler"/>
-            <sec:custom-filter ref="userIdMDCPutFilter" after="ANONYMOUS_FILTER"/>
-            <sec:session-management />
             <!-- (1) -->
             <sec:form-login
                 login-page="/login.jsp"
                 authentication-failure-url="/login.jsp?error=true" />
             <!-- (2) -->
             <sec:logout
-                logout-url="/logout"
                 logout-success-url="/"
                 delete-cookies="JSESSIONID" />
+            <sec:access-denied-handler ref="accessDeniedHandler"/>
+            <sec:custom-filter ref="userIdMDCPutFilter" after="ANONYMOUS_FILTER"/>
+            <sec:session-management />
             <!-- (3) -->
             <sec:intercept-url pattern="/login.jsp" access="permitAll" />
             <sec:intercept-url pattern="/**" access="isAuthenticated()" />
-
         </sec:http>
 
         <sec:authentication-manager>
@@ -674,7 +665,7 @@ Following are URL patterns to be handled by the application created in this tuto
             </sec:authentication-provider>
         </sec:authentication-manager>
 
-        <!-- Change View for CSRF or AccessDenied -->
+        <!-- CSRF Protection -->
         <bean id="accessDeniedHandler"
             class="org.springframework.security.web.access.DelegatingAccessDeniedHandler">
             <constructor-arg index="0">
@@ -856,8 +847,10 @@ Creating login page
     <%@ taglib uri="http://www.springframework.org/tags" prefix="spring"%>
     <%@ taglib uri="http://www.springframework.org/tags/form" prefix="form"%>
     <%@ taglib uri="http://www.springframework.org/security/tags" prefix="sec"%>
-    <%@ taglib uri="http://terasoluna.org/functions" prefix="f"%>
+    <%@ taglib uri="http://tiles.apache.org/tags-tiles" prefix="tiles"%>
+    <%@ taglib uri="http://tiles.apache.org/tags-tiles-extras" prefix="tilesx"%>
     <%@ taglib uri="http://terasoluna.org/tags" prefix="t"%>
+    <%@ taglib uri="http://terasoluna.org/functions" prefix="f"%>
 
 .. tabularcolumns:: |p{0.10\linewidth}|p{0.90\linewidth}|
 .. list-table::
@@ -1129,27 +1122,22 @@ Perform definitions related to Spring Security in \ ``spring-security.xml``\ .
 \ ``src/main/resources/META-INF/spring/spring-security.xml``\ of the blank project which has been created has following settings.
 
 .. code-block:: xml
-    :emphasize-lines: 9,12,14,16,18,20,24,27,60
+    :emphasize-lines: 10,13,15,17,19,21,25,28,61
 
     <?xml version="1.0" encoding="UTF-8"?>
     <beans xmlns="http://www.springframework.org/schema/beans"
-        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:sec="http://www.springframework.org/schema/security"
-        xmlns:context="http://www.springframework.org/schema/context"
-        xsi:schemaLocation="http://www.springframework.org/schema/security http://www.springframework.org/schema/security/spring-security.xsd
+        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xmlns:sec="http://www.springframework.org/schema/security"
+        xsi:schemaLocation="
+            http://www.springframework.org/schema/security http://www.springframework.org/schema/security/spring-security.xsd
             http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd
-            http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context.xsd">
+        ">
 
         <!-- (1) -->
         <sec:http pattern="/resources/**" security="none"/>
         <sec:http>
             <!-- (2) -->
             <sec:form-login/>
-                <sec:cache-control />
-                <sec:content-type-options />
-                <sec:hsts />
-                <sec:frame-options />
-                <sec:xss-protection />
-            </sec:headers>
             <!-- (3) -->
             <sec:logout/>
             <!-- (4) -->
@@ -1161,10 +1149,10 @@ Perform definitions related to Spring Security in \ ``spring-security.xml``\ .
         </sec:http>
 
         <!-- (7) -->
-        <sec:authentication-manager></sec:authentication-manager>
+        <sec:authentication-manager />
 
         <!-- (4) -->
-        <!-- Change View for CSRF or AccessDenied -->
+        <!-- CSRF Protection -->
         <bean id="accessDeniedHandler"
             class="org.springframework.security.web.access.DelegatingAccessDeniedHandler">
             <constructor-arg index="0">
@@ -1255,18 +1243,21 @@ Perform settings to link Spring Security and Spring MVC in \ ``spring-mvc.xml``\
 Description of settings not related to Spring Security is omitted.
 
 .. code-block:: xml
-    :emphasize-lines: 19-21,76-77
+    :emphasize-lines: 22-24,87-89
 
     <?xml version="1.0" encoding="UTF-8"?>
     <beans xmlns="http://www.springframework.org/schema/beans"
-        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:context="http://www.springframework.org/schema/context"
-        xmlns:mvc="http://www.springframework.org/schema/mvc" xmlns:util="http://www.springframework.org/schema/util"
+        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xmlns:context="http://www.springframework.org/schema/context"
+        xmlns:mvc="http://www.springframework.org/schema/mvc"
+        xmlns:util="http://www.springframework.org/schema/util"
         xmlns:aop="http://www.springframework.org/schema/aop"
         xsi:schemaLocation="http://www.springframework.org/schema/mvc http://www.springframework.org/schema/mvc/spring-mvc.xsd
             http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd
             http://www.springframework.org/schema/util http://www.springframework.org/schema/util/spring-util.xsd
             http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context.xsd
-            http://www.springframework.org/schema/aop http://www.springframework.org/schema/aop/spring-aop.xsd">
+            http://www.springframework.org/schema/aop http://www.springframework.org/schema/aop/spring-aop.xsd
+        ">
 
         <context:property-placeholder
             location="classpath*:/META-INF/spring/*.properties" />
@@ -1279,6 +1270,8 @@ Description of settings not related to Spring Security is omitted.
                 <bean
                     class="org.springframework.security.web.method.annotation.AuthenticationPrincipalArgumentResolver" />
             </mvc:argument-resolvers>
+            <!-- workarround to CVE-2016-5007. -->
+            <mvc:path-matching path-matcher="pathMatcher" />
         </mvc:annotation-driven>
 
         <mvc:default-servlet-handler />
@@ -1325,15 +1318,22 @@ Description of settings not related to Spring Security is omitted.
 
         <!-- Settings View Resolver. -->
         <mvc:view-resolvers>
+            <mvc:bean-name />
+            <mvc:tiles />
             <mvc:jsp prefix="/WEB-INF/views/" />
         </mvc:view-resolvers>
+
+        <mvc:tiles-configurer>
+            <mvc:definitions location="/WEB-INF/tiles/tiles-definitions.xml" />
+        </mvc:tiles-configurer>
 
         <bean id="requestDataValueProcessor"
             class="org.terasoluna.gfw.web.mvc.support.CompositeRequestDataValueProcessor">
             <constructor-arg>
                 <util:list>
                     <!-- (2) -->
-                    <bean class="org.springframework.security.web.servlet.support.csrf.CsrfRequestDataValueProcessor" />
+                    <bean
+                        class="org.springframework.security.web.servlet.support.csrf.CsrfRequestDataValueProcessor" />
                     <bean
                         class="org.terasoluna.gfw.web.token.transaction.TransactionTokenRequestDataValueProcessor" />
                 </util:list>
@@ -1342,7 +1342,8 @@ Description of settings not related to Spring Security is omitted.
 
         <!-- Setting Exception Handling. -->
         <!-- Exception Resolver. -->
-        <bean class="org.terasoluna.gfw.web.exception.SystemExceptionResolver">
+        <bean id="systemExceptionResolver"
+            class="org.terasoluna.gfw.web.exception.SystemExceptionResolver">
             <property name="exceptionCodeResolver" ref="exceptionCodeResolver" />
             <!-- Setting and Customization by project. -->
             <property name="order" value="3" />
@@ -1374,6 +1375,11 @@ Description of settings not related to Spring Security is omitted.
             <aop:advisor advice-ref="handlerExceptionResolverLoggingInterceptor"
                 pointcut="execution(* org.springframework.web.servlet.HandlerExceptionResolver.resolveException(..))" />
         </aop:config>
+
+        <!-- Setting PathMatcher. -->
+        <bean id="pathMatcher" class="org.springframework.util.AntPathMatcher">
+            <property name="trimTokens" value="false" />
+        </bean>
 
     </beans>
 

@@ -3212,20 +3212,19 @@ web.xml
 作成したブランクプロジェクトの\ :file:`src/main/webapp/WEB-INF/web.xml`\ は、以下のような設定となっている。
 
 .. code-block:: xml
-    :emphasize-lines: 2, 6, 22, 78, 95, 106, 120
+    :emphasize-lines: 2, 8, 25, 79, 95, 106, 122
 
 
     <?xml version="1.0" encoding="UTF-8"?>
     <!-- (1) -->
-    <web-app xmlns="http://java.sun.com/xml/ns/javaee" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    <web-app xmlns="http://java.sun.com/xml/ns/javaee"
+        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
         xsi:schemaLocation="http://java.sun.com/xml/ns/javaee http://java.sun.com/xml/ns/javaee/web-app_3_0.xsd"
         version="3.0">
+
         <!-- (2) -->
         <listener>
-            <listener-class>org.springframework.web.context.ContextLoaderListener</listener-class>
-        </listener>
-        <listener>
-            <listener-class>org.terasoluna.gfw.web.logging.HttpSessionEventLoggingListener</listener-class>
+        <listener-class>org.springframework.web.context.ContextLoaderListener</listener-class>
         </listener>
         <context-param>
             <param-name>contextConfigLocation</param-name>
@@ -3235,6 +3234,10 @@ web.xml
                 classpath*:META-INF/spring/spring-security.xml
             </param-value>
         </context-param>
+
+        <listener>
+            <listener-class>org.terasoluna.gfw.web.logging.HttpSessionEventLoggingListener</listener-class>
+        </listener>
 
         <!-- (3) -->
         <filter>
@@ -3285,12 +3288,10 @@ web.xml
             <filter-name>springSecurityFilterChain</filter-name>
             <filter-class>org.springframework.web.filter.DelegatingFilterProxy</filter-class>
         </filter>
-
         <filter-mapping>
             <filter-name>springSecurityFilterChain</filter-name>
             <url-pattern>/*</url-pattern>
         </filter-mapping>
-
 
         <!-- (4) -->
         <servlet>
@@ -3303,7 +3304,6 @@ web.xml
             </init-param>
             <load-on-startup>1</load-on-startup>
         </servlet>
-
         <servlet-mapping>
             <servlet-name>appServlet</servlet-name>
             <url-pattern>/</url-pattern>
@@ -3325,10 +3325,12 @@ web.xml
             <error-code>500</error-code>
             <location>/WEB-INF/views/common/error/systemError.jsp</location>
         </error-page>
+
         <error-page>
             <error-code>404</error-code>
             <location>/WEB-INF/views/common/error/resourceNotFoundError.jsp</location>
         </error-page>
+
         <error-page>
             <exception-type>java.lang.Exception</exception-type>
             <location>/WEB-INF/views/common/error/unhandledSystemError.html</location>
@@ -3338,6 +3340,11 @@ web.xml
         <session-config>
             <!-- 30min -->
             <session-timeout>30</session-timeout>
+            <cookie-config>
+                <http-only>true</http-only>
+                <!-- <secure>true</secure> -->
+            </cookie-config>
+            <tracking-mode>COOKIE</tracking-mode>
         </session-config>
 
     </web-app>
@@ -3484,15 +3491,16 @@ applicationContext.xml
 | なお、チュートリアルで使用しないコンポーネントについての説明は割愛する。
 
 .. code-block:: xml
-    :emphasize-lines: 9-10, 14-16, 18-19
+    :emphasize-lines: 10-11, 15-17, 19-20
 
     <?xml version="1.0" encoding="UTF-8"?>
     <beans xmlns="http://www.springframework.org/schema/beans"
-        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:context="http://www.springframework.org/schema/context"
-        xmlns:aop="http://www.springframework.org/schema/aop"
-        xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd
+        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xmlns:context="http://www.springframework.org/schema/context"
+        xsi:schemaLocation="
+            http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd
             http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context.xsd
-            http://www.springframework.org/schema/aop http://www.springframework.org/schema/aop/spring-aop.xsd">
+        ">
 
         <!-- (1) -->
         <import resource="classpath:/META-INF/spring/todo-domain.xml" />
@@ -3504,7 +3512,7 @@ applicationContext.xml
             location="classpath*:/META-INF/spring/*.properties" />
 
         <!-- (3) -->
-        <bean class="org.dozer.spring.DozerBeanMapperFactoryBean">
+        <bean id="beanMapper" class="org.dozer.spring.DozerBeanMapperFactoryBean">
             <property name="mappingFiles"
                 value="classpath*:/META-INF/dozer/**/*-mapping.xml" />
         </bean>
@@ -3591,15 +3599,18 @@ todo-domain.xml
 | なお、チュートリアルで使用しないコンポーネントについての説明は割愛する。
 
 .. code-block:: xml
-    :emphasize-lines: 9-10, 13-14
+    :emphasize-lines: 12-13, 16-17
 
     <?xml version="1.0" encoding="UTF-8"?>
     <beans xmlns="http://www.springframework.org/schema/beans"
-        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:context="http://www.springframework.org/schema/context"
+        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xmlns:context="http://www.springframework.org/schema/context"
         xmlns:aop="http://www.springframework.org/schema/aop"
-        xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd
+        xsi:schemaLocation="
+            http://www.springframework.org/schema/aop http://www.springframework.org/schema/aop/spring-aop.xsd
+            http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd
             http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context.xsd
-            http://www.springframework.org/schema/aop http://www.springframework.org/schema/aop/spring-aop.xsd">
+        ">
 
         <!-- (1) -->
         <import resource="classpath:META-INF/spring/todo-infra.xml" />
@@ -3611,11 +3622,11 @@ todo-domain.xml
         <!-- AOP. -->
         <bean id="resultMessagesLoggingInterceptor"
             class="org.terasoluna.gfw.common.exception.ResultMessagesLoggingInterceptor">
-            <property name="exceptionLogger" ref="exceptionLogger" />
+              <property name="exceptionLogger" ref="exceptionLogger" />
         </bean>
         <aop:config>
             <aop:advisor advice-ref="resultMessagesLoggingInterceptor"
-                pointcut="@within(org.springframework.stereotype.Service)" />
+                         pointcut="@within(org.springframework.stereotype.Service)" />
         </aop:config>
 
     </beans>
@@ -3669,8 +3680,9 @@ O/R Mapperに依存しないブランクプロジェクトを作成した場合�
     <?xml version="1.0" encoding="UTF-8"?>
     <beans xmlns="http://www.springframework.org/schema/beans"
         xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-        xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd">
-
+        xsi:schemaLocation="
+            http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd
+        ">
 
     </beans>
 
@@ -3680,17 +3692,16 @@ MyBatis3用のブランクプロジェクトを作成した場合のtodo-infra.x
 MyBatis3用のブランクプロジェクトを作成した場合、以下のような設定となっている。
 
 .. code-block:: xml
-   :emphasize-lines: 11-12, 14-16, 17-18, 19-20, 23-25
+   :emphasize-lines: 10-11, 13-15, 16-17, 18-19, 22-24
 
     <?xml version="1.0" encoding="UTF-8"?>
     <beans xmlns="http://www.springframework.org/schema/beans"
-           xmlns:mybatis="http://mybatis.org/schema/mybatis-spring"
-           xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xmlns:mybatis="http://mybatis.org/schema/mybatis-spring"
+        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
         xsi:schemaLocation="
-            http://www.springframework.org/schema/beans
-            http://www.springframework.org/schema/beans/spring-beans.xsd
-            http://mybatis.org/schema/mybatis-spring
-            http://mybatis.org/schema/mybatis-spring.xsd">
+            http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd
+            http://mybatis.org/schema/mybatis-spring http://mybatis.org/schema/mybatis-spring.xsd
+        ">
 
          <!-- (1) -->
         <import resource="classpath:/META-INF/spring/todo-env.xml" />
@@ -3746,8 +3757,8 @@ MyBatis3用のブランクプロジェクトを作成した場合、以下のよ
 
         <?xml version="1.0" encoding="UTF-8" ?>
         <!DOCTYPE configuration
-          PUBLIC "-//mybatis.org//DTD Config 3.0//EN"
-          "http://mybatis.org/dtd/mybatis-3-config.dtd">
+            PUBLIC "-//mybatis.org//DTD Config 3.0//EN"
+            "http://mybatis.org/dtd/mybatis-3-config.dtd">
         <configuration>
 
             <!-- See http://mybatis.github.io/mybatis-3/configuration.html#settings -->
@@ -3755,10 +3766,10 @@ MyBatis3用のブランクプロジェクトを作成した場合、以下のよ
                 <setting name="mapUnderscoreToCamelCase" value="true" />
                 <setting name="lazyLoadingEnabled" value="true" />
                 <setting name="aggressiveLazyLoading" value="false" />
+                <setting name="defaultFetchSize" value="100" />
         <!--
                 <setting name="defaultExecutorType" value="REUSE" />
                 <setting name="jdbcTypeForNull" value="NULL" />
-                <setting name="proxyFactory" value="JAVASSIST" />
                 <setting name="localCacheScope" value="STATEMENT" />
         -->
             </settings>
@@ -3785,15 +3796,18 @@ JPA用のブランクプロジェクトを作成した場合のtodo-infra.xml
 JPA用のブランクプロジェクトを作成した場合、以下のような設定となっている。
 
 .. code-block:: xml
-    :emphasize-lines: 9-10, 12-13, 15-17, 22-24, 26-27, 30-31
+    :emphasize-lines: 12-13, 15-16, 18-20, 25-27, 28-29, 32-33
 
     <?xml version="1.0" encoding="UTF-8"?>
     <beans xmlns="http://www.springframework.org/schema/beans"
-        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:jpa="http://www.springframework.org/schema/data/jpa"
+        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xmlns:jpa="http://www.springframework.org/schema/data/jpa"
         xmlns:util="http://www.springframework.org/schema/util"
-        xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd
+        xsi:schemaLocation="
+            http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd
             http://www.springframework.org/schema/util http://www.springframework.org/schema/util/spring-util.xsd
-            http://www.springframework.org/schema/data/jpa http://www.springframework.org/schema/data/jpa/spring-jpa.xsd">
+            http://www.springframework.org/schema/data/jpa http://www.springframework.org/schema/data/jpa/spring-jpa.xsd
+        ">
 
         <!-- (1) -->
         <import resource="classpath:/META-INF/spring/todo-env.xml" />
@@ -3809,9 +3823,8 @@ JPA用のブランクプロジェクトを作成した場合、以下のよう�
         </bean>
 
         <!-- (4) -->
-        <bean
-            class="org.springframework.orm.jpa.LocalContainerEntityManagerFactoryBean"
-            id="entityManagerFactory">
+        <bean id="entityManagerFactory"
+            class="org.springframework.orm.jpa.LocalContainerEntityManagerFactoryBean">
             <!-- (5) -->
             <property name="packagesToScan" value="todo.domain.model" />
             <property name="dataSource" ref="dataSource" />
@@ -3916,12 +3929,16 @@ todo-env.xml
 なお、データベースにアクセスしないブランクプロジェクトを作成した際は、\ :file:`todo-env.xml`\ は作成されない。
 
 .. code-block:: xml
-    :emphasize-lines: 8, 22, 39
+    :emphasize-lines: 12, 27, 44
 
     <?xml version="1.0" encoding="UTF-8"?>
     <beans xmlns="http://www.springframework.org/schema/beans"
         xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-        xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd">
+        xmlns:jdbc="http://www.springframework.org/schema/jdbc"
+        xsi:schemaLocation="
+            http://www.springframework.org/schema/jdbc http://www.springframework.org/schema/jdbc/spring-jdbc.xsd
+            http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd
+        ">
 
         <bean id="dateFactory" class="org.terasoluna.gfw.common.date.jodatime.DefaultJodaTimeDateFactory" />
 
@@ -3939,10 +3956,17 @@ todo-env.xml
             <property name="maxWaitMillis" value="${cp.maxWait}" />
         </bean>
 
+
         <!-- (2) -->
         <bean id="dataSource" class="net.sf.log4jdbc.Log4jdbcProxyDataSource">
             <constructor-arg index="0" ref="realDataSource" />
         </bean>
+
+        <jdbc:initialize-database data-source="dataSource"
+            ignore-failures="ALL">
+            <jdbc:script location="classpath:/database/${database}-schema.sql" encoding="UTF-8" />
+            <jdbc:script location="classpath:/database/${database}-dataload.sql" encoding="UTF-8" />
+        </jdbc:initialize-database>
 
         <!--  REMOVE THIS LINE IF YOU USE JPA
         <bean id="transactionManager"
@@ -3950,12 +3974,6 @@ todo-env.xml
             <property name="entityManagerFactory" ref="entityManagerFactory" />
         </bean>
               REMOVE THIS LINE IF YOU USE JPA  -->
-        <!--  REMOVE THIS LINE IF YOU USE MyBatis2
-        <bean id="transactionManager"
-            class="org.springframework.jdbc.datasource.DataSourceTransactionManager">
-            <property name="dataSource" ref="dataSource" />
-        </bean>
-              REMOVE THIS LINE IF YOU USE MyBatis2  -->
         <!-- (3) -->
         <bean id="transactionManager"
             class="org.springframework.jdbc.datasource.DataSourceTransactionManager">
@@ -4007,18 +4025,21 @@ spring-mvc.xml
 | なお、チュートリアルで使用しないコンポーネントについての説明は割愛する。
 
 .. code-block:: xml
-    :emphasize-lines: 12, 16, 28, 31, 37, 71
+    :emphasize-lines: 15, 19, 33, 36, 42, 76
 
     <?xml version="1.0" encoding="UTF-8"?>
     <beans xmlns="http://www.springframework.org/schema/beans"
-        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:context="http://www.springframework.org/schema/context"
-        xmlns:mvc="http://www.springframework.org/schema/mvc" xmlns:util="http://www.springframework.org/schema/util"
+        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xmlns:context="http://www.springframework.org/schema/context"
+        xmlns:mvc="http://www.springframework.org/schema/mvc"
+        xmlns:util="http://www.springframework.org/schema/util"
         xmlns:aop="http://www.springframework.org/schema/aop"
         xsi:schemaLocation="http://www.springframework.org/schema/mvc http://www.springframework.org/schema/mvc/spring-mvc.xsd
             http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd
             http://www.springframework.org/schema/util http://www.springframework.org/schema/util/spring-util.xsd
             http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context.xsd
-            http://www.springframework.org/schema/aop http://www.springframework.org/schema/aop/spring-aop.xsd">
+            http://www.springframework.org/schema/aop http://www.springframework.org/schema/aop/spring-aop.xsd
+        ">
 
         <!-- (1) -->
         <context:property-placeholder
@@ -4032,6 +4053,8 @@ spring-mvc.xml
                 <bean
                     class="org.springframework.security.web.method.annotation.AuthenticationPrincipalArgumentResolver" />
             </mvc:argument-resolvers>
+            <!-- workarround to CVE-2016-5007. -->
+            <mvc:path-matching path-matcher="pathMatcher" />
         </mvc:annotation-driven>
 
         <mvc:default-servlet-handler />
@@ -4089,7 +4112,8 @@ spring-mvc.xml
             class="org.terasoluna.gfw.web.mvc.support.CompositeRequestDataValueProcessor">
             <constructor-arg>
                 <util:list>
-                    <bean class="org.springframework.security.web.servlet.support.csrf.CsrfRequestDataValueProcessor" />
+                    <bean
+                        class="org.springframework.security.web.servlet.support.csrf.CsrfRequestDataValueProcessor" />
                     <bean
                         class="org.terasoluna.gfw.web.token.transaction.TransactionTokenRequestDataValueProcessor" />
                 </util:list>
@@ -4098,7 +4122,8 @@ spring-mvc.xml
 
         <!-- Setting Exception Handling. -->
         <!-- Exception Resolver. -->
-        <bean class="org.terasoluna.gfw.web.exception.SystemExceptionResolver">
+        <bean id="systemExceptionResolver"
+            class="org.terasoluna.gfw.web.exception.SystemExceptionResolver">
             <property name="exceptionCodeResolver" ref="exceptionCodeResolver" />
             <!-- Setting and Customization by project. -->
             <property name="order" value="3" />
@@ -4130,6 +4155,11 @@ spring-mvc.xml
             <aop:advisor advice-ref="handlerExceptionResolverLoggingInterceptor"
                 pointcut="execution(* org.springframework.web.servlet.HandlerExceptionResolver.resolveException(..))" />
         </aop:config>
+
+        <!-- Setting PathMatcher. -->
+        <bean id="pathMatcher" class="org.springframework.util.AntPathMatcher">
+            <property name="trimTokens" value="false" />
+        </bean>
 
     </beans>
 
@@ -4213,24 +4243,25 @@ spring-security.xml
 
     <?xml version="1.0" encoding="UTF-8"?>
     <beans xmlns="http://www.springframework.org/schema/beans"
-        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:sec="http://www.springframework.org/schema/security"
-        xmlns:context="http://www.springframework.org/schema/context"
-        xsi:schemaLocation="http://www.springframework.org/schema/security http://www.springframework.org/schema/security/spring-security.xsd
+        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xmlns:sec="http://www.springframework.org/schema/security"
+        xsi:schemaLocation="
+            http://www.springframework.org/schema/security http://www.springframework.org/schema/security/spring-security.xsd
             http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd
-            http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context.xsd">
+        ">
 
         <sec:http pattern="/resources/**" security="none"/>
         <sec:http>
-            <sec:form-login />
-            <sec:logout />
+            <sec:form-login/>
+            <sec:logout/>
             <sec:access-denied-handler ref="accessDeniedHandler"/>
             <sec:custom-filter ref="userIdMDCPutFilter" after="ANONYMOUS_FILTER"/>
             <sec:session-management />
         </sec:http>
 
-        <sec:authentication-manager></sec:authentication-manager>
+        <sec:authentication-manager />
 
-        <!-- Change View for CSRF or AccessDenied -->
+        <!-- CSRF Protection -->
         <bean id="accessDeniedHandler"
             class="org.springframework.security.web.access.DelegatingAccessDeniedHandler">
             <constructor-arg index="0">
