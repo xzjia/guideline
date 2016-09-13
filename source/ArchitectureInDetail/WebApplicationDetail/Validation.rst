@@ -2810,7 +2810,7 @@ Java SE 8から追加された\ ``java.lang.annotation.ElementType.TYPE_USE``\ �
      * - | (2)
        - | このアノテーションにより使用されるルール(\ ``@ExistInCodeList``\)を定義する。
      * - | (3)
-       - | エラーメッセージのデフォルト値を定義する。
+       - | エラーメッセージのデフォルト値を定義する。また、ValidationMessages.propertiesに任意のエラーメッセージを定義する。
      * - | (4)
        - | \ ``@ExistInCodeList``\ アノテーションの\ ``codeListId``\ 属性をオーバーライドする。
      * - | (5)
