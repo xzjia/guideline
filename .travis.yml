@@ -1,5 +1,7 @@
 os:
   - osx
+  
+language: python
 
 cache:
   directories:
