@@ -1,6 +1,3 @@
-os:
-  - osx
-
 sudo: required
 language: python
 python:
@@ -8,19 +5,23 @@ python:
 
 cache:
   directories:
-    - "$HOME/Library/texlive/2016basic/texmf-var/luatex-cache"
+    - /usr/local/texlive
+
+before_install:
+  - echo $PATH
+  - export PATH=$PATH:/usr/texbin
+  - echo $PATH
 
 install:
-  - export PATH=$PATH:/usr/texbin:$HOME/bin:/sbin
   - pip install --upgrade pip
   - pip install -r requirements.txt
   - mkdir -p $HOME/tmp/sphinx
-  - curl -L -O http://mirrors.concertpass.com/tex-archive/systems/mac/mactex/BasicTeX.pkg
-  - sudo installer -pkg BasicTeX.pkg -target /
-  - rm BasicTeX.pkg
-
-  - sudo tlmgr update --self --all
-  - sudo tlmgr install latexmk collection-luatex collection-langjapanese collection-fontsrecommended filehook type1cm mdframed needspace 
+  - curl -L -O http://mirror.ctan.org/systems/texlive/tlnet/install-tl-unx.tar.gz
+  - tar -xvf install-tl-unx.tar.gz
+  - cd install-tl*
+  - sudo ./install-tl -scheme-basic --repository http://mirror.ctan.org/systems/texlive/tlnet/ < ../test.txt
+  - sudo ./install-tl -collection-langjapanese --repository http://mirror.ctan.org/systems/texlive/tlnet/
+  - cd ..
 
 before_script:
   - ERROR_LOG_FILE=$HOME/tmp/sphinx/build-error.log
