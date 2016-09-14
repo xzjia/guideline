@@ -2513,13 +2513,13 @@ Bean Validationは標準で用意されているチェックルール以外に�
     import static java.lang.annotation.RetentionPolicy.RUNTIME;
 
     @Documented
-    @Constraint(validatedBy = {})
+    @Constraint(validatedBy = {}) // (1)
     @Target({ METHOD, FIELD, ANNOTATION_TYPE, CONSTRUCTOR, PARAMETER })
     @Retention(RUNTIME)
-    @ReportAsSingleViolation // (1)
-    @Pattern(regexp = "[a-zA-Z0-9]*") // (2)
+    @ReportAsSingleViolation // (2)
+    @Pattern(regexp = "[a-zA-Z0-9]*") // (3)
     public @interface AlphaNumeric {
-        String message() default "{com.example.common.validation.AlphaNumeric.message}"; // (3)
+        String message() default "{com.example.common.validation.AlphaNumeric.message}"; // (4)
 
         Class<?>[] groups() default {};
 
@@ -2542,10 +2542,12 @@ Bean Validationは標準で用意されているチェックルール以外に�
      * - 項番
        - 説明
      * - | (1)
-       - | エラーメッセージをまとめ、エラー時はこのアノテーションによるメッセージだけを変えるようにする。
+       - | 既存のアノテーションを利用して実装を行う場合、\ ``validatedBy``\ は空にしておく必要がある。
      * - | (2)
-       - | このアノテーションにより使用されるルールを定義する。
+       - | エラーメッセージをまとめ、エラー時はこのアノテーションによるメッセージだけを変えるようにする。
      * - | (3)
+       - | このアノテーションにより使用されるルールを定義する。
+     * - | (4)
        - | エラーメッセージのデフォルト値を定義する。
 
 * 正の数に限定する\ ``@NotNegative``\ アノテーションの実装例
@@ -2789,15 +2791,15 @@ Java SE 8から追加された\ ``java.lang.annotation.ElementType.TYPE_USE``\ �
     import org.terasoluna.gfw.common.codelist.ExistInCodeList;
 
     @Documented
-    @Constraint(validatedBy = {}) // (1)
-    @Target(TYPE_USE) // (2)
+    @Constraint(validatedBy = {})
+    @Target(TYPE_USE) // (1)
     @Retention(RUNTIME)
     @ReportAsSingleViolation
-    @ExistInCodeList(codeListId = "") // (3)
+    @ExistInCodeList(codeListId = "") // (2)
     public @interface ExistInCodeListForTypeArgument {
-        String message() default "{com.example.common.validation.ExistInCodeListForTypeArgument.message}"; // (4)
+        String message() default "{com.example.common.validation.ExistInCodeListForTypeArgument.message}"; // (3)
         
-        @OverridesAttribute(constraint = ExistInCodeList.class, name = "codeListId") // (5)
+        @OverridesAttribute(constraint = ExistInCodeList.class, name = "codeListId") // (4)
         String codeListId();
 
         
@@ -2805,7 +2807,7 @@ Java SE 8から追加された\ ``java.lang.annotation.ElementType.TYPE_USE``\ �
 
         Class<? extends Payload>[] payload() default {};
 
-        @Target(TYPE_USE) // (6)
+        @Target(TYPE_USE) // (5)
         @Retention(RUNTIME)
         @Documented
         @interface List {
@@ -2822,16 +2824,14 @@ Java SE 8から追加された\ ``java.lang.annotation.ElementType.TYPE_USE``\ �
      * - 項番
        - 説明
      * - | (1)
-       - | 既存のアノテーションを利用して実装を行う場合、\ ``validatedBy``\ は空にしておく必要がある。この実装では\ ``@ExistInCodeList``\ を利用している。
-     * - | (2)
        - | \ ``TYPE_USE``\ を設定し、このアノテーションが型使用箇所で付加できるようにする。
-     * - | (3)
+     * - | (2)
        - | このアノテーションにより使用されるルール(\ ``@ExistInCodeList``\)を定義する。
-     * - | (4)
+     * - | (3)
        - | エラーメッセージのデフォルト値を定義する。また、ValidationMessages.propertiesに任意のエラーメッセージを定義する。
-     * - | (5)
+     * - | (4)
        - | \ ``@ExistInCodeList``\ アノテーションの\ ``codeListId``\ 属性をオーバーライドする。
-     * - | (6)
+     * - | (5)
        - | \ ``TYPE_USE``\ を設定し、このアノテーションが型使用箇所で付加できるようにする。
 
 
