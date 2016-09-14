@@ -19,8 +19,8 @@ install:
   - curl -L -O http://mirror.ctan.org/systems/texlive/tlnet/install-tl-unx.tar.gz
   - tar -xvf install-tl-unx.tar.gz
   - cd install-tl*
-  - sudo ./install-tl -scheme-basic --repository http://mirror.ctan.org/systems/texlive/tlnet/ < ../test.txt
-  - sudo ./install-tl -collection-langjapanese --repository http://mirror.ctan.org/systems/texlive/tlnet/
+  - sudo ./install-tl -scheme scheme-basic --repository http://mirror.ctan.org/systems/texlive/tlnet/ < ../test.txt
+  - sudo ./install-tl -scheme collection-langjapanese --repository http://mirror.ctan.org/systems/texlive/tlnet/
   - cd ..
 
 before_script:
