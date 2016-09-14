@@ -13,7 +13,7 @@ install:
   - pip install -r requirements.txt
   - mkdir -p $HOME/tmp/sphinx
   - curl -L -O http://mirrors.concertpass.com/tex-archive/systems/mac/mactex/BasicTeX.pkg
-  - sudo installer -pkg BasicTeX.pkg -target /
+  - sudo install -pkg BasicTeX.pkg -target /
   - rm BasicTeX.pkg
 
   - sudo tlmgr update --self --all
