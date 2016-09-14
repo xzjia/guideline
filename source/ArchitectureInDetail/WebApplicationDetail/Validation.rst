@@ -1749,6 +1749,17 @@ Bean Validationでグループを指定する場合、アノテーションの\ 
  基本的には、Controllerにロジックを書くべきではないため、\ ``@RequestMapping``\ の属性でルールを切り替えられるのであれば、\ ``SmartValidator``\ は使わない方がよい。
 
 
+.. _Validation_for_parameter_object_in_collection:
+
+コレクション内の値に対する入力チェック
+""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+Java SE 8から追加された\ ``java.lang.annotation.ElementType.TYPE_USE``\ を使用することで、宣言に限らず型全般（ローカル変数の型等）にアノテーションを付加できる。
+これにより、\ ``List<@ExistInCodeListForTypeArgument(codeListId = "CL_ROLE") String>``\ のように、
+リスト内の型指定の部分にアノテーションを指定することができ、コレクションに対して入力チェックを行うことができるようになる。
+
+実装例は\ :ref:`Validation_for_parameter_object_in_collection_corresponding_annotation`\ を参照されたい。
+
+
 .. _Validation_correlation_check:
 
 相関項目チェック
@@ -2681,19 +2692,10 @@ Bean Validationは標準で用意されているチェックルール以外に�
 
 |
 
-.. _Validation_for_parameter_object_in_collection:
-
-コレクション内の値に対する入力チェック
-^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
-
-Java SE 8から追加された\ ``java.lang.annotation.ElementType.TYPE_USE``\ を使用することで、宣言に限らず型全般（ローカル変数の型等）にアノテーションを付加できる。
-これにより、\ ``List<@ExistInCodeListForTypeArgument(codeListId = "CL_ROLE") String>``\ のように、
-リスト内の型指定の部分にアノテーションを指定することができ、コレクションに対して入力チェックを行うことができるようになる。
-
 .. _Validation_for_parameter_object_in_collection_corresponding_annotation:
 
 コレクションに対応していないアノテーションをコレクションに対応させる方法
-""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
 ここでは、コレクション内の値に対する入力チェックのうち、最もニーズがあると思われる「コレクション内のString」に対する入力チェックについて説明する。
 
@@ -2733,7 +2735,9 @@ Controller及びJSPで特別な実装を行うことなく、
 
 * :ref:`Validation_exist_in_codelist_javase8`\
     Java SE 8とHibernate Validatorを利用し、\ ``String``\ の\ ``List``\ に付加できる独自のアノテーションを実装する方式。
-    **後者と比べて簡単に実現できるので、Java SE 8が使用できる環境ではこちらの方式を推奨する。**
+    **後者と比べて簡単に実現できるので、Java SE 8が使用できる環境ではこちらの方式を推奨する。** 
+    
+    詳細は単項目チェックの\ :ref:`Validation_for_parameter_object_in_collection`\ を参照されたい。
 
 * :ref:`Validation_exist_in_codelist_formatter`\
     Java Beanクラスでラップしたプロパティに対して \ ``@ExistInCodeList``\ アノテーションを設定する方式。
