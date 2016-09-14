@@ -1492,8 +1492,10 @@ JSPの実装(基本編)
     * - | (1)
       - | 検索条件を指定するフォーム。
         | post通信時に検索条件の \ ``word`` \ と ソート条件の\ ``sort`` \ を保持したフォームをセッションに格納される。
+        | フォームのパラメータに含まれていない\ ``page`` \ と\ ``size`` \ は対象外となる。
     * - | (2)
       - | \ ``word`` \ と \ ``sort`` \ はセッションに格納されているため、 \ ``criteriaQuery``\属性は使用しない。
+        | \ ``page`` \ の値はページリンクごとに毎回変わるため、 \ ``criteriaQuery``\経由でリクエストに設定される。
         | 上記例の場合、 \ ``"?page=ページ位置&size=取得件数"``\という形式のクエリ文字列が生成される。
 
 - Controller
@@ -1517,13 +1519,13 @@ JSPの実装(基本編)
             @RequestMapping("list")
             public String list(PersonSearchForSessionForm form,
                 BindingResult result,
-                Pageable pageable,
+                @PageableDefault(size = 50) Pageable pageable, // (3)
                 Model model) {
 
                 ArticleSearchCriteria criteria = beanMapper.map(form,
                         ArticleSearchCriteria.class);
 
-                Page<Article> page = articleService.searchArticle(criteria, pageable); // (3)
+                Page<Article> page = articleService.searchArticle(criteria, pageable); // (4)
 
                 model.addAttribute("page", page);
 
@@ -1546,6 +1548,8 @@ JSPの実装(基本編)
     * - | (2)
       - | \ ``@ModelAttribute``\アノテーションを使用して、\ ``value``\属性で指定した\ ``"personSearchForSessionForm"``\ のオブジェクトをセッションに格納する。
     * - | (3)
+      - | \ ``size`` \ は毎回変わらないため、\ ``pageable`` \の初期値として定義する。
+    * - | (4)
       - | 下記に各画面遷移に応じたControllerでの利用方法を説明する。
         |
         | 検索ボタン押下によるpost通信の画面遷移の場合
