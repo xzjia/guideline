@@ -20,6 +20,8 @@ install:
   - tar -xvf install-tl-unx.tar.gz
   - cd install-tl*
   - sudo ./install-tl -scheme scheme-basic --repository http://mirror.ctan.org/systems/texlive/tlnet/ < ../InputAction.txt
+  - sudo apt-get update
+  - sudo apt-get install texlive-lang-cjk
   - sudo apt-get install xdvik-ja
   - cd ..
 
