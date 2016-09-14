@@ -19,7 +19,8 @@ install:
   - curl -L -O http://mirror.ctan.org/systems/texlive/tlnet/install-tl-unx.tar.gz
   - tar -xvf install-tl-unx.tar.gz
   - cd install-tl*
-  - sudo ./install-tl -scheme scheme-basic --repository http://mirror.ctan.org/systems/texlive/tlnet/ < ../InputAction.txt
+  - sudo ./install-tl -scheme scheme-basic --repository http://mirror.ctan.org/systems/texlive/tlnet/ < ../InputAction_I_Enter.txt
+  - sudo apt-add-repository ppa:texlive-backports/ppa < ../InputAction_Enter.txt
   - sudo apt-get update
   - sudo apt-get install texlive-lang-cjk
   - sudo apt-get install xdvik-ja
