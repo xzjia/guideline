@@ -14,7 +14,7 @@ install:
   - tar -xvf install-tl-unx.tar.gz
   - cd install-tl*
   - sudo ./install-tl -scheme scheme-basic --repository http://mirror.ctan.org/systems/texlive/tlnet/ < ../InputAction_I_Enter.txt
-  - export PATH=$PATH:/usr/texbin
+  - export PATH=$PATH:/usr/texbin:/usr/local/texlive/????/bin/*/tlmgr
   - sudo tlmgr update --self --all
   - sudo tlmgr install latexmk collection-luatex collection-langjapanese
   - cd ..
