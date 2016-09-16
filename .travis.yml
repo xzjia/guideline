@@ -20,7 +20,7 @@ install:
   - cd install-tl*
   - sudo ./install-tl -scheme scheme-small --repository http://mirror.ctan.org/systems/texlive/tlnet/ < ../InputAction_I_Enter.txt
   - sudo /usr/local/texlive/2016/bin/x86_64-linux/tlmgr update --self --all
-  - sudo apt-get install install texlive-fonts-recommended texlive-latex-recommended texlive-latex-extra
+  - sudo apt-get install texlive-fonts-recommended texlive-latex-recommended texlive-latex-extra
   - ls -l /usr/local/texlive/2016/bin/x86_64-linux
   - cd ..
 
