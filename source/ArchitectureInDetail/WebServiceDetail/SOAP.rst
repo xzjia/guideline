@@ -899,12 +899,9 @@ SOAPサーバで発生した例外はこれから記述する例外を実装し�
       - | \ ``ErrorBean``\
       - | 発生した例外のコードとメッセージなどを保持するクラス。
     * - | (2)
-      - | \ ``WebFaultType``\
-      - | 例外の種類を判別するために使用する列挙型。
-    * - | (3)
       - | \ ``WebFaultBean``\
       - | \ ``ErrorBean``\ と\ ``WebFaultType``\ を保持するクラス。\ ``ErrorBean``\ を\ ``List``\ で保持して例外情報を複数保持できる。
-    * - | (4)
+    * - | (3)
       - | \ ``WebFaultException``\
       - | \ ``WebFaultBean``\ を保持する例外クラス。
   
@@ -938,31 +935,6 @@ SOAPサーバで発生した例外はこれから記述する例外を実装し�
 
 |
 
-*[server projectName]-webservice/src/main/java/com/example/ws/webfault/WebFaultType.java*
-
-.. code-block:: java
-
-    package com.example.ws.webfault;
-
-    public enum WebFaultType { // (2)
-        AccessDeniedFault,
-        BusinessFault,
-        ResourceNotFoundFault,
-        ValidationFault,
-    }
-
-.. tabularcolumns:: |p{0.10\linewidth}|p{0.90\linewidth}|
-.. list-table::
-    :header-rows: 1
-    :widths: 10 90
-
-    * - 項番
-      - 説明
-    * - | (1)
-      - | 例外の種類を判別するために使用する列挙型を定義する。
-
-|
-
 *[server projectName]-webservice/src/main/java/com/example/ws/webfault/WebFaultBean.java*
 
 .. code-block:: java
@@ -974,13 +946,7 @@ SOAPサーバで発生した例外はこれから記述する例外を実装し�
 
     public class WebFaultBean { // (3)
 
-        private WebFaultType type;
-
         private List<ErrorBean> errors = new ArrayList<ErrorBean>();
-
-        public WebFaultBean(WebFaultType type) {
-            this.type = type;
-        }
 
         public void addError(String code, String message) {
             addError(code, message, null);
@@ -1002,7 +968,7 @@ SOAPサーバで発生した例外はこれから記述する例外を実装し�
     * - 項番
       - 説明
     * - | (1)
-      - | \ ``ErrorBean``\ と\ ``WebFaultType``\ を保持するクラスを作成する。
+      - | \ ``ErrorBean``\ を保持するクラスを作成する。
 
 |
 
@@ -1016,9 +982,8 @@ SOAPサーバで発生した例外はこれから記述する例外を実装し�
 
     import javax.xml.ws.WebFault;
 
-    @WebFault(name = "WebFault", targetNamespace = "http://example.com/todo") // (1)
     public class WebFaultException extends Exception {
-        private WebFaultBean faultInfo; // (2)
+        private WebFaultBean faultInfo; // (1)
 
         public WebFaultException() {
         }
@@ -1037,9 +1002,6 @@ SOAPサーバで発生した例外はこれから記述する例外を実装し�
             return this.faultInfo.getErrors();
         }
 
-        public WebFaultType getType() {
-            return this.faultInfo.getType();
-        }
         // omitted setter and getter
     }
 
@@ -1051,10 +1013,6 @@ SOAPサーバで発生した例外はこれから記述する例外を実装し�
     * - 項番
       - 説明
     * - | (1)
-      - | Exception継承クラスに\ ``@WebFault``\を付けて、SOAPFaultであることを宣言する。
-        | \ ``name``\属性には、クライアントに送信するSOAPFaultの\ ``name``\属性を設定する。
-        | \ ``targetNamespace``\属性には、使用するネームスペースを設定する。Webサービスと同じにする必要がある。
-    * - | (2)
       - | faultInfoをフィールドに保持させるとともに、コード例のように以下のようなコンストラクタとメソッドを持たせる。
 
         - メッセージ文字列とfaultInfoを引数とするコンストラクタ
@@ -1187,28 +1145,34 @@ Serviceからスローされる例外は以下を想定している。必要に�
         ExceptionLogger exceptionLogger; // (4)
 
         // (5)
-        public void translateException(Exception e) throws WebFaultException {
+        public void translateException(Exception e) throws AccessDeniedFaultException, ValidationFaultException, BusinessFaultException, ResourceNotFoundFaultException, BusinessFaultException {
             loggingException(e);
             WebFaultBean faultInfo = null;
 
             if (e instanceof AccessDeniedException) {
                 faultInfo = new WebFaultBean(WebFaultType.AccessDeniedFault);
                 faultInfo.addError(e.getClass().getName(), e.getMessage());
+                throw new AccessDeniedFaultException(e.getMessage(), faultInfo, e
+                    .getCause());
             } else if (e instanceof ConstraintViolationException) {
                 faultInfo = new WebFaultBean(WebFaultType.ValidationFault);
                 this.addErrors(faultInfo, ((ConstraintViolationException) e).getConstraintViolations());
+				            throw new ValidationFaultException(e.getMessage(), faultInfo, e
+				                    .getCause());
             } else if (e instanceof ResourceNotFoundException) {
                 faultInfo = new WebFaultBean(WebFaultType.ResourceNotFoundFault);
                 this.addErrors(faultInfo, ((ResourceNotFoundException) e).getResultMessages());
+				            throw new ResourceNotFoundFaultException(e.getMessage(), faultInfo, e
+				                    .getCause());
             } else if (e instanceof BusinessException) {
                 faultInfo = new WebFaultBean(WebFaultType.BusinessFault);
                 this.addErrors(faultInfo, ((BusinessException) e).getResultMessages());
+				            throw new BusinessFaultException(e.getMessage(), faultInfo, e
+				                    .getCause());
             } else {
                 // not translate.
                 throw new SystemException("e.ex.fw.9001", e);
             }
-
-            throw new WebFaultException(e.getMessage(), faultInfo, e.getCause());
         }
 
         private void loggingException(Exception e) {
@@ -1289,7 +1253,7 @@ Webサービスクラスにて、例外ハンドラーを呼び出す。以下�
         WsExceptionHandler handler; // (1)
 
         @Override
-        public Todo getTodo(String todoId) throws WebFaultException /* (2) */ {
+        public Todo getTodo(String todoId) throws AccessDeniedFaultException, ValidationFaultException, ResourceNotFoundFaultException, BusinessFaultException /* (2) */ {
             try {
                 return todoService.getTodo(todoId);
             } catch (RuntimeException e) {
