@@ -1,3 +1,6 @@
+notifications:
+  email: false
+
 sudo: required
 
 cache:
@@ -22,6 +25,11 @@ install:
   - sudo /usr/local/texlive/2016/bin/x86_64-linux/tlmgr update --self --all
   - sudo /usr/local/texlive/2016/bin/x86_64-linux/tlmgr install latexmk collection-luatex collection-langjapanese collection-fontsrecommended filehook type1cm mdframed needspace
   - ls -l /usr/local/texlive/2016/bin/x86_64-linux
+  - locate titlesec.sty
+  - locate cmap.sty
+  - apt-cache search titlesec | grep tex
+  - apt-cache search cmap | grep tex
+  - 
   - cd ..
 
 before_script:
