@@ -20,8 +20,8 @@ install:
   - cd install-tl*
   - sudo ./install-tl -scheme scheme-basic --repository http://mirror.ctan.org/systems/texlive/tlnet/ < ../InputAction_I_Enter.txt
   - sudo /usr/local/texlive/2016/bin/x86_64-linux/tlmgr update --self --all
-  - sudo /usr/local/texlive/2016/bin/x86_64-linux/tlmgr install latexmk collection-luatex collection-langjapanese collection-fontsrecommended
-  - sudo apt-get install texlive-formats-extra texlive-latex-extra
+  - sudo /usr/local/texlive/2016/bin/x86_64-linux/tlmgr install latexmk collection-luatex collection-langjapanese collection-fonts-recommended
+  - sudo apt-get install texlive-formats-extra  texlive-latex-recommended texlive-latex-extra  texlive-fonts-recommended 
   - ls -l /usr/local/texlive/2016/bin/x86_64-linux
   - cd ..
 
@@ -29,8 +29,8 @@ before_script:
   - ERROR_LOG_FILE=$HOME/tmp/sphinx/build-error.log
 
 script:
-  - sh -c ./build-pdf.sh < ./InputAction_X.txt 2> $ERROR_LOG_FILE
-  - sh -c ./build-pdf_en.sh < ./InputAction_X.txt 2>> $ERROR_LOG_FILE
+  - sh -c ./build-pdf.sh  2> $ERROR_LOG_FILE
+  - sh -c ./build-pdf_en.sh >> $ERROR_LOG_FILE
   - cat $ERROR_LOG_FILE
 
 after_script:
