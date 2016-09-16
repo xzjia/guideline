@@ -30,7 +30,7 @@ before_script:
 
 script:
   - sh -c ./build-pdf.sh < ./InputAction_Enter.txt 2> $ERROR_LOG_FILE
-  - sh -c ./build-pdf_en.sh 2>> $ERROR_LOG_FILE
+  - sh -c ./build-pdf_en.sh < ./InputAction_Enter.txt 2>> $ERROR_LOG_FILE
   - cat $ERROR_LOG_FILE
 
 after_script:
