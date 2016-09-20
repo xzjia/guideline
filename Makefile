@@ -122,13 +122,18 @@ latexpdfja:
 	$(SPHINXBUILD) -b latex $(ALLSPHINXOPTS) $(BUILDDIR)/latex
 	@echo "Running LaTeX files through platex and dvipdfmx..."
 	@echo "add uplatex to documentclass for Unicode proc"
-	@echo "building pdf index needs twice uplatex command"
+	c "building pdf index needs twice uplatex command"
 	cd ${BUILDDIR}/latex; \
 	sed -i -e 's/\\documentclass\[/\\documentclass\[uplatex,/g' TERASOLUNAServerFrameworkForJavaDevelopmentGuideline.tex; \
+	@echo "test1"
 	/usr/local/texlive/2016/bin/x86_64-linux/uplatex TERASOLUNAServerFrameworkForJavaDevelopmentGuideline.tex; \
+	@echo "test2"
 	/usr/local/texlive/2016/bin/x86_64-linux/uplatex TERASOLUNAServerFrameworkForJavaDevelopmentGuideline.tex; \
+	@echo "test3"
 	/usr/local/texlive/2016/bin/x86_64-linux/dvipdfmx TERASOLUNAServerFrameworkForJavaDevelopmentGuideline.dvi;
+	@echo "test4"
 	@echo "pdflatex finished; the PDF files are in $(BUILDDIR)/latex."
+	@echo "test5"
 
 latexpdfen:
 	$(SPHINXBUILD) -b latex $(ALLSPHINXOPTS) $(BUILDDIR)/latex
@@ -138,6 +143,7 @@ latexpdfen:
 	sh $(REPLACE_SHELL) $(BUILDDIR)/latex/*.tex
 	cd ${BUILDDIR}/latex; \
 	sed -i -e 's/\\documentclass\[/\\documentclass\[uplatex,/g' TERASOLUNAServerFrameworkForJavaDevelopmentGuideline.tex; \
+	
 	/usr/local/texlive/2016/bin/x86_64-linux/uplatex TERASOLUNAServerFrameworkForJavaDevelopmentGuideline.tex; \
 	/usr/local/texlive/2016/bin/x86_64-linux/uplatex TERASOLUNAServerFrameworkForJavaDevelopmentGuideline.tex; \
 	/usr/local/texlive/2016/bin/x86_64-linux/dvipdfmx TERASOLUNAServerFrameworkForJavaDevelopmentGuideline.dvi;
