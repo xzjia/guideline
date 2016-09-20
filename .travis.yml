@@ -30,7 +30,20 @@ install:
   - apt-cache search cmap | grep tex
   - sudo apt-get install texlive-latex-extra texlive-latex-recommended texlive-formats-extra
   - sudo find / -name "cmap"
+  - ls -l /usr/local/texlive/2016/texmf-dist/fonts/cmap
+  - ls -l /usr/local/texlive/2016/texmf-dist/tex/latex/xcjk2uni/cmap
+  - ls -l /usr/share/doc/texlive-doc/latex/cmap
+  - ls -l /usr/share/doc/texlive-latex-recommended-doc/latex/cmap
+  - ls -l /usr/share/fonts/cmap
+  - ls -l /usr/share/texmf-texlive/fonts/cmap
+  - ls -l /usr/share/texmf-texlive/tex/latex/cmap
+  - ls -l /usr/share/doc/texlive-latex-extra-doc/latex/titlesec
+  - ls -l /usr/share/doc/texlive-doc/latex/titlesec
+  - ls -l /usr/share/texmf-texlive/tex/latex/titlesec
+
   - sudo find / -name "titlesec"
+  
+  
   
   - cd ..
 
