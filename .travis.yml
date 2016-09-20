@@ -26,19 +26,10 @@ install:
   - apt-cache search titlesec | grep tex
   - apt-cache search cmap | grep tex
   - sudo apt-get install texlive-latex-extra texlive-latex-recommended texlive-formats-extra
+  - rm `kpsewhich --expand-path='$TEXMFMAIN'`/ls-R
   - sudo find / -name "ls-R"
-  - sudo mktexlsr
   - sudo find / -name "cmap"
   - sudo find / -name "titlesec"
-  - sudo cat /usr/local/texlive/texmf-local/ls-R | egrep 'cmap|titlesec'
-  - sudo cat /usr/local/texlive/2016/texmf-var/ls-R | egrep 'cmap|titlesec'
-  - sudo cat /usr/local/texlive/2016/texmf-config/ls-R | egrep 'cmap|titlesec'
-  - sudo cat /usr/local/texlive/2016/texmf-dist/ls-R | egrep 'cmap|titlesec'
-  - sudo cat /usr/share/texmf/ls-R | egrep 'cmap|titlesec'
-  - sudo cat /usr/share/texmf-texlive/ls-R | egrep 'cmap|titlesec'
-
-  - kpsewhich titlesec.sty
-  - kpsewhich cmap.sty
   
   - cd ..
 
