@@ -13,6 +13,7 @@ python:
 
 before_install:
   - echo $PATH
+  - export PATH=$PATH:/usr/share/texmf-texlive/tex/latex:/usr/share/texmf-texlive/tex/latex/cmap:/usr/share/texmf-texlive/tex/latex/titlesec
 
 install:
   - pip install --upgrade pip
