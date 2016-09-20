@@ -30,7 +30,7 @@ install:
   - sudo find / -name "ls-R"
   - sudo find / -name "cmap"
   - sudo find / -name "titlesec"
-  - sudo tlmgr conf texmf TEXMFDBS /usr/share/texmf-texlive/ls-R
+  - sudo /usr/local/texlive/2016/bin/x86_64-linux/tlmgr conf texmf TEXMFDBS /usr/share/texmf-texlive/ls-R
   
   
   - cd ..
