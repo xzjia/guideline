@@ -43,6 +43,8 @@ install:
   - ls -l /usr/share/texmf-texlive/tex/latex/titlesec
 
   - sudo find / -name "titlesec"
+  - kpsewhich titlesec.sty
+  - kpsewhich cmap.sty
   
   
   
