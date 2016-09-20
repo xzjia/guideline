@@ -30,6 +30,9 @@ install:
   - sudo find / -name "ls-R"
   - sudo find / -name "cmap"
   - sudo find / -name "titlesec"
+  - sudo cat /usr/share/texmf/web2c/texmf.cnf
+  - sudo cat /etc/texmf/texmf.cnf
+  
   
   - cd ..
 
