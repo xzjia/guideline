@@ -21,7 +21,7 @@ install:
   - curl -L -O http://mirror.ctan.org/systems/texlive/tlnet/install-tl-unx.tar.gz
   - tar -xvf install-tl-unx.tar.gz
   - cd install-tl*
-  - sudo ./install-tl -scheme scheme-small --repository http://mirror.ctan.org/systems/texlive/tlnet/ < ../InputAction_I_Enter.txt
+  - sudo ./install-tl -scheme scheme-basic --repository http://mirror.ctan.org/systems/texlive/tlnet/ < ../InputAction_I_Enter.txt
   - sudo /usr/local/texlive/2016/bin/x86_64-linux/tlmgr update --self --all
   - sudo /usr/local/texlive/2016/bin/x86_64-linux/tlmgr install latexmk collection-luatex collection-langjapanese collection-fontsrecommended filehook type1cm mdframed needspace
   - ls -l /usr/local/texlive/2016/bin/x86_64-linux
@@ -29,6 +29,9 @@ install:
   - apt-cache search titlesec | grep tex
   - apt-cache search cmap | grep tex
   - sudo apt-get install texlive-latex-extra texlive-latex-recommended texlive-formats-extra
+  - sudo find / -name "cmap"
+  - sudo find / -name "titlesec"
+  
   - cd ..
 
 before_script:
@@ -43,3 +46,6 @@ after_script:
   - ERROR_COUNT=`grep ERROR $ERROR_LOG_FILE | wc -l`
   - WARNING_COUNT=`grep WARNING $ERROR_LOG_FILE | wc -l`
   - if [[ $ERROR_COUNT -ne 0 || $WARNING_COUNT -ne 0 ]]; then echo "Build is failed. Please fix errors or warnings."; exit 1; fi
+
+
+sudo find / -name "cmap" 
