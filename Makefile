@@ -125,9 +125,7 @@ latexpdfja:
 	@echo "building pdf index needs twice uplatex command"
 	cd ${BUILDDIR}/latex; \
 	sed -i -e 's/\\documentclass\[/\\documentclass\[uplatex,/g' TERASOLUNAServerFrameworkForJavaDevelopmentGuideline.tex; \
-	@echo "test1"
 	/usr/local/texlive/2016/bin/x86_64-linux/uplatex TERASOLUNAServerFrameworkForJavaDevelopmentGuideline.tex; \
-	@echo "test2"
 	/usr/local/texlive/2016/bin/x86_64-linux/uplatex TERASOLUNAServerFrameworkForJavaDevelopmentGuideline.tex; \
 	@echo "test3"
 	/usr/local/texlive/2016/bin/x86_64-linux/dvipdfmx TERASOLUNAServerFrameworkForJavaDevelopmentGuideline.dvi;
