@@ -28,7 +28,7 @@ install:
   - ls -l /usr/local/texlive/2016/bin/x86_64-linux/latex
   - apt-cache search titlesec | grep tex
   - apt-cache search cmap | grep tex
-  - sudo apt-get install texlive-latex-extra 
+  - sudo apt-get install texlive-latex-extra texlive-latex-recommended texlive-formats-extra
   - cd ..
 
 before_script:
