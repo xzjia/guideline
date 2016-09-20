@@ -122,7 +122,7 @@ latexpdfja:
 	$(SPHINXBUILD) -b latex $(ALLSPHINXOPTS) $(BUILDDIR)/latex
 	@echo "Running LaTeX files through platex and dvipdfmx..."
 	@echo "add uplatex to documentclass for Unicode proc"
-	c "building pdf index needs twice uplatex command"
+	@echo "building pdf index needs twice uplatex command"
 	cd ${BUILDDIR}/latex; \
 	sed -i -e 's/\\documentclass\[/\\documentclass\[uplatex,/g' TERASOLUNAServerFrameworkForJavaDevelopmentGuideline.tex; \
 	@echo "test1"
