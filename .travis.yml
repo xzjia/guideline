@@ -3,10 +3,6 @@ notifications:
 
 sudo: required
 
-cache:
-  directories:
-    - /usr/local/texlive/2016/bin/x86_64-linux/
-
 language: python
 python:
   - "3.4"
