@@ -30,6 +30,8 @@ install:
   - apt-cache search titlesec | grep tex
   - apt-cache search cmap | grep tex
   - sudo apt-get install texlive-latex-extra texlive-latex-recommended texlive-formats-extra
+  - sudo find / -name "ls-R"
+  - sudo mktexlsr
   - sudo find / -name "cmap"
   - ls -l /usr/local/texlive/2016/texmf-dist/fonts/cmap
   - ls -l /usr/local/texlive/2016/texmf-dist/tex/latex/xcjk2uni/cmap
