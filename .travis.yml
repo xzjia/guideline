@@ -30,18 +30,15 @@ install:
   - sudo mktexlsr
   - sudo find / -name "cmap"
   - sudo find / -name "titlesec"
-  - ls -l /usr/local/texlive/texmf-local/ls-R
-  - ls -l /usr/local/texlive/2016/texmf-var/ls-R
-  - ls -l /usr/local/texlive/2016/texmf-config/ls-R
-  - ls -l /usr/local/texlive/2016/texmf-dist/ls-R
-  - ls -l /usr/share/texmf/ls-R
-  - ls -l /usr/share/texmf-texlive/ls-R
-
+  - sudo cat /usr/local/texlive/texmf-local/ls-R
+  - sudo cat /usr/local/texlive/2016/texmf-var/ls-R
+  - sudo cat /usr/local/texlive/2016/texmf-config/ls-R
+  - sudo cat /usr/local/texlive/2016/texmf-dist/ls-R
+  - sudo cat /usr/share/texmf/ls-R
+  - sudo cat /usr/share/texmf-texlive/ls-R
 
   - kpsewhich titlesec.sty
   - kpsewhich cmap.sty
-  
-  
   
   - cd ..
 
