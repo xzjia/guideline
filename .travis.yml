@@ -8,8 +8,7 @@ python:
   - "3.4"
 
 before_install:
-  - echo $PATH
-  - export PATH=$PATH:/usr/share/texmf-texlive/tex/latex:/usr/share/texmf-texlive/tex/latex/cmap:/usr/share/texmf-texlive/tex/latex/titlesec
+  - export TEXINPUTS='.//;'
 
 install:
   - pip install --upgrade pip
@@ -26,10 +25,15 @@ install:
   - apt-cache search titlesec | grep tex
   - apt-cache search cmap | grep tex
   - sudo apt-get install texlive-latex-extra texlive-latex-recommended texlive-formats-extra
+  - sudo mktexlsr
   - sudo find / -name "texmf.cnf"
   - sudo find / -name "ls-R"
   - sudo find / -name "cmap"
   - sudo find / -name "titlesec"
+  - kpsewhich titlesec.sty  
+  - kpsewhich cmap.sty  
+  
+  
   - sudo sh -c "find / -name 'ls-R' | xargs rm"
   
   - cd ..
