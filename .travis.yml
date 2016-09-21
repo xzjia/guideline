@@ -29,8 +29,8 @@ before_script:
   - ERROR_LOG_FILE=$HOME/tmp/sphinx/build-error.log
 
 script:
-  - sh ./build-html.sh 2> $ERROR_LOG_FILE
-  - sh ./build-html_en.sh 2>> $ERROR_LOG_FILE
+#  - sh ./build-html.sh 2> $ERROR_LOG_FILE
+#  - sh ./build-html_en.sh 2>> $ERROR_LOG_FILE
 #  - sh ./build-pdf.sh 2>> $ERROR_LOG_FILE
 #  - sh ./build-pdf_en.sh >> $ERROR_LOG_FILE
   - sh ./build-pdf.sh < ./InputAction_Enter.txt
