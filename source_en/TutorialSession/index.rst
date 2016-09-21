@@ -3089,6 +3089,11 @@ Set the default value as 30 minutes.
     <session-config>
         <!-- 30min -->
         <session-timeout>30</session-timeout>
+        <cookie-config>
+            <http-only>true</http-only>
+            <!-- <secure>true</secure> -->
+        </cookie-config>
+        <tracking-mode>COOKIE</tracking-mode>
     </session-config>
 
 
