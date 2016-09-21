@@ -8,7 +8,7 @@ python:
   - "3.4"
 
 before_install:
-  - export TEXINPUTS=:./:$TEXMF/tex/{$progname,generic,}//:/usr/share/texmf//:/usr/share/texmf-texlive//
+  - export TEXINPUTS=:./:$TEXMF/tex/{$progname,generic,}//:/usr/share/texmf-texlive/tex/latex//
 
 install:
   - pip install --upgrade pip
