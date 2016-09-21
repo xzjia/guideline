@@ -22,6 +22,12 @@
 
         * メッセージに入力チェック対象を含める方法の説明を追加(\ `guideline#2002 <https://github.com/terasolunaorg/guideline/issues/2002>`_\ )
 
+    * - 
+      - :doc:`../ArchitectureInDetail/MessagingDetail/Email`
+      - 記載内容の追加
+
+        * JavaMailで発生する問題とその回避方法を追加(\ `guideline#2190 <https://github.com/terasolunaorg/guideline/issues/2190>`_\ )
+
     * - 2016-08-31
       - \-
       - 5.2.0 RELEASE版公開
