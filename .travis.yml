@@ -8,7 +8,7 @@ python:
   - "3.4"
 
 before_install:
-  - export TEXINPUTS='//;'
+  - export TEXINPUTS= :/usr/local/texlive/texmf-local//:/usr/local/texlive/2016/texmf-var//:/usr/local/texlive/2016/texmf-config//:/usr/local/texlive/2016/texmf-dist//:/usr/local/share/texmf//:/var/lib/texmf//
 
 install:
   - pip install --upgrade pip
@@ -31,10 +31,7 @@ install:
   - sudo find / -name "cmap"
   - sudo find / -name "titlesec"
   - kpsewhich titlesec.sty  
-  - kpsewhich cmap.sty  
-  
-  
-  - sudo sh -c "find / -name 'ls-R' | xargs rm"
+  - kpsewhich cmap.sty
   
   - cd ..
 
