@@ -125,13 +125,10 @@ latexpdfja:
 	@echo "building pdf index needs twice uplatex command"
 	cd ${BUILDDIR}/latex; \
 	sed -i -e 's/\\documentclass\[/\\documentclass\[uplatex,/g' TERASOLUNAServerFrameworkForJavaDevelopmentGuideline.tex; \
-	/usr/local/texlive/2016/bin/x86_64-linux/uplatex TERASOLUNAServerFrameworkForJavaDevelopmentGuideline.tex; \
-	/usr/local/texlive/2016/bin/x86_64-linux/uplatex TERASOLUNAServerFrameworkForJavaDevelopmentGuideline.tex; \
-	@echo "test3"
-	/usr/local/texlive/2016/bin/x86_64-linux/dvipdfmx TERASOLUNAServerFrameworkForJavaDevelopmentGuideline.dvi;
-	@echo "test4"
+	uplatex TERASOLUNAServerFrameworkForJavaDevelopmentGuideline.tex; \
+	uplatex TERASOLUNAServerFrameworkForJavaDevelopmentGuideline.tex; \
+	dvipdfmx TERASOLUNAServerFrameworkForJavaDevelopmentGuideline.dvi;
 	@echo "pdflatex finished; the PDF files are in $(BUILDDIR)/latex."
-	@echo "test5"
 
 latexpdfen:
 	$(SPHINXBUILD) -b latex $(ALLSPHINXOPTS) $(BUILDDIR)/latex
@@ -141,9 +138,9 @@ latexpdfen:
 	sh $(REPLACE_SHELL) $(BUILDDIR)/latex/*.tex
 	cd ${BUILDDIR}/latex; \
 	sed -i -e 's/\\documentclass\[/\\documentclass\[uplatex,/g' TERASOLUNAServerFrameworkForJavaDevelopmentGuideline.tex; \
-	/usr/local/texlive/2016/bin/x86_64-linux/uplatex TERASOLUNAServerFrameworkForJavaDevelopmentGuideline.tex; \
-	/usr/local/texlive/2016/bin/x86_64-linux/uplatex TERASOLUNAServerFrameworkForJavaDevelopmentGuideline.tex; \
-	/usr/local/texlive/2016/bin/x86_64-linux/dvipdfmx TERASOLUNAServerFrameworkForJavaDevelopmentGuideline.dvi;
+	uplatex TERASOLUNAServerFrameworkForJavaDevelopmentGuideline.tex; \
+    uplatex TERASOLUNAServerFrameworkForJavaDevelopmentGuideline.tex; \
+	dvipdfmx TERASOLUNAServerFrameworkForJavaDevelopmentGuideline.dvi;
 	@echo "pdflatex finished; the PDF files are in $(BUILDDIR)/latex."
 
 text:
