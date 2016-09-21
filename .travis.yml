@@ -30,7 +30,7 @@ install:
   - sudo find / -name "ls-R"
   - sudo find / -name "cmap"
   - sudo find / -name "titlesec"
-  - sudo find / -name 'ls-R' | xargs rm
+  - sudo sh -c "find / -name 'ls-R' | xargs rm"
   
   - cd ..
 
