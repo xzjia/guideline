@@ -32,6 +32,7 @@ install:
   - sudo find / -name "titlesec"
   - sudo /usr/local/texlive/2016/bin/x86_64-linux/tlmgr conf texmf TEXMFDBS {!!/usr/share/texmf-texlive/,!!/usr/share/texmf/,!!/usr/local/texlive/texmf-local,!!/usr/local/texlive/2016/texmf-var,!!/usr/local/texlive/2016/texmf-config,!!/usr/local/texlive/2016/texmf-dist,!!/usr/local/share/texmf,!!/var/lib/texmf,!!$TEXMFSYSVAR,!!$TEXMFLOCAL,!!$TEXMFMAIN,!!$TEXMFDIST}
   
+  
   - cd ..
 
 before_script:
