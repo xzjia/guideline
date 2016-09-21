@@ -487,8 +487,7 @@ webserviceプロジェクト内にWebサービスを呼び出すインターフ�
 
         @WebMethod // (2)
         @WebResult(name = "todo") // (3)
-        Todo getTodo(@WebParam(name = "todoId") /* (4) */ String todoId) throws AccessDeniedFaultException, ValidationFaultException,
-        ResourceNotFoundFaultException, BusinessFaultException;
+        Todo getTodo(@WebParam(name = "todoId") /* (4) */ String todoId) throws AccessDeniedFaultException, ValidationFaultException, ResourceNotFoundFaultException, BusinessFaultException;
 
     }
 
@@ -518,7 +517,7 @@ webserviceプロジェクト内にWebサービスを呼び出すインターフ�
     * - | (4)
       - | 引数に\ ``@WebParam``\ を付け、名前を\ ``name``\ 属性に指定する。
         | このアノテーションを付けることにより、WSDL上に引数が公開され、外部から呼び出すときの必要なパラメータとして定義される。
-        | \ ``AccessDeniedFaultException``\ \ ``ValidationFaultException``\ \ ``ResourceNotFoundFaultException``\ \ ``BusinessFaultException``\ の詳細は
+        | SOAPFaultのサブクラス(\ ``AccessDeniedFaultException``\、\ ``ValidationFaultException``\、\ ``ResourceNotFoundFaultException``\、\ ``BusinessFaultException``\)の詳細は
         | 「\ :ref:`SOAPHowToUseExceptionHandler`\ 」を参照されたい。
 
 
@@ -585,8 +584,7 @@ webプロジェクト内にWebServiceインターフェースの実装クラス�
         TodoService todoService;
 
         @Override // (5)
-        public Todo getTodo(String todoId) throws AccessDeniedFaultException, ValidationFaultException,
-        ResourceNotFoundFaultException, BusinessFaultException; {
+        public Todo getTodo(String todoId) throws AccessDeniedFaultException, ValidationFaultException, ResourceNotFoundFaultException, BusinessFaultException; {
             return todoService.getTodo(todoId);
         }
 
@@ -883,7 +881,7 @@ webプロジェクト内にWebServiceインターフェースの実装クラス�
 
 **SOAPサーバで発生する例外**
 
-SOAPサーバで発生した例外はこれから記述する例外を実装したクラス(以下「SOAPFault」)を使用することで、クライアントのプラットフォームに依存しない標準の通知メッセージを決定することができる。
+SOAPサーバで発生した例外はこれから記述する例外を実装したクラス(以下「SOAPFault」)を使用することで、クライアントのプラットフォームに依存しない通知メッセージを決定することができる。
 
 具体的には以下のクラスを作成する。
 
@@ -903,15 +901,7 @@ SOAPサーバで発生した例外はこれから記述する例外を実装し�
       - | \ ``ErrorBean``\ を保持するクラス。\ ``ErrorBean``\ を\ ``List``\ で保持して例外情報を複数保持できる。
     * - | (3)
       - | \ ``WebFaultException``\
-      - | \ ``WebFaultBean``\ を保持するSOAPFaultの親クラス。
-    * - | (4)
-      - | \ ``AccessDeniedFaultException``\
-        | \ ``ValidationFaultException``\
-        | \ ``ResourceNotFoundFaultException``\
-        | \ ``BusinessFaultException``\
-      - | SOAPFault例外クラス。\ ``WebFaultException``\ を継承して作成する。
-        | クライアントに通知したい例外の種類分、必要に応じて追加されたい。
-
+      - | \ ``WebFaultBean``\ を保持する例外クラス。
 
 これらの例外はSOAPサーバ、クライアントで共用するため、[server projectName]-webserviceに配置する。
 
@@ -1037,6 +1027,22 @@ SOAPサーバで発生した例外はこれから記述する例外を実装し�
 
 |
 
+**SOAPFaultのサブクラス**
+
+| SOAP Web Service内からスローされる例外型にマップされるSOAPFaultのサブクラスである。本節では以下のSOAPFaultのサブクラスを想定とし説明する。
+
+.. tabularcolumns:: |p{1.00\linewidth}|
+.. list-table::
+    :header-rows: 1
+    :widths: 100
+
+    * - SOAPFaultサブクラス
+    * - | \ ``com.example.ws.webfault.AccessDeniedFaultException``\		
+    * - | \ ``com.example.ws.webfault.ValidationFaultException``\		
+    * - | \ ``com.example.ws.webfault.ResourceNotFoundFaultException``\		
+    * - | \ ``com.example.ws.webfault.BusinessFaultException``\		
+
+
 *[server projectName]-webservice/src/main/java/com/example/ws/webfault/AccessDeniedFaultException.java*
 
 .. code-block:: java
@@ -1048,11 +1054,11 @@ SOAPサーバで発生した例外はこれから記述する例外を実装し�
     @WebFault(name = "AccessDeniedFault", targetNamespace = "http://example.com/todo") // (1)
     public class AccessDeniedFaultException extends WebFaultException { 
         // (2)
-        public BusinessFaultException(String message, WebFaultBean faultInfo) {
+        public AccessDeniedFaultException(String message, WebFaultBean faultInfo) {
             super(message, faultInfo);
         }
 
-        public BusinessFaultException(String message, WebFaultBean faultInfo, Throwable e) {
+        public AccessDeniedFaultException(String message, WebFaultBean faultInfo, Throwable e) {
             super(message, faultInfo, e);
         }
 
@@ -1071,11 +1077,11 @@ SOAPサーバで発生した例外はこれから記述する例外を実装し�
     @WebFault(name = "ValidationFault", targetNamespace = "http://example.com/todo") // (1)
     public class ValidationFaultException extends WebFaultException {
         // (2)
-        public BusinessFaultException(String message, WebFaultBean faultInfo) {
+        public ValidationFaultException(String message, WebFaultBean faultInfo) {
             super(message, faultInfo);
         }
 
-        public BusinessFaultException(String message, WebFaultBean faultInfo, Throwable e) {
+        public ValidationFaultException(String message, WebFaultBean faultInfo, Throwable e) {
             super(message, faultInfo, e);
         }
 
@@ -1094,11 +1100,11 @@ SOAPサーバで発生した例外はこれから記述する例外を実装し�
     @WebFault(name = "ResourceNotFoundFault", targetNamespace = "http://example.com/todo") // (1)
     public class ResourceNotFoundFaultException extends WebFaultException {
         // (2)
-        public BusinessFaultException(String message, WebFaultBean faultInfo) {
+        public ResourceNotFoundFaultException(String message, WebFaultBean faultInfo) {
             super(message, faultInfo);
         }
 
-        public BusinessFaultException(String message, WebFaultBean faultInfo, Throwable e) {
+        public ResourceNotFoundFaultException(String message, WebFaultBean faultInfo, Throwable e) {
             super(message, faultInfo, e);
         }
 
@@ -1137,41 +1143,41 @@ SOAPサーバで発生した例外はこれから記述する例外を実装し�
     * - 項番
       - 説明
     * - | (1)
-      - | \ ``WebFaultException``\ 継承クラスに、\ ``@WebFault``\ を付けて、SOAPFaultであることを宣言する。
+      - | \ ``@WebFault``\ を付けて、SOAPFaultであることを宣言する。
         | \ ``name``\ 属性には、クライアントに送信するSOAPFaultの \ ``name``\ 属性を設定する。
         | \ ``targetNamespace``\ 属性には、使用するネームスペースを設定する。Webサービスと同じにする必要がある。
     * - | (2)
-      - | \ ``WebFaultException``\ を継承し、コンストラクタのみ作成する。
-        | フィールドやその他メソッドは親クラスのメソッドを使用するため記述不要である。
+      - | \ ``WebFaultException``\ を継承、コンストラクタのみ作成する。
+        | フィールドやその他メソッドは \ ``WebFaultException``\ のメソッドを使用するため記述不要である。
 
 |
 
 **発生する例外をSOAPFaultでラップする例外ハンドラー**
 
-Serviceから発生する実行時例外をSOAPFaultでラップするために例外ハンドラークラスを作成する。
+Serviceから発生する実行時例外をSOAPFaultのサブクラスでラップするための例外ハンドラークラスを作成する。
 本ガイドラインではWebService実装クラスがこのハンドラーを用いて例外を変換してスローする方針とする。
 
-Serviceからスローされる例外とラップするSOAPFaultクラスは以下を想定している。必要に応じて追加されたい。
+Serviceからスローされる例外とラップするSOAPFaultのサブクラスは以下を想定している。必要に応じて追加されたい。
 
-.. tabularcolumns:: |p{0.60\linewidth}|p{0.40\linewidth}|
+.. tabularcolumns:: |p{0.50\linewidth}|p{0.25\linewidth}|p{0.25\linewidth}|
 .. list-table::
     :header-rows: 1
-    :widths: 40 40 20
+    :widths: 50 25 25
 
     * - 例外名
-      - SOAPFaultクラス
+      - SOAPFaultのサブクラス
       - 内容
     * - | \ ``org.springframework.security.access.AccessDeniedException``\		
-      - | \ ``com.example.ws.webfault.AccessDeniedFaultException``\		
+      - | \ ``AccessDeniedFaultException``\		
       - | 認可エラー時の例外
     * - | \ ``javax.validation.ConstraintViolationException``\
-      - | \ ``com.example.ws.webfault.ValidationFaultException``\		
+      - | \ ``ValidationFaultException``\		
       - | 入力チェックエラー時の例外
     * - | \ ``org.terasoluna.gfw.common.exception.ResourceNotFoundException``\
-      - | \ ``com.example.ws.webfault.ResourceNotFoundFaultException``\		
+      - | \ ``ResourceNotFoundFaultException``\		
       - | リソースが見つからない場合の例外
     * - | \ ``org.terasoluna.gfw.common.exception.BusinessException``\
-      - | \ ``com.example.ws.webfault.BusinessFaultException``\		
+      - | \ ``BusinessFaultException``\		
       - | 業務例外
 
 
@@ -1215,9 +1221,8 @@ Serviceからスローされる例外とラップするSOAPFaultクラスは以�
         @Inject
         ExceptionLogger exceptionLogger; // (3)
 
-        // (5)
-        public void translateException(Exception e) throws AccessDeniedFaultException, ValidationFaultException, 
-        ResourceNotFoundFaultException, BusinessFaultException {
+        // (4)
+        public void translateException(Exception e) throws AccessDeniedFaultException, ValidationFaultException, ResourceNotFoundFaultException, BusinessFaultException {
             loggingException(e);
             WebFaultBean faultInfo = null;
 
@@ -1225,30 +1230,29 @@ Serviceからスローされる例外とラップするSOAPFaultクラスは以�
                 faultInfo = new WebFaultBean();
                 faultInfo.addError(e.getClass().getName(), e.getMessage());
                 throw new AccessDeniedFaultException(e.getMessage(), faultInfo, e
-                    .getCause());
+                        .getCause());
             } else if (e instanceof ConstraintViolationException) {
                 faultInfo = new WebFaultBean();
-                this.addErrors(faultInfo, ((ConstraintViolationException) e).getConstraintViolations());
-				            throw new ValidationFaultException(e.getMessage(), faultInfo, e
-				                    .getCause());
+                this.addErrors(faultInfo, ((ConstraintViolationException) e)
+                        .getConstraintViolations());
+                throw new ValidationFaultException(e.getMessage(), faultInfo, e
+                    .getCause());
             } else if (e instanceof ResourceNotFoundException) {
                 faultInfo = new WebFaultBean();
-                this.addErrors(faultInfo, ((ResourceNotFoundException) e).getResultMessages());
-				            throw new ResourceNotFoundFaultException(e.getMessage(), faultInfo, e
-				                    .getCause());
+                this.addErrors(faultInfo, ((ResourceNotFoundException) e)
+                        .getResultMessages());
+                throw new ResourceNotFoundFaultException(e.getMessage(), faultInfo, e
+                        .getCause());
             } else if (e instanceof BusinessException) {
                 faultInfo = new WebFaultBean();
-                this.addErrors(faultInfo, ((BusinessException) e).getResultMessages());
-				            throw new BusinessFaultException(e.getMessage(), faultInfo, e
-				                    .getCause());
+                this.addErrors(faultInfo, ((BusinessException) e)
+                        .getResultMessages());
+                throw new BusinessFaultException(e.getMessage(), faultInfo, e
+                        .getCause());
             } else {
                 // not translate.
-                throw new SystemException("e.ex.fw.9001", e);
+                throw new SystemException("e.sf.soap.9001", e);
             }
-        }
-
-        private void loggingException(Exception e) {
-            exceptionLogger.log(e);
         }
 
         private void addErrors(WebFaultBean faultInfo, Set<ConstraintViolation<?>> constraintViolations) {
@@ -1291,7 +1295,7 @@ Serviceからスローされる例外とラップするSOAPFaultクラスは以�
       - | 共通ライブラリが提供する\ ``ExceptionLogger``\ を使用して例外情報を例外に出力する。
         | 詳細は、「\ :doc:`../WebApplicationDetail/ExceptionHandling`\ 」を参照されたい。
     * - | (4)
-      - | Serviceから発生しうる各例外について、\ ``SOAPFault``\へのラップを行う。
+      - | Serviceから発生しうる各例外について、\ ``SOAPFault``\ のサブクラスへラップを行う。
         | 例外のマッピングは冒頭の表を参考されたい。
 
 .. note:: **その他の例外の扱いについて**
@@ -1322,8 +1326,7 @@ Webサービスクラスにて、例外ハンドラーを呼び出す。以下�
         WsExceptionHandler handler; // (1)
 
         @Override
-        public Todo getTodo(String todoId) throws AccessDeniedFaultException, ValidationFaultException,
-        ResourceNotFoundFaultException, BusinessFaultException /* (2) */ {
+        public Todo getTodo(String todoId) throws AccessDeniedFaultException, ValidationFaultException, ResourceNotFoundFaultException, BusinessFaultException /* (2) */ {
             try {
                 return todoService.getTodo(todoId);
             } catch (RuntimeException e) {
@@ -1343,7 +1346,7 @@ Webサービスクラスにて、例外ハンドラーを呼び出す。以下�
     * - | (1)
       - | 例外ハンドラーをインジェクションする。
     * - | (2)
-      - | SOAPFaultにラップしてスローするため、throws句を付ける。
+      - | SOAPFaultのサブクラスにラップしてスローする。
     * - | (3)
       - | 実行時例外が発生した場合は、例外ハンドラークラスに処理を委譲する。
 
@@ -1384,8 +1387,7 @@ MTOMを利用した大容量のバイナリデータを扱う方法
         // omitted
 
         @WebMethod
-        void uploadFile(@XmlMimeType("application/octet-stream") /* (1) */ DataHandler dataHandler) throws AccessDeniedFaultException, ValidationFaultException,
-        ResourceNotFoundFaultException, BusinessFaultException;
+        void uploadFile(@XmlMimeType("application/octet-stream") /* (1) */ DataHandler dataHandler) throws AccessDeniedFaultException, ValidationFaultException, ResourceNotFoundFaultException, BusinessFaultException;
 
     }
 
@@ -1446,8 +1448,7 @@ MTOMを利用した大容量のバイナリデータを扱う方法
         // omitted
 
         @Override
-        public void uploadFile(DataHandler dataHandler) throws throws AccessDeniedFaultException, ValidationFaultException,
-        ResourceNotFoundFaultException, BusinessFaultException {
+        public void uploadFile(DataHandler dataHandler) throws AccessDeniedFaultException, ValidationFaultException, ResourceNotFoundFaultException, BusinessFaultException {
 
             try (InputStream inputStream = dataHandler.getInputStream()){ // (2)
                 todoService.uploadFile(inputStream);
@@ -1686,7 +1687,7 @@ WebServiceインターフェースを実装したプロキシを生成する\ ``
     * - | (1)
       - | \ ``TodoWebService``\ をインジェクションして、実行対象のServiceを呼び出す。
     * - | (2)
-      - | サーバ側で、例外が発生した場合は、\ ``WebFaultException``\ を継承したSOAPFaultにラップされて送信される。
+      - | サーバ側で、例外が発生した場合は、\ ``WebFaultException``\ を継承したSOAPFaultのサブクラスにラップされて送信される。
         | 内容に応じて処理を行う。
         | 例外処理の詳細は「:ref:`SOAPHowToUseExceptionHandler`」を参照されたい。
 
@@ -1759,7 +1760,7 @@ WebServiceインターフェースを実装したプロキシを生成する\ ``
 
 例外ハンドリングの実装
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
-| SOAPサーバでは、\ ``WebFaultException``\ を継承した、SOAPFault例外をラップして、スローすることを推奨している。
+| SOAPサーバでは、\ ``WebFaultException``\ を継承した、SOAPFaultのサブクラスをラップして、スローすることを推奨している。
 | クライアントは\ ``WebFaultException``\ をキャッチして、その原因例外を判定してそれぞれの処理を行う。
 
 .. code-block:: java
@@ -1795,9 +1796,9 @@ WebServiceインターフェースを実装したプロキシを生成する\ ``
     * - 項番
       - 説明
     * - | (1)
-      - | Webサービスを呼び出す。SOAPFault例外クラスthrowsがついているため、\ ``WebFaultException``\ をキャッチする必要がある。
+      - | Webサービスを呼び出す。SOAPFaultの親クラスである\ ``WebFaultException``\ をキャッチする。
     * - | (2)
-      - | SOAPFault例外を判定し、それぞれの処理を記述する（画面にメッセージを出す、例外をスローするなど）
+      - | SOAPFaultのサブクラスを判定し、それぞれの処理を記述する（画面にメッセージを出す、例外をスローするなど）
 
 |
 
