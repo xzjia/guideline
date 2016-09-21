@@ -1461,45 +1461,25 @@ JSPの実装(基本編)
 | セッション管理の詳細については、\ :doc:`SessionManagement`\ を参照されたい。
 | セッション方式の実現方法を、以下に示す。
 
-- JSP
+- From
 
- .. code-block:: jsp
+ .. code-block:: java
 
-        <%-- (1) --%>
-        <div id="criteriaPart">
-          <form:form action="${pageContext.request.contextPath}/article/list"
-                     method="post" modelAttribute="personSearchForSessionForm">
-            <form:input path="word" />
-            <form:select path="sort">
-              <form:option value="publishedDate,DESC">Newest</form:option>
-              <form:option value="publishedDate,ASC">Oldest</form:option>
-            </form:select>
-            <form:button>Search</form:button>
-            <br>
-          </form:form>
-        </div>
+        public class PersonSearchForSessionForm implements Serializable {
 
-        <%-- ... --%>
+            // ...
 
-        <%-- (2) --%>
-        <t:pagination page="${page}"
-            outerElementClass="pagination" />
+            private int page;
 
- .. tabularcolumns:: |p{0.10\linewidth}|p{0.90\linewidth}|
- .. list-table::
-    :header-rows: 1
-    :widths: 10 90
+            private int size;
 
-    * - 項番
-      - 説明
-    * - | (1)
-      - | 検索条件を指定するフォーム。
-        | post通信時に検索条件の \ ``word`` \ と ソート条件の\ ``sort`` \ を保持したフォームをセッションに格納される。
-        | フォームのパラメータに含まれていない\ ``page`` \ と\ ``size`` \ は対象外となる。
-    * - | (2)
-      - | \ ``word`` \ と \ ``sort`` \ はセッションに格納されているため、 \ ``criteriaQuery``\属性は使用しない。
-        | \ ``page`` \ の値はページリンクごとに毎回変わるため、 \ ``criteriaQuery``\経由でリクエストに設定される。
-        | 上記例の場合、 \ ``"?page=ページ位置&size=取得件数"``\という形式のクエリ文字列が生成される。
+            private String word;
+
+            private String sort;
+
+            // ...
+
+        }
 
 - Controller
 
@@ -1566,25 +1546,45 @@ JSPの実装(基本編)
         *  別画面（詳細画面など）から戻ってくる画面遷移の場合
            \ ``page`` \ と \ ``size`` \ 、 \ ``word`` \ 、 \ ``sort`` \ はセッションから取得する。
 
-- From
+- JSP
 
- .. code-block:: java
+ .. code-block:: jsp
 
-        public class PersonSearchForSessionForm implements Serializable {
+        <%-- (1) --%>
+        <div id="criteriaPart">
+          <form:form action="${pageContext.request.contextPath}/article/list"
+                     method="post" modelAttribute="personSearchForSessionForm">
+            <form:input path="word" />
+            <form:select path="sort">
+              <form:option value="publishedDate,DESC">Newest</form:option>
+              <form:option value="publishedDate,ASC">Oldest</form:option>
+            </form:select>
+            <form:button>Search</form:button>
+            <br>
+          </form:form>
+        </div>
 
-            // ...
+        <%-- ... --%>
 
-            private int page;
+        <%-- (2) --%>
+        <t:pagination page="${page}"
+            outerElementClass="pagination" />
 
-            private int size;
+ .. tabularcolumns:: |p{0.10\linewidth}|p{0.90\linewidth}|
+ .. list-table::
+    :header-rows: 1
+    :widths: 10 90
 
-            private String word;
-
-            private String sort;
-
-            // ...
-
-        }
+    * - 項番
+      - 説明
+    * - | (1)
+      - | 検索条件を指定するフォーム。
+        | post通信時に検索条件の \ ``word`` \ と ソート条件の\ ``sort`` \ を保持したフォームをセッションに格納される。
+        | フォームのパラメータに含まれていない\ ``page`` \ と\ ``size`` \ は対象外となる。
+    * - | (2)
+      - | \ ``word`` \ と \ ``sort`` \ はセッションに格納されているため、 \ ``criteriaQuery``\属性は使用しない。
+        | \ ``page`` \ の値はページリンクごとに毎回変わるため、 \ ``criteriaQuery``\経由でリクエストに設定される。
+        | 上記例の場合、 \ ``"?page=ページ位置&size=取得件数"``\という形式のクエリ文字列が生成される。
 
 以下の3リクエストでセッションに格納したフォームの削除を行う必要がある。
 
