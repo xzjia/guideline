@@ -211,7 +211,6 @@ Webサービスとして公開されるURL
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
 
-
 | SOAP Web Serviceを作成するとWSDL（\ **W**\ eb \ **S**\ ervices \ **D**\ escription \ **L**\ anguage）というWebサービスのインターフェース定義が公開され、クライアントはこの定義をもとにSOAP Web Serviceを実行する。
 | WSDLの詳細は、`W3C -Web Services Description Language (WSDL)- <http://www.w3.org/TR/wsdl>`_\を参照されたい。
 
@@ -517,7 +516,7 @@ webserviceプロジェクト内にWebサービスを呼び出すインターフ�
     * - | (4)
       - | 引数に\ ``@WebParam``\ を付け、名前を\ ``name``\ 属性に指定する。
         | このアノテーションを付けることにより、WSDL上に引数が公開され、外部から呼び出すときの必要なパラメータとして定義される。
-        | SOAPFaultのサブクラス(\ ``AccessDeniedFaultException``\、\ ``ValidationFaultException``\、\ ``ResourceNotFoundFaultException``\、\ ``BusinessFaultException``\)の詳細は
+        | カスタムSOAPFaultクラス(\ ``AccessDeniedFaultException``\、\ ``ValidationFaultException``\、\ ``ResourceNotFoundFaultException``\、\ ``BusinessFaultException``\)の詳細は
         | 「\ :ref:`SOAPHowToUseExceptionHandler`\ 」を参照されたい。
 
 
@@ -544,8 +543,7 @@ webserviceプロジェクト内にWebサービスを呼び出すインターフ�
 
 |
 
-    
-      
+
 **WebService実装クラスの作成**
 
 webプロジェクト内にWebServiceインターフェースの実装クラスを作成する。
@@ -876,12 +874,14 @@ webプロジェクト内にWebServiceインターフェースの実装クラス�
 
 例外ハンドリングの実装
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
-| SOAPサーバで例外が発生した場合にクライアントへ伝えるためには、クライアントのプラットフォームに依存しない専用の例外クラスをスローする必要がある。
+| SOAPサーバで例外が発生した場合にクライアントへ伝えるためには、クライアントのプラットフォームに依存しない専用の例外クラス(以下、SOAPFault)をスローする必要がある。
 | その実装を以下に記述する。
 
 **SOAPサーバで発生する例外**
 
-SOAPサーバで発生した例外はこれから記述する例外を実装したクラス(以下「SOAPFault」)を使用することで、クライアントのプラットフォームに依存しない通知メッセージを決定することができる。
+| SOAPサーバで発生した例外はこれから記述する例外を実装したクラス(SOAPFault)を使用することで、クライアントへの通知メッセージを決定することができる。
+| Faultの仕様については \ `The Java API for XML-Based Web Services(JAX-WS) 2.2 -2.5 Fault- <http://www.google.co.jp/url?sa=t&rct=j&q=&esrc=s&source=web&cd=1&cad=rja&uact=8&ved=0ahUKEwj1z_exk7TOAhUDnpQKHbk6AgwQFggfMAA&url=http%3A%2F%2Fdownload.oracle.com%2Fotn-pub%2Fjcp%2Fjaxws-2.2-mrel3-evalu-oth-JSpec%2Fjaxws-2_2-mrel3-spec.pdf&v6u=https%3A%2F%2Fs-v6exp1-ds.metric.gstatic.com%2Fgen_204%3Fip%3D163.135.151.80%26ts%3D1470739411479764%26auth%3Dk5tkj3erhgejiufbavruvdinx2iknps5%26rndm%3D0.9131593964234974&v6s=2&v6t=48530&usg=AFQjCNEfBm6Ji-bQy9GDL8l5crz9PZ188w&bvm=bv.129389765,d.dGo>`_\ を参照されたい。
+
 
 具体的には以下のクラスを作成する。
 
@@ -901,7 +901,15 @@ SOAPサーバで発生した例外はこれから記述する例外を実装し�
       - | \ ``ErrorBean``\ を保持するクラス。\ ``ErrorBean``\ を\ ``List``\ で保持して例外情報を複数保持できる。
     * - | (3)
       - | \ ``WebFaultException``\
-      - | \ ``WebFaultBean``\ を保持する例外クラス。
+      - | \ ``WebFaultBean``\ を保持する例外クラスでカスタムSOAPFaultクラスの親クラスである。
+    * - | (4)
+      - | \ ``AccessDeniedFaultException``\
+        | \ ``ValidationFaultException``\
+        | \ ``ResourceNotFoundFaultException``\
+        | \ ``BusinessFaultException``\
+      - | カスタムSOAPFaultクラス。\ ``WebFaultException``\ を継承して作成する。
+        | SOAP Web Service内からスローされるJava例外(java.lang.Exception)をSOAPFaultにマップする例外クラス。
+        | 本節では左記のカスタムSOAPFaultクラスを想定とし説明する。必要に応じて追加されたい。
 
 これらの例外はSOAPサーバ、クライアントで共用するため、[server projectName]-webserviceに配置する。
 
@@ -1023,25 +1031,9 @@ SOAPサーバで発生した例外はこれから記述する例外を実装し�
 
 .. warning:: **WebFaultExceptionのコンストラクタとフィールドについて**
 
-    \ ``WebFaultException``\ には、デフォルトコンストラクタと各フィールドに対応するsetterが必須となる。これは、クライアントの内部処理で、\ ``WebFaultException``\ を作成する際に使用するためである。そのため、各フィールドをfinalにすることも不可能である。
+    \ ``WebFaultException``\ には、デフォルトコンストラクタと各フィールドに対応するsetterが必須となる。これは、Serviceの内部処理で、\ ``WebFaultException``\ を継承したカスタムSOAPFaultクラスを作成する際に使用するためである。そのため、各フィールドをfinalにすることも不可能である。
 
 |
-
-**SOAPFaultのサブクラス**
-
-| SOAP Web Service内からスローされる例外型にマップされるSOAPFaultのサブクラスである。本節では以下のSOAPFaultのサブクラスを想定とし説明する。
-
-.. tabularcolumns:: |p{1.00\linewidth}|
-.. list-table::
-    :header-rows: 1
-    :widths: 100
-
-    * - SOAPFaultサブクラス
-    * - | \ ``com.example.ws.webfault.AccessDeniedFaultException``\		
-    * - | \ ``com.example.ws.webfault.ValidationFaultException``\		
-    * - | \ ``com.example.ws.webfault.ResourceNotFoundFaultException``\		
-    * - | \ ``com.example.ws.webfault.BusinessFaultException``\		
-
 
 *[server projectName]-webservice/src/main/java/com/example/ws/webfault/AccessDeniedFaultException.java*
 
@@ -1148,16 +1140,16 @@ SOAPサーバで発生した例外はこれから記述する例外を実装し�
         | \ ``targetNamespace``\ 属性には、使用するネームスペースを設定する。Webサービスと同じにする必要がある。
     * - | (2)
       - | \ ``WebFaultException``\ を継承、コンストラクタのみ作成する。
-        | フィールドやその他メソッドは \ ``WebFaultException``\ のメソッドを使用するため記述不要である。
+        | フィールドやその他メソッドは記述不要である。
 
 |
 
-**発生する例外をSOAPFaultでラップする例外ハンドラー**
+**発生する例外をカスタムSOAPFaultクラスにラップする例外ハンドラー**
 
-Serviceから発生する実行時例外をSOAPFaultのサブクラスでラップするための例外ハンドラークラスを作成する。
+Serviceから発生する実行時例外をカスタムSOAPFaultクラスにラップするための例外ハンドラークラスを作成する。
 本ガイドラインではWebService実装クラスがこのハンドラーを用いて例外を変換してスローする方針とする。
 
-Serviceからスローされる例外とラップするSOAPFaultのサブクラスは以下を想定している。必要に応じて追加されたい。
+Serviceからスローされる例外とラップするカスタムSOAPFaultクラスは以下を想定している。必要に応じて追加されたい。
 
 .. tabularcolumns:: |p{0.50\linewidth}|p{0.25\linewidth}|p{0.25\linewidth}|
 .. list-table::
@@ -1165,7 +1157,7 @@ Serviceからスローされる例外とラップするSOAPFaultのサブクラ�
     :widths: 50 25 25
 
     * - 例外名
-      - SOAPFaultのサブクラス
+      - カスタムSOAPFaultクラス
       - 内容
     * - | \ ``org.springframework.security.access.AccessDeniedException``\		
       - | \ ``AccessDeniedFaultException``\		
@@ -1346,7 +1338,7 @@ Webサービスクラスにて、例外ハンドラーを呼び出す。以下�
     * - | (1)
       - | 例外ハンドラーをインジェクションする。
     * - | (2)
-      - | SOAPFaultのサブクラスにラップしてスローする。
+      - | カスタムSOAPFaultクラスにラップしてスローする。
     * - | (3)
       - | 実行時例外が発生した場合は、例外ハンドラークラスに処理を委譲する。
 
@@ -1687,7 +1679,7 @@ WebServiceインターフェースを実装したプロキシを生成する\ ``
     * - | (1)
       - | \ ``TodoWebService``\ をインジェクションして、実行対象のServiceを呼び出す。
     * - | (2)
-      - | サーバ側で、例外が発生した場合は、\ ``WebFaultException``\ を継承したSOAPFaultのサブクラスにラップされて送信される。
+      - | サーバ側で、例外が発生した場合は、\ ``WebFaultException``\ を継承したカスタムSOAPFaultクラスにラップされて送信される。
         | 内容に応じて処理を行う。
         | 例外処理の詳細は「:ref:`SOAPHowToUseExceptionHandler`」を参照されたい。
 
@@ -1760,7 +1752,7 @@ WebServiceインターフェースを実装したプロキシを生成する\ ``
 
 例外ハンドリングの実装
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
-| SOAPサーバでは、\ ``WebFaultException``\ を継承した、SOAPFaultのサブクラスをラップして、スローすることを推奨している。
+| SOAPサーバでは、\ ``WebFaultException``\ を継承した、カスタムSOAPFaultクラスをラップして、スローすることを推奨している。
 | クライアントは\ ``WebFaultException``\ をキャッチして、その原因例外を判定してそれぞれの処理を行う。
 
 .. code-block:: java
@@ -1798,7 +1790,7 @@ WebServiceインターフェースを実装したプロキシを生成する\ ``
     * - | (1)
       - | Webサービスを呼び出す。SOAPFaultの親クラスである\ ``WebFaultException``\ をキャッチする。
     * - | (2)
-      - | SOAPFaultのサブクラスを判定し、それぞれの処理を記述する（画面にメッセージを出す、例外をスローするなど）
+      - | カスタムSOAPFaultクラスを判定し、それぞれの処理を記述する（画面にメッセージを出す、例外をスローするなど）
 
 |
 
