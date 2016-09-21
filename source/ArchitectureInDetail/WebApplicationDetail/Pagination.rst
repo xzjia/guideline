@@ -1560,7 +1560,6 @@ JSPの実装(基本編)
               <form:option value="publishedDate,ASC">Oldest</form:option>
             </form:select>
             <form:button>Search</form:button>
-            <br>
           </form:form>
         </div>
 
