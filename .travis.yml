@@ -32,8 +32,8 @@ script:
   - sh ./build-html_en.sh 2>> $ERROR_LOG_FILE
 #  - sh ./build-pdf.sh 2>> $ERROR_LOG_FILE
 #  - sh ./build-pdf_en.sh >> $ERROR_LOG_FILE
-  - sh ./build-pdf.sh
-  - sh ./build-pdf_en.sh
+  - sh ./build-pdf.sh < ./InputAction_Enter.txt
+  - sh ./build-pdf_en.sh < ./InputAction_Enter.txt
   - cat $ERROR_LOG_FILE
 
 after_script:
