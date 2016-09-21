@@ -361,7 +361,7 @@ Modification of web.xml
 | ``src/main/webapp/WEB-INF/web.xml``
 
 .. code-block:: xml
-    :emphasize-lines: 74-84,85-90
+    :emphasize-lines: 74-84,86-90
 
     <?xml version="1.0" encoding="UTF-8"?>
     <web-app xmlns="http://java.sun.com/xml/ns/javaee" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
@@ -381,7 +381,7 @@ Modification of web.xml
                 classpath*:META-INF/spring/spring-security.xml
             </param-value>
         </context-param>
-    
+
         <filter>
             <filter-name>MDCClearFilter</filter-name>
             <filter-class>org.terasoluna.gfw.web.logging.mdc.MDCClearFilter</filter-class>
@@ -390,7 +390,7 @@ Modification of web.xml
             <filter-name>MDCClearFilter</filter-name>
             <url-pattern>/*</url-pattern>
         </filter-mapping>
-    
+
         <filter>
             <filter-name>exceptionLoggingFilter</filter-name>
             <filter-class>org.springframework.web.filter.DelegatingFilterProxy</filter-class>
@@ -399,7 +399,7 @@ Modification of web.xml
             <filter-name>exceptionLoggingFilter</filter-name>
             <url-pattern>/*</url-pattern>
         </filter-mapping>
-    
+
         <filter>
             <filter-name>XTrackMDCPutFilter</filter-name>
             <filter-class>org.terasoluna.gfw.web.logging.mdc.XTrackMDCPutFilter</filter-class>
@@ -408,7 +408,7 @@ Modification of web.xml
             <filter-name>XTrackMDCPutFilter</filter-name>
             <url-pattern>/*</url-pattern>
         </filter-mapping>
-    
+
         <filter>
             <filter-name>CharacterEncodingFilter</filter-name>
             <filter-class>org.springframework.web.filter.CharacterEncodingFilter</filter-class>
@@ -425,17 +425,17 @@ Modification of web.xml
             <filter-name>CharacterEncodingFilter</filter-name>
             <url-pattern>/*</url-pattern>
         </filter-mapping>
-    
+
         <filter>
             <filter-name>springSecurityFilterChain</filter-name>
             <filter-class>org.springframework.web.filter.DelegatingFilterProxy</filter-class>
         </filter>
-    
+
         <filter-mapping>
             <filter-name>springSecurityFilterChain</filter-name>
             <url-pattern>/*</url-pattern>
         </filter-mapping>
-    
+
         <!-- (1) -->
         <servlet>
             <servlet-name>restApiServlet</servlet-name>
@@ -447,13 +447,13 @@ Modification of web.xml
             </init-param>
             <load-on-startup>1</load-on-startup>
         </servlet>
-    
+
         <!-- (2) -->
         <servlet-mapping>
             <servlet-name>restApiServlet</servlet-name>
             <url-pattern>/api/v1/*</url-pattern>
         </servlet-mapping>
-    
+
         <servlet>
             <servlet-name>appServlet</servlet-name>
             <servlet-class>org.springframework.web.servlet.DispatcherServlet</servlet-class>
@@ -464,12 +464,23 @@ Modification of web.xml
             </init-param>
             <load-on-startup>1</load-on-startup>
         </servlet>
-    
+
+        <servlet>
+            <servlet-name>appServlet</servlet-name>
+            <servlet-class>org.springframework.web.servlet.DispatcherServlet</servlet-class>
+            <init-param>
+                <param-name>contextConfigLocation</param-name>
+                <!-- ApplicationContext for Spring MVC -->
+                <param-value>classpath*:META-INF/spring/spring-mvc.xml</param-value>
+            </init-param>
+            <load-on-startup>1</load-on-startup>
+        </servlet>
+
         <servlet-mapping>
             <servlet-name>appServlet</servlet-name>
             <url-pattern>/</url-pattern>
         </servlet-mapping>
-    
+
         <jsp-config>
             <jsp-property-group>
                 <url-pattern>*.jsp</url-pattern>
@@ -479,7 +490,7 @@ Modification of web.xml
                 <include-prelude>/WEB-INF/views/common/include.jsp</include-prelude>
             </jsp-property-group>
         </jsp-config>
-    
+
         <error-page>
             <error-code>500</error-code>
             <location>/WEB-INF/views/common/error/systemError.jsp</location>
@@ -492,12 +503,17 @@ Modification of web.xml
             <exception-type>java.lang.Exception</exception-type>
             <location>/WEB-INF/views/common/error/unhandledSystemError.html</location>
         </error-page>
-    
+
         <session-config>
             <!-- 30min -->
             <session-timeout>30</session-timeout>
+            <cookie-config>
+                <http-only>true</http-only>
+                <!-- <secure>true</secure> -->
+            </cookie-config>
+            <tracking-mode>COOKIE</tracking-mode>
         </session-config>
-    
+
     </web-app>
 
 
@@ -529,7 +545,7 @@ Creation of spring-mvc-rest.xml
 ``src/main/resources/META-INF/spring/spring-mvc-rest.xml``
 
 .. code-block:: xml
-    :emphasize-lines: 22-36,41
+    :emphasize-lines: 22-36,43
 
     <?xml version="1.0" encoding="UTF-8"?>
     <beans xmlns="http://www.springframework.org/schema/beans"
@@ -567,6 +583,8 @@ Creation of spring-mvc-rest.xml
                     </property>
                 </bean>
             </mvc:message-converters>
+            <!-- workarround to CVE-2016-5007. -->
+            <mvc:path-matching path-matcher="pathMatcher" />
         </mvc:annotation-driven>
 
         <mvc:default-servlet-handler />
@@ -581,6 +599,21 @@ Creation of spring-mvc-rest.xml
                 <bean
                     class="org.terasoluna.gfw.web.logging.TraceLoggingInterceptor" />
             </mvc:interceptor>
+            <mvc:interceptor>
+                <mvc:mapping path="/**" />
+                <mvc:exclude-mapping path="/resources/**" />
+                <mvc:exclude-mapping path="/**/*.html" />
+                <bean
+                    class="org.terasoluna.gfw.web.token.transaction.TransactionTokenInterceptor" />
+            </mvc:interceptor>
+            <mvc:interceptor>
+                <mvc:mapping path="/**" />
+                <mvc:exclude-mapping path="/resources/**" />
+                <mvc:exclude-mapping path="/**/*.html" />
+                <bean class="org.terasoluna.gfw.web.codelist.CodeListInterceptor">
+                    <property name="codeListIdPattern" value="CL_.+" />
+                </bean>
+            </mvc:interceptor>
             <!--  REMOVE THIS LINE IF YOU USE JPA
             <mvc:interceptor>
                 <mvc:mapping path="/**" />
@@ -592,6 +625,47 @@ Creation of spring-mvc-rest.xml
                 REMOVE THIS LINE IF YOU USE JPA  -->
         </mvc:interceptors>
 
+        <!-- Settings View Resolver. -->
+        <mvc:view-resolvers>
+            <mvc:jsp prefix="/WEB-INF/views/" />
+        </mvc:view-resolvers>
+
+        <bean id="requestDataValueProcessor"
+            class="org.terasoluna.gfw.web.mvc.support.CompositeRequestDataValueProcessor">
+            <constructor-arg>
+                <util:list>
+                    <bean class="org.springframework.security.web.servlet.support.csrf.CsrfRequestDataValueProcessor" />
+                    <bean
+                        class="org.terasoluna.gfw.web.token.transaction.TransactionTokenRequestDataValueProcessor" />
+                </util:list>
+            </constructor-arg>
+        </bean>
+
+        <!-- Setting Exception Handling. -->
+        <!-- Exception Resolver. -->
+        <bean class="org.terasoluna.gfw.web.exception.SystemExceptionResolver">
+            <property name="exceptionCodeResolver" ref="exceptionCodeResolver" />
+            <!-- Setting and Customization by project. -->
+            <property name="order" value="3" />
+            <property name="exceptionMappings">
+                <map>
+                    <entry key="ResourceNotFoundException" value="common/error/resourceNotFoundError" />
+                    <entry key="BusinessException" value="common/error/businessError" />
+                    <entry key="InvalidTransactionTokenException" value="common/error/transactionTokenError" />
+                    <entry key=".DataAccessException" value="common/error/dataAccessError" />
+                </map>
+            </property>
+            <property name="statusCodes">
+                <map>
+                    <entry key="common/error/resourceNotFoundError" value="404" />
+                    <entry key="common/error/businessError" value="409" />
+                    <entry key="common/error/transactionTokenError" value="409" />
+                    <entry key="common/error/dataAccessError" value="500" />
+                </map>
+            </property>
+            <property name="defaultErrorView" value="common/error/systemError" />
+            <property name="defaultStatusCode" value="500" />
+        </bean>
         <!-- Setting AOP. -->
         <bean id="handlerExceptionResolverLoggingInterceptor"
             class="org.terasoluna.gfw.web.exception.HandlerExceptionResolverLoggingInterceptor">
@@ -601,6 +675,11 @@ Creation of spring-mvc-rest.xml
             <aop:advisor advice-ref="handlerExceptionResolverLoggingInterceptor"
                 pointcut="execution(* org.springframework.web.servlet.HandlerExceptionResolver.resolveException(..))" />
         </aop:config>
+
+        <!-- Setting PathMatcher. -->
+        <bean id="pathMatcher" class="org.springframework.util.AntPathMatcher">
+            <property name="trimTokens" value="false" />
+        </bean>
 
     </beans>
 

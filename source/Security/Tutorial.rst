@@ -465,14 +465,15 @@ AccountSharedServiceの作成
 | ``src/main/resources/META-INF/spring/first-springsecurity-env.xml``
 
 .. code-block:: xml
-    :emphasize-lines: 3,6,44-49
+    :emphasize-lines: 4,5,29-35
 
     <?xml version="1.0" encoding="UTF-8"?>
     <beans xmlns="http://www.springframework.org/schema/beans"
+        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:jee="http://www.springframework.org/schema/jee"
         xmlns:jdbc="http://www.springframework.org/schema/jdbc"
-        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-        xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd
-            http://www.springframework.org/schema/jdbc http://www.springframework.org/schema/jdbc/spring-jdbc.xsd">
+        xsi:schemaLocation="http://www.springframework.org/schema/jdbc http://www.springframework.org/schema/jdbc/spring-jdbc.xsd
+            http://www.springframework.org/schema/jee http://www.springframework.org/schema/jee/spring-jee.xsd
+            http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd">
 
         <bean id="dateFactory" class="org.terasoluna.gfw.common.date.jodatime.DefaultJodaTimeDateFactory" />
 
@@ -489,9 +490,19 @@ AccountSharedServiceの作成
             <property name="maxWaitMillis" value="${cp.maxWait}" />
         </bean>
 
+
         <bean id="dataSource" class="net.sf.log4jdbc.Log4jdbcProxyDataSource">
             <constructor-arg index="0" ref="realDataSource" />
         </bean>
+
+        <!-- (1) -->
+        <jdbc:initialize-database data-source="dataSource"
+            ignore-failures="ALL">
+            <!-- (2) -->
+            <jdbc:script location="classpath:/database/${database}-schema.sql" encoding="UTF-8" />
+            <!-- (3) -->
+            <jdbc:script location="classpath:/database/${database}-dataload.sql" encoding="UTF-8" />
+        </jdbc:initialize-database>
 
         <!--  REMOVE THIS LINE IF YOU USE JPA
         <bean id="transactionManager"
@@ -499,25 +510,12 @@ AccountSharedServiceの作成
             <property name="entityManagerFactory" ref="entityManagerFactory" />
         </bean>
               REMOVE THIS LINE IF YOU USE JPA  -->
-        <!--  REMOVE THIS LINE IF YOU USE MyBatis2
+        <!--  REMOVE THIS LINE IF YOU USE MyBatis3
         <bean id="transactionManager"
             class="org.springframework.jdbc.datasource.DataSourceTransactionManager">
             <property name="dataSource" ref="dataSource" />
         </bean>
-              REMOVE THIS LINE IF YOU USE MyBatis2  -->
-        <bean id="transactionManager"
-            class="org.springframework.jdbc.datasource.DataSourceTransactionManager">
-            <property name="dataSource" ref="dataSource" />
-        </bean>
-
-        <!-- (1) -->
-        <jdbc:initialize-database data-source="dataSource" ignore-failures="ALL">
-            <!-- (2) -->
-            <jdbc:script location="classpath:/database/${database}-schema.sql" />
-            <!-- (3) -->
-            <jdbc:script location="classpath:/database/${database}-dataload.sql" />
-        </jdbc:initialize-database>
-
+              REMOVE THIS LINE IF YOU USE MyBatis3  -->
     </beans>
 
 .. tabularcolumns:: |p{0.10\linewidth}|p{0.90\linewidth}|
@@ -628,7 +626,7 @@ Spring Securityの設定
 | ``src/main/resources/META-INF/spring/spring-security.xml``
 
 .. code-block:: xml
-    :emphasize-lines: 22-23,27-28,32-33,34-35,42-47
+    :emphasize-lines: 22-23,27-28,32-33,41-43,44-45
 
     <?xml version="1.0" encoding="UTF-8"?>
     <beans xmlns="http://www.springframework.org/schema/beans"
@@ -1269,7 +1267,7 @@ spring-mvc.xml
 Spring Securityと関係のない設定については、説明を割愛する。
 
 .. code-block:: xml
-    :emphasize-lines: 19-21,76-77
+    :emphasize-lines: 19-21,78-79
 
     <?xml version="1.0" encoding="UTF-8"?>
     <beans xmlns="http://www.springframework.org/schema/beans"
@@ -1293,6 +1291,8 @@ Spring Securityと関係のない設定については、説明を割愛する�
                 <bean
                     class="org.springframework.security.web.bind.support.AuthenticationPrincipalArgumentResolver" />
             </mvc:argument-resolvers>
+            <!-- workarround to CVE-2016-5007. -->
+            <mvc:path-matching path-matcher="pathMatcher" />
         </mvc:annotation-driven>
 
         <mvc:default-servlet-handler />
@@ -1388,6 +1388,11 @@ Spring Securityと関係のない設定については、説明を割愛する�
             <aop:advisor advice-ref="handlerExceptionResolverLoggingInterceptor"
                 pointcut="execution(* org.springframework.web.servlet.HandlerExceptionResolver.resolveException(..))" />
         </aop:config>
+
+        <!-- Setting PathMatcher. -->
+        <bean id="pathMatcher" class="org.springframework.util.AntPathMatcher">
+            <property name="trimTokens" value="false" />
+        </bean>
 
     </beans>
 

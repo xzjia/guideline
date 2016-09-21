@@ -501,25 +501,144 @@ Maven Archetypeで作成したプロジェクトのPOMファイルでは、
 
 .. code-block:: xml
 
-    <!-- ... -->
+    <project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+        <modelVersion>4.0.0</modelVersion>
+        <groupId>com.example.todo</groupId>
+        <artifactId>todo</artifactId>
+        <version>5.0.3-SNAPSHOT</version>
+        <packaging>pom</packaging>
+        <modules>
+            <module>todo-env</module>
+            <module>todo-domain</module>
+            <module>todo-web</module>
+            <module>todo-initdb</module>
+            <module>todo-selenium</module>
+        </modules>
+        <parent>
+            <groupId>org.terasoluna.gfw</groupId>
+            <artifactId>terasoluna-gfw-parent</artifactId>
+            <version>5.0.3-SNAPSHOT</version>
+            <relativePath />
+        </parent>
 
-    <name>TERASOLUNA Server Framework for Java (5.x) Web Blank Multi Project</name>
-    <description>Web Blank Multi Project using TERASOLUNA Server Framework for Java (5.x)</description>
-    <url>http://terasoluna.org</url>
-    <inceptionYear>2014</inceptionYear>
-    <licenses>
-        <license>
-            <name>Apache License, Version 2.0</name>
-            <url>http://www.apache.org/licenses/LICENSE-2.0.txt</url>
-            <distribution>manual</distribution>
-        </license>
-    </licenses>
-    <organization>
-        <name>TERASOLUNA Framework Team</name>
+        <name>TERASOLUNA Server Framework for Java (5.x) Web Blank Multi Project</name>
+        <description>Web Blank Multi Project using TERASOLUNA Server Framework for Java (5.x)</description>
         <url>http://terasoluna.org</url>
-    </organization>
+        <inceptionYear>2014</inceptionYear>
+        <licenses>
+            <license>
+                <name>Apache License, Version 2.0</name>
+                <url>http://www.apache.org/licenses/LICENSE-2.0.txt</url>
+                <distribution>manual</distribution>
+            </license>
+        </licenses>
+        <organization>
+            <name>TERASOLUNA Framework Team</name>
+            <url>http://terasoluna.org</url>
+        </organization>
+        <repositories>
+            <repository>
+                <releases>
+                    <enabled>true</enabled>
+                </releases>
+                <snapshots>
+                    <enabled>false</enabled>
+                </snapshots>
+                <id>terasoluna-gfw-releases</id>
+                <url>http://repo.terasoluna.org/nexus/content/repositories/terasoluna-gfw-releases/</url>
+            </repository>
+            <repository>
+                <releases>
+                    <enabled>false</enabled>
+                </releases>
+                <snapshots>
+                    <enabled>true</enabled>
+                </snapshots>
+                <id>terasoluna-gfw-snapshots</id>
+                <url>http://repo.terasoluna.org/nexus/content/repositories/terasoluna-gfw-snapshots/</url>
+            </repository>
+        </repositories>
+        <build>
+            <pluginManagement>
+                <plugins>
+                    <plugin>
+                        <groupId>org.codehaus.mojo</groupId>
+                        <artifactId>build-helper-maven-plugin</artifactId>
+                        <version>${org.codehaus.mojo.build-helper-maven-plugin.version}</version>
+                        <executions>
+                            <execution>
+                                <id>add-source</id>
+                                <phase>generate-sources</phase>
+                                <goals>
+                                    <goal>add-source</goal>
+                                </goals>
+                                <configuration>
+                                    <sources>
+                                        <source>src/generated/java</source>
+                                    </sources>
+                                </configuration>
+                            </execution>
+                            <execution>
+                                <id>add-resource</id>
+                                <phase>generate-resources</phase>
+                                <goals>
+                                    <goal>add-resource</goal>
+                                </goals>
+                                <configuration>
+                                    <resources>
+                                        <resource>
+                                            <directory>src/generated/resources</directory>
+                                        </resource>
+                                    </resources>
+                                </configuration>
+                            </execution>
+                        </executions>
+                    </plugin>
+                </plugins>
+            </pluginManagement>
+        </build>
+        <dependencyManagement>
+            <dependencies>
+                <dependency>
+                    <groupId>${project.groupId}</groupId>
+                    <artifactId>todo-domain</artifactId>
+                    <version>${project.version}</version>
+                </dependency>
+                <dependency>
+                    <groupId>${project.groupId}</groupId>
+                    <artifactId>todo-web</artifactId>
+                    <version>${project.version}</version>
+                </dependency>
+                <dependency>
+                    <groupId>${project.groupId}</groupId>
+                    <artifactId>todo-env</artifactId>
+                    <version>${project.version}</version>
+                </dependency>
 
-    <!-- ... -->
+                <!-- == Begin Database == -->
+    <!--             <dependency> -->
+    <!--                 <groupId>org.postgresql</groupId> -->
+    <!--                 <artifactId>postgresql</artifactId> -->
+    <!--                 <version>${postgresql.version}</version> -->
+    <!--             </dependency> -->
+    <!--             <dependency> -->
+    <!--                 <groupId>com.oracle</groupId> -->
+    <!--                 <artifactId>ojdbc7</artifactId> -->
+    <!--                 <version>${ojdbc.version}</version> -->
+    <!--             </dependency> -->
+                <!-- == End Database == -->
+
+            </dependencies>
+        </dependencyManagement>
+        <properties>
+            <encoding>UTF-8</encoding>
+            <java-version>1.7</java-version>
+            <org.codehaus.mojo.build-helper-maven-plugin.version>1.9.1</org.codehaus.mojo.build-helper-maven-plugin.version>
+            <postgresql.version>9.4-1206-jdbc41</postgresql.version>
+            <ojdbc.version>12.1.0.2</ojdbc.version>
+        </properties>
+    </project>
 
 .. note::
 
@@ -805,8 +924,8 @@ Maven Archetypeで作成したプロジェクトには、インメモリデー�
 
     <jdbc:initialize-database data-source="dataSource"
         ignore-failures="ALL">
-        <jdbc:script location="classpath:/database/${database}-schema.sql" />
-        <jdbc:script location="classpath:/database/${database}-dataload.sql" />
+        <jdbc:script location="classpath:/database/${database}-schema.sql" encoding="UTF-8" />
+        <jdbc:script location="classpath:/database/${database}-dataload.sql" encoding="UTF-8" />
     </jdbc:initialize-database>
 
 .. code-block:: console
@@ -991,7 +1110,7 @@ Maven Archetypeで作成したプロジェクトでは、インメモリデー�
 
             <!-- ... -->
 
-            <postgresql.version>9.3-1102-jdbc41</postgresql.version>
+            <postgresql.version>9.4-1206-jdbc41</postgresql.version>
             <ojdbc.version>12.1.0.2</ojdbc.version>
 
     * ``artifactId/artifactId-domain/pom.xml``
@@ -1001,8 +1120,8 @@ Maven Archetypeで作成したプロジェクトでは、インメモリデー�
                      <dependency>
                          <groupId>org.postgresql</groupId>
                          <artifactId>postgresql</artifactId>
-                         <scope>provided</scope> -->
-                     </dependency> -->
+                         <scope>provided</scope>
+                     </dependency>
         <!--         <dependency> -->
         <!--             <groupId>com.oracle</groupId> -->
         <!--             <artifactId>ojdbc7</artifactId> -->

@@ -3321,6 +3321,11 @@ Following settings are done in created blank project :file:`src/main/webapp/WEB-
         <session-config>
             <!-- 30min -->
             <session-timeout>30</session-timeout>
+            <cookie-config>
+                <http-only>true</http-only>
+                <!-- <secure>true</secure> -->
+            </cookie-config>
+            <tracking-mode>COOKIE</tracking-mode>
         </session-config>
 
     </web-app>
@@ -3741,8 +3746,11 @@ The following settings are done in created MyBatis3 project.
         <!--
                 <setting name="defaultExecutorType" value="REUSE" />
                 <setting name="jdbcTypeForNull" value="NULL" />
-                <setting name="proxyFactory" value="JAVASSIST" />
                 <setting name="localCacheScope" value="STATEMENT" />
+        -->
+        <!-- Defaul value for proxyFactory has chenged to JAVASSIST since mybatis 3.3.0 .
+             To use CGLIB as a proxyFactory, remove this comment and add dependency for CGLIB in pom.xml
+                <setting name="proxyFactory" value="CGLIB" />
         -->
             </settings>
 
@@ -3768,8 +3776,6 @@ todo-infra.xml of blank project created for JPA
 The following settings are done in created JPA blank project.
 
 .. code-block:: xml
-    :emphasize-lines: 9-10, 12-13, 15-17, 22-24, 26-27, 30-31
-
     <?xml version="1.0" encoding="UTF-8"?>
     <beans xmlns="http://www.springframework.org/schema/beans"
         xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:jpa="http://www.springframework.org/schema/data/jpa"
@@ -3898,12 +3904,15 @@ Here, the file stored in the blank project for MyBatis3 is described as an examp
 Furthermore, the \ :file:`todo-env.xml` \ is not created while creating blank project that does not access the database.
 
 .. code-block:: xml
-    :emphasize-lines: 8, 22, 39
+    :emphasize-lines: 11, 26, 43
 
     <?xml version="1.0" encoding="UTF-8"?>
     <beans xmlns="http://www.springframework.org/schema/beans"
-        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-        xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd">
+        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:jee="http://www.springframework.org/schema/jee"
+        xmlns:jdbc="http://www.springframework.org/schema/jdbc"
+        xsi:schemaLocation="http://www.springframework.org/schema/jdbc http://www.springframework.org/schema/jdbc/spring-jdbc.xsd
+            http://www.springframework.org/schema/jee http://www.springframework.org/schema/jee/spring-jee.xsd
+            http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd">
 
         <bean id="dateFactory" class="org.terasoluna.gfw.common.date.jodatime.DefaultJodaTimeDateFactory" />
 
@@ -3921,10 +3930,17 @@ Furthermore, the \ :file:`todo-env.xml` \ is not created while creating blank pr
             <property name="maxWaitMillis" value="${cp.maxWait}" />
         </bean>
 
+
         <!-- (2) -->
         <bean id="dataSource" class="net.sf.log4jdbc.Log4jdbcProxyDataSource">
             <constructor-arg index="0" ref="realDataSource" />
         </bean>
+
+        <jdbc:initialize-database data-source="dataSource"
+            ignore-failures="ALL">
+            <jdbc:script location="classpath:/database/${database}-schema.sql" encoding="UTF-8" />
+            <jdbc:script location="classpath:/database/${database}-dataload.sql" encoding="UTF-8" />
+        </jdbc:initialize-database>
 
         <!--  REMOVE THIS LINE IF YOU USE JPA
         <bean id="transactionManager"
@@ -3932,12 +3948,6 @@ Furthermore, the \ :file:`todo-env.xml` \ is not created while creating blank pr
             <property name="entityManagerFactory" ref="entityManagerFactory" />
         </bean>
               REMOVE THIS LINE IF YOU USE JPA  -->
-        <!--  REMOVE THIS LINE IF YOU USE MyBatis2
-        <bean id="transactionManager"
-            class="org.springframework.jdbc.datasource.DataSourceTransactionManager">
-            <property name="dataSource" ref="dataSource" />
-        </bean>
-              REMOVE THIS LINE IF YOU USE MyBatis2  -->
         <!-- (3) -->
         <bean id="transactionManager"
             class="org.springframework.jdbc.datasource.DataSourceTransactionManager">
@@ -3989,7 +3999,7 @@ The Spring MVC related definitions are done in \ :file:`spring-mvc.xml`\.
 | In addition, a description of the components that are not used in the tutorial are omitted.
 
 .. code-block:: xml
-    :emphasize-lines: 12, 16, 28, 31, 37, 71
+    :emphasize-lines: 12, 16, 30, 33, 39, 73
 
     <?xml version="1.0" encoding="UTF-8"?>
     <beans xmlns="http://www.springframework.org/schema/beans"
@@ -4014,6 +4024,8 @@ The Spring MVC related definitions are done in \ :file:`spring-mvc.xml`\.
                 <bean
                     class="org.springframework.security.web.bind.support.AuthenticationPrincipalArgumentResolver" />
             </mvc:argument-resolvers>
+            <!-- workarround to CVE-2016-5007. -->
+            <mvc:path-matching path-matcher="pathMatcher" />
         </mvc:annotation-driven>
 
         <mvc:default-servlet-handler />
@@ -4112,6 +4124,11 @@ The Spring MVC related definitions are done in \ :file:`spring-mvc.xml`\.
             <aop:advisor advice-ref="handlerExceptionResolverLoggingInterceptor"
                 pointcut="execution(* org.springframework.web.servlet.HandlerExceptionResolver.resolveException(..))" />
         </aop:config>
+
+        <!-- Setting PathMatcher. -->
+        <bean id="pathMatcher" class="org.springframework.util.AntPathMatcher">
+            <property name="trimTokens" value="false" />
+        </bean>
 
     </beans>
 
