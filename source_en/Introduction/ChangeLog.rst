@@ -10,6 +10,12 @@ Change Log
       - Modified locations
       - Modification details
 
+    * -
+      - :doc:`../ArchitectureInDetail/WebApplicationDetail/ExceptionHandling`
+      - Modifications corresponding to Spring Framework 4.2.7
+      
+        * Description details related to HTTP response header output modified (\ `guideline#1965 <https://github.com/terasolunaorg/guideline/issues/1965>`_\ )
+
     * - 2016-06-31
       - :doc:`../ArchitectureInDetail/GeneralFuncDetail/StringProcessing`
       - Description details added
