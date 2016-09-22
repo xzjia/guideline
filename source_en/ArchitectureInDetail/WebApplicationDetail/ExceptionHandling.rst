@@ -2082,10 +2082,9 @@ Cache control flag of HTTP response
     If cache control flag of HTTP response is set to Yes, the following HTTP response header is output.
 
      | Cache-Control:no-store
-     | Cache-Control:no-cache
-     | Expires:Thu, 01 Jan 1970 00:00:00 GMT
-     | Pragma:no-cache
 
+    Adding a header for cache control using \ ``SystemExceptionResolver``\  is an option to suppress display of unintended error screen due to browser cache, however a header for cache control can also be added for security by using a Spring Security function.
+    For Spring Security function, referÅA:ref:`SpringSecurityLinkageWithBrowser`\.
 
 .. _exception-handling-about-handlerexceptionresolverlogginginterceptor:
 
