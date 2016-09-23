@@ -962,7 +962,9 @@ webプロジェクト内にWebServiceインターフェースの実装クラス�
             errors.add(new ErrorBean(code, message, path));
         }
 
-        // omitted setter and getter
+        public List<ErrorBean> getErrors() {
+            return errors;
+        }
     }
 
 
@@ -1008,7 +1010,9 @@ webプロジェクト内にWebServiceインターフェースの実装クラス�
             return this.faultInfo.getErrors();
         }
 
-        // omitted setter and getter
+        public WebFaultBean getFaultInfo() {
+            return faultInfo;
+        }
     }
 
 .. tabularcolumns:: |p{0.10\linewidth}|p{0.90\linewidth}|
@@ -1024,6 +1028,7 @@ webプロジェクト内にWebServiceインターフェースの実装クラス�
         - メッセージ文字列と\ ``faultInfo``\ を引数とするコンストラクタ
         - メッセージ文字列と\ ``faultInfo``\ と原因例外を引数とするコンストラクタ
         - \ ``getErrors``\ メソッド
+        - \ ``getFaultInfo``\ メソッド
 
 .. Note:: **WebFaultExceptionにRuntimeExceptionではなく、Exceptionを継承させている理由**
 
@@ -1055,6 +1060,23 @@ webプロジェクト内にWebServiceインターフェースの実装クラス�
         }
 
     }
+
+.. tabularcolumns:: |p{0.10\linewidth}|p{0.90\linewidth}|
+.. list-table::
+    :header-rows: 1
+    :widths: 10 90
+
+    * - 項番
+      - 説明
+    * - | (1)
+      - | \ ``@WebFault``\ を付けて、SOAPFaultであることを宣言する。
+        | \ ``name``\ 属性には、クライアントに送信するSOAPFaultの \ ``name``\ 属性を設定する。
+        | \ ``targetNamespace``\ 属性には、使用するネームスペースを設定する。Webサービスと同じにする必要がある。
+    * - | (2)
+      - | \ ``WebFaultException``\ を継承、コンストラクタのみ作成する。
+        | フィールドやその他メソッドは記述不要である。
+
+\ ``AccessDeniedFaultException``\ 同様に、以下のカスタムSOAPFaultクラスを作成する。説明については\ ``AccessDeniedFaultException``\ を参照されたい。
 
 |
 
@@ -1124,23 +1146,6 @@ webプロジェクト内にWebServiceインターフェースの実装クラス�
         }
 
     }
-
-|
-
-.. tabularcolumns:: |p{0.10\linewidth}|p{0.90\linewidth}|
-.. list-table::
-    :header-rows: 1
-    :widths: 10 90
-
-    * - 項番
-      - 説明
-    * - | (1)
-      - | \ ``@WebFault``\ を付けて、SOAPFaultであることを宣言する。
-        | \ ``name``\ 属性には、クライアントに送信するSOAPFaultの \ ``name``\ 属性を設定する。
-        | \ ``targetNamespace``\ 属性には、使用するネームスペースを設定する。Webサービスと同じにする必要がある。
-    * - | (2)
-      - | \ ``WebFaultException``\ を継承、コンストラクタのみ作成する。
-        | フィールドやその他メソッドは記述不要である。
 
 |
 
@@ -1287,12 +1292,12 @@ Serviceからスローされる例外とラップするカスタムSOAPFaultク�
       - | 共通ライブラリが提供する\ ``ExceptionLogger``\ を使用して例外情報を例外に出力する。
         | 詳細は、「\ :doc:`../WebApplicationDetail/ExceptionHandling`\ 」を参照されたい。
     * - | (4)
-      - | Serviceから発生しうる各例外について、\ ``SOAPFault``\ のサブクラスへラップを行う。
+      - | Serviceから発生しうる各例外について、カスタムSOAPFaultクラスへのラップを行う。
         | 例外のマッピングは冒頭の表を参考されたい。
 
 .. note:: **その他の例外の扱いについて**
 
-    その他の例外発生時（上記の\ ``translateException``\ メソッドのelse部分）では、クライアントでは詳細な例外の内容は通知されず、\ ``com.sun.xml.internal.ws.fault.ServerSOAPFaultException``\ が発生するのみとなる。他の例外同様にラップしてクライアント側に通知することも可能である。
+    その他の例外発生時(上記の\ ``translateException``\ メソッドのelse部分)、クライアントでは詳細な例外の内容は通知されず、\ ``com.sun.xml.internal.ws.fault.ServerSOAPFaultException``\ が発生するのみとなる。他の例外同様にラップしてクライアント側に通知することも可能である。
 
 |
 
@@ -1680,7 +1685,6 @@ WebServiceインターフェースを実装したプロキシを生成する\ ``
       - | \ ``TodoWebService``\ をインジェクションして、実行対象のServiceを呼び出す。
     * - | (2)
       - | サーバ側で、例外が発生した場合は、\ ``WebFaultException``\ を継承したカスタムSOAPFaultクラスにラップされて送信される。
-        | 内容に応じて処理を行う。
         | 例外処理の詳細は「:ref:`SOAPHowToUseExceptionHandler`」を参照されたい。
 
 .. note:: **レスポンスの情報取得**
@@ -1788,7 +1792,7 @@ WebServiceインターフェースを実装したプロキシを生成する\ ``
     * - 項番
       - 説明
     * - | (1)
-      - | Webサービスを呼び出す。SOAPFaultの親クラスである\ ``WebFaultException``\ をキャッチする。
+      - | Webサービスを呼び出す。カスタムSOAPFaultクラスの親クラスである\ ``WebFaultException``\ をキャッチする。
     * - | (2)
       - | カスタムSOAPFaultクラスを判定し、それぞれの処理を記述する（画面にメッセージを出す、例外をスローするなど）
 
