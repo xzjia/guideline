@@ -1434,39 +1434,6 @@ The maximum limit of transaction tokens that can be stored for each NameSpace is
 How to extend
 --------------------------------------------------------------------------------
 
-How to manage the lifecycle of transaction tokens using a program
-^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
-
-It is possible to receive \ ``org.terasoluna.gfw.web.token.transaction.TransactionTokenContext``\  as an argument for handler method of Controller and manage the lifecycle of transaction tokens programmatically by adding the settings give below.
-
-- :file:`spring-mvc.xml`
-
- .. code-block:: xml
-    :emphasize-lines: 3-5
-
-    <mvc:annotation-driven>
-      <mvc:argument-resolvers>
-        <!-- (1) -->
-        <bean
-          class="org.terasoluna.gfw.web.token.transaction.TransactionTokenContextHandlerMethodArgumentResolver" />
-      </mvc:argument-resolvers>
-    </mvc:annotation-driven>
-
- .. tabularcolumns:: |p{0.10\linewidth}|p{0.90\linewidth}|
- .. list-table::
-   :header-rows: 1
-   :widths: 10 90
-
-   * - Sr. No.
-     - Description
-   * - | (1)
-     - | In \ ``<mvc:argument-resolvers>``\  element, set the class (\ ``TransactionTokenContextHandlerMethodArgumentResolver``\ ) which passes the object (\ ``TransactionTokenContext``\ ) managing the lifecycle of transaction tokens programmatically, as an argument for methods of Controller.
-       | When it is not necessary to manage the lifecycle of transaction tokens using a program, this setting is not required.
-
- .. note::
- 
-    This setting is not required as the transaction tokens that can no longer be used are automatically discarded when the tokens that can be stored in a NameSpace exceeds the maximum limit.
-
 .. _doubleSubmit_how_to_extend_change_max_count:
 
 How to change the maximum limit of transaction tokens
