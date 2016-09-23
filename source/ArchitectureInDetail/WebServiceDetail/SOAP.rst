@@ -962,9 +962,8 @@ webプロジェクト内にWebServiceインターフェースの実装クラス�
             errors.add(new ErrorBean(code, message, path));
         }
 
-        public List<ErrorBean> getErrors() {
-            return errors;
-        }
+        // omitted setter and getter
+
     }
 
 
@@ -1010,9 +1009,8 @@ webプロジェクト内にWebServiceインターフェースの実装クラス�
             return this.faultInfo.getErrors();
         }
 
-        public WebFaultBean getFaultInfo() {
-            return faultInfo;
-        }
+        // omitted setter and getter
+
     }
 
 .. tabularcolumns:: |p{0.10\linewidth}|p{0.90\linewidth}|
@@ -1028,7 +1026,7 @@ webプロジェクト内にWebServiceインターフェースの実装クラス�
         - メッセージ文字列と\ ``faultInfo``\ を引数とするコンストラクタ
         - メッセージ文字列と\ ``faultInfo``\ と原因例外を引数とするコンストラクタ
         - \ ``getErrors``\ メソッド
-        - \ ``getFaultInfo``\ メソッド
+        - \ ``faultInfo``\ のアクセサメソッド
 
 .. Note:: **WebFaultExceptionにRuntimeExceptionではなく、Exceptionを継承させている理由**
 
