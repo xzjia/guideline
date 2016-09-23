@@ -3574,6 +3574,16 @@ An example to show how to create an exception handling class is given below.
 
     Refer to ":ref:`application_layer_controller_advice`" for details of \ ``@ControllerAdvice``\  annotation.
 
+.. warning::
+
+    Error messages can be retrieved by using \ ``ConstraintViolation#getMessage``\  method, however since message supplement is not carried out using Spring function, field name cannot be included in \ ``{0}``\ for error messages.
+    
+    Alternatively, the field name can be fetched using \ ``ConstraintViolation#getPropertyPath``\  method.
+    
+    For message supplement using Spring function, refer Note of 、:ref:`Validation_message_in_validationmessages`.
+    
+    For details of \ ``ConstraintViolation``\, refer \ `Hibernate Validator reference <http://docs.jboss.org/hibernate/validator/5.2/reference/en-US/html_single/#section-constraint-violation-methods>`_\.
+    
 
 Appendix
 --------------------------------------------------------------------------------
