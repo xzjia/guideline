@@ -32,11 +32,10 @@ Overview
 
  .. warning::
  
-    If implementation of file upload of an application server to be used depends on implementation of Apache Commons FileUpload, security vulnerabilities reported in \ `CVE-2014-0050 <http://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2014-0050>`_\  may occur.
+    If implementation of file upload of an application server to be used depends on implementation of Apache Commons FileUpload, security vulnerabilities reported in \ `CVE-2014-0050 <http://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2014-0050>`_\  and `CVE-2016-3092 <https://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2016-3092>`_\  may occur.
     Hence ensure that there are no such vulnerabilities in the application server to be used.
     
     In case of using Tomcat, it is necessary to use version 7.0.52 or above for series 7.0, and version 8.0.3 or above for series 8.0.
-    A file upload function of Servlet 3.0 should be used since problems do not occur while using Tomcat 7/8 as an Application Server.
 
 Basic flow of upload process
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
@@ -1718,17 +1717,18 @@ Perform the following settings when using Commons FileUpload.
      - | Description
    * - | (1)
      - | Add dependency to \ ``commons-fileupload``\ .
-       | No need to specify the version in :file:`pom.xml`\  as it is defined depending on Spring IO Platform.
+       | No need to specify the version in :file:`pom.xml`\ as it is defined depending on Spring IO Platform.
 
 .. warning::
 
     In case of using Apache Commons FileUpload,
-    security vulnerabilities reported in \ `CVE-2014-0050 <http://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2014-0050>`_\  are likely to occur.
+    security vulnerabilities reported in \ `CVE-2014-0050 <http://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2014-0050>`_\  and `CVE-2016-3092 <https://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2016-3092>`_\  are likely to occur.
     Confirm that there are no vulnerabilities in the version of Apache Commons FileUpload to be used.
 
-    When using Apache Commons FileUpload, version 1.3.1 or above should be used.
+    When using Apache Commons FileUpload, version 1.3.2 or above should be used.
 
-    Further, if a version stored in Spring IO Platform is used, the vulnerabilities reported in CVE-2014-0050 do not occur.
+    Note that, if a version managed by Spring IO Platform 2.0.6.RELEASE which is in conformance with TERASOLUNA Server Framework for Java version 5.2.0.RELEASE is used, vulnerabilities reported in CVE-2014-0050 and CVE-2016-3092 do not occur.
+    When Apache Commons FileUpload version is to be changed intentionally, a version wherein corresponding vulnerability has been addressed must be specified.
 
 |
 
