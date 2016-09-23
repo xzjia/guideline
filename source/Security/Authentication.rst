@@ -2802,7 +2802,7 @@ Remember Me認証を利用する場合は、\ ``<sec:remember-me>``\ タグを�
             <!-- omitted -->
             <tr>
                 <td><label for="remember-me">Remember Me : </label></td>
-                <td><input name="remember-me" id="remember-me" type="checkbox" checked="checked"></td> <!-- (1) -->
+                <td><input name="remember-me" id="remember-me" type="checkbox" checked="checked" value="true"></td> <!-- (1) -->
             </tr>
             <!-- omitted -->
     </form:form>
@@ -2815,9 +2815,14 @@ Remember Me認証を利用する場合は、\ ``<sec:remember-me>``\ タグを�
     * - 項番
       - 説明
     * - | (1)
-      - | 「Remember Me認証」機能の利用有無を指定するためのフラグ(チェックボックス項目)を追加し、フィールド名(リクエストパラメータ名)には\ ``remember_me``\ を指定する。
-        | チェックボックスの\ ``value``\ 属性には、\ ``true``\ 、\ ``on``\ 、\ ``yes``\ 、\ ``1``\ のいずれかを設定する。上記例では\ ``value``\ 属性を省略しているため\ ``on``\ が設定される。
+      - | 「Remember Me認証」機能の利用有無を指定するためのフラグ(チェックボックス項目)を追加し、フィールド名(リクエストパラメータ名)には、\ ``remember-me-parameter``\ のデフォルト値である\ ``remember_me``\ を指定する。
+        | チェックボックスの\ ``value``\ 属性には、\ ``true``\を設定する。
         | チェックボックスをチェック状態にしてから認証処理を実行すると、以降のリクエストから「Remember Me認証」機能が適用される。
+
+.. tip:: **value属性の設定値について**
+
+    \ ``value``\ 属性には、\ ``true``\を設定する旨が\ `rememberMeRequestedのJavaDoc <http://docs.spring.io/autorepo/docs/spring-security/4.0.4.RELEASE/apidocs/org/springframework/security/web/authentication/rememberme/AbstractRememberMeServices.html#rememberMeRequested-javax.servlet.http.HttpServletRequest-java.lang.String->`_\ に記載されているが、
+    実装上は\ ``on``\ 、\ ``yes``\ 、\ ``1``\ も設定可能である。
 
 .. raw:: latex
 
