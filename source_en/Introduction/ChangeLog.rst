@@ -26,6 +26,18 @@ Change Log
 
         * Added warning for the classes on JSR-310 Date and Time API, refer \ `@DateTimeFormat is not strict with JSR310 #1991 <https://github.com/terasolunaorg/guideline/issues/1991>`_\ .
 
+    * -
+      - :doc:`../ArchitectureInDetail/WebApplicationDetail/Validation`
+      - Description details modified
+
+        * Description related to OS command injection added (\ `guideline#1957 <https://github.com/terasolunaorg/guideline/issues/1957>`_\ )
+
+    * -
+      - :doc:`../ArchitectureInDetail/WebApplicationDetail/FileUpload`
+      - Description details added
+
+        * Reminders for \ `CVE-2016-3092 <https://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2016-3092>`_\ (vulnerability of File Upload) added (\ `guideline#1973 <https://github.com/terasolunaorg/guideline/issues/1973>`_\ )
+
     * - 2016-05-19
       - \-
       - Optimize the order of chapters and sections
