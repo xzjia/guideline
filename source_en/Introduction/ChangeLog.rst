@@ -166,6 +166,12 @@ Change Log
         *  Description of \ ``defaultLocale``\  of \ ``SessionLocalResolver``\  corrected (\ `guideline#686 <https://github.com/terasolunaorg/guideline/issues/686>`_\ )
 
     * -
+      - :doc:`../ArchitectureInDetail/WebApplicationDetail/FileUpload`
+      - Description details added
+
+        * Description for directory traversal attack added (\ `guideline#2010 <https://github.com/terasolunaorg/guideline/issues/2010>`_\ )
+
+    * -
       - :doc:`../ArchitectureInDetail/WebApplicationDetail/Codelist`
       - Description details added
 
