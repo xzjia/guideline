@@ -2426,7 +2426,7 @@ Bean Validationのアノテーションの\ ``message``\ 属性に指定され�
 
           - 上記のメッセージ定義から実際に生成されるメッセージは、 \ ``${validatedValue}``\ の部分にフォームに入力した値が埋め込まれる。
 
-            詳細については、\ `Hibernate Validator Reference Guide <http://docs.jboss.org/hibernate/validator/5.2/reference/en-US/html/ch04.html>`_\ を参照されたい。
+            詳細については、\ `Hibernate Validator Reference Guide(Interpolation with message expressions) <http://docs.jboss.org/hibernate/validator/5.2/reference/en-US/html/ch04.html#section-interpolation-with-message-expressions>`_\ を参照されたい。
 
 
 .. _Validation_message_in_application_messages:
