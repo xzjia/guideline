@@ -8,8 +8,9 @@ python:
   - "3.4"
 
 before_install:
-  - export PATH=$PATH:/usr/local/texlive/2016/bin/x86_64-linux
+#  - export PATH=$PATH:/usr/local/texlive/2016/bin/x86_64-linux
   - export TEXINPUTS=:./:$TEXMF/tex/{$progname,generic,}//:/usr/share/texmf-texlive/tex/latex//
+  - echo $path
 
 install:
   - pip install --upgrade pip
@@ -21,8 +22,9 @@ install:
   - sudo ./install-tl -scheme scheme-basic --repository http://mirror.ctan.org/systems/texlive/tlnet/ < ../InputAction_I_Enter.txt
   - sudo /usr/local/texlive/2016/bin/x86_64-linux/tlmgr update --self --all
   - sudo /usr/local/texlive/2016/bin/x86_64-linux/tlmgr install latexmk collection-luatex collection-langjapanese collection-fontsrecommended
-  - sudo apt-get install texlive-latex-extra texlive-latex-recommended texlive-formats-extra 
+  - sudo apt-get install texlive-latex-extra texlive-latex-recommended texlive-formats-extra
   - sudo mktexlsr
+  - sudo where dvipdfmx
   - cd ..
 
 before_script:
