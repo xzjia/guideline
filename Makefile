@@ -127,7 +127,7 @@ latexpdfja:
 	sed -i -e 's/\\documentclass\[/\\documentclass\[uplatex,/g' TERASOLUNAServerFrameworkForJavaDevelopmentGuideline.tex; \
 	uplatex TERASOLUNAServerFrameworkForJavaDevelopmentGuideline.tex; \
 	uplatex TERASOLUNAServerFrameworkForJavaDevelopmentGuideline.tex; \
-	dvipdfmx TERASOLUNAServerFrameworkForJavaDevelopmentGuideline.dvi;
+	dvipdf TERASOLUNAServerFrameworkForJavaDevelopmentGuideline.dvi;
 	@echo "pdflatex finished; the PDF files are in $(BUILDDIR)/latex."
 
 latexpdfen:
@@ -140,7 +140,7 @@ latexpdfen:
 	sed -i -e 's/\\documentclass\[/\\documentclass\[uplatex,/g' TERASOLUNAServerFrameworkForJavaDevelopmentGuideline.tex; \
 	uplatex TERASOLUNAServerFrameworkForJavaDevelopmentGuideline.tex; \
     uplatex TERASOLUNAServerFrameworkForJavaDevelopmentGuideline.tex; \
-	dvipdfmx TERASOLUNAServerFrameworkForJavaDevelopmentGuideline.dvi;
+	dvipdf TERASOLUNAServerFrameworkForJavaDevelopmentGuideline.dvi;
 	@echo "pdflatex finished; the PDF files are in $(BUILDDIR)/latex."
 
 text:

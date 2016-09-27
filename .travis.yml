@@ -26,6 +26,7 @@ install:
   - sudo mktexlsr
   - sudo which dvipdfmx
   - sudo find / -name "dvipdfmx"
+  - sudo find / -name "dvipdf"
   - cd ..
 
 before_script:
