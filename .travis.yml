@@ -24,7 +24,7 @@ install:
   - sudo /usr/local/texlive/2016/bin/x86_64-linux/tlmgr update --self --all
   - sudo /usr/local/texlive/2016/bin/x86_64-linux/tlmgr install latexmk collection-luatex collection-langjapanese collection-fontsrecommended
   - sudo apt-get install texlive-latex-extra texlive-latex-recommended texlive-formats-extra
-  - sudo mktexlsr
+#  - sudo mktexlsr
   - sudo which dvipdfmx
   - cd ..
 
