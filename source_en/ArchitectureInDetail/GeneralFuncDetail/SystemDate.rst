@@ -168,7 +168,8 @@ If project is created from `blank project <https://github.com/terasolunaorg/tera
         <!-- (1) -->
         <dependency>
             <groupId>org.terasoluna.gfw</groupId>
-            <artifactId>terasoluna-gfw-jodatime</artifactId>
+            <artifactId>terasoluna-gfw-jodatime-dependencies</artifactId>
+            <type>pom</type>
         </dependency>
 
     </dependencies>
@@ -182,8 +183,8 @@ If project is created from `blank project <https://github.com/terasolunaorg/tera
     * - Sr. No.
       - Description
     * - (1)
-      - Add a terasoluna-gfw-jodatime into dependencies.
-        The dependencies of Joda Time related to Date Factory and Joda Time libraries are defined.
+      - Add a terasoluna-gfw-jodatime-dependencies into dependencies.
+        The dependencies of Joda Time related to Date Factory and Joda Time libraries are defined for terasoluna-gfw-jodatime-dependencies.
 
 .. tip:: **The configuration method if do not want to use the terasoluna-gfw-parent as a Parent project**
 
@@ -196,6 +197,7 @@ If project is created from `blank project <https://github.com/terasolunaorg/tera
                 <groupId>org.terasoluna.gfw</groupId>
                 <artifactId>terasoluna-gfw-jodatime</artifactId>
                 <version>5.2.0.RELEASE</version>
+                <type>pom</type>
             </dependency>
 
     In the above example 5.2.0.RELEASE is specified  but it should be actual version which is specified at project side.
@@ -905,9 +907,9 @@ Further, even if the need to change date and time arises, return value of Date F
 
     **Configuration example**
 
-    - •When using the table for the first time in Production environment,
+    - 窶｢When using the table for the first time in Production environment,
         - INSERT INTO operation_date (diff) VALUES (0);
-    - •When test execution is completed in Production environment
+    - 窶｢When test execution is completed in Production environment
         - UPDATE operation_date SET diff=0;
 
     **Always,** :ref:`useCache<useCache>` **should be set to 'true'.**
