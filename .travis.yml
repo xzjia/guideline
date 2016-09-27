@@ -9,7 +9,7 @@ python:
 
 before_install:
 #  - export PATH=$PATH:/usr/local/texlive/2016/bin/x86_64-linux
-   - export PATH=$PATH/usr/bin:/home/travis/virtualenv/python3.4.4/bin:/home/travis/bin:/home/travis/.local/bin:/home/travis/.gimme/versions/go1.4.2.linux.amd64/bin:/home/travis/.rvm/gems/ruby-2.2.5/bin:/home/travis/.rvm/gems/ruby-2.2.5@global/bin:/home/travis/.rvm/rubies/ruby-2.2.5/bin:/opt/python/2.7.12/bin:/opt/python/2.6.9/bin:/opt/python/3.5.2/bin:/opt/python/3.4.4/bin:/opt/python/3.3.6/bin:/opt/python/3.2.6/bin:/opt/python/pypy-5.3.1/bin:/opt/python/pypy3-2.4.0/bin:/usr/local/phantomjs/bin:/home/travis/.nvm/v0.10.36/bin:./node_modules/.bin:/usr/local/maven-3.2.5/bin:/usr/local/clang-3.4/bin:/usr/local/sbin:/usr/local/bin:/usr/sbin:/sbin:/bin:/home/travis/.rvm/bin:/usr/local/texlive/2016/bin/x86_64-linux
+   - export PATH=/usr/bin:/home/travis/virtualenv/python3.4.4/bin:/home/travis/bin:/home/travis/.local/bin:/home/travis/.gimme/versions/go1.4.2.linux.amd64/bin:/home/travis/.rvm/gems/ruby-2.2.5/bin:/home/travis/.rvm/gems/ruby-2.2.5@global/bin:/home/travis/.rvm/rubies/ruby-2.2.5/bin:/opt/python/2.7.12/bin:/opt/python/2.6.9/bin:/opt/python/3.5.2/bin:/opt/python/3.4.4/bin:/opt/python/3.3.6/bin:/opt/python/3.2.6/bin:/opt/python/pypy-5.3.1/bin:/opt/python/pypy3-2.4.0/bin:/usr/local/phantomjs/bin:/home/travis/.nvm/v0.10.36/bin:./node_modules/.bin:/usr/local/maven-3.2.5/bin:/usr/local/clang-3.4/bin:/usr/local/sbin:/usr/local/bin:/usr/sbin:/sbin:/bin:/home/travis/.rvm/bin:/usr/local/texlive/2016/bin/x86_64-linux
 #  - export TEXINPUTS=:./:$TEXMF/tex/{$progname,generic,}//:/usr/share/texmf-texlive/tex/latex//
   - export TEXINPUTS=:/usr/share/texmf-texlive/tex/latex//
   - echo $PATH
