@@ -461,6 +461,27 @@ pom.xml settings
         
     In the above example, 5.2.0.RELEASE is specified. However, version used in the project should be specified.
 
+ .. Warning:: **Configuration while using in Java SE 7 environment**
+
+    terasoluna-gfw-mybatis3-dependencies configures dependency relation considering Java SE 8 as a prerequisite. Java SE 8 dependency library should be excluded as below while using in Java SE 7 environment.
+    For java SE 8 dependency library, refer "\ :ref:`frameworkstack_using_oss_version` \" of architectural overview.
+
+   .. code-block:: xml
+    :emphasize-lines: 4-9
+
+            <dependency>
+                <groupId>org.terasoluna.gfw</groupId>
+                <artifactId>terasoluna-gfw-mybatis3-dependencies</artifactId>
+                <exclusions>
+                    <exclusion>
+                        <groupId>org.mybatis</groupId>
+                        <artifactId>mybatis-typehandlers-jsr310</artifactId>
+                    </exclusion>
+                </exclusions>
+            </dependency>
+
+
+
 |
 
 .. _DataAccessMyBatis3HowToUseSettingsCooperateWithMyBatis3AndSpring:
@@ -995,7 +1016,7 @@ How to change the default behavior of MyBatis3 is given below.
 TypeHandler settings
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 
-TypeHandler is used when mapping Java class and JDBC type.
+\ ``TypeHandler`` \  is used when mapping Java class and JDBC type.
 
 Basically, it is used when
 
@@ -1004,15 +1025,65 @@ Basically, it is used when
 
 
 
-A TypeHandler is provided by MyBatis3 for general Java classes like primitive type and primitive wrapper type class.
+A \ ``TypeHandler`` \  is provided by MyBatis3 for general Java classes like primitive type and primitive wrapper type class.
 Specific settings are not required.
+
+**Configuration while using JSR-310 Date and Time API**
+
+When a class which represents date and time offered by JSR-310 Date and Time API in MyBatis3 is used, \ ``TypeHandler`` \  offered by a library different from  that of MyBatis (\ ``mybatis-typehandlers-jsr310`` \) is used.
+While using, configuration to recognise \ ``TypeHandler`` \  is added to \ ``mybatis-config.xml`` \, in MyBatis.
+    
+
+ .. code-block:: xml
+ 
+      <typeHandlers>
+          <typeHandler handler="org.apache.ibatis.type.InstantTypeHandler" />         <!-- (1) -->
+          <typeHandler handler="org.apache.ibatis.type.LocalDateTimeTypeHandler" />   <!-- (2) -->
+          <typeHandler handler="org.apache.ibatis.type.LocalDateTypeHandler" />       <!-- (3) -->
+          <typeHandler handler="org.apache.ibatis.type.LocalTimeTypeHandler" />       <!-- (4) -->
+          <typeHandler handler="org.apache.ibatis.type.OffsetDateTimeTypeHandler" />  <!-- (5) -->
+          <typeHandler handler="org.apache.ibatis.type.OffsetTimeTypeHandler" />      <!-- (6) -->
+          <typeHandler handler="org.apache.ibatis.type.ZonedDateTimeTypeHandler" />   <!-- (7) -->
+          <typeHandler handler="org.apache.ibatis.type.YearTypeHandler" />            <!-- (8) -->
+          <typeHandler handler="org.apache.ibatis.type.MonthTypeHandler" />           <!-- (9) -->
+      </typeHandlers>
+
+ .. tabularcolumns:: |p{0.10\linewidth}|p{0.80\linewidth}|
+ .. list-table::
+   :header-rows: 1
+   :widths: 10 80
+
+   * - Sr. No.
+     - Description
+   * - (1)
+     - A \ ``TypeHandler`` \  to map \ ``java.time.Instant`` \  in \ ``java.sql.Timestamp`` \.
+   * - (2)
+     - A \ ``TypeHandler`` \  to map \ ``java.time.LocalDateTime`` \  in \ ``java.sql.Timestamp`` \.
+   * - (3)
+     - A \ ``TypeHandler`` \  to map \ ``java.time.LocalDate`` \  in \ ``java.sql.Date`` \
+   * - (4)
+     - A \ ``TypeHandler`` \  to map \ ``java.time.LocalTime`` \  in \ ``java.sql.Time`` \
+   * - (5)
+     - A \ ``TypeHandler`` \  to map \ ``java.time.OffsetDateTime`` \  in \ ``java.sql.Timestamp`` \
+   * - (6)
+     - A \ ``TypeHandler`` \  to map \ ``java.time.OffsetTime`` \  in \ ``java.sql.Time`` \
+   * - (7)
+     - A \ ``TypeHandler`` \  to map \ ``java.time.ZonedDateTime`` \  in \ ``java.sql.Timestamp`` \
+   * - (8)
+     - A \ ``TypeHandler`` \  to map \ ``java.time.Year`` \  in primitive type int
+   * - (9)
+     - A \ ``TypeHandler`` \  to map \ ``java.time.Month`` \  in primitive type int
 
  .. tip::
 
-    Refer to "\ `MyBatis 3 REFERENCE DOCUMENTATION(Configuration XML-typeHandlers-) <http://mybatis.github.io/mybatis-3/configuration.html#typeHandlers>`_ \"  for a TypeHandler provided by MyBatis3.
+        Since \ ``TypeHandler`` \  is auto-detected in MyBatis 3.4, above configuration is not required.
+
+.. tip::
+
+    Refer to "\ `MyBatis 3 REFERENCE DOCUMENTATION(Configuration XML-typeHandlers-) <http://mybatis.github.io/mybatis-3/configuration.html#typeHandlers>`_ \"  for a \ ``TypeHandler`` \  provided by MyBatis3.
     
 
- .. tip:: **Enum type mapping**
+.. tip:: **Enum type mapping**
 
     Enum type is mapped with a constant identifier (string) of Enum in the default behavior of MyBatis3.
 
@@ -1034,9 +1105,9 @@ Specific settings are not required.
 
 |
 
-Creating a TypeHandler is required while mapping a Java class and JDBC type not supported by MyBatis3.
+Creating a \ ``TypeHandler`` \  is required while mapping a Java class and JDBC type not supported by MyBatis3.
 
-Basically, it is necessary to create a TypeHandler in the following cases
+Basically, it is necessary to create a \ ``TypeHandler`` \  in the following cases
 
 * A file data with large capacity (binary data) is retained in \ ``java.io.InputStream`` \  type and mapped in \ ``BLOB`` \  type of JDBC type.
 * A large capacity text data is retained as \ ``java.io.Reader`` \  type and mapped in \ ``CLOB`` \  type of JDBC type.
@@ -1045,12 +1116,12 @@ Basically, it is necessary to create a TypeHandler in the following cases
 
 
 
-Refer to ":ref:`DataAccessMyBatis3HowToExtendTypeHandler`" for creating the three types of TypeHandler described above.
+Refer to ":ref:`DataAccessMyBatis3HowToExtendTypeHandler`" for creating the three types of \ ``TypeHandler`` \  described above.
 
 
 |
 
-How to apply a TypeHandler thus created in MyBatis is explained below.
+How to apply a \ ``TypeHandler`` \  thus created in MyBatis is explained below.
 
 - :file:`projectName-domain/src/main/resources/META-INF/mybatis/mybatis-config.xml`
 
@@ -1076,17 +1147,17 @@ How to apply a TypeHandler thus created in MyBatis is explained below.
    * - Sr. No.
      - Description
    * - (1)
-     - Configure TypeHandler in MyBatis configuration file.
+     - Configure \ ``TypeHandler`` \  in MyBatis configuration file.
 
-       Specify a package name wherein the created TypeHandler is stored, in the name attribute of \ ``package``\  element.
-       The TypeHandler stored under specified package is automatically detected by MyBatis.
+       Specify a package name wherein the created \ ``TypeHandler`` \  is stored, in the name attribute of \ ``package``\  element.
+       The \ ``TypeHandler`` \  stored under specified package is automatically detected by MyBatis.
 
  .. tip::
 
-    In the above example, although TypeHandler stored under specified package is automatically detected by MyBatis,
+    In the above example, although \ ``TypeHandler`` \  stored under specified package is automatically detected by MyBatis,
     it can also be configured in class unit.
 
-    \ ``typeHandler``\  element is used when setting TypeHandler in class unit.
+    \ ``typeHandler``\  element is used when setting \ ``TypeHandler`` \  in class unit.
 
     - :file:`projectName-domain/src/main/resources/META-INF/mybatis/mybatis-config.xml`
 
@@ -1100,8 +1171,8 @@ How to apply a TypeHandler thus created in MyBatis is explained below.
 
     |
 
-    Further, when a bean stored by DI container is to be used in TypeHandler,
-    TypeHandler can be specified in bean definition file.
+    Further, when a bean stored by DI container is to be used in \ ``TypeHandler`` \,
+    \ ``TypeHandler`` \  can be specified in bean definition file.
 
     - :file:`projectName-domain/src/main/resources/META-INF/spring/projectName-infra.xml`
 
@@ -1134,11 +1205,11 @@ How to apply a TypeHandler thus created in MyBatis is explained below.
 
     |
 
-    The mapping of Java class wherein TypeHandler is applied and JDBC type is specified as below.
+    The mapping of Java class wherein \ ``TypeHandler`` \  is applied and JDBC type is specified as below.
 
     * Specify as an attribute value of \ ``typeHandler``\  element in MyBatis configuration file
     * Specify in ``@org.apache.ibatis.type.MappedTypes``\  annotation and \ ``@org.apache.ibatis.type.MappedJdbcTypes``\  annotation
-    * Specify by inheriting a base class (\ ``org.apache.ibatis.type.BaseTypeHandler``\) of TypeHandler provided by MyBatis3
+    * Specify by inheriting a base class (\ ``org.apache.ibatis.type.BaseTypeHandler``\) of \ ``TypeHandler`` \  provided by MyBatis3
 
     
 
@@ -1148,8 +1219,8 @@ How to apply a TypeHandler thus created in MyBatis is explained below.
  .. tip::
 
     Although each of the above example is a configuration method to be applied to overall application,
-    an individual TypeHandler can also be specified for each field.
-    It is used while overwriting a TypeHandler that is applicable for overall application.
+    an individual \ ``TypeHandler`` \  can also be specified for each field.
+    It is used while overwriting a \ ``TypeHandler`` \  that is applicable for overall application.
 
      .. code-block:: xml
         :emphasize-lines: 6-7,31-32
@@ -1199,13 +1270,13 @@ How to apply a TypeHandler thus created in MyBatis is explained below.
         * - Sr. No.
           - Description
         * - (2)
-          - Specify a TypeHandler that is applicable to \ ``typeHandler``\  attribute of \ ``id``\  or \ ``result``\  element
+          - Specify a \ ``TypeHandler`` \  that is applicable to \ ``typeHandler``\  attribute of \ ``id``\  or \ ``result``\  element
             while fetching the value from search result (\ ``ResultSet``\).
         * - (3)
-          - Specify a TypeHandler that is applicable to \ ``typeHandler``\  attribute of inline parameters
+          - Specify a \ ``TypeHandler`` \  that is applicable to \ ``typeHandler``\  attribute of inline parameters
             while configuring a value in the \ ``PreparedStatement``\.
 
-    It is recommended to set TypeAlias in TypeHandler class when TypeHandler is to be individually specified for each field.
+    It is recommended to set TypeAlias in \ ``TypeHandler`` \  class when TypeHandler is to be individually specified for each field.
     Refer to ":ref:`DataAccessMyBatis3HowToUseSettingsTypeAlias`" for how to configure TypeAlias.
 
 
@@ -4818,9 +4889,9 @@ Implementation of TypeHandler
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
 When it is necessary to perform mapping with the Java class not supported by MyBatis3 standard
-and when it is necessary to change the standard behavior of MyBatis3, a unique TypeHandler should be created.
+and when it is necessary to change the standard behavior of MyBatis3, a unique \ ``TypeHandler`` \  should be created.
 
-How to implement the TypeHandler is explained using the examples given below.
+How to implement the \ ``TypeHandler`` \  is explained using the examples given below.
 
 * :ref:`DataAccessMyBatis3HowToExtendTypeHandlerBlob`
 * :ref:`DataAccessMyBatis3HowToExtendTypeHandlerClob`
@@ -4828,7 +4899,7 @@ How to implement the TypeHandler is explained using the examples given below.
 
 
 
-Refer to ":ref:`DataAccessMyBatis3HowToUseSettingsTypeHandler`" for how to apply a created TypeHandler in an application.
+Refer to ":ref:`DataAccessMyBatis3HowToUseSettingsTypeHandler`" for how to apply a created \ ``TypeHandler`` \  in an application.
 
 
  .. note:: **Preconditions for implementation of BLOB and CLOB**
@@ -4850,10 +4921,10 @@ Refer to ":ref:`DataAccessMyBatis3HowToUseSettingsTypeHandler`" for how to apply
 Implementing the TypeHandler for BLOB
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 
-MyBatis3 provides a TypeHandler for mapping BLOB in \ ``byte[]``\ .
+MyBatis3 provides a \ ``TypeHandler`` \  for mapping BLOB in \ ``byte[]``\ .
 However, when the data to be handled is very large, it is necessary to map in \ ``java.io.InputStream``\ .
 
-How to implement a TypeHandler for mapping BLOB in \ ``java.io.InputStream``\  is given below.
+How to implement a \ ``TypeHandler`` \  for mapping BLOB in \ ``java.io.InputStream``\  is given below.
 
  .. code-block:: java
 
@@ -4936,10 +5007,10 @@ How to implement a TypeHandler for mapping BLOB in \ ``java.io.InputStream``\  i
 Implementing the TypeHandler for CLOB
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 
-MyBatis3 provides a TypeHandler for mapping CLOB in \ ``java.lang.String``\.
+MyBatis3 provides a \ ``TypeHandler`` \  for mapping CLOB in \ ``java.lang.String``\.
 However, when the data to be handled is very large, it is necessary to map it in \ ``java.io.Reader``\.
 
-How to implement the TypeHandler for mapping CLOB in \ ``java.io.Reader``\ is given below.
+How to implement the \ ``TypeHandler`` \  for mapping CLOB in \ ``java.io.Reader``\ is given below.
 
  .. code-block:: java
 
@@ -5022,9 +5093,9 @@ Implementing TypeHandler for Joda-Time
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 
 | MyBatis3 does not support Joda-time classes (\ ``org.joda.time.DateTime``\ , ``org.joda.time.LocalDateTime``\ , \ ``org.joda.time.LocalDate``\  etc.).
-| Hence, when Joda-Time class is used in the field of Entity class, it is necessary to provide a TypeHandler for Joda-Time.
+| Hence, when Joda-Time class is used in the field of Entity class, it is necessary to provide a \ ``TypeHandler`` \  for Joda-Time.
 
-How to implement a TypeHandler for mapping ``org.joda.time.DateTime``\  and \ ``java.sql.Timestamp``\  is shown below.
+How to implement a \ ``TypeHandler`` \  for mapping ``org.joda.time.DateTime``\  and \ ``java.sql.Timestamp``\  is shown below.
 
  .. note::
 

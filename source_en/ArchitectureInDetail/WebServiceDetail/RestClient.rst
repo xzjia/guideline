@@ -1986,3 +1986,10 @@ When credential information (user name and password) are necessary while accessi
       - | Call \ ``setDefault``\  method of \ ``Authenticator``\  and specify \ ``Authenticator``\  object which returns credentials information of HTTP Proxy server.
     * - | (2)
       - | Return credential information of HTTP Proxy server (user name and password) as a return value of \ ``getPasswordAuthentication``\  method.
+
+
+Configuration while using JSR-310 Date and Time API in JSON
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+For configuration while using JSR-310 Date and Time API as a property of JavaBean which represents a resource (Resource class),
+refer "\ :ref:`RESTAppendixUsingJSR310_JodaTime` \".
