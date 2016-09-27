@@ -392,13 +392,13 @@ The explanation hereafter can be broadly classified as below.
 pom.xml settings
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
-| When MyBatis3 is used in the infrastructure layer, dependency relation with terasoluna-gfw-mybatis3 is added to \ :file:`pom.xml`\.
+| When MyBatis3 is used in the infrastructure layer, dependency relation with terasoluna-gfw-mybatis3-dependencies is added to \ :file:`pom.xml`\.
 | In case of multi project configuration, it is added to \ :file:`pom.xml`\  (:file:`projectName-domain/pom.xml`) of domain project.
 
-| When a project is generated from a blank project <https://github.com/terasolunaorg/terasoluna-gfw-web-multi-blank#multi-blank-project-with-mybatis3>`_ \  for MyBatis3, dependency relation with terasoluna-gfw-mybatis3 is already configured.
+| When a project is generated from a blank project <https://github.com/terasolunaorg/terasoluna-gfw-web-multi-blank#multi-blank-project-with-mybatis3>`_ \  for MyBatis3, dependency relation with terasoluna-gfw-mybatis3-dependencies is already configured.
 
  .. code-block:: xml
-    :emphasize-lines: 22-26
+    :emphasize-lines: 22-27
 
     <?xml version="1.0" encoding="UTF-8"?>
     <project xmlns="http://maven.apache.org/POM/4.0.0"
@@ -424,7 +424,8 @@ pom.xml settings
             <!-- (1) -->
             <dependency>
                 <groupId>org.terasoluna.gfw</groupId>
-                <artifactId>terasoluna-gfw-mybatis3</artifactId>
+                <artifactId>terasoluna-gfw-mybatis3-dependencies</artifactId>
+                <type>pom</type>
             </dependency>
 
             <!-- omitted -->
@@ -455,8 +456,9 @@ pom.xml settings
  
         <dependency>
             <groupId>org.terasoluna.gfw</groupId>
-            <artifactId>terasoluna-gfw-mybatis3</artifactId>
+            <artifactId>terasoluna-gfw-mybatis3-dependencies</artifactId>
             <version>5.2.0.RELEASE</version>
+            <type>pom</type>
         </dependency>
         
     In the above example, 5.2.0.RELEASE is specified. However, version used in the project should be specified.
