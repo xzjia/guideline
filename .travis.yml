@@ -9,7 +9,7 @@ python:
 
 before_install:
   - export PATH=$PATH:/usr/local/texlive/2016/bin/x86_64-linux
-  - export TEXINPUTS=:./:$TEXMF/tex/{$progname,generic,}//:/usr/share/texmf-texlive//
+  - export TEXINPUTS=/usr/share/texmf-texlive/tex/latex//:$TEXINPUTS
   - echo $PATH
 
 install:
