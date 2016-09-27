@@ -25,13 +25,11 @@ Change Log
           Hence, corresponding API is deprecated. Description for how to use the corresponding function is deleted in accordance with the deprecation.
 
     * - 
+      - :doc:`../ArchitectureInDetail/DoubleSubmitProtection`
       - Description details added
 
         * Description for specifications and how to use \ ``TransactionTokenType.CHECK``\ which is newly added in the type attribute of \ ``@TransactionTokenCheck``\  annotation added
           (\ `guideline#2071 <https://github.com/terasolunaorg/guideline/issues/2071>`_\ )
-
-    * -
-      - :doc:`../ArchitectureInDetail/WebApplicationDetail/DoubleSubmitProtection`
 
     * - 2016-06-31
       - :doc:`../ArchitectureInDetail/Utilities/StringProcessing`
