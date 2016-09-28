@@ -1749,17 +1749,6 @@ Bean Validationでグループを指定する場合、アノテーションの\ 
  基本的には、Controllerにロジックを書くべきではないため、\ ``@RequestMapping``\ の属性でルールを切り替えられるのであれば、\ ``SmartValidator``\ は使わない方がよい。
 
 
-.. _Validation_for_parameter_object_in_collection:
-
-コレクション内の値に対する入力チェック
-""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
-Java SE 8から追加された\ ``java.lang.annotation.ElementType.TYPE_USE``\ を使用することで、宣言に限らず型全般（ローカル変数の型等）にアノテーションを付加できる。
-これにより、\ ``List<@ExistInCodeListForTypeArgument(codeListId = "CL_ROLE") String>``\ のように、
-リスト内の型指定の部分にアノテーションを指定することができ、コレクションに対して入力チェックを行うことができるようになる。
-
-実装例は\ :ref:`Validation_for_parameter_object_in_collection_corresponding_annotation`\ を参照されたい。
-
-
 .. _Validation_correlation_check:
 
 相関項目チェック
@@ -2751,15 +2740,19 @@ Controller及びJSPで特別な実装を行うことなく、
 Java SE 8とHibernate Validator 5.2+による実装
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 
-共通ライブラリから標準で提供される\ ``@ExistInCodeList``\は、Java SE 7互換のため\ ``TYPE_USE``\に対応していない。
+ここでは、共通ライブラリから標準で提供される\ ``@ExistInCodeList``\ をラップし、
+独自のアノテーションを作成することでコレクションに対応させる方法を紹介する。
 
-Java SE 8に対応したHibernate Validator 5.2+を導入し、
-Java SE 8から追加された\ ``java.lang.annotation.ElementType.TYPE_USE``\ を使用することで、
-コレクションに対応した独自のアノテーションを作成することが可能である。
+Java SE 8で\ ``java.lang.annotation.ElementType.TYPE_USE``\ が追加された。
+これにより、宣言に限らず型全般（ローカル変数の型等）にアノテーションを付加できるようになったが、
+\ ``@ExistInCodeList``\ は、Java SE 7互換のため\ ``TYPE_USE``\ に対応していない。
 
-この実装により、\ ``List<@ExistInCodeListForTypeArgument(codeListId = "CL_ROLE") String>``\ のように、
-リスト内の型指定の部分にアノテーションを指定することができ、リスト内の値の入力チェックを行うことができるようになる。
+また、Java SE 8に対応したHibernate Validator 5.2+は、
+\ ``TYPE_USE``\ を使用して、Collection, Map, Optional, ジェネリクス型のチェックを可能にしている。
 
+Java SE 8とHibernate Validator 5.2+を組み合わせることで、
+\ ``List<@ExistInCodeListForTypeArgument(codeListId = "CL_ROLE") String>``\ のように、
+リスト内の型指定部分に付加できるアノテーションを作成し、コレクション内の値の入力チェックを行うことができるようになる。
 
 主な手順は以下の通り。
 
@@ -2775,10 +2768,6 @@ Java SE 8から追加された\ ``java.lang.annotation.ElementType.TYPE_USE``\ �
 
     package com.example.common.validation;
 
-    import static java.lang.annotation.ElementType.ANNOTATION_TYPE;
-    import static java.lang.annotation.ElementType.FIELD;
-    import static java.lang.annotation.ElementType.METHOD;
-    import static java.lang.annotation.ElementType.PARAMETER;
     import static java.lang.annotation.ElementType.TYPE_USE;
     import static java.lang.annotation.RetentionPolicy.RUNTIME;
     import java.lang.annotation.Documented;
