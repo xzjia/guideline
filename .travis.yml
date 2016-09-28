@@ -28,6 +28,7 @@ install:
   - sudo find / -name "dvipdfmx"
   - sudo find / -name "dvipdf"
   - sudo ls -R /usr/local/texlive/2016/texmf-dist/fonts/cmap/dvipdfmx
+  - sudo find / -name "UTF8-UCS2"
   - cd ..
 
 before_script:
