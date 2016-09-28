@@ -1442,150 +1442,6 @@ JSPの実装(基本編)
 
 |
 
-セッションで検索条件やソート条件などを引き継ぐ
-""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
-| :ref:`ページネーションに関連する情報を引継ぎぐ方法について <Constraints_at_the_time_of_pagination_use>` のを利用した引継ぎ方法の制約として示している通り、\ ``<t:pagination>``\ の \ ``criteriaQuery`` \属性 や \ ``queryTmpl`` \属性 で作成したクエリ文字をを使用してリクエストパラメータで引き継ぐ方法には課題がある。
-| そのため、検索条件、ソート条件、ページネーション情報をセッションへ格納して画面間で持ち回る方法で課題を解決することができるが、セッション方式の制約として示している課題を踏まえてどちらの方式を採用するか設計する必要がある。
-| セッション管理の詳細については、\ :doc:`SessionManagement`\ を参照されたい。
-| セッション方式の実現方法を紹介するため、以下の要件を示す。
-
-  * 検索結果一覧画面から詳細画面などの別画面に遷移し、また検索結果一覧画面の当該ページへ戻る
-  * 検索結果の1ページ当たりの件数は固定
-  * セッション格納する情報は検索条件（\ ``word`` \）、ソート条件（\ ``sort`` \）、ページネーション情報（\ ``page`` \ 、 \ ``size`` \）
-
-- From
-
- .. code-block:: java
-
-        public class PersonSearchForSessionForm implements Serializable {
-
-            // ...
-
-            private int page;
-
-            private int size;
-
-            private String word;
-
-            private String sort;
-
-            // ...
-
-        }
-
-- Controller
-
- .. code-block:: java
-
-        @Controller
-        @RequestMapping("article")
-        @SessionAttributes(value = {"personSearchForSessionForm"}) // (1)
-        public class PaginationInSessionController {
-
-            // ...
-
-            @ModelAttribute("personSearchForSessionForm") // (2)
-            public PersonSearchForSessionForm setUpForm() {
-                return new PersonSearchForSessionForm();
-            }
-
-            // ...
-
-            @RequestMapping("list")
-            public String list(PersonSearchForSessionForm form,
-                BindingResult result,
-                @PageableDefault(size = 50) Pageable pageable, // (3)
-                Model model) {
-
-                ArticleSearchCriteria criteria = beanMapper.map(form,
-                        ArticleSearchCriteria.class);
-
-                Page<Article> page = articleService.searchArticle(criteria, pageable); // (4)
-
-                model.addAttribute("page", page);
-
-                return "article/list";
-            }
-
-            // ...
-
-        }
-
- .. tabularcolumns:: |p{0.10\linewidth}|p{0.90\linewidth}|
- .. list-table::
-    :header-rows: 1
-    :widths: 10 90
-
-    * - 項番
-      - 説明
-    * - | (1)
-      - | \ ``@SessionAttributes``\アノテーションの\ ``value``\属性に、セッションに格納するオブジェクトの属性名を指定する。
-    * - | (2)
-      - | \ ``@ModelAttribute``\アノテーションを使用して、\ ``value``\属性で指定した\ ``"personSearchForSessionForm"``\ のオブジェクトをセッションに格納する。
-    * - | (3)
-      - | \ ``size`` \ は毎回変わらないため、\ ``@PageableDefault``\アノテーションを仕様して\ ``pageable`` \の初期値として定義する。
-    * - | (4)
-      - | 下記に各画面遷移に応じたControllerでの利用方法を説明する。
-
-        *  検索ボタン押下によるpost通信の画面遷移の場合
-           \ ``size`` \ を\ ``pageable`` \で取得する。
-           \ ``word`` \ はフォームオブジェクトから取得する。
-
-        *  ページネーションリンク押下によるget通信の画面遷移の場合
-           \ ``page`` \ と \ ``size`` \ は\ ``criteriaQuery``\ を経由して \ ``pageable`` \で取得する。
-           \ ``word`` \ と \ ``sort`` \ はセッションから取得する。
-
-        *  別画面（詳細画面など）から戻ってくる画面遷移の場合
-           \ ``page`` \ と \ ``size`` \ 、 \ ``word`` \ 、 \ ``sort`` \ はセッションから取得する。
-
-- JSP
-
- .. code-block:: jsp
-
-        <%-- (1) --%>
-        <div id="criteriaPart">
-          <form:form action="${pageContext.request.contextPath}/article/list"
-                     method="post" modelAttribute="personSearchForSessionForm">
-            <form:input path="word" />
-            <form:select path="sort">
-              <form:option value="publishedDate,DESC">Newest</form:option>
-              <form:option value="publishedDate,ASC">Oldest</form:option>
-            </form:select>
-            <form:button>Search</form:button>
-          </form:form>
-        </div>
-
-        <%-- ... --%>
-
-        <%-- (2) --%>
-        <t:pagination page="${page}"
-            outerElementClass="pagination" />
-
- .. tabularcolumns:: |p{0.10\linewidth}|p{0.90\linewidth}|
- .. list-table::
-    :header-rows: 1
-    :widths: 10 90
-
-    * - 項番
-      - 説明
-    * - | (1)
-      - | 検索条件を指定するフォーム。
-        | post通信時に検索条件の \ ``word`` \ と ソート条件の\ ``sort`` \ を保持したフォームオブジェクトをセッションに格納される。
-        | フォームオブジェクトのパラメータに含まれていない\ ``page`` \ と\ ``size`` \ は対象外となる。
-    * - | (2)
-      - | \ ``word`` \ と \ ``sort`` \ はセッションに格納されているため、 \ ``criteriaQuery``\属性は使用しない。
-        | \ ``page`` \ の値はページリンクごとに毎回変わるため、 \ ``criteriaQuery``\経由でリクエストに設定される。
-        | 上記例の場合、 \ ``"?page=ページ位置&size=取得件数"``\という形式のクエリ文字列が生成される。
-
-以下の3リクエストでセッションに格納したフォームオブジェクトの削除を行う必要がある。
-
-* | 一連の画面操作を完了するためのリクエスト。**(必須)**
-* | 一連の画面操作を中止するためのリクエスト。**(必須)**
-* | 一連の画面操作を開始するためのリクエスト。(任意)
-
-
-|
-
 .. _pagination_how_to_use_make_jsp_layout:
 
 JSPの実装(レイアウト変更編)
@@ -1850,6 +1706,157 @@ JavaScriptを使用したページリンクの無効化
         ただし、\ ``<t:pagination>``\ タグの\ ``enableLinkOfCurrentPage``\ 属性に\ ``"true"``\ を指定している場合は、\ ``"active"``\ 状態のページリンクのクリックイベントを無効化してはいけない。
     * - | (3)
       - \ ``disabledHref``\ 属性に\ ``"#"``\ を指定する。
+
+|
+
+.. _pagination_extend:
+
+How to extend
+--------------------------------------------------------------------------------
+
+.. _pagination_take_over_session:
+
+セッションで検索条件やソート条件などを引き継ぐ
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+| これまで紹介したURLを利用して引き継ぐ方法だと、:ref:`ページネーションに関連する情報を引継ぎぐ方法について <Constraints_at_the_time_of_pagination_use>` に記載された制約がある。
+| その解決法して、検索条件、ソート条件、ページネーションに関連する情報をセッションへ格納して画面間で持ち回る方法で課題を解決することができるが、セッション方式の制約を踏まえてどちらの方式を採用するか設計する必要がある。
+| セッション管理の詳細については、\ :doc:`SessionManagement`\ を参照されたい。
+| セッション方式の実現方法を紹介するため、以下の要件を示す。
+
+  * 検索結果一覧画面から詳細画面などの別画面に遷移し、また検索結果一覧画面の当該ページへ戻る
+  * 検索結果の1ページ当たりの件数は固定
+  * セッション格納する情報は検索条件（\ ``word`` \）、ソート条件（\ ``sort`` \）、ページネーション情報（\ ``page`` \ 、 \ ``size`` \）
+
+- From
+
+ .. code-block:: java
+
+        public class PersonSearchForSessionForm implements Serializable {
+
+            // ...
+
+            private int page;
+
+            private int size;
+
+            private String word;
+
+            private String sort;
+
+            // ...
+
+        }
+
+- Controller
+
+ .. code-block:: java
+
+        @Controller
+        @RequestMapping("article")
+        @SessionAttributes(value = {"personSearchForSessionForm"}) // (1)
+        public class PaginationInSessionController {
+
+            // ...
+
+            @ModelAttribute("personSearchForSessionForm") // (2)
+            public PersonSearchForSessionForm setUpForm() {
+                return new PersonSearchForSessionForm();
+            }
+
+            // ...
+
+            @RequestMapping("list")
+            public String list(PersonSearchForSessionForm form,
+                BindingResult result,
+                @PageableDefault(size = 50) Pageable pageable, // (3)
+                Model model) {
+
+                ArticleSearchCriteria criteria = beanMapper.map(form,
+                        ArticleSearchCriteria.class);
+
+                Page<Article> page = articleService.searchArticle(criteria, pageable); // (4)
+
+                model.addAttribute("page", page);
+
+                return "article/list";
+            }
+
+            // ...
+
+        }
+
+ .. tabularcolumns:: |p{0.10\linewidth}|p{0.90\linewidth}|
+ .. list-table::
+    :header-rows: 1
+    :widths: 10 90
+
+    * - 項番
+      - 説明
+    * - | (1)
+      - | \ ``@SessionAttributes``\アノテーションの\ ``value``\属性に、セッションに格納するオブジェクトの属性名を指定する。
+    * - | (2)
+      - | \ ``@ModelAttribute``\アノテーションを使用して、\ ``value``\属性で指定した\ ``"personSearchForSessionForm"``\ のオブジェクトをセッションに格納する。
+    * - | (3)
+      - | \ ``size`` \ は毎回変わらないため、\ ``@PageableDefault``\アノテーションを仕様して\ ``pageable`` \の初期値として定義する。
+    * - | (4)
+      - | 下記に各画面遷移に応じたControllerでの利用方法を説明する。
+
+        *  検索ボタン押下によるpost通信の画面遷移の場合
+           \ ``size`` \ を\ ``pageable`` \で取得する。
+           \ ``word`` \ はフォームオブジェクトから取得する。
+
+        *  ページネーションリンク押下によるget通信の画面遷移の場合
+           \ ``page`` \ と \ ``size`` \ は\ ``criteriaQuery``\ を経由して \ ``pageable`` \で取得する。
+           \ ``word`` \ と \ ``sort`` \ はセッションから取得する。
+
+        *  別画面（詳細画面など）から戻ってくる画面遷移の場合
+           \ ``page`` \ と \ ``size`` \ 、 \ ``word`` \ 、 \ ``sort`` \ はセッションから取得する。
+
+- JSP
+
+ .. code-block:: jsp
+
+        <%-- (1) --%>
+        <div id="criteriaPart">
+          <form:form action="${pageContext.request.contextPath}/article/list"
+                     method="post" modelAttribute="personSearchForSessionForm">
+            <form:input path="word" />
+            <form:select path="sort">
+              <form:option value="publishedDate,DESC">Newest</form:option>
+              <form:option value="publishedDate,ASC">Oldest</form:option>
+            </form:select>
+            <form:button>Search</form:button>
+          </form:form>
+        </div>
+
+        <%-- ... --%>
+
+        <%-- (2) --%>
+        <t:pagination page="${page}"
+            outerElementClass="pagination" />
+
+ .. tabularcolumns:: |p{0.10\linewidth}|p{0.90\linewidth}|
+ .. list-table::
+    :header-rows: 1
+    :widths: 10 90
+
+    * - 項番
+      - 説明
+    * - | (1)
+      - | 検索条件を指定するフォーム。
+        | post通信時に検索条件の \ ``word`` \ と ソート条件の\ ``sort`` \ を保持したフォームオブジェクトをセッションに格納される。
+        | フォームオブジェクトのパラメータに含まれていない\ ``page`` \ と\ ``size`` \ は対象外となる。
+    * - | (2)
+      - | \ ``word`` \ と \ ``sort`` \ はセッションに格納されているため、 \ ``criteriaQuery``\属性は使用しない。
+        | \ ``page`` \ の値はページリンクごとに毎回変わるため、 \ ``criteriaQuery``\経由でリクエストに設定される。
+        | 上記例の場合、 \ ``"?page=ページ位置&size=取得件数"``\という形式のクエリ文字列が生成される。
+
+以下の3リクエストでセッションに格納したフォームオブジェクトの削除を行う必要がある。
+
+* | 一連の画面操作を完了するためのリクエスト。**(必須)**
+* | 一連の画面操作を中止するためのリクエスト。**(必須)**
+* | 一連の画面操作を開始するためのリクエスト。(任意)
+
 
 |
 
