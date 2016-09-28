@@ -19,7 +19,7 @@ install:
   - curl -L -O http://mirror.ctan.org/systems/texlive/tlnet/install-tl-unx.tar.gz
   - tar -xvf install-tl-unx.tar.gz
   - cd install-tl*
-  - sudo ./install-tl -scheme scheme-basic --repository http://mirror.ctan.org/systems/texlive/tlnet/ < ../InputAction_I_Enter.txt
+  - sudo ./install-tl --repository http://mirror.ctan.org/systems/texlive/tlnet/ < ../InputAction_I_Enter.txt
   - sudo /usr/local/texlive/2016/bin/x86_64-linux/tlmgr update --self --all
   - sudo /usr/local/texlive/2016/bin/x86_64-linux/tlmgr install latexmk collection-luatex collection-langjapanese collection-fontsrecommended
   - sudo apt-get install texlive-latex-extra texlive-latex-recommended texlive-formats-extra
@@ -48,8 +48,6 @@ script:
 #  - sh ./build-html_en.sh 2>> $ERROR_LOG_FILE
   - sh ./build-pdf.sh < ./InputAction_Enter.txt 2>> $ERROR_LOG_FILE
   - sh ./build-pdf_en.sh < ./InputAction_Enter.txt 2>> $ERROR_LOG_FILE
-#  - sh ./build-pdf.sh < ./InputAction_Enter.txt
-#  - sh ./build-pdf_en.sh < ./InputAction_Enter.txt
   - cat $ERROR_LOG_FILE
 
 after_script:
