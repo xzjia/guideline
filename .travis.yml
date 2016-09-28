@@ -25,6 +25,8 @@ install:
   - sudo apt-get install texlive-latex-extra texlive-latex-recommended texlive-formats-extra
   - sudo mktexlsr
   - sudo which dvipdfmx
+  - sudo find / -name "pdfglyphlist.txt"
+  - sudo find / -name "glyphlist.txt"
   - sudo find / -name "dvipdfmx"
   - sudo find / -name "dvipdf"
   - sudo ls -R /usr/local/texlive/2016/texmf-dist/fonts/cmap/dvipdfmx
