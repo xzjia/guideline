@@ -1732,7 +1732,7 @@ How to extend
 
  .. code-block:: java
 
-        public class PersonSearchForSessionForm implements Serializable {
+        public class ArticleSearchCriteriaForm  implements Serializable {
 
             // ...
 
@@ -1754,20 +1754,20 @@ How to extend
 
         @Controller
         @RequestMapping("article")
-        @SessionAttributes(value = {"personSearchForSessionForm"}) // (1)
+        @SessionAttributes(value = {"articleSearchCriteriaForm"}) // (1)
         public class PaginationInSessionController {
 
             // ...
 
-            @ModelAttribute("personSearchForSessionForm") // (2)
-            public PersonSearchForSessionForm setUpForm() {
-                return new PersonSearchForSessionForm();
+            @ModelAttribute("articleSearchCriteriaForm") // (2)
+            public ArticleSearchCriteriaForm setUpForm() {
+                return new ArticleSearchCriteriaForm();
             }
 
             // ...
 
             @RequestMapping("list")
-            public String list(PersonSearchForSessionForm form,
+            public String list(ArticleSearchCriteriaForm form,
                 BindingResult result,
                 @PageableDefault(size = 50) Pageable pageable, // (3)
                 Model model) {
@@ -1796,7 +1796,7 @@ How to extend
     * - | (1)
       - | \ ``@SessionAttributes``\アノテーションの\ ``value``\属性に、セッションに格納するオブジェクトの属性名を指定する。
     * - | (2)
-      - | \ ``@ModelAttribute``\アノテーションを使用して、\ ``value``\属性で指定した\ ``"personSearchForSessionForm"``\ のオブジェクトをセッションに格納する。
+      - | \ ``@ModelAttribute``\アノテーションを使用して、\ ``value``\属性で指定した\ ``"articleSearchCriteriaForm"``\ のオブジェクトをセッションに格納する。
     * - | (3)
       - | \ ``size`` \ は毎回変わらないため、\ ``@PageableDefault``\アノテーションを仕様して\ ``pageable`` \の初期値として定義する。
     * - | (4)
@@ -1820,7 +1820,7 @@ How to extend
         <%-- (1) --%>
         <div id="criteriaPart">
           <form:form action="${pageContext.request.contextPath}/article/list"
-                     method="post" modelAttribute="personSearchForSessionForm">
+                     method="post" modelAttribute="articleSearchCriteriaForm">
             <form:input path="word" />
             <form:select path="sort">
               <form:option value="publishedDate,DESC">Newest</form:option>
