@@ -5053,7 +5053,8 @@ an extension module provided by Jackson in \ ``pom.xml``\  is added to dependent
 
     <dependency>
         <groupId>org.terasoluna.gfw</groupId>
-        <artifactId>terasoluna-gfw-jodatime</artifactId>
+        <artifactId>terasoluna-gfw-jodatime-dependencies</artifactId>
+        <type>pom</type>
     </dependency>
 
 or

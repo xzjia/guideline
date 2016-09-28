@@ -252,7 +252,8 @@ When using JPA (Spring Data JPA) in infrastructure layer, add the following depe
     <!-- (1) -->
     <dependency>
         <groupId>org.terasoluna.gfw</groupId>
-        <artifactId>terasoluna-gfw-jpa</artifactId>
+        <artifactId>terasoluna-gfw-jpa-dependencies</artifactId>
+        <type>pom</type>
     </dependency>
 
  .. tabularcolumns:: |p{0.10\linewidth}|p{0.90\linewidth}|
@@ -263,7 +264,7 @@ When using JPA (Spring Data JPA) in infrastructure layer, add the following depe
    * - Sr. No.
      - Description
    * - | (1)
-     - | \ ``terasoluna-gfw-jpa``\  where the libraries associated with JPA are defined should be added to dependency.
+     - | \ ``terasoluna-gfw-jpa-dependencies``\  where the libraries associated with JPA are defined should be added to dependency.
 
 Application Settings
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^

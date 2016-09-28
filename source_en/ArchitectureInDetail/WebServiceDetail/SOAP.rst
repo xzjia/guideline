@@ -1910,15 +1910,17 @@ model project configuration is explained.
             <!-- == Begin TERASOLUNA == -->
             <dependency>
                 <groupId>org.terasoluna.gfw</groupId>
-                <artifactId>terasoluna-gfw-common</artifactId>
+                <artifactId>terasoluna-gfw-common-dependencies</artifactId>
             </dependency>
             <dependency>
                 <groupId>org.terasoluna.gfw</groupId>
-                <artifactId>terasoluna-gfw-jodatime</artifactId>
+                <artifactId>terasoluna-gfw-jodatime-dependencies</artifactId>
+                <type>pom</type>
             </dependency>
             <dependency>
                 <groupId>org.terasoluna.gfw</groupId>
-                <artifactId>terasoluna-gfw-security-core</artifactId>
+                <artifactId>terasoluna-gfw-security-core-dependencies</artifactId>
+                <type>pom</type>
             </dependency>
 
             <dependency>
@@ -1981,15 +1983,18 @@ webservice project configuration is explained.
             <!-- == Begin TERASOLUNA == -->
             <dependency>
                 <groupId>org.terasoluna.gfw</groupId>
-                <artifactId>terasoluna-gfw-common</artifactId>
+                <artifactId>terasoluna-gfw-common-dependencies</artifactId>
+                <type>pom</type>
             </dependency>
             <dependency>
                 <groupId>org.terasoluna.gfw</groupId>
-                <artifactId>terasoluna-gfw-jodatime</artifactId>
+                <artifactId>terasoluna-gfw-jodatime-dependencies</artifactId>
+                <type>pom</type>
             </dependency>
             <dependency>
                 <groupId>org.terasoluna.gfw</groupId>
-                <artifactId>terasoluna-gfw-security-core</artifactId>
+                <artifactId>terasoluna-gfw-security-core-dependencies</artifactId>
+                <type>pom</type>
             </dependency>
 
             <dependency>
