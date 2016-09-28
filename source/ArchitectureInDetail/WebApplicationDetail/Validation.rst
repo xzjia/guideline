@@ -2876,6 +2876,7 @@ Java SE 8から追加された\ ``java.lang.annotation.ElementType.TYPE_USE``\ �
 
     public class SampleForm {
         @NotNull
+        @Valid
         private List<@ExistInCodeListForTypeArgument(codeListId = "CL_ROLE") String> roles; // (1)
 
         public List<String> getRoles() {
