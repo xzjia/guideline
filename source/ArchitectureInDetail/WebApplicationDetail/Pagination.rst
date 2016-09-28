@@ -1798,7 +1798,7 @@ How to extend
     * - | (2)
       - | \ ``@ModelAttribute``\アノテーションを使用して、\ ``value``\属性で指定した\ ``"articleSearchCriteriaForm"``\ のオブジェクトをセッションに格納する。
     * - | (3)
-      - | \ ``size`` \ は毎回変わらないため、\ ``@PageableDefault``\アノテーションを仕様して\ ``pageable`` \の初期値として定義する。
+      - | \ ``size`` \ は固定なので、\ ``@PageableDefault``\アノテーションを仕様して\ ``pageable`` \の初期値として定義する。
     * - | (4)
       - | 下記に各画面遷移に応じたControllerでの利用方法を説明する。
 
