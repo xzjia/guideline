@@ -31,8 +31,13 @@ install:
   - sudo find / -name "dvipdf"
   - sudo ls -R /usr/local/texlive/2016/texmf-dist/fonts/cmap/dvipdfmx
   - sudo find / -name "UTF8-UCS2"
+  - sudo cp /usr/local/texlive/2016/texmf-dist/fonts/map/glyphlist/pdfglyphlist.txt /etc/texmf/dvipdfmx/pdfglyphlist.txt
+  - sudo cp /usr/local/texlive/2016/texmf-dist/fonts/map/glyphlist/glyphlist.txt /etc/texmf/dvipdfmx/glyphlist.txt
+  - sudo cp /usr/local/texlive/2016/texmf-dist/fonts/cmap/dvipdfmx/UTF8-UCS2 /etc/texmf/dvipdfmx/UTF8-UCS2
   - sudo cp /usr/local/texlive/2016/texmf-dist/fonts/cmap/dvipdfmx/UTF8-UCS2 /usr/share/texmf-texlive/fonts/cmap/dvipdfmx/UTF8-UCS2
   - sudo find / -name "UTF8-UCS2"
+  - sudo find / -name "pdfglyphlist.txt"
+  - sudo find / -name "glyphlist.txt"
   - cd ..
 
 before_script:
