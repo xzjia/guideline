@@ -8,7 +8,7 @@ python:
   - "3.4"
 
 before_install:
-  - export PATH=/usr/local/texlive/2016/texmf-dist/fonts/cmap/dvipdfmx/UTF8-UCS2:$PATH:/usr/local/texlive/2016/bin/x86_64-linux
+  - export PATH=$PATH:/usr/local/texlive/2016/bin/x86_64-linux
   - export TEXINPUTS=/usr/share/texmf-texlive/tex/latex//:$TEXINPUTS
   - echo $PATH
 
@@ -29,6 +29,7 @@ install:
   - sudo find / -name "dvipdf"
   - sudo ls -R /usr/local/texlive/2016/texmf-dist/fonts/cmap/dvipdfmx
   - sudo find / -name "UTF8-UCS2"
+  - sudo cp -r /usr/local/texlive/2016/texmf-dist/fonts/cmap/dvipdfmx/UTF8-UCS2 /usr/share/texmf-texlive/fonts/cmap/dvipdfmx/UTF8-UCS2
   - cd ..
 
 before_script:
