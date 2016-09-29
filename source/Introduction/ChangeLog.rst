@@ -10,6 +10,13 @@
       - 更新箇所
       - 更新内容
 
+    * - 
+      - :doc:`../ArchitectureInDetail/DataAccessDetail/DataAccessMyBatis3`
+      - 記載内容の追加
+
+        * 1:Nの関連を持つ関連Entityのページネーション検索でN側に検索条件がある場合の取得方法を追記(\ `guideline#1355 <https://github.com/terasolunaorg/guideline/issues/1355>`_\ )
+
+
     * - 2016-08-31
       - \-
       - 5.2.0 RELEASE版公開
