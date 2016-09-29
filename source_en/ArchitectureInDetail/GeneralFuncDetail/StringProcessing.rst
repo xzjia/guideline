@@ -17,7 +17,7 @@ Overview
 | determination of a string consisting of only half width katakana.
 
 | Also, note that although in Java, all the strings are represented in Unicode
-| the special characters like 𠮷 are represented in unicode by char type 2 (32 bits) which is referred to as surrogate pair.
+| the special characters like 吉 are represented in unicode by char type 2 (32 bits) which is referred to as surrogate pair.
 | Even while handling these characters, an implementation which takes into account various types of characters are necessary to prevent occurrence of unexpected behavior.
 
 | The guideline assumes a case wherein Japanese language is processed, and
@@ -80,7 +80,7 @@ Fetching string length
 
 .. code-block:: java
 
-   String str = "𠮷田太郎";
+   String str = "吉田太郎";
    int len = str.length(); // => 5
 
 |
@@ -91,7 +91,7 @@ Fetching string length
 
 .. code-block:: java
 
-   String str = "𠮷田太郎";
+   String str = "吉田太郎";
    int lenOfChar = str.length(); // => 5
    int lenOfCodePoint = str.codePointCount(0, lenOfChar); // => 4
 
@@ -119,29 +119,29 @@ Fetch string in the specified range
 
 .. code-block:: java
 
-   String str = "𠮷田 太郎";
+   String str = "吉田太郎";
    int startIndex = 0;
    int endIndex = 2;
    
    String subStr = str.substring(startIndex, endIndex);
 
-   System.out.println(subStr); // => "𠮷"
+   System.out.println(subStr); // => "吉"
 
-| In the example above, when you try to fetch "𠮷田" by taking out 2 characters from 0th character (beginning), only "𠮷" could be fetched since the surrogate pair is represented by 32 bits (char type 2).
+| In the example above, when you try to fetch "吉田" by taking out 2 characters from 0th character (beginning), only "吉" could be fetched since the surrogate pair is represented by 32 bits (char type 2).
 | In such a case, ``String#substring`` method must be used by searching start and end positions considering the surrogate pair, by using ``String#offsetByCodePoints``.
 |
 | An example wherein 2 characters are taken from the beginning (surname part) is shown below.
 
 .. code-block:: java
 
-   String str = "𠮷田 太郎";
+   String str = "吉田太郎";
    int startIndex = 0;
    int endIndex = 2;
 
    int startIndexSurrogate = str.offsetByCodePoints(0, startIndex); // => 0
    int endIndexSurrogate = str.offsetByCodePoints(0, endIndex); // => 3
 
-   String subStrSurrogate = str.substring(startIndexSurrogate, endIndexSurrogate); // => "𠮷田"
+   String subStrSurrogate = str.substring(startIndexSurrogate, endIndexSurrogate); // => "吉田"
 
 |
 
@@ -153,9 +153,9 @@ String split
 
 .. code-block:: java
 
-   String str = "𠮷田 太郎";
+   String str = "吉田太郎";
    
-   str.split(" "); // => {"𠮷田", "太郎"}
+   str.split(" "); // => {"吉田", "太郎"}
 
 |
 
@@ -184,7 +184,7 @@ Full width and half width character conversion is carried out by using API of \ 
 \ ``FullHalfConverter``\  class adopts a style wherein pair definition of full width and half width characters for conversion (\ ``org.terasoluna.gfw.common.fullhalf.FullHalfPair``\ ) is registered in advance.
 \ ``FullHalfConverter``\  object for which default pair definition is registered, is provided as a \ ``INSTANCE``\  constant
 of \ ``org.terasoluna.gfw.common.fullhalf.DefaultFullHalf``\  class in the common library.
-For default pair definition, refer `DefaultFullHalf source <https://github.com/terasolunaorg/terasoluna-gfw/blob/5.2.0.RELEASE/terasoluna-gfw-common-libraries/terasoluna-gfw-string/src/main/java/org/terasoluna/gfw/common/fullhalf/DefaultFullHalf.java>`_ .
+For default pair definition, refer `DefaultFullHalf source <https://github.com/terasolunaorg/terasoluna-gfw/blob/master/terasoluna-gfw-string/src/main/java/org/terasoluna/gfw/common/fullhalf/DefaultFullHalf.java>`_ .
 
 .. note::
 
@@ -376,7 +376,7 @@ Creating FullHalfConverter class for which a unique full width and half width ch
 .. note::
 
     For the values that can be specified in the argument of \ ``FullHalfPairsBuilder#pair``\  method,
-    refer `FullHalfPair constructor JavaDoc <https://github.com/terasolunaorg/terasoluna-gfw/blob/5.2.0.RELEASE/terasoluna-gfw-common-libraries/terasoluna-gfw-string/src/main/java/org/terasoluna/gfw/common/fullhalf/FullHalfPair.java>`_
+    refer `FullHalfPair constructor JavaDoc <https://github.com/terasolunaorg/terasoluna-gfw/blob/master/terasoluna-gfw-string/src/main/java/org/terasoluna/gfw/common/fullhalf/FullHalfPair.java>`_
     
 
 |
@@ -900,7 +900,12 @@ artifact information to be incorporated while using are given below.
                <artifactId>terasoluna-gfw-codepoints-jisx0213kanji</artifactId>
            </dependency>
 
-|
+.. note::
+
+    \ ``JIS_X_0208_SpecialChars``\ codepoint set class is a special character set corresponding to JIS chinese characters (JIS X 0208)-section 01-02.
+    Double byte dash (-) of JIS chinese characters is EM DASH and the corresponding UCS(ISO/IEC 10646-1, JIS X 0221, Unicode) codepoints usually correspond to \ ``U+2014``\ .
+    However, in the conversion table offered by Unicode consortium , characters supported by Unicode are \ `HORINZONTAL BAR (U+2015) <http://www.unicode.org/Public/MAPPINGS/OBSOLETE/EASTASIA/JIS/JIS0208.TXT>`_\  instead of EM DASH..
+    Since general conversion rules that are being used and Unicode conversion table vary, problems may occur during actual use if codepoint set is defined as per Unicode conversion table. Therefore, codepoint set is defined in 、\ ``JIS_X_0208_SpecialChars``\  codepoint set class by converting HORINZONTAL BAR (\ ``U+2015``\ ) to EM DASH (\ ``U+2014``\ ).
 
 .. raw:: latex
 
