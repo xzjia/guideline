@@ -18,6 +18,13 @@ Change Log
         * Precautions for surrogate pair added to description of @Size annotation(\ `guideline#1874 <https://github.com/terasolunaorg/guideline/issues/1874>`_\ )
         * Description added for corresponding UCS(Unicode)characters of JIS chinese characters \ ``U+2014``\(EM DASH)(\ `guideline#1914 <https://github.com/terasolunaorg/guideline/issues/1914>`_\ )
 
+    * - 
+      - :doc:`../ArchitectureInDetail/WebApplicationDetail/DoubleSubmitProtection`
+      - Description details added
+
+        * Description for specifications and how to use \ ``TransactionTokenType.CHECK``\ which is newly added in the type attribute of \ ``@TransactionTokenCheck``\  annotation added
+          (\ `guideline#2071 <https://github.com/terasolunaorg/guideline/issues/2071>`_\ )
+
     * - 2016-08-04
       - :doc:`../Overview/FrameworkStack`
       - OSS version to be used (Spring IO Platform version) updated
