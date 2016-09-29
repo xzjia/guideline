@@ -7255,47 +7255,67 @@ SQLの実装
     SQL実行結果は主Entityのレコード数と一致しない可能性があるためである。
 
     SQL絞込み方式においても、関連Entityを1回のSQLでまとめて取得した後に、ページネーションの範囲指定をすると同様の問題が発生するが、
-    SQLにてページ範囲内の主Entityのみ格納されている仮想テーブルを作成し、仮想テーブルのレコードとJOINする事で、
-    マッピングに必要な全てのレコードを取得することが可能である。(上記例の \ ``findPage``\は、このパターンで実装している)
+    副問い合わせにて主Entityの取得時に\ ``limit``\と\ ``offset``\の指定をした仮想テーブルを作成し、仮想テーブルのレコードとJOINする事で、
+    ページ範囲内の必要な全てのレコードを取得することが可能である。(上記例の \ ``findPage``\は、このパターンで実装している)
 
-    また、関連Entityに検索条件がある場合には、検索条件を適用した関連Entityの抽出レコードを集約し、
-    主Entityのみの仮想テーブルと1:1の関係になるようにしてJOINすることで、検索条件を満たしたページ範囲内の仮想テーブルが作成可能である。
+    一方、関連Entityに検索条件がある場合には、検索条件を適用した関連Entityの抽出レコードを集約し、
+    \ ``limit``\と\ ``offset``\の指定をした主Entityのみの仮想テーブルと1:1の関係になるようにしてJOINすることで、
+    ページネーションの範囲指定を満たした仮想テーブルが作成可能である。
 
     以下に、特定の商品を含む注文を取得する例を示す。
 
       .. code-block:: xml
-  
-        <select id="findPage" resultMap="orderResultMap">
-            <bind name="orderTable" value="
-                '(
-                  SELECT
-                      vo.id,
-                      vo.status_code
-                  FROM
-                      t_order vo
-                  INNER JOIN
-                      (
-                       SELECT
-                          voi.order_id
-                        FROM
-                          t_order_item voi
-                        WHERE
-                        <foreach collection="list" item="itemCode"
+
+        <select id="findPageByItemcode" resultMap="orderResultMap">
+            SELECT
+                o.id,
+                o.status_code,
+                os.name AS status_name,
+                oi.quantity,
+                i.code AS item_code,
+                i.name AS item_name,
+                i.price AS item_price,
+                ct.code AS category_code,
+                ct.name AS category_name,
+                cp.code AS coupon_code,
+                cp.name AS coupon_name,
+                cp.price AS coupon_price
+            FROM
+                (
+                    SELECT
+                        vo.id,
+                        vo.status_code
+                    FROM
+                        t_order vo
+                    INNER JOIN
+                        (
+                        SELECT
+                            voi.order_id
+                         FROM
+                            t_order_item voi
+                         WHERE
+                            <foreach collection="searchItemCode"
+                                item="searchItemCode"
                                 open="voi.item_code IN ("
                                 separator=","
                                 close=")">
-                            #{itemCode}
-                        </foreach>
-                        GROUP BY
-                          voi.order_id
-                       ) vvoi ON vvoi.order_id = vo.id
-                  ORDER BY
-                      id DESC
-                  LIMIT #{pageable.pageSize}
-                  OFFSET #{pageable.offset}
-                  )'" />
-            <include refid="selectFromJoin"/>
-            ...
+                                #{searchItemCode}
+                            </foreach>
+                         GROUP BY
+                            voi.order_id
+                        ) vvoi ON vvoi.order_id = vo.id
+                    ORDER BY id DESC
+                    LIMIT #{pageable.pageSize}
+                    OFFSET #{pageable.offset}
+                ) o
+            INNER JOIN c_order_status os ON os.code = o.status_code
+            INNER JOIN t_order_item oi ON oi.order_id = o.id
+            INNER JOIN m_item i ON i.code = oi.item_code
+            INNER JOIN m_item_category ic ON ic.item_code = i.code
+            INNER JOIN m_category ct ON ct.code = ic.category_code
+            LEFT JOIN t_order_coupon oc ON oc.order_id = o.id
+            LEFT JOIN m_coupon cp ON cp.code = oc.coupon_code
+        </select>
 
 
 |
