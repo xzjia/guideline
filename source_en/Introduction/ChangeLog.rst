@@ -1,7 +1,7 @@
 Change Log
 ================================================================================
 
-.. tabularcolumns:: |p{0.15\linewidth}|p{0.25\linewidth}|p{ 0.60\linewidth}|
+.. tabularcolumns:: |p{0.15\linewidth}|p{0.25\linewidth}|p{0.60\linewidth}|
 .. list-table::
     :header-rows: 1
     :widths: 15 25 60
@@ -10,19 +10,13 @@ Change Log
       - Modified locations
       - Modification details
 
-    * - 2016-08-31
-      - :doc:`../ArchitectureInDetail/WebApplicationDetail/ExceptionHandling`
-      - Modifications corresponding to Spring Framework 4.2.7
-      
-        * Description details related to HTTP response header output modified (\ `guideline#1965 <https://github.com/terasolunaorg/guideline/issues/1965>`_\ )
+    * - 2016-06-31
+      - :doc:`../ArchitectureInDetail/GeneralFuncDetail/StringProcessing`
+      - Description details added
 
-    * -
-      - :doc:`../ArchitectureInDetail/WebApplicationDetail/DoubleSubmitProtection`
-      - "How to manage transaction token lifecycle in How To Extend programmatic" deleted.
-
-        * When API for application offered by \ ``TransactionTokenContext``\ is used,
-          it impacts the behavior of internal framework like inability to retain \ ``TransactionToken``\ in the appropriate status and the like.
-          Hence, corresponding API is deprecated. Description for how to use the corresponding function is deleted in accordance with the deprecation.
+        * Example to add dependency to terasoluna-gfw-string is added (\ `guideline#1699 <https://github.com/terasolunaorg/guideline/issues/1699>`_\ )
+        * Precautions for surrogate pair added to description of @Size annotation(\ `guideline#1874 <https://github.com/terasolunaorg/guideline/issues/1874>`_\ )
+        * Description added for corresponding UCS(Unicode)characters of JIS chinese characters \ ``U+2014``\(EM DASH)(\ `guideline#1914 <https://github.com/terasolunaorg/guideline/issues/1914>`_\ )
 
     * - 2016-08-04
       - :doc:`../Overview/FrameworkStack`
@@ -40,56 +34,12 @@ Change Log
 
         * Added warning for the classes on JSR-310 Date and Time API, refer \ `@DateTimeFormat is not strict with JSR310 #1991 <https://github.com/terasolunaorg/guideline/issues/1991>`_\ .
 
-    * -
-      - :doc:`../ArchitectureInDetail/WebApplicationDetail/Validation`
-      - Description details modified
-
-        * Description related to OS command injection added (\ `guideline#1957 <https://github.com/terasolunaorg/guideline/issues/1957>`_\ )
-
-    * -
-      - :doc:`../ArchitectureInDetail/WebApplicationDetail/FileUpload`
-      - Description details added
-
-        * Reminders for \ `CVE-2016-3092 <https://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2016-3092>`_\ (vulnerability of File Upload) added (\ `guideline#1973 <https://github.com/terasolunaorg/guideline/issues/1973>`_\ )
-
     * - 2016-05-19
       - \-
       - Optimize the order of chapters and sections
       
         * For details of modification, refer \ `Optimize the order of chapters and sections #1683 <https://github.com/terasolunaorg/guideline/issues/1683>`_\ .
-
-    * -
-      - :doc:`../Overview/FrameworkStack`
-      - Description details added
-
-        * mybatis-typehandlers-jsr310, jackson-datatype-jsr310 are added to OSS version to be used  (\ `guideline#1966 <https://github.com/terasolunaorg/guideline/issues/1966>`_\ )
-
-    * -
-      - :doc:`../ArchitectureInDetail/DataAccessDetail/DataAccessMyBatis3`
-      - Description details added
-
-        * Configuration method for using JSR-310 Date and Time API in Mybatis3.3 is described  (\ `guideline#1966 <https://github.com/terasolunaorg/guideline/issues/1966>`_\ )
-        * Precautions for using MyBatis in Java SE 7 environment are described (\ `guideline#1966 <https://github.com/terasolunaorg/guideline/issues/1966>`_\ )
-
-    * -
-      - :doc:`../ArchitectureInDetail/WebServiceDetail/REST`
-      - Description details changed and added
-
-        * Description of configuration while using JSR-310 Date and Time API / Joda Time is changed (\ `guideline#1966 <https://github.com/terasolunaorg/guideline/issues/1966>`_\ )
-        * Precautions for using Jackson in Java SE 7 environment are described (\ `guideline#1966 <https://github.com/terasolunaorg/guideline/issues/1966>`_\ )
-
-    * -
-      - :doc:`../ArchitectureInDetail/WebServiceDetail/RestClient`
-      - Description details modified
-
-        * Configuration while using JSR-310 Date and Time API in JSON is described (\ `guideline#1966 <https://github.com/terasolunaorg/guideline/issues/1966>`_\ )
-
-    * -
-      - :doc:`../ArchitectureInDetail/GeneralFuncDetail/Dozer`
-      - Description details added
-
-        * Precautions while using JSR-310 Date and Time API are described (\ `guideline#1966 <https://github.com/terasolunaorg/guideline/issues/1966>`_\ )
-
+      
     * - 2016-02-24
       - \-
       - 5.1.0 RELEASE version published
@@ -224,12 +174,6 @@ Change Log
         *  Description of \ ``defaultLocale``\  of \ ``SessionLocalResolver``\  corrected (\ `guideline#686 <https://github.com/terasolunaorg/guideline/issues/686>`_\ )
 
     * -
-      - :doc:`../ArchitectureInDetail/WebApplicationDetail/FileUpload`
-      - Description details added
-
-        * Description for directory traversal attack added (\ `guideline#2010 <https://github.com/terasolunaorg/guideline/issues/2010>`_\ )
-
-    * -
       - :doc:`../ArchitectureInDetail/WebApplicationDetail/Codelist`
       - Description details added
 
@@ -291,12 +235,6 @@ Change Log
 
         *  The object of sample code which handles the date that does not use Timezone modified to \ ``LocalDate``\  (\ `guideline#1283 <https://github.com/terasolunaorg/guideline/issues/1283>`_\ )
         *  A method to handle Japanese calendar in Java8 and earlier versions is added (\ `guideline#1450 <https://github.com/terasolunaorg/guideline/issues/1450>`_\ )
-
-    * -
-      - :doc:`../ArchitectureInDetail/GeneralFuncDetail/Logging`
-      - Description details added
-        
-        * Extension method to output log message with ID is described (\ `guideline#1928 <https://github.com/terasolunaorg/guideline/issues/1928>`_\ )
 
     * -
       - :doc:`../ArchitectureInDetail/GeneralFuncDetail/StringProcessing`
