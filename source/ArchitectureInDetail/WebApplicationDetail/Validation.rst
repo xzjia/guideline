@@ -2411,7 +2411,7 @@ Bean Validationのアノテーションの\ ``message``\ 属性に指定され�
 
         # ...
         # (1)
-        javax.validation.constraints.Pattern.message = The value entered "${validatedValue}" is not a number.
+        javax.validation.constraints.Pattern.message = The value entered "${validatedValue}" is invalid.
         # ...
 
 
