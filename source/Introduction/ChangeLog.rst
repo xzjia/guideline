@@ -12,9 +12,9 @@
 
     * - 2017-02-28
       - \-
-      - 5.3.0 RELEASE版公開
+      - 5.2.1 RELEASE版公開
 
-        * 更新内容の詳細は、\ `5.3.0のIssue一覧 <https://github.com/terasolunaorg/guideline/issues?utf8=%E2%9C%93&q=label%3A5.3.0%20is%3Aissue%20is%3Aclosed%20>`_\ を参照されたい。
+        * 更新内容の詳細は、\ `5.2.1のIssue一覧 <https://github.com/terasolunaorg/guideline/issues?utf8=%E2%9C%93&q=label%3A5.2.1%20is%3Aissue%20is%3Aclosed%20>`_\ を参照されたい。
 
     * -
       - :doc:`../ArchitectureInDetail/WebApplicationDetail/Validation`
