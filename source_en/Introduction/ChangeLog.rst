@@ -49,6 +49,14 @@ Change Log
 
         OSS version to be used along with Spring IO Platform version update is updated  
 
+    * -
+      - :doc:`../ArchitectureInDetail/GeneralFuncDetail/StringProcessing`
+      - Description details added
+
+        * Example to add dependency to terasoluna-gfw-string is added (\ `guideline#1699 <https://github.com/terasolunaorg/guideline/issues/1699>`_\ )
+        * Precautions for surrogate pair added to description of @Size annotation(\ `guideline#1874 <https://github.com/terasolunaorg/guideline/issues/1874>`_\ )
+        * Description added for corresponding UCS(Unicode)characters of JIS chinese characters \ ``U+2014``\(EM DASH)(\ `guideline#1914 <https://github.com/terasolunaorg/guideline/issues/1914>`_\ )
+
     * - 2016-08-31
       - :doc:`../ImplementationAtEachLayer/ApplicationLayer`
       - Description details added
@@ -249,6 +257,12 @@ Change Log
       - Description details added
 
         *  Description which recommends a pattern wherein \ ``JdbcTemplate``\  is specified in JdbcCodeList, is added (\ `guideline#501 <https://github.com/terasolunaorg/guideline/issues/501>`_\ )
+
+    * -
+      - :doc:`../ArchitectureInDetail/WebApplicationDetail/HealthCheck`
+      - New
+
+        * Health check added (\ `guideline#1698 <https://github.com/terasolunaorg/guideline/issues/1698>`_\ )
 
     * -
       - :doc:`../ArchitectureInDetail/WebServiceDetail/REST`
