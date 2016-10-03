@@ -19,6 +19,7 @@ The web function architecture adopted in this guideline is explained in detail.
    TilesLayout
    TagLibAndELFunctions
    Ajax
+   HealthCheck
 
 .. raw:: latex
 
