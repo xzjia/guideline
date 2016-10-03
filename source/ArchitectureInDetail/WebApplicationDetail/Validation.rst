@@ -2403,6 +2403,32 @@ Bean Validationのアノテーションの\ ``message``\ 属性に指定され�
             Bean ValidationにおけるEL式の扱いについては、
             \ `Hibernate Validator Reference Guide(Interpolation with message expressions) <http://docs.jboss.org/hibernate/validator/5.2/reference/en-US/html/ch04.html#section-interpolation-with-message-expressions>`_\ を参照されたい。
 
+    また、:file:`ValidationMessages.properties` に指定するメッセージに \ ``${validatedValue}``\ を使用することで、エラーメッセージにチェック対象の値を含むことができる。
+
+    以下に、 \ ``${validatedValue}``\ の使用例を示す。
+
+     .. code-block:: properties
+
+        # ...
+        # (1)
+        javax.validation.constraints.Pattern.message = The value entered "${validatedValue}" is invalid.
+        # ...
+
+
+     .. tabularcolumns:: |p{0.10\linewidth}|p{0.90\linewidth}|
+     .. list-table::
+        :header-rows: 1
+        :widths: 10 90
+
+        * - 項番
+          - 説明
+        * - | (1)
+
+          - 上記のメッセージ定義から実際に生成されるメッセージは、 \ ``${validatedValue}``\ の部分にフォームに入力した値が埋め込まれる。
+            入力値に機密情報を含む場合、機密情報がメッセージに表示されないようにするため、 \ ``${validatedValue}``\ を使用しないように注意すること。
+
+            詳細については、\ `Hibernate Validator Reference Guide(Interpolation with message expressions) <http://docs.jboss.org/hibernate/validator/5.2/reference/en-US/html/ch04.html#section-interpolation-with-message-expressions>`_\ を参照されたい。
+
 
 .. _Validation_message_in_application_messages:
 
