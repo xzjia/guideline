@@ -10,21 +10,6 @@ Change Log
       - Modified locations
       - Modification details
 
-    * - 2016-06-31
-      - :doc:`../ArchitectureInDetail/GeneralFuncDetail/StringProcessing`
-      - Description details added
-
-        * Example to add dependency to terasoluna-gfw-string is added (\ `guideline#1699 <https://github.com/terasolunaorg/guideline/issues/1699>`_\ )
-        * Precautions for surrogate pair added to description of @Size annotation(\ `guideline#1874 <https://github.com/terasolunaorg/guideline/issues/1874>`_\ )
-        * Description added for corresponding UCS(Unicode)characters of JIS chinese characters \ ``U+2014``\(EM DASH)(\ `guideline#1914 <https://github.com/terasolunaorg/guideline/issues/1914>`_\ )
-
-    * - 
-      - :doc:`../ArchitectureInDetail/WebApplicationDetail/DoubleSubmitProtection`
-      - Description details added
-
-        * Description for specifications and how to use \ ``TransactionTokenType.CHECK``\ which is newly added in the type attribute of \ ``@TransactionTokenCheck``\  annotation added
-          (\ `guideline#2071 <https://github.com/terasolunaorg/guideline/issues/2071>`_\ )
-
     * - 2016-08-04
       - :doc:`../Overview/FrameworkStack`
       - OSS version to be used (Spring IO Platform version) updated
@@ -314,6 +299,13 @@ Change Log
     * -
       - :doc:`../Security/SecureLoginDemo`
       - Added new
+
+    * -
+      - :doc:`../Security/SecureLoginDemo`
+      - Description details added
+
+        * "Input check for security" added
+        * "Audit log output" added
 
         *  Typical implementation example of security requirements added (\ `guideline#1604 <https://github.com/terasolunaorg/guideline/issues/1604>`_\ )
 
