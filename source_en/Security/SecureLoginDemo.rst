@@ -57,12 +57,12 @@ The list of security requirements fulfilled by the application is shown below. T
       - Force password change when using initial password
       - Forces password change when authentication is successful using initial password
     * - | (2)
-      - 
+      -
       - Force to change expired password
       - | Force password change when authentication is successful for the users who have not changed the password for a certain period
         | In this application, it is intended only for Administrator
     * - | (3)
-      - 
+      -
       - Display message prompting password change
       - Displays message prompting password change when authentication is successful for the users who have not changed the password for a certain period
     * - | (4)
@@ -70,15 +70,15 @@ The list of security requirements fulfilled by the application is shown below. T
       - Specify minimum password length
       - Specifies the minimum length that can be set for the password
     * - | (5)
-      - 
+      -
       - Specify the type of characters for the password
       - Specifies the type of characters (uppercase letters, lowercase letters, numbers, symbols) that must be included in the password
     * - | (6)
-      - 
+      -
       - Prohibit user name from being used as password
       - Prohibit user name of the account from being used in the password
     * - | (7)
-      - 
+      -
       - Prohibit reuse of administrator password
       - Prohibit reusing the password which has been recently used by the administrator
     * - | (8)
@@ -86,11 +86,11 @@ The list of security requirements fulfilled by the application is shown below. T
       - Account lockout
       - If authentication of a certain account has failed for more than a specific number of times within a short period, then that account is set to 'authentication disabled' state (lockout state)
     * - | (9)
-      - 
+      -
       - Specify account lockout duration
       - Specifies the duration for account lockout state
     * - | (10)
-      - 
+      -
       - Unlock by administrator
       - Administrator can unlock any account
     * - | (11)
@@ -102,7 +102,7 @@ The list of security requirements fulfilled by the application is shown below. T
       - Assign random string to the password reissue URL
       - In order to prevent unauthorized access, a string that is difficult to guess is assigned to URL which is used to access the password reissue screen
     * - | (13)
-      - 
+      -
       - Issue confidential information for password reissue
       - Create confidential information in advance (Random string) that is difficult to guess, in order to use for user verification at the time of reissuing password
     * - | (14)
@@ -121,6 +121,38 @@ The list of security requirements fulfilled by the application is shown below. T
       - :ref:`Set the maximum limit for password reissue failure <reissue-info-invalidate>`
       - Set the maximum limit for password reissue failure
       - Disable password reissue screen URL and confidential information when the authentication fails for a specific number of times at the time of password reissue
+    * - | (18)
+      - :ref:`Input value check from security viewpoint <secure-input-validation>`
+      - Set commonly prohibited characters for request parameters
+      - Set commonly prohibited characters in overall application, for the string included in the request parameters
+    * - | (19)
+      -
+      - Set commonly prohibited string for uploaded file name
+      - Set commonly prohibited string in overall application, for the uploaded file name
+    * - | (20)
+      -
+      - Input check for control string
+      - Check whether control character is included in the input value.
+    * - | (21)
+      -
+      - Input check for file extension
+      - Check whether extension of the uploaded file is allowed in the application.
+    * - | (22)
+      -
+      - Input check for file name
+      - Check whether the file name for the uploaded file matches with the pattern authorized in the application
+    * - | (23)
+      -
+      - Input check for URL domain
+      - Check whether domain of input URL is authorized by the application.
+    * - | (24)
+      -
+      - Input check for mail address domain
+      - Check whether domain of input mail address is authorized by the application
+    * - | (25)
+      - :ref:`Audit log output <audit-logging>`
+      - Audit log output
+      - Output date and time, user name, operation details and operation results for each request in a log
 
 Functions
 --------------------------------------------------------------------------------
@@ -134,6 +166,8 @@ The application consists of following functions in addition to the application c
 
     * - Function name
       - Description
+    * - Create new account function
+      - A function to create new account
     * - Password change function
       - Function to enable logged-in users to change their account password
     * - Account lockout function
@@ -160,7 +194,7 @@ Authentication
 Authorization
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 
-* Authentication is required to access the screens other than login screen and the screen used for password reissue
+* Authentication is required to access the screens other than login screen, screen used for creating an account and the screen used for password reissue
 * There are two types of roles, "General user" and "Administrator"
     * A single account can have multiple roles
 * Account unlock function can be used only by the account having administrator rights
@@ -196,41 +230,50 @@ Screen transition diagram is shown below. Screen transition in case of an error 
     :widths: 20 50 30
 
     * - | Sr. No.
-      - | Screen name
+      - | Screen Name
       - | Access control
     * - | (1)
       - | Login screen
       - | -
     * - | (2)
-      - | Top screen
-      - | Authenticated users only
+      - | Create new account screen
+      - | -
     * - | (3)
-      - | Account information display screen
-      - | Authenticated users only
+      - | A screen to confirm input for creating new account
+      - | -
     * - | (4)
-      - | Password change screen
-      - | Authenticated users only
+      - | New account creation complete screen
+      - | -
     * - | (5)
-      - | Password change completion screen
-      - | Authenticated users only
+      - | A screen to generate authentication information for password reissue
+      - | -
     * - | (6)
-      - | Unlock screen
-      - | Administrator only
+      - | A screen to complete generation of authentication information for password reissue
+      - | -
     * - | (7)
-      - | Unlock completion screen
-      - | Administrator only
-    * - | (8)
-      - | Screen to create authentication information for password reissue
-      - | -
-    * - | (9)
-      - | Screen to complete creation of authentication information for password reissue
-      - | -
-    * - | (10)
       - | Password reissue screen
       - | -
-    * - | (11)
-      - | Password reissue completion screen
+    * - | (8)
+      - | Password reissue complete screen
       - | -
+    * - | (9)
+      - | Top screen
+      - | Authenticated users only
+    * - | (10)
+      - | Account information display screen
+      - | Authenticated users only
+    * - | (11)
+      - | Unlock screen
+      - | Administrator only
+    * - | (12)
+      - | Unlock complete screen
+      - | Administrator only
+    * - | (13)
+      - | Password change screen
+      - | Authenticated users only
+    * - | (14)
+      - | Password change complete screen
+      - | Authenticated users only
 
 URL List
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
@@ -247,90 +290,110 @@ URL list is shown below.
       - URL
       - Description
     * - 1
-      - Login screen display
+      - Display login screen
       - GET
       - /login
-      - Displays login screen
+      - Display login screen
     * - 2
       - Login
       - POST
       - /login
-      - Authenticates by using username and password entered from login screen (performed by Spring Security)
+      - Authenticate using user name and password entered in the screen (performed by Spring Security)
     * - 3
       - Logout
       - POST
       - /logout
-      - Performs logout (performed by Spring Security)
+      - Log out (performed by Spring Security)
     * - 4
-      - Top screen display
+      - Display top screen
       - GET
       - /
-      - Displays the Top screen
+      - Display top screen
     * - 5
-      - Account information display
+      - Display account information
       - GET
-      - /account
-      - Displays account information of logged-in user
+      - /accounts
+      - Display account information of login user
     * - 6
-      - Password change screen display
+      - A screen to create new account
+      - GET
+      - /accounts/create?form
+      - Display a screen to create new account
+    * - 7
+      - A screen to confirm input for creating new account
+      - POST
+      - /accounts/create?confirm
+      - Display a screen to confirm input for creating new account
+    * - 8
+      - Create new account
+      - POST
+      - /accounts/create
+      - Create a new account with input details
+    * - 9
+      - A screen to complete creation of new account
+      - GET
+      - /accounts/create?complete
+      - Display a screen to complete new account creation
+    * - 10
+      - Display password change screen
       - GET
       - /password?form
-      - Displays the password change screen
-    * - 7
+      - Display password change screen
+    * - 11
       - Password change
       - POST
       - /password
-      - Changes the password for the account using the information provided in the Password change screen
-    * - 8
-      - Password change completion screen display
+      - Change account password by using information input in the password change screen
+    * - 12
+      - Display password change complete screen
       - GET
       - /password?complete
-      - Displays password change completion screen
-    * - 9
-      - Unlock screen display
+      - Display password change complete screen
+    * - 13
+      - Display unlock screen
       - GET
       - /unlock?form
-      - Displays the unlock screen
-    * - 10
+      - Display unlock screen
+    * - 14
       - Unlock
       - POST
       - /unlock
-      - Unlocks the account using the information provided on the unlock screen
-    * - 11
-      - Unlock completion screen display
+      - Unlock an account by using information input in unlock screen
+    * - 15
+      - Display unlock complete screen
       - GET
       - /unlock?complete
-      - Displays the unlock completion screen
-    * - 12
-      - Authentication information creation screen display for password reissue
+      - Display unlock complete screen
+    * - 16
+      - Display a screen to generate authentication information for password reissue
       - GET
       - /reissue/create?form
-      - Displays the screen to create authentication information for password reissue
-    * - 13
-      - Create authentication information for password reissue
+      - Display a screen to generate authentication information for password reissue
+    * - 17
+      - Generate authentication information for password reissue
       - POST
       - /reissue/create
-      - Creates authentication information for password reissue
-    * - 14
-      - Authentication information creation completion screen display for password reissue
+      - Generate authentication information for password reissue
+    * - 18
+      - A screen to complete generation of authentication information for password reissue
       - GET
       - /reissue/create?complete
-      - Displays the authentication information creation completion screen for password reissue
-    * - 15
-      - Password reissue screen display
+      - Display a screen to complete generation of authentication information for password reissue
+    * - 19
+      - Display password reissue screen
       - GET
       - /reissue/resetpassword?form&token={token}
-      - Displays 'User specific password reissue screen display' using the two request parameters
-    * - 16
+      - Display user specific password reissue screen by using two request parameters
+    * - 20
       - Password reissue
       - POST
       - /reissue/resetpassword
-      - Reissue password using the information provided in the Password reissue screen
-    * - 17
-      - Password reissue completion screen display
+      - Reissue password by using the information input in password reissue screen
+    * - 21
+      - Display password reissue complete screen
       - GET
       - /reissue/resetpassword?complete
-      - Displays password reissue completion screen
+      - Display password reissue complete screen
 
 ER diagram
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
@@ -359,36 +422,44 @@ ER diagram in this application is shown below.
         | firstName : First name
         | lastName : Last name
         | email : E-mail address
+        | url : Individual Web site and blog URL
+        | profile : Profile
         | roles : Role(s)
     * - | (2)
+      - | Account image
+      - | Image registered by the user for the account
+      - | username : User name for the account corresponding to the account image
+        | body : Binary image file
+        | extension : Extension of image file
+    * - | (3)
       - | Role
       - | Rights to be used in authorization
       - | roleValue : Identifier of role
         | roleLabel : Display name of role
-    * - | (3)
+    * - | (4)
       - | Authentication successful event
       - | Information saved when authentication is successful in order to get the last login date and time of account
       - | username : User name
         | authenticationTimestamp : Date and time when authentication is successful
-    * - | (4)
+    * - | (5)
       - | Authentication failed event
       - | Information saved when authentication failed to be used by account lockout function
       - | username : User name
         | authenticationTimestamp : Date and time when authentication failed
-    * - | (5)
+    * - | (6)
       - | Password change history
       - | Information saved at the time of password change to be used to determine password expiration date
       - | username : User name
         | useFrom : Date and time when changed password is activated
         | password : Changed password
-    * - | (6)
+    * - | (7)
       - | Authentication information for password reissue
       - | Information to be used for user verification at the time of password reissue
       - | token : String used to make a unique and difficult to guess password reissue screen URL
         | username : User name
         | secret : String to be used for user verification
         | experyDate : Expiry date of authentication information for password reissue
-    * - | (7)
+    * - | (8)
       - | Password reissue failed event
       - | Information saved in password reissue failure to restrict the number of attempts for password reissue
       - | token : token used when failed to reissue password
@@ -949,7 +1020,8 @@ The code implemented according to the implementation method mentioned above is d
              model.addAttribute("account", account);
              
              if(accountSharedService.isCurrentPasswordExpired(account.getUsername())){ // (3)
-                 ResultMessages messages = ResultMessages.warning().add("w.sl.pe.0001");
+                 ResultMessages messages = ResultMessages.warning().add(
+                         "w.sl.pe.0001");
                  model.addAttribute(messages);
              }
 
@@ -2067,7 +2139,8 @@ The code implemented according to the implementation method is described below s
         private final Account account;
 
         public LoggedInUser(Account account, boolean isLocked,
-                        LocalDateTime lastLoginDate, List<SimpleGrantedAuthority> authorities) {
+                LocalDateTime lastLoginDate,
+                List<SimpleGrantedAuthority> authorities) {
             super(account.getUsername(), account.getPassword(), true, true, true,
                         !isLocked, authorities); // (1)
             this.account = account;
@@ -2305,8 +2378,7 @@ The code implemented according to the implementation method is described below s
 
              @Override
              public void unlock(String username) {
-                 authenticationEventSharedService
-                        .deleteFailureEventByUsername(username); // (1)
+                 authenticationEventSharedService.deleteFailureEventByUsername(username); // (1)
              }
 
          }
@@ -2655,7 +2727,8 @@ Code description
              public void authenticationSuccess(String username) {
                  SuccessfulAuthentication successEvent = new SuccessfulAuthentication();
                  successEvent.setUsername(username);
-                 successEvent.setAuthenticationTimestamp(dateFactory.newTimestamp().toLocalDateTime());
+                 successEvent.setAuthenticationTimestamp(dateFactory.newTimestamp()
+                         .toLocalDateTime());
 
                  successAuthenticationRepository.create(successEvent);
                  deleteFailureEventByUsername(username);
@@ -2686,7 +2759,8 @@ The code implemented according to the implementation method is described below s
              LoggedInUser details = (LoggedInUser) event.getAuthentication()
                              .getPrincipal(); // (2)
 
-             authenticationEventSharedService.authenticationSuccess(details.getUsername()); // (3)
+             authenticationEventSharedService.authenticationSuccess(details
+                     .getUsername()); // (3)
          }
 
      }
@@ -2770,7 +2844,8 @@ The code implemented according to the implementation method is described below s
          private final LocalDateTime lastLoginDate; // (1)
 
          public LoggedInUser(Account account, boolean isLocked,
-                         LocalDateTime lastLoginDate, List<SimpleGrantedAuthority> authorities) {
+                 LocalDateTime lastLoginDate,
+                 List<SimpleGrantedAuthority> authorities) {
 
              super(account.getUsername(), account.getPassword(), true, true, true,
                              !isLocked, authorities);
@@ -2855,25 +2930,25 @@ The code implemented according to the implementation method is described below s
      @Controller
      public class HomeController {
 
-     	@Inject
-     	AccountSharedService accountSharedService;
+        @Inject
+        AccountSharedService accountSharedService;
 
-     	@RequestMapping(value = "/", method = { RequestMethod.GET,
-     			RequestMethod.POST })
-     	public String home(@AuthenticationPrincipal LoggedInUser userDetails, // (1)
-     			Model model) {
+        @RequestMapping(value = "/", method = { RequestMethod.GET,
+                RequestMethod.POST })
+        public String home(@AuthenticationPrincipal LoggedInUser userDetails, // (1)
+                Model model) {
 
             // omitted
-     		
-     		LocalDateTime lastLoginDate = userDetails.getLastLoginDate(); // (2)
-     		if (lastLoginDate != null) {
-     			model.addAttribute("lastLoginDate", lastLoginDate
-     					.format(DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss"))); // (3)
-     		}
-     		
-     		return "welcome/home";
 
-     	}
+            LocalDateTime lastLoginDate = userDetails.getLastLoginDate(); // (2)
+            if (lastLoginDate != null) {
+                model.addAttribute("lastLoginDate", lastLoginDate
+                        .format(DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss"))); // (3)
+            }
+
+            return "welcome/home";
+
+        }
 
      }
 
@@ -3422,7 +3497,8 @@ The code implemented according to the above implementation method is described s
                  return showCreateReissueInfoForm(form);
              }
 
-             String rawSecret = passwordReissueService.createAndSendReissueInfo(form.getUsername()); // (1)
+             String rawSecret = passwordReissueService.createAndSendReissueInfo(form
+                     .getUsername()); // (1)
              attributes.addFlashAttribute("secret", rawSecret); // (2)
              return "redirect:/reissue/create?complete"; // (3)
          }
@@ -3490,7 +3566,8 @@ The code implemented according to the above implementation method is described s
      // omitted
 
      @Service
-     public class PasswordReissueMailSharedServiceImpl implements PasswordReissueMailSharedService {
+     public class PasswordReissueMailSharedServiceImpl implements
+             PasswordReissueMailSharedService {
 
          @Inject
          JavaMailSender mailSender; // (1)
@@ -3562,7 +3639,8 @@ The code implemented according to the above implementation method is described s
          @Override
          public String createAndSendReissueInfo(String username) {
             
-             String rowSecret = passwordGenerator.generatePassword(10, passwordGenerationRules);
+             String rowSecret = passwordGenerator.generatePassword(10,
+                     passwordGenerationRules);
 
              if(!accountSharedService.exists(username)){
                  return rowSecret;           
@@ -3766,7 +3844,8 @@ Code description
                            MessageKeys.E_SL_PR_5002, token));
                }
 
-               if (dateFactory.newTimestamp().toLocalDateTime().isAfter(info.getExpiryDate())) { // (2)
+               if (dateFactory.newTimestamp().toLocalDateTime()
+                        .isAfter(info.getExpiryDate())) { // (2)
                    throw new BusinessException(ResultMessages.error().add(
                            MessageKeys.E_SL_PR_2001));
                }
@@ -4074,8 +4153,7 @@ Code description
            public String resetPassword(@Validated PasswordResetForm form,
                    BindingResult bindingResult, Model model) {
                if (bindingResult.hasErrors()) {
-                   return showPasswordResetForm(form, model, form.getUsername(),
-                           form.getToken());
+                   return showPasswordResetForm(form, model, form.getToken());
                }
 
                try {
@@ -4084,8 +4162,7 @@ Code description
                    return "redirect:/reissue/resetpassword?complete";
                } catch (BusinessException e) {
                    model.addAttribute(e.getResultMessages());
-                   return showPasswordResetForm(form, model, form.getUsername(),
-                           form.getToken());
+                   return showPasswordResetForm(form, model, form.getToken());
                }
            }
 
@@ -4250,11 +4327,11 @@ Code description
                    token,
                    attempt_date
                ) VALUES (
-       	        #{token},
+                #{token},
                    #{attemptDate}
                )
            ]]>
-       	</insert>
+        </insert>
 
        	<delete id="deleteByToken">
            <![CDATA[
@@ -4446,6 +4523,1142 @@ Code implemented in accordance with the implementation method is described here 
        - | Fetch number of password reissue failure event entities from the database, considering token assigned as an argument, as a key.
      * - | (3)
        - | Compare number of failure event entities at the time of password reissue that has been fetched and maximum limit for number of failures, and throw an exception if it exceeds the maximum limit.
+
+.. _secure-input-validation :
+
+Input check validation for security
+--------------------------------------------------------------------------------
+
+List of requirements to be implemented
+""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+
+* :ref:`Configuration of common prohibited characters for request parameter <sec-requirements>`
+* :ref:`Configuration of common prohibited strings for uploaded file name <sec-requirements>`
+* :ref:`Input check for control characters <sec-requirements>`
+* :ref:`Input check for file extensions <sec-requirements>`
+* :ref:`Input check for file names <sec-requirements>`
+* :ref:`Input check for URL domain <sec-requirements>`
+* :ref:`Input check for mail address domain <sec-requirements>`
+
+Working image
+""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+
+* Configuration of common prohibited strings
+
+.. figure:: ./images/SecureLogin_common_input_validation.png
+   :alt: Common input validation
+   :width: 80%
+   :align: center
+
+* Individual input check
+
+.. figure:: ./images/SecureLogin_input_validation.png
+   :alt: Input validation
+   :width: 80%
+   :align: center
+
+Implementation method
+""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+| Since the scope for performing a check greatly vary for the configuration of common prohibited characters of overall application and individual input checks, implementation is carried out separately.
+| For configuration of common prohibited strings, two methods described in :ref:`controller-common-process` can be used. In this application, implementation is carried out by using Servlet Filter in order to perform check regardless of whether mapping is done in the handler method of Controller. When an input error occurs, it signifies that the input values which were not predicted as the results of normal user operation are input and are described in the configuration file so as to transit to a common error screen without considering reduction in usability.
+| For individual input check, :doc:`../ArchitectureInDetail/WebApplicationDetail/Validation` function can be used. Input value check is performed in this application using Bean Validation. For the individual input error, implementation is done so as to encourage re-input by displaying an error message for input items corresponding to Bean Validation.
+
+Code description
+""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+
+Code implemented in accordance with the implementation method above is explained sequentially.
+
+* Implementation of Servlet Filter
+
+  | When the user input is to be used in the application, it may serve as a target for injection attacks like SQL injection and XSS directory traversal (path traversal).
+  | An implementation example of Servlet Filter to validate the input from the user in overall application is shown as a countermeasure for these attacks.
+  | In this application, it is verified that prohibited characters respectively configured for following items are not included.
+
+  .. tabularcolumns:: |p{0.10\linewidth}|p{0.20\linewidth}|p{0.70\linewidth}|
+  .. list-table::
+     :header-rows: 1
+     :widths: 10 20 70
+
+     * - Sr. No.
+       - Items
+       - Description
+     * - | (1)
+       - | Request parameters
+       - | Since the request parameters are generally used for receiving the input from the user, the parameters act as a target for input check.
+         | Since both the parameter name and the value are entered by user, both the name and the value are checked.
+     * - | (2)
+       - | Upload file name
+       - | Since file upload function is executed in this application, the file name of uploaded file entered by user acts as a target for input check.
+
+  | Further, Since \ ``org.springframework.web.multipart.MultipartRequest`` \  is used in the following code, using \ ``org.springframework.web.multipart.support.MultipartFilter`` \ is assumed. For \ ``MultipartFilter`` \, refer \ :doc:`../ArchitectureInDetail/WebApplicationDetail/FileUpload`\.
+
+  .. code-block:: java
+
+     package org.terasoluna.securelogin.app.common.filter;
+
+     // omitted
+
+     public class InputValidationFilter extends OncePerRequestFilter { // (1)
+
+         private final List<Character> prohibitedChars;
+
+         private final List<Character> prohibitedCharsForFileName;
+
+         public InputValidationFilter(char[] prohibitedChars,
+                 char[] prohibitedCharsForFileName) {
+             this.prohibitedChars = Chars.asList(prohibitedChars); // (2)
+             this.prohibitedCharsForFileName = Chars
+                     .asList(prohibitedCharsForFileName); // (3)
+         }
+
+         @Override
+         protected void doFilterInternal(HttpServletRequest request,
+                 HttpServletResponse response, FilterChain filterChain)
+                 throws ServletException, IOException {
+             if (request != null) {
+                 validateRequestParams(request); // (4)
+
+                 if (request instanceof MultipartRequest) {
+                     validateFileNames((MultipartRequest) request); // (5)
+                 }
+             }
+
+             filterChain.doFilter(request, response); // (6)
+         }
+
+         private void validateRequestParams(HttpServletRequest request) {
+             Map<String, String[]> params = request.getParameterMap();
+             for (Map.Entry<String, String[]> entry : params.entrySet()) {
+                 validate(entry.getKey(), prohibitedChars); // (7)
+                 for (String value : entry.getValue()) {
+                     validate(value, prohibitedChars); // (8)
+                 }
+             }
+         }
+
+         private void validateFileNames(MultipartRequest request) {
+             for (Map.Entry<String, MultipartFile> entry : request.getFileMap()
+                     .entrySet()) {
+                 String filename = new File(entry.getValue().getOriginalFilename())
+                         .getName(); // (9)
+                 validate(filename, prohibitedCharsForFileName); // (10)
+             }
+         }
+
+         private void validate(String target, List<Character> prohibited) {
+             if (StringUtils.hasLength(target)) {
+                 List<Character> chars = Chars.asList(target.toCharArray());
+                 for(Character prohibitedChar : prohibited) { // (11)
+                     if (chars.contains(prohibitedChar)) {
+                         throw new InvalidCharacterException(
+                             "The request contains prohibited charcter.");
+                     }
+                 }
+             }
+         }
+
+     }
+
+  .. tabularcolumns:: |p{0.10\linewidth}|p{0.90\linewidth}|
+  .. list-table::
+     :header-rows: 1
+     :widths: 10 90
+
+     * - Sr. No.
+       - Description
+     * - | (1)
+       - | It is guaranteed that the process is executed only once for the request by inheriting \ ``org.springframework.web.filter.OncePerRequestFilter`` \.
+     * - | (2)
+       - | Receive the list of prohibited characters of request parameters as a string and store as a list of characters.
+     * - | (3)
+       - | Receive the list of prohibited characters of file name as a string and store as a list of characters.
+     * - | (4)
+       - | Call a method to perform input check of request parameters
+     * - | (5)
+       - | In case of file upload request (when Content-Type is a POST request of \ ``multipart/form-data`` \), the \ ``request`` \  object here acts as an instance of \ ``StandardMultipartHttpServletRequest`` \  which implements \ ``MultipartRequest`` \, using \ ``MultipartFilter`` \ function.
+         | Fetch file name by using \ ``MultipartRequest`` \  API and call a method to perform input check.
+     * - | (6)
+       - | After completing input check, call a method to execute subsequent servlet filter process.
+     * - | (7), (8)
+       - | Fetch the list of request parameters from \ ``HttpServletRequest`` \ and call a method to perform actual input check for each request parameter name and request parameter value.
+     * - | (9)
+       - | Fetch the list of files uploaded from \ ``MultipartRequest`` \  and fetch actual file name.
+         | Since path is included in the file name according to browser or OS of the client and path delimiter tends to vary, the process is required to fetch only file name.
+     * - | (10)
+       - | Call a method to perform actual input check for the file name of each uploaded file.
+     * - | (11)
+       - | Check whether the string for input check is included in the prohibited characters - sequentially one character at a time and throw an exception if the prohibited character is included
+         | \ ``InvalidCharacterException`` \  is an exception created by inheriting \ ``RuntimeException`` \. Code is omitted.
+
+  .. tip::
+
+     In this application, only request parameters and file names are checked for common prohibited characters.
+     If required, similar check can also be implemented for HTTP header or cookies by fetching the value of HTTP header and Cookie using \ ``getHeaders`` \  and \ ``getCookies`` \  of \ ``HttpServletRequest`` \.
+
+* Configuration of Servlet Filter
+
+  | Configure in web.xml to validate created \ ``InputValidationFilter`` \.
+  | Configuration is done by using \ ``org.springframework.web.filter.DelegatingFilterProxy`` \  by reading prohibited characters from the property file and defining a Bean for \ ``InputValidationFilter`` \.
+
+  **web.xml**
+
+  .. code-block:: xml
+
+     <filter>
+         <filter-name>MultipartFilter</filter-name>
+         <filter-class>org.springframework.web.multipart.support.MultipartFilter</filter-class>  <!-- (1) -->
+     </filter>
+     <filter-mapping>
+         <filter-name>MultipartFilter</filter-name>
+         <url-pattern>/*</url-pattern>
+     </filter-mapping>
+
+     <filter>
+         <filter-name>inputValidationFilter</filter-name>
+         <filter-class>org.springframework.web.filter.DelegatingFilterProxy</filter-class>  <!-- (2) -->
+     </filter>
+     <filter-mapping>
+         <filter-name>inputValidationFilter</filter-name>
+         <url-pattern>/*</url-pattern>
+     </filter-mapping>
+
+     <!-- omitted -->
+
+     <error-page>
+         <exception-type>org.terasoluna.securelogin.app.common.filter.exception.InvalidCharacterException</exception-type>  <!-- (3) -->
+         <location>/WEB-INF/views/common/error/invalidCharacterError.jsp</location>
+     </error-page>
+
+  .. tabularcolumns:: |p{0.10\linewidth}|p{0.90\linewidth}|
+  .. list-table::
+     :header-rows: 1
+     :widths: 10 90
+
+     * - Sr. No.
+       - Description
+     * - | (1)
+       - | Configure \ ``MultipartFilter`` \  which is a prerequisite for using \ ``InputValidationFilter`` \.
+         | Note that \ ``MultipartFilter`` \  must be defined even prior to \ ``InputValidationFilter`` \
+     * - | (2) 
+       - | Configure \ ``InputValidationFilter`` \ for which a Bean is defined, using \ ``DelegatingFilterProxy`` \.
+         | Bean name must be specified in the \ ``<filter-name>`` \.
+     * - | (3) 
+       - | Configure an error screen to be displayed when the \ ``InvalidCharacterException`` \  exception is thrown.
+
+  .. note::
+
+     Since \ ``MultipartFilter`` \  is used for input check of file name, configuration to validate upload function of Servlet 3.0 described in :ref:`file-upload_how_to_usr_application_settings` is required in addition to the details described here.
+
+  **invalidCharacterError.jsp**
+
+  .. code-block:: jsp
+
+     <% response.setStatus(HttpServletResponse.SC_BAD_REQUEST); %>  <!-- (1) -->
+     <!DOCTYPE html>
+     <html>
+     <head>
+     <meta charset="utf-8">
+     <title>Invalid Character Error!</title>
+
+     <!-- omitted -->
+
+  .. tabularcolumns:: |p{0.10\linewidth}|p{0.90\linewidth}|
+  .. list-table::
+     :header-rows: 1
+     :widths: 10 90
+
+     * - Sr. No.
+       - Description
+     * - | (1)
+       - | Since \ ``InvalidCharacterException`` \  is an exception which originates in the client input, set HTTP status code to \ ``"400"`` \ (Bad Request).
+
+  **applicationContext.xml**
+
+  .. code-block:: xml
+
+     <bean id="inputValidationFilter" class="org.terasoluna.securelogin.app.common.filter.InputValidationFilter">
+         <constructor-arg index="0" value="${app.security.prohibitedChars}"/>  <!-- (1) -->
+         <constructor-arg index="1" value="${app.security.prohibitedCharsForFileName}"/>  <!-- (2) -->
+     </bean>
+
+  .. tabularcolumns:: |p{0.10\linewidth}|p{0.90\linewidth}|
+  .. list-table::
+     :header-rows: 1
+     :widths: 10 90
+
+     * - Sr. No.
+       - Description
+     * - | (1)
+       - | Fetch the list of prohibited characters of request parameter from  property, as a string
+     * - | (2)
+       - | Fetch the list of prohibited characters of file name from property, as a string
+
+  **application.properties**
+
+  .. code-block:: properties
+
+     ## (1)
+     app.security.prohibitedChars=&\\!"<>*
+
+     ## (2)
+     app.security.prohibitedCharsForFileName=&\\!"<>*;:
+
+  .. tabularcolumns:: |p{0.10\linewidth}|p{0.90\linewidth}|
+  .. list-table::
+     :header-rows: 1
+     :widths: 10 90
+
+     * - Sr. No.
+       - Description
+     * - | (1)
+       - | In this application, specify a list of characters which are not intended to be included in the request parameters, as a string
+     * - | (2)
+       - | In this application, specify a list of characters which are not intended to be included in the uploaded file name, as a string
+
+* Creating Bean Validation annotation
+
+  An annotation of Bean Validation which validates the input value based on the requirements is created to alleviate the security risk posed by the input value which was not considered in the specifications of application.
+
+  * Annotation to verify that the control characters are not included
+
+    | When the control characters are included in the input value, an unexpected issue is likely to occur in the application. Hence, it is checked that the control characters are not included for the input items which do not require input of control characters.
+    | Since only linefeed character of control characters is allowed in some cases at the time of text input, an annotation to allow linefeed code is created separately.
+    | It can be verified that control characters are not included by performing a check using normal expressions.
+
+    .. code-block:: java
+
+       package org.terasoluna.securelogin.app.common.validation;
+
+       // omitted
+       @Documented
+       @Constraint(validatedBy = {})
+       @Target({ FIELD })
+       @Retention(RUNTIME)
+       @ReportAsSingleViolation  // (1)
+       @Pattern(regexp = "^\\P{Cntrl}*$") // (2)
+       public @interface NotContainControlChars {
+           String message() default "{org.terasoluna.securelogin.app.common.validation.NotContainControlChars.message}";
+
+           Class<?>[] groups() default {};
+
+           @Target({ FIELD })
+           @Retention(RUNTIME)
+           @Documented
+           public @interface List {
+               NotContainControlChars[] value();
+           }
+
+           Class<? extends Payload>[] payload() default {};
+       }
+
+    .. tabularcolumns:: |p{0.10\linewidth}|p{0.90\linewidth}|
+    .. list-table::
+       :header-rows: 1
+       :widths: 10 90
+
+       * - Sr. No.
+         - Description
+       * - | (1)
+         - | Assign \ ``@ReportAsSingleViolation`` \  annotation to output only the message specified in the annotation, as an error message.
+       * - | (2)
+         - | Assign \ ``@Pattern`` \ annotation to perform input check using normal expressions
+           | Since \ ``\P{Cntrl}`` \  signifies "characters other than control characters" in the normal expressions of Java, \ ``^\\P{Cntrl}*$`` \ matches only with the string which does not include a control character from beginning to end
+
+    | Similarly, implementation example for the annotation which allows linefeed code is shown below.
+
+    .. code-block:: java
+
+       package org.terasoluna.securelogin.app.common.validation;
+
+       // omitted
+       @Documented
+       @Constraint(validatedBy = {})
+       @Target({ FIELD })
+       @Retention(RUNTIME)
+       @ReportAsSingleViolation
+       @Pattern(regexp = "^[\\r\\n\\P{Cntrl}]*$") // (1)
+       public @interface NotContainControlCharsExceptNewlines {
+           String message() default "{org.terasoluna.securelogin.app.common.validation.NotContainControlCharsExceptNewlines.message}";
+
+           Class<?>[] groups() default {};
+
+           @Target({ FIELD })
+           @Retention(RUNTIME)
+           @Documented
+           public @interface List {
+               NotContainControlCharsExceptNewlines[] value();
+           }
+
+           Class<? extends Payload>[] payload() default {};
+       }
+
+    .. tabularcolumns:: |p{0.10\linewidth}|p{0.90\linewidth}|
+    .. list-table::
+       :header-rows: 1
+       :widths: 10 90
+
+       * - Sr. No.
+         - Description
+       * - | (1)
+         - | Specify normal expressions to match the string consisting of only "characters other than control character (\ ``\P{Cntrl}`` \)" and linefeed code (\ ``\r`` \, \ ``\n`` \).
+
+  * Annotation to verify that extensions of the uploaded file are allowed
+
+    | When a file uploaded by the user is to be received, the format of the file to be received is likely to be restricted. In such cases, a list of extensions for the files allowed is set and it is checked whether the extension of the uploaded file is included in the list.
+    | It is a specification which can be changed for whether the upper case and lower case extensions are to be differentiated.
+
+    .. warning::
+       Since extension of the file can be disguised easily, a file format should not be trusted unconditionally even after performing the extension check.
+
+    .. code-block:: java
+
+       package org.terasoluna.securelogin.app.common.validation;
+
+       // omitted
+
+       @Documented
+       @Constraint(validatedBy = { FileExtensionValidator.class })
+       @Target({ ElementType.FIELD })
+       @Retention(RetentionPolicy.RUNTIME)
+       public @interface FileExtension {
+           String message() default "{org.terasoluna.securelogin.app.common.validation.FileExtension.message}";
+
+           Class<?>[] groups() default {};
+
+           Class<? extends Payload>[] payload() default {};
+
+           String[] extensions();  // (1)
+
+           boolean ignoreCase() default true;  // (2)
+
+           @Target({ ElementType.FIELD })
+           @Retention(RetentionPolicy.RUNTIME)
+           @Documented
+           public @interface List {
+               FileExtension[] value();
+           }
+       }
+
+    .. tabularcolumns:: |p{0.10\linewidth}|p{0.90\linewidth}|
+    .. list-table::
+       :header-rows: 1
+       :widths: 10 90
+
+       * - Sr. No.
+         - Description
+       * - | (1)
+         - | Specify list of extensions to be allowed.
+       * - | (2)
+         - | Whether to ignore the differentiation between uppercase and lowercase characters. Default value is \ ``true`` \  (ignore)
+
+    .. code-block :: java
+
+       package org.terasoluna.securelogin.app.common.validation;
+
+       // omitted
+
+       public class FileExtensionValidator implements
+               ConstraintValidator<FileExtension, MultipartFile> {
+
+           private Set<String> extensions;
+
+           private boolean ignoreCase;
+
+           @Override
+           public void initialize(FileExtension constraintAnnotation) {
+               this.extensions = new HashSet<String>(
+                       Arrays.asList(constraintAnnotation.extensions()));
+               this.ignoreCase = constraintAnnotation.ignoreCase();
+           }
+
+           @Override
+           public boolean isValid(MultipartFile value,
+                   ConstraintValidatorContext context) {
+               if (value == null) {  // (1)
+                   return true;
+               }
+
+               String fileNameExtension = StringUtils.getFilenameExtension(value
+                       .getOriginalFilename());  // (2)
+               if (!StringUtils.hasLength(fileNameExtension)) {  // (3)
+                   return false;
+               }
+
+               for (String extension : extensions) {  // (4)
+                   if (fileNameExtension.equals(extension) || ignoreCase
+                           && fileNameExtension.equalsIgnoreCase(extension)) {
+                       return true;
+                   }
+               }
+               return false;
+           }
+
+       }
+
+    .. tabularcolumns:: |p{0.10\linewidth}|p{0.90\linewidth}|
+    .. list-table::
+       :header-rows: 1
+       :widths: 10 90
+
+       * - Sr. No.
+         - Description
+       * - | (1)
+         - | Return \ ``true`` \  in case of \ ``null`` \  since \ ``null`` \  check is performed by using another annotation.
+       * - | (2)
+         - | Fetch extension from the file name by using \ ``getFilenameExtension`` \  method of \ ``org.springframework.util.StringUtils`` \
+       * - | (3)
+         - | Return \ ``false`` \ for the file without an extension since it is not permissible.
+       * - | (4)
+         - | Fetch extensions one by one from the list of extensions to be allowed and compare with the string fetched from the file name.
+           | Return \ ``true`` \  if even one of the extensions show a match and return \ ``false`` \  if it does not match with any of the extensions in the list.
+
+  * Annotation that verifies that file name of the uploaded file matches with the patterns that are allowed
+
+    When a file uploaded by the user is to be received, the format of the file to be received is likely to be restricted. In such cases, pattern for the file name to be allowed is set in normal expression and it is checked that file name of uploaded file matches with the pattern.
+
+    .. code-block:: java
+
+       package org.terasoluna.securelogin.app.common.validation;
+
+       // omitted
+
+       @Documented
+       @Constraint(validatedBy = { FileNamePatternValidator.class })
+       @Target({ ElementType.FIELD })
+       @Retention(RetentionPolicy.RUNTIME)
+       public @interface FileNamePattern {
+
+           String message() default "{org.terasoluna.securelogin.app.common.validation.FileNamePattern.message}";
+
+           Class<?>[] groups() default {};
+
+           Class<? extends Payload>[] payload() default {};
+
+           String pattern() default "";  // (1)
+
+           @Target({ ElementType.FIELD })
+           @Retention(RetentionPolicy.RUNTIME)
+           @Documented
+           public @interface List {
+               FileNamePattern[] value();
+           }
+
+       }
+
+    .. tabularcolumns:: |p{0.10\linewidth}|p{0.90\linewidth}|
+    .. list-table::
+       :header-rows: 1
+       :widths: 10 90
+
+       * - Sr. No.
+         - Description
+       * - | (1)
+         - | Pattern for the file name to be allowed
+
+    .. code-block:: java
+
+       package org.terasoluna.securelogin.app.common.validation;
+
+       // omitted
+
+       public class FileNamePatternValidator implements
+               ConstraintValidator<FileNamePattern, MultipartFile> {
+
+           private Pattern pattern;
+
+           @Override
+           public void initialize(FileNamePattern constraintAnnotation) {
+               this.pattern = Pattern.compile(constraintAnnotation.pattern());  // (1)
+           }
+
+           @Override
+           public boolean isValid(MultipartFile value,
+                   ConstraintValidatorContext context) {
+               if (value == null) {  // (2)
+                   return true;
+               }
+
+               String filename = new File(value.getOriginalFilename()).getName();  // (3)
+               return pattern.matcher(filename).matches();  // (4)
+           }
+
+       }
+
+    .. tabularcolumns:: |p{0.10\linewidth}|p{0.90\linewidth}|
+    .. list-table::
+       :header-rows: 1
+       :widths: 10 90
+
+       * - Sr. No.
+         - Description
+       * - | (1)
+         - | Create and retain a pattern of normal expressions to be checked, as a \ ``Pattern`` \.
+       * - | (2)
+         - | Return \ ``true`` \  in case of \ ``null`` \  since \ ``null`` \  check is performed by using another annotation.
+       * - | (3)
+         - | Fetch actual file name from \ ``MultipartRequest`` \. Since path is included in the file name in accordance with browser and OS of client and path delimiter varies, the process is required for fetching only file name.
+       * - | (4)
+         - | Return \ ``true`` \  when \ ``Pattern`` \  created in (1) and file name match otherwise return \ ``false`` \.
+
+
+  * Annotation to verify that domain of input URL is allowed
+
+    | When a URL input by the user is to be received, the domain that are allowed are likely to be restricted. In such cases, list of domains allowed is set and it is checked whether the domain of input URL is a domain included in the list or is a subdomain.
+    | Since URL format is checked at the same time, implementation is done combining with \ ``org.hibernate.validator.constraints.URL`` \.
+
+    .. code-block:: java
+
+       package org.terasoluna.securelogin.app.common.validation;
+
+       // omitted
+
+       @Documented
+       @Constraint(validatedBy = { DomainRestrictedURLValidator.class })
+       @Target({ FIELD })
+       @Retention(RUNTIME)
+       @URL  // (1)
+       public @interface DomainRestrictedURL {
+
+           String message() default "{org.terasoluna.securelogin.app.common.validation.DomainRestrictedURL.message}";
+
+           Class<?>[] groups() default {};
+
+           String[] allowedDomains() default {};  // (2)
+
+           @Target({ FIELD })
+           @Retention(RUNTIME)
+           @Documented
+           public @interface List {
+               DomainRestrictedURL[] value();
+           }
+
+           Class<? extends Payload>[] payload() default {};
+
+       }
+
+    .. tabularcolumns:: |p{0.10\linewidth}|p{0.90\linewidth}|
+    .. list-table::
+       :header-rows: 1
+       :widths: 10 90
+
+       * - Sr. No.
+         - Description
+       * - | (1)
+         - | Assign \ ``@URL`` \  to check URL format.
+       * - | (2)
+         - | List of domains to be allowed
+
+    .. code-block:: java
+
+       package org.terasoluna.securelogin.app.common.validation;
+
+       // omitted
+
+       public class DomainRestrictedURLValidator implements
+               ConstraintValidator<DomainRestrictedURL, String> {
+
+           private static final Pattern URL_REGEX = Pattern  // (1)
+               .compile( "(?i)^(?:[a-z](?:[-a-z0-9\\+\\.])*)" + // protocol
+                        ":(?:\\/\\/([^\\/:]+)" + // auth+host/ip
+                        "(?::([0-9]*))?" + // port
+                        "(?:\\/.*)*)$"
+                );
+
+           private Set<String> allowedDomains;
+
+           @Override
+           public void initialize(DomainRestrictedURL constraintAnnotation) {
+               allowedDomains = new HashSet<String>(Arrays.asList(constraintAnnotation
+                       .allowedDomains()));  // (2)
+           }
+
+           @Override
+           public boolean isValid(String value, ConstraintValidatorContext context) {
+               Matcher urlMatcher = URL_REGEX.matcher(value);
+               if (urlMatcher.matches()) {  // (3)
+                   String host = urlMatcher.group(1);
+                   for(String domain : allowedDomains) {  // (4)
+                       if (StringUtils.hasLength(host) && host.endsWith("."+domain)) {
+                           return true;
+                       }
+                   }
+                   return false;
+               } else {
+                   return true;
+               }
+           }
+
+       }
+
+    .. tabularcolumns:: |p{0.10\linewidth}|p{0.90\linewidth}|
+    .. list-table::
+       :header-rows: 1
+       :widths: 10 90
+
+       * - Sr. No.
+         - Description
+       * - | (1)
+         - | Create and retain a pattern of normal expressions as a \ ``Pattern`` \ for fetching URL domain
+           | Since whether the URL format is correct is verified by \ ``@URL`` \, only minimum required expressions are specified here.
+       * - | (2)
+         - | Fetch and retain the list of domains to be allowed
+       * - | (3)
+         - | Check whether the URL format is correct. If the format is invalid, return \ ``true`` \ here since a validation error occurs in \ ``URL`` \  annotation used in combination
+       * - | (4)
+         - | Fetch the domain one by one from the list of domains to be allowed and check whether it matches with the end part of host name of URL. Return \ ``true`` \  if even one of the values match and return \ ``false`` \  if it does not match with any of the values
+
+
+  * Annotation to verify that domain of input mail address is allowed
+
+    | When a mail address input by the user is to be received, the domains that are allowed are likely to be restricted. In such cases, list of allowed domains is set and it is checked that domain of input mail address is included in the list. It is a specification which can be changed to include whether to allow  the subdomain of domain.
+    | Since the mail address format is checked at the same time, implementation is done combining with \ ``org.hibernate.validator.constraints.Email`` \.
+
+    .. code-block:: java
+
+       package org.terasoluna.securelogin.app.common.validation;
+
+       // omitted
+
+       @Documented
+       @Constraint(validatedBy = { DomainRestrictedEmailValidator.class })
+       @Target({ FIELD })
+       @Retention(RUNTIME)
+       @Email  // (1)
+       public @interface DomainRestrictedEmail {
+           String message() default "{org.terasoluna.securelogin.app.common.validation.DomainRestrictedEmail.message}";
+
+           Class<?>[] groups() default {};
+
+           String[] allowedDomains() default {};  // (2)
+
+           boolean allowSubDomain() default false;  // (3)
+
+           @Target({ FIELD })
+           @Retention(RUNTIME)
+           @Documented
+           public @interface List {
+               DomainRestrictedEmail[] value();
+           }
+
+           Class<? extends Payload>[] payload() default {};
+       }
+
+    .. tabularcolumns:: |p{0.10\linewidth}|p{0.90\linewidth}|
+    .. list-table::
+       :header-rows: 1
+       :widths: 10 90
+
+       * - Sr. No.
+         - Description
+       * - | (1)
+         - | Assign \ ``@Email`` \  to check the mail address format
+       * - | (2)
+         - | List of domains to be allowed
+       * - | (3)
+         - | Whether to allow a subdomain. Default value is \ ``false`` \  (do not allow)
+
+    .. code-block:: java
+
+       package org.terasoluna.securelogin.app.common.validation;
+
+       // omitted
+
+       public class DomainRestrictedEmailValidator implements
+               ConstraintValidator<DomainRestrictedEmail, CharSequence> {
+
+           private Set<String> allowedDomains;
+
+           private boolean allowSubDomain;
+
+           @Override
+           public void initialize(DomainRestrictedEmail constraintAnnotation) {
+               allowedDomains = new HashSet<String>(Arrays.asList(constraintAnnotation
+                       .allowedDomains()));  // (1)
+               allowSubDomain = constraintAnnotation.allowSubDomain();  // (2)
+           }
+
+           @Override
+           public boolean isValid(CharSequence value,
+                   ConstraintValidatorContext context) {
+               if (value == null) {  // (3)
+                   return true;
+               }
+
+               for (String domain : allowedDomains) {  // (4)
+                   if (value.toString().endsWith("@" + domain)
+                           || (allowSubDomain && value.toString().endsWith(
+                                   "." + domain))) {
+                       return true;
+                   }
+               }
+               return false;
+           }
+
+       }
+
+    .. tabularcolumns:: |p{0.10\linewidth}|p{0.90\linewidth}|
+    .. list-table::
+       :header-rows: 1
+       :widths: 10 90
+
+       * - Sr. No.
+         - Description
+       * - | (1)
+         - | Fetch and retain the list of domains to be allowed.
+       * - | (2)
+         - | Fetch and retain the truth value which indicates whether the subdomain is allowed
+       * - | (3)
+         - | Return \ ``true`` \ in case of \ ``null`` \  since \ ``null`` \  check is performed by another annotation
+       * - | (4)
+         - | Fetch domain one by one from the list of domains to be allowed and check whether it matches with the domain part of the mail address. Return \ ``true`` \  even if one of the domains show a match and return \ ``false`` \ of it does not match any of the domains.
+
+* Assigning annotation to Form class
+
+  Annotation created is assigned to the field of Form class of new account creation.
+
+  .. code-block:: java
+
+     package org.terasoluna.securelogin.app.account;
+
+     // omitted
+
+     public class AccountCreateForm implements Serializable {
+
+         // omitted
+
+         @NotNull
+         @NotContainControlChars  // (1)
+         @Size(min=4, max=128)
+         private String username;
+
+         // omitted
+
+         @NotNull
+         @NotContainControlChars
+         @Size(min=1, max=128)
+         @DomainRestrictedEmail(allowedDomains={ "domainexample.co.jp",
+                  "somedomainexample.co.jp" }, allowSubDomain=true)  // (2)
+         private String email;
+
+         // omitted
+
+         @NotNull
+         @NotContainControlChars
+         @DomainRestrictedURL(allowedDomains={ "jp" })  // (3)
+         private String url;
+
+         @UploadFileRequired
+         @UploadFileNotEmpty
+         @UploadFileMaxSize
+         @FileExtension(extensions = { "jpg", "png", "gif" })  // (4)
+         @FileNamePattern(pattern = "[a-zA-Z0-9_-]+\\.[a-zA-Z]{3}")  // (5)
+         private MultipartFile image;
+
+         @NotNull
+         @NotContainControlCharsExceptNewlines  // (6)
+         private String profile;
+
+     }
+
+  .. tabularcolumns:: |p{0.10\linewidth}|p{0.90\linewidth}|
+  .. list-table::
+     :header-rows: 1
+     :widths: 10 90
+
+     * - Sr. No.
+       - Description
+     * - | (1)
+       - | Check that control characters are not included.
+     * - | (2)
+       - | Check that the mail address domain is "ntt.co.jp", "nttdata.co.jp" or its subdomain
+     * - | (3)
+       - | Check that URL domain is "jp" or its subdomain
+     * - | (4)
+       - | Check that file extemsions are one of the "jpg", "png" and "gif" extensions
+     * - | (5)
+       - | Check that the file name is of "repeating 1 or more characters of Alphanumeric, "_", "-" " + " "." " + "single byte alphabet 3 characters" pattern
+     * - | (6)
+       - | Check that control characters other than linefeed character are not included
+
+.. _audit-logging:
+
+Audit log output
+--------------------------------------------------------------------------------
+
+List of requirements to be implemented
+""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+* :ref:`Audit log output <sec-requirements>`
+
+Working image
+""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+
+.. figure:: ./images/SecureLogin_logging.png
+   :alt: Logging
+   :width: 80%
+   :align: center
+
+
+While calling a service class method, date and time of calling, name of the user calling and method name are output in a log for the audit in order to check the information regarding the application like the user who has performed the operation, date and time at which the operation is performed, what kind of operation is performed etc.
+Further, for the results of method execution, log is output as "operation successful" if exception does not occur during the operation and "operation failed" if exception occurs during the process.
+
+Log format is as below..
+
+\ ``｛date and time of method calling｝｛Thread｝｛Name of user calling｝｛X-Track｝｛Log level｝｛Logger｝｛Message｝`` \
+
+.. tabularcolumns:: |p{0.30\linewidth}|p{0.70\linewidth}|
+.. list-table::
+   :header-rows: 1
+   :widths: 30 70
+
+   * - Sr. No.
+     - Description
+   * - | Date and time of method calling
+     - | Date and time at which service class method is called is output in "yyyy-MM-dd HH:mm:ss" format
+   * - | Thread
+     - | A thread which outputs the log
+   * - | Name of user calling
+     - | Output user name of Spring Security which calls service class method
+       | Kept blank in case of no login
+   * - | X-Track
+     - | An ID which is set for each request to enhance traceability
+       | For details, refer \ :doc:`../ArchitectureInDetail/GeneralFuncDetail/Logging` \
+   * - | Log level
+     - | Level of log which has been output
+       | Output in \ ``info`` \ level in this application
+   * - | Logger
+     - | A logger which outputs a log
+   * - | Message
+     - | Time at which a method is called: "[START SERVICE] ServiceClassName.methodName"
+       | Time at which method is successfully terminated: "[COMPLETE SERVICE] ServiceClassName.methodName"
+       | Exception occurrence time: "[SERVICE THROWS EXCEPTION] ExceptionClassName.methodName"
+
+How to implement
+""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+| User name is fetched from authentication information of Spring Security in order to output user name in the log. Fetching user name and log output are implemented by using \ ``org.terasoluna.gfw.security.web.logging.UserIdMDCPutFilter`` \  described in \ :doc:`../ArchitectureInDetail/GeneralFuncDetail/Logging` \.
+| Further, operation details and operation results for the request are defined as below and output in a log, for this application.
+
+* Operation details: Name of the method of service class that has been called
+* Operation results: Whether the exceptions have occurred in the results of method processing
+
+| AOP(Aspect Oriented Programming) function offered by Spring can be used to achieve a cross-sectional function like log output for calling of all the methods of service class
+| AOP offered by Spring offers many implementation methods. This application puts an emphasis on combining with implementation of logging related components offered by common library <https://github.com/terasolunaorg/terasoluna-gfw>`_ and adopts a method to implement \ ``org.aopalliance.intercept.MethodInterceptor`` \.
+| Requirements are fulfilled by implementation and configuration given below.
+
+* Configure \ ``UserIdMDCPutFilter`` \
+
+* Create an advice which outputs a log at the time of calling a method and after execution
+
+* Configure to apply the advice defined above for the class assigned with \ ``@Service`` \
+
+ .. note::
+
+    Advice indicates a process which is executed for AOP within specified timing.
+    Further, the place where advice can be embedded is called a joining point whereas set of join points where advice is embedded is called as a point cut
+    For AOP function offered by Spring, refer Official document - AOP <http://docs.spring.io/spring/docs/4.2.7.RELEASE/spring-framework-reference/html/aop.html>`_ .
+
+Code description
+""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+
+Code implemented in accordance with the implementation method above is sequentially explained.
+
+* Configure \ ``UserIdMDCPutFilter`` \
+
+  Configuration to output authenticated user name of Spring Security in log is shown below.
+
+  **spring-security.xml**
+
+  .. code-block:: xml
+
+     <!-- omitted -->
+
+     <sec:http>
+         <!-- omitted -->
+         <sec:custom-filter ref="userIdMDCPutFilter" after="ANONYMOUS_FILTER" />
+         <!-- omitted -->
+     </sec:http>
+
+     <!-- omitted -->
+     <bean id="userIdMDCPutFilter" class="org.terasoluna.gfw.security.web.logging.UserIdMDCPutFilter">
+     </bean>
+
+  .. tabularcolumns:: |p{0.10\linewidth}|p{0.90\linewidth}|
+  .. list-table::
+     :header-rows: 1
+     :widths: 10 90
+
+     * - Sr. No.
+       - Description
+     * - | (1)
+       - | Configure \ ``UserIdMDCPutFilter`` \  in Filter Chain of Spring Security to output a log immediately after generating user information
+         | By configuring \ ``UserIdMDCPutFilter`` \, authenticated user name is added to MDC with a key called \ ``USER`` \.
+
+  **logback.xml**
+
+  .. code-block:: xml
+
+     <!-- omitted -->
+
+     <appender name="AUDIT_LOG_FILE"
+         class="ch.qos.logback.core.rolling.RollingFileAppender">  <!-- (1) -->
+         <file>log/security-audit.log</file>
+         <rollingPolicy class="ch.qos.logback.core.rolling.TimeBasedRollingPolicy">
+             <fileNamePattern>log/security-audit-%d{yyyyMMdd}.log</fileNamePattern>
+             <maxHistory>7</maxHistory>
+         </rollingPolicy>
+         <encoder>
+             <charset>UTF-8</charset>
+             <pattern><![CDATA[date:%d{yyyy-MM-dd HH:mm:ss}\tthread:%thread\tUSER:%X{USER}\tX-Track:%X{X-Track}\tlevel:%-5level\tlogger:%-48logger{48}\tmessage:%msg%n]]></pattern>  <!-- (2) -->
+         </encoder>
+     </appender>
+
+     <!-- omitted -->
+
+     <logger 
+        name="org.terasoluna.securelogin.domain.common.interceptor.ServiceCallLoggingInterceptor"
+        additivity="false">  <!-- (3) -->
+        <level value="info" />
+        <appender-ref ref="AUDIT_LOG_FILE" />
+     </logger>
+
+     <!-- omitted -->
+
+  .. tabularcolumns:: |p{0.10\linewidth}|p{0.90\linewidth}|
+  .. list-table::
+     :header-rows: 1
+     :widths: 10 90
+
+     * - Sr. No.
+       - Description
+     * - | (1)
+       - | Define an appender for audit log output.
+     * - | (2)
+       - | Describe "USER:%X{USER}" in the pattern definition
+     * - | (3)
+       - | Define a logger for audit log output
+         | Implementation of \ ``org.terasoluna.securelogin.domain.common.interceptor.ServiceCallLoggingInterceptor`` \  will be explained later.
+
+* Create an advice which outputs a log at the time of calling a method and after execution
+
+  Implementation and configuration to output a log for operation details and operation results are shown below.
+
+  .. code-block:: java
+
+     package org.terasoluna.securelogin.domain.common.interceptor;
+
+     // omitted
+
+     public class ServiceCallLoggingInterceptor implements MethodInterceptor {  // (1)
+
+       private static final Logger logger = LoggerFactory
+               .getLogger(ServiceCallLoggingInterceptor.class);
+
+       @Override
+       public Object invoke(MethodInvocation invocation) throws Throwable {  // (2)
+           String methodName = invocation.getMethod().getName();
+           String className = invocation.getMethod().getDeclaringClass()
+                   .getSimpleName();
+           logger.info("[START SERVICE]{}.{}", className, methodName);  // (3)
+           try {
+               Object result = invocation.proceed();  // (4)
+               logger.info("[COMPLETE SERVICE]{}.{}", className, methodName);  // (5)
+               return result;  // (6)
+           } catch (Throwable e) {
+               logger.info("[SERVICE THROWS EXCEPTION]{}.{}", className,  // (7)
+                       methodName);
+               logger.info(Exception : {}, Message : {}, e.getClass().getName(),
+                       e.getMessage()); // (8)
+               throw e;  // (9)
+           }
+       }
+   }
+
+  .. tabularcolumns:: |p{0.10\linewidth}|p{0.90\linewidth}|
+  .. list-table::
+     :header-rows: 1
+     :widths: 10 90
+
+     * - Sr. No.
+       - Description
+     * - | (1)
+       - | Implement \ ``MethodInterceptor`` \  to describe the processes to be carried out before and after calling a method
+     * - | (2)
+       - | Override \ ``invoke`` \  method defined in \ ``MethodInterceptor`` \
+         | Information like name of the method being called can be fetched from  \ ``org.aopalliance.intercept.MethodInvocation`` \  object of argument
+     * - | (3)
+       - | Output name of the method to be called in a log before calling a method
+     * - | (4)
+       - | Perform actual method calling and fetch results
+     * - | (5)
+       - | Output a "operation successful" log message if an exception does not occur in the results of calling a method
+     * - | (6)
+       - | Return a object for results of method calling
+     * - | (7)
+       - | Output a "operation failed" message when an exception occurs in the results of calling a method
+     * - | (8)
+       - | Output exception class and exception message thus occurred
+         | Since it is for the auditing, a stack trace is not output to avoid redundancy in the log
+     * - | (9)
+       - | Throw an exception object thus occurred
+
+  .. tip::
+
+     Detailed contents can also be output by using arguments at the time of calling a method, to further extend the example of this application.
+     However, in such a case, a password without hashing is likely to be output in a log. Hence, countermeasures like masking may be required.
+
+* Configure for applying advice for a class assigned with \ ``@Service`` \.
+
+  Configuration of point cut for the advice is shown below.
+
+  **secure-login-domain.xml**
+
+  .. code-block:: xml
+
+     <!-- omitted -->
+
+     <bean id="serviceCallLoggingInterceptor"
+         class="org.terasoluna.securelogin.domain.common.interceptor.ServiceCallLoggingInterceptor" />  <!-- (1) -->
+     <aop:config>
+         <aop:advisor advice-ref="serviceCallLoggingInterceptor"
+             pointcut="@within(org.springframework.stereotype.Service)" />  <!-- (2) -->
+     </aop:config>
+
+     <!-- omitted -->
+
+  .. tabularcolumns:: |p{0.10\linewidth}|p{0.90\linewidth}|
+  .. list-table::
+     :header-rows: 1
+     :widths: 10 90
+
+     * - Sr. No.
+       - Description
+     * - | (1)
+       - | Define a Bean for advice class created above (implementation class of \ ``MethodInterceptor`` \)
+     * - | (2)
+       - | Set Bean which implements the advice, in \ ``advice-ref`` \  attribute of \ ``aop:advisor`` \  tag and set point cuts in \ ``pointcut`` \  attribute respectively.
+         | By defining a point cut \ ``@within(org.springframework.stereotype.Service)`` \, the method calling of the class assigned with \ ``@Service`` \  is used as a target for advice.
+
+  .. note::
+
+     Spring AOP adopts a proxy method wherein a proxy class which has been auto-created handles the method calling.
+     Note that, as a constraint of AOP of Proxy method, advice is not executed for the method calling of visibility other than \ ``public`` \  or the method calling within the same class.
+     For details, refer `Official document <http://docs.spring.io/spring/docs/4.2.7.RELEASE/spring-framework-reference/html/aop.html#aop-understanding-aop-proxies>`_ .
+
+  Output results of log are as below.
+
+  .. code-block:: console
+
+     date:2016-08-18 13:45:42   thread:tomcat-http--7   USER:demo   X-Track:f514cc4159324ba28d8393f2c3062d89    level:INFO  logger:o.t.s.d.c.i.ServiceCallLoggingInterceptor        message:[START SERVICE]AccountSharedService.isInitialPassword
+     date:2016-08-18 13:45:42   thread:tomcat-http--7   USER:demo   X-Track:f514cc4159324ba28d8393f2c3062d89    level:INFO  logger:o.t.s.d.c.i.ServiceCallLoggingInterceptor        message:[START SERVICE]PasswordHistorySharedService.findLatest
+     date:2016-08-18 13:45:42   thread:tomcat-http--7   USER:demo   X-Track:f514cc4159324ba28d8393f2c3062d89    level:INFO  logger:o.t.s.d.c.i.ServiceCallLoggingInterceptor        message:[COMPLETE SERVICE]PasswordHistorySharedService.findLatest
+     date:2016-08-18 13:45:42   thread:tomcat-http--7   USER:demo   X-Track:f514cc4159324ba28d8393f2c3062d89    level:INFO  logger:o.t.s.d.c.i.ServiceCallLoggingInterceptor        message:[COMPLETE SERVICE]AccountSharedService.isInitialPassword
+
+  Log at the time occurrence of exception is as below. Since the log is for the process performed before login, the user name is not displayed.
+
+  .. code-block:: console
+
+     date:2016-08-18 13:52:32   thread:tomcat-http--10  USER:   X-Track:1a37a9a280014216a300b61e2f4bbb66    level:INFO  logger:o.t.s.d.c.i.ServiceCallLoggingInterceptor        message:[SERVICE THROWS EXCEPTION]AccountSharedService.findOne
+     date:2016-08-18 13:52:32   thread:tomcat-http--10  USER:   X-Track:1a37a9a280014216a300b61e2f4bbb66    level:INFO  logger:o.t.s.d.c.i.ServiceCallLoggingInterceptor        message:[SERVICE THROWS EXCEPTION]UserDetailsService.loadUserByUsername
+     date:2016-08-18 13:52:32   thread:tomcat-http--10  USER:   X-Track:1a37a9a280014216a300b61e2f4bbb66    level:INFO  logger:o.t.s.d.c.i.ServiceCallLoggingInterceptor        message:user not found
 
 Conclusion
 ================================================================================
