@@ -10,6 +10,7 @@ Change Log
       - Modified locations
       - Modification details
 
+
     * - 2016-08-31
       - :doc:`../ArchitectureInDetail/WebApplicationDetail/ExceptionHandling`
       - Modifications corresponding to Spring Framework 4.2.7
@@ -398,6 +399,13 @@ Change Log
     * -
       - :doc:`../Security/SecureLoginDemo`
       - Added new
+
+    * -
+      - :doc:`../Security/SecureLoginDemo`
+      - Description details added
+
+        * "Input check for security" added
+        * "Audit log output" added
 
         *  Typical implementation example of security requirements added (\ `guideline#1604 <https://github.com/terasolunaorg/guideline/issues/1604>`_\ )
 
