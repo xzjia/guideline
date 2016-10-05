@@ -2212,7 +2212,6 @@ It is explained below using the following form used at the beginning of \ :ref:`
     javax.validation.constraints.NotNull.message=is required.
     # (1)
     javax.validation.constraints.Size.message=size is not in the range {min} through {max}.
-    # (2)
     javax.validation.constraints.Min.message=cannot be less than {value}.
     javax.validation.constraints.Max.message=cannot be greater than {value}.
     org.hibernate.validator.constraints.Email.message=is an invalid e-mail address.
@@ -2226,8 +2225,6 @@ It is explained below using the following form used at the beginning of \ :ref:`
        - Description
      * - | (1)
        - | It is possible to embed the value of attributes specified in the annotation using \ ``{Attribute name}``\ .
-     * - | (2)
-       - | It is possible to embed the invalid value using \ ``{value}``\ .
 
 When the form is sent with input fields left blank after adding the above settings, changed error messages are displayed as shown below.
 
