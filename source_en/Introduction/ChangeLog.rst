@@ -10,43 +10,42 @@ Change Log
       - Modified locations
       - Modification details
 
-    * - 2016-06-31
-      - :doc:`../ArchitectureInDetail/GeneralFuncDetail/StringProcessing`
-      - Description details added
-
-        * Example to add dependency to terasoluna-gfw-string is added (\ `guideline#1699 <https://github.com/terasolunaorg/guideline/issues/1699>`_\ )
-        * Precautions for surrogate pair added to description of @Size annotation(\ `guideline#1874 <https://github.com/terasolunaorg/guideline/issues/1874>`_\ )
-        * Description added for corresponding UCS(Unicode)characters of JIS chinese characters \ ``U+2014``\(EM DASH)(\ `guideline#1914 <https://github.com/terasolunaorg/guideline/issues/1914>`_\ )
-
-    * - 
-      - :doc:`../ArchitectureInDetail/WebApplicationDetail/DoubleSubmitProtection`
-      - Description details added
-
-        * Description for specifications and how to use \ ``TransactionTokenType.CHECK``\ which is newly added in the type attribute of \ ``@TransactionTokenCheck``\  annotation added
-          (\ `guideline#2071 <https://github.com/terasolunaorg/guideline/issues/2071>`_\ )
-
-    * - 2016-08-04
-      - :doc:`../Overview/FrameworkStack`
-      - OSS version to be used (Spring IO Platform version) updated
-
-        * Spring IO Platform version updated in 2.0.6.RELEASE
-        * Spring Framework version updated in 4.2.7.RELEASE
-        * Spring Security version updated in 4.0.4.RELEASE
-
-        OSS version to be used along with Spring IO Platform version update is updated  
-
     * - 2016-08-31
-      - :doc:`../ImplementationAtEachLayer/ApplicationLayer`
+      - \-
+      - 1.0.5 RELEASE version published
+
+        * For details of update, refer \ `Issue list of 1.0.5 <https://github.com/terasolunaorg/guideline/issues?utf8=%E2%9C%93&q=label%3A5.2.0%20is%3Aissue%20is%3Aclosed%20>`_\.
+
+    * -
+      - General
+      - Correction of errors in the guideline (typos or simple description errors)
+
+        * For details of modification, refer \ `Issue list of 1.0.5 (improvement) <https://github.com/terasolunaorg/guideline/issues?utf8=%E2%9C%93&q=label%3A5.2.0%20label%3Aimprovement%20is%3Aclosed%20>`_\.
+
+        Update common library version to 1.0.5.
+
+        * For details of update, refer \ `Check Version  #2076 <https://github.com/terasolunaorg/guideline/issues/2076>`_\.
+
+    * -
+      - :doc:`../Overview/FrameworkStack`
       - Description details added
 
-        * Added warning for the classes on JSR-310 Date and Time API, refer \ `@DateTimeFormat is not strict with JSR310 #1991 <https://github.com/terasolunaorg/guideline/issues/1991>`_\ .
+        Version of OSS used updated)
 
-    * - 2016-05-19
-      - \-
-      - Optimize the order of chapters and sections
-      
-        * For details of modification, refer \ `Optimize the order of chapters and sections #1683 <https://github.com/terasolunaorg/guideline/issues/1683>`_\ .
-      
+        * GroupId "\ ``org.springframework``\" version updated from 3.2.14.RELEASE to 3.2.17.RELEASE
+
+    * -
+      - :doc:`../ArchitectureInDetail/WebApplicationDetail/FileUpload`
+      - Description details added
+
+        * \ `CVE-2016-3092 <https://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2016-3092>`_\ Precautions for (File Upload vulnerability) added (\ `guideline#1973 <https://github.com/terasolunaorg/guideline/issues/1973>`_\ )
+
+    * -
+      - :doc:`../Security/Authorization`
+      - Description details added
+
+        * How to handle \ `CVE-2016-5007 Spring Security / MVC Path Matching Inconsistency <https://pivotal.io/security/cve-2016-5007>`_\ added (\ `guideline#1976 <https://github.com/terasolunaorg/guideline/issues/1976>`_\ )
+
     * - 2016-02-24
       - \-
       - 5.1.0 RELEASE version published
