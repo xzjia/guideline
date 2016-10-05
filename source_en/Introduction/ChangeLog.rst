@@ -9,11 +9,36 @@ Change Log
     * - Modified on
       - Modified locations
       - Modification details
+
+    * - 2016-06-31
+      - :doc:`../ArchitectureInDetail/Utilities/StringProcessing`
+      - Description details added
+
+        * Example to add dependency to terasoluna-gfw-string is added (\ `guideline#1699 <https://github.com/terasolunaorg/guideline/issues/1699>`_\ )
+        * Precautions for surrogate pair added to description of @Size annotation(\ `guideline#1874 <https://github.com/terasolunaorg/guideline/issues/1874>`_\ )
+        * Description added for corresponding UCS(Unicode)characters of JIS chinese characters \ ``U+2014``\(EM DASH)(\ `guideline#1914 <https://github.com/terasolunaorg/guideline/issues/1914>`_\ )
+
+    * - 2016-08-04
+      - :doc:`../Overview/FrameworkStack`
+      - OSS version to be used (Spring IO Platform version) updated
+
+        * Spring IO Platform version updated in 2.0.6.RELEASE
+        * Spring Framework version updated in 4.2.7.RELEASE
+        * Spring Security version updated in 4.0.4.RELEASE
+
+        OSS version to be used along with Spring IO Platform version update is updated  
+
     * - 2016-08-31
       - :doc:`../ImplementationAtEachLayer/ApplicationLayer`
       - Description details added
 
         * Added warning for the classes on JSR-310 Date and Time API, refer \ `@DateTimeFormat is not strict with JSR310 #1991 <https://github.com/terasolunaorg/guideline/issues/1991>`_\ .
+
+    * - 2016-05-19
+      - \-
+      - Optimize the order of chapters and sections
+      
+        * For details of modification, refer \ `Optimize the order of chapters and sections #1683 <https://github.com/terasolunaorg/guideline/issues/1683>`_\ .
 
     * - 2016-02-24
       - \-
