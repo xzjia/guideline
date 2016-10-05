@@ -80,7 +80,7 @@ Types of Logs
      - | Exception occurrence time, Message ID corresponding to system error
        | Use tools for monitoring and keep the output contents to a minimum.
 
-| Debug log, Access log, Communication log, Business error log and System error log are output to same file.
+| Debug log, Access log, External communication log, Business error log and System error log are output to same file.
 | In this guideline, the log file that outputs the above mentioned logs is called as application log.
 
 .. note::
@@ -485,7 +485,7 @@ Log is output by calling a method according to each log level of SLF4J logger(\ 
 
 Log output results are shown below. Log level of com.example.sample is DEBUG, hence TRACE log is not output.
 
-.. code-block:: xml
+.. code-block:: console
 
     date:2013-11-06 20:13:05    thread:tomcat-http--3 X-Track:5844f073b7434b67a875cb85b131e686    level:DEBUG logger:com.example.sample.app.welcome.HomeController    message:This log is debug log.
     date:2013-11-06 20:13:05    thread:tomcat-http--3 X-Track:5844f073b7434b67a875cb85b131e686    level:INFO  logger:com.example.sample.app.welcome.HomeController    message:This log is info log.
@@ -504,7 +504,7 @@ The description can be as given below when an argument is to be entered in place
 The log given below is output.
 
 
-.. code-block:: xml
+.. code-block:: console
 
     date:2013-11-06 20:32:45    thread:tomcat-http--3   X-Track:853aa701a401404a87342a574c69efbc    level:DEBUG logger:com.example.sample.app.welcome.HomeController    message:a=1
     date:2013-11-06 20:32:45    thread:tomcat-http--3   X-Track:853aa701a401404a87342a574c69efbc    level:DEBUG logger:com.example.sample.app.welcome.HomeController    message:a=1, b=bbb
@@ -536,7 +536,7 @@ ERROR log (WARN log in some cases) is output as shown below. Error message and e
 
 Accordingly, stack trace of caused exception is output and the cause of the error can be easily analyzed.
 
-.. code-block:: xml
+.. code-block:: console
 
     date:2013-11-06 20:38:04    thread:tomcat-http--5   X-Track:11d7dbdf64e44782822c5aea4fc4bb4f    level:ERROR logger:com.example.sample.app.welcome.HomeController    message:Exception happend!
     java.lang.Exception: Test Exception!
@@ -572,6 +572,7 @@ However, as shown below, when the exception that is caught is wrapped with other
                // omitted
            }
 
+.. _note-description-of-log-output:
 
 Points to be noted for the description of log output
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
@@ -617,7 +618,417 @@ However, the log level should be checked in the cases given below to prevent per
             logger.debug("xxx={}", foo.getXxx());
         }
 
-|
+
+
+How to extend
+--------------------------------------------------------------------------------
+Log output specifications are individually defined based on monitoring products and requirements and a case which is individually implemented is assumed. Here, a couple of examples are described below.
+
+#. Uniform  management of log messages
+#. Integration of output format of log messages
+
+Uniform  management of log messages
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+| An implementation example which aims to improve maintenance through uniform management of log messages.
+| Log messages are managed uniformly by consolidating the log messages in another file like a property file and resolving messages at the time of log output.
+| A method is described as an implementation example wherein the messages corresponding to log ID are output in the property file to enable setting of log ID in the argument of log output method.
+
+ .. note::
+
+     A method wherein consolidation is done using enum  of Java also exists as a method to manage Log ID and log message, however, a general method wherein the property file is used is introduced in this guideline.
+
+In this implementation example
+
+#. Logger wrapper class
+#. Property file
+
+| are created.
+| Here, ``LogIdBasedLogger``\ is considered as a Logger wrapper class and \ ``log-messages.properties``\ is considered as a property file.
+
+- `LogIdBasedLogger`  (Logger wrapper class)
+
+.. code-block:: java
+
+    package com.example.sample.common.logger;
+
+    import java.text.MessageFormat;
+    import java.util.Arrays;
+    import java.util.Locale;
+
+    import org.slf4j.Logger;
+    import org.slf4j.LoggerFactory;
+    import org.springframework.context.NoSuchMessageException;
+    import org.springframework.context.support.ResourceBundleMessageSource;
+
+    public class LogIdBasedLogger {
+
+        private static final String UNDEFINED_MESSAGE_FORMAT = "UNDEFINED-MESSAGE id:{0} arg:{1}";   // (1)
+
+        private static ResourceBundleMessageSource messageSource = new ResourceBundleMessageSource();// (2)
+
+        static {    // (3)
+            messageSource.setDefaultEncoding("UTF-8");          // (4)
+            messageSource.setBasenames("i18n/log-messages");    // (5)
+        }
+
+        private final Logger logger;
+
+        private LogIdBasedLogger(Class<?> clazz) {
+            logger = LoggerFactory.getLogger(clazz);            // (6)
+        }
+
+        public static LogIdBasedLogger getLogger(Class<?> clazz) {
+            return new LogIdBasedLogger(clazz);
+        }
+
+        public boolean isDebugEnabled() {                       // (7)
+            return logger.isDebugEnabled();
+        }
+
+        public void debug(String format, Object... args) {
+            logger.debug(format, args);                         // (8)
+        }
+
+        public void info(String id, Object... args) {
+            if (logger.isInfoEnabled()) {
+                logger.info(createLogMessage(id, args));        // (9)
+            }
+        }
+
+        public void warn(String id, Object... args) {
+            if (logger.isWarnEnabled()) {
+                logger.warn(createLogMessage(id, args));        // (9)
+            }
+        }
+
+        public void error(String id, Object... args) {
+            if (logger.isErrorEnabled()) {
+                logger.error(createLogMessage(id, args));       // (9)
+            }
+        }
+
+        public void trace(String id, Object... args) {
+            if (logger.isTraceEnabled()) {
+                logger.trace(createLogMessage(id, args));       // (9)
+            }
+        }
+
+        public void warn(String id, Throwable t, Object... args) {
+            if (logger.isWarnEnabled()) {
+                logger.warn(createLogMessage(id, args), t);     // (9)
+            }
+        }
+
+        public void error(String id, Throwable t, Object... args) {
+            if (logger.isErrorEnabled()) {
+                logger.error(createLogMessage(id, args), t);    // (9)
+            }
+        }
+
+        private String createLogMessage(String id, Object... args) {
+            return getMessage(id, args);
+        }
+        
+        private String getMessage(String id, Object... args) {
+            String message;
+            try {
+                message = messageSource.getMessage(id, args, Locale
+                        .getDefault());
+            } catch (NoSuchMessageException e) {                // (10)
+                message = MessageFormat.format(UNDEFINED_MESSAGE_FORMAT, id, Arrays
+                        .toString(args));
+            }
+            return message;
+        }
+    }
+
+.. tabularcolumns:: |p{0.10\linewidth}|p{0.90\linewidth}|
+.. list-table::
+   :header-rows: 1
+   :widths: 10 90
+
+   * - Sr. No.
+     - Description
+   * - | (1)
+     - | A log message when the log ID is not defined. Here, a message same as \ ``org.terasoluna.gfw.common.exception.ExceptionLogger``\ is used as an example.
+   * - | (2)
+     - | An implementation example wherein the log message is fetched by \ ``MessageSource``\.
+       | \ ``MessageSource``\ managed by message data is stored in \ ``static``\ area to enhance general versatility.
+       | This implementation facilitates the use of Logger wrapper class at any time since dependence on accessibility to DI container is eliminated.
+   * - | (3)
+     - | Generate \ ``MessageSource``\ using static initializer.
+       | In this implementation, \ ``log-messages.properties``\ placed in \ ``i18n``\ is read.
+   * - | (4)
+     - | Specify a character code to be used while parsing a property file.
+       | In this implementation, since property file is in UTF-8 encoding format, UTF-8 is specified.
+       | For details, refer \ :ref:`properties-display`\ of \ :doc:`../../ArchitectureInDetail/WebApplicationDetail/MessageManagement`\.
+   * - | (5)
+     - | Specify a property file by using \ ``setBasenames``\  method considering internationalization.
+       | For details of \ ``setBasenames``\, refer \ `Javadoc of setBasenames of ReloadableResourceBundleMessageSource class <http://docs.spring.io/spring/docs/4.2.7.RELEASE/javadoc-api/org/springframework/context/support/ReloadableResourceBundleMessageSource.html#setBasenames-java.lang.String...->`_\.
+   * - | (6)
+     - | Use SLF4J in logger wrapper class as well. Logging library implementation is not used directly.
+   * - | (7)
+     - | Determine whether log output of DEBUG level is allowed.
+       | For precautions for use, refer \ :ref:`note-description-of-log-output`\.
+   * - | (8)
+     - | In this implementation example, log ID is not used in the log of DEBUG level. Log message of argument is output as it is.
+   * - | (9)
+     - | Output TRACE/INFO/WARN/ERROR level log by fetching the log message corresponding to log ID from the property file.
+   * - | (10)
+     - | If log ID is not described in the property file while calling getMessage, an exception :\ ``NoSuchMessageException``\ is generated.
+       | Hence, \ ``NoSuchMessageException``\ is caught Aand a log message stating "log ID is not defined in the property file" is output.
+
+
+- `log-messages.properties`  (property file)
+
+.. code-block:: console
+
+    i.ab.cd.1001 = This message is Info-Level. {0}
+    w.ab.cd.2001 = This message is Warn-Level. {0}
+    e.ab.cd.3001 = This message is Error-Level. {0}
+    t.ab.cd.4001 = This message is Trace-Level. {0}
+
+\
+
+ .. note::
+
+     In this guideline, since message for screen output and message for log output are managed separately, a new property file is created. However, both the messages can be output in a single file.
+     
+     File unit should be determined in accordance with the nature of the application and how to manage a method of message.
+
+
+
+Execution results are as below.
+
+
+- Call sample
+
+.. code-block:: java
+
+    package com.example.sample.app.welcome;
+
+    import org.springframework.stereotype.Controller;
+    import org.springframework.ui.Model;
+    import org.springframework.web.bind.annotation.RequestMapping;
+    import org.springframework.web.bind.annotation.RequestMethod;
+
+    import com.example.sample.common.logger.LogIdBasedLogger;
+
+    @Controller
+    public class HomeController {
+
+        private static final LogIdBasedLogger logger = LogIdBasedLogger
+                .getLogger(HomeController.class);
+
+        @RequestMapping(value = "/", method = { RequestMethod.GET,
+                RequestMethod.POST })
+        public String home(Model model) {
+            logger.debug("debug log");
+            logger.info("i.ab.cd.1001","replace_value_1");
+            logger.warn("w.ab.cd.2001","replace_value_2");
+            logger.error("e.ab.cd.3001","replace_value_3");
+            logger.trace("t.ab.cd.4001","replace_value_4");
+            logger.info("i.ab.cd.1002","replace_value_5");
+            return "welcome/home";
+        }
+    }
+
+
+- Example of log output
+
+.. code-block:: console
+
+    date:2016-05-30 17:34:18.590  thread:http-bio-8080-exec-3  X-Track:e2a65cd9160b48d6aaeb63fe6e751c6b  level:DEBUG  logger:com.example.sample.app.welcome.HomeController   message:debug log
+    date:2016-05-30 17:34:18.590  thread:http-bio-8080-exec-3  X-Track:e2a65cd9160b48d6aaeb63fe6e751c6b  level:INFO   logger:com.example.sample.app.welcome.HomeController   message:This message is Info-Level. replace_value_1
+    date:2016-05-30 17:34:18.590  thread:http-bio-8080-exec-3  X-Track:e2a65cd9160b48d6aaeb63fe6e751c6b  level:WARN   logger:com.example.sample.app.welcome.HomeController   message:This message is Warn-Level. replace_value_2
+    date:2016-05-30 17:34:18.590  thread:http-bio-8080-exec-3  X-Track:e2a65cd9160b48d6aaeb63fe6e751c6b  level:ERROR  logger:com.example.sample.app.welcome.HomeController   message:This message is Error-Level. replace_value_3
+    date:2016-05-30 17:34:18.590  thread:http-bio-8080-exec-3  X-Track:e2a65cd9160b48d6aaeb63fe6e751c6b  level:TRACE  logger:com.example.sample.app.welcome.HomeController   message:This message is Trace-Level. replace_value_4
+    date:2016-05-30 17:34:18.590  thread:http-bio-8080-exec-3  X-Track:e2a65cd9160b48d6aaeb63fe6e751c6b  level:INFO   logger:com.example.sample.app.welcome.HomeController   message:UNDEFINED-MESSAGE id:i.ab.cd.1002 arg:[replace_value_5]
+
+
+Integration of output format of log messages
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+| Output format of log messages differs according to log output format as given in the table below..
+| Hence, log output format must be combined with another format or both the formats must be integrated with individual format in the integration of log format.
+| In this guideline, an example wherein the format is defined in the log output by business logic and an example wherein both are integrated with the individual format ({Exception code (message ID) or log ID}], {message or log message}) are explained.
+
+.. tabularcolumns:: |p{0.10\linewidth}|p{0.30\linewidth}|p{0.30\linewidth}|p{0.30\linewidth}|
+.. list-table::
+   :header-rows: 1
+   :widths: 10 30 30 30
+
+   * - Sr. No.
+     - Log output format
+     - Corresponding log
+     - Default format
+   * - | (1)
+     - | Explicitly output log using business logic
+     - | Access log, external communication log etc
+     - | Nil
+   * - | (2)
+     - | Framework detects the exception and implicitly outputs the log
+     - | Business error log, system  error log etc
+     - | [{Exception code (Message ID)}] {Message}
+
+.. note::
+
+     "Business error log" and "system  error log" output at the time of generating an exception are output in the default format of the table given above in accordance with the exception handling system  of \ :ref:`Common library<\exception-handling-about-classes-of-library-label>`.
+
+Integration with the format of the log output by framework after detecting an exception
+"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+
+| An implementation example is shown wherein the log output by business logic is coordinated with the format of the log output by framework after detecting an exception.
+| In this guideline, it is implemented by adding a process to apply format, in Logger wrapper class (\ ``LogIdBasedLogger`` \).
+
+.. code-block:: java
+
+    package com.example.sample.common.logger;
+
+    import java.text.MessageFormat; // (1)
+
+    // omitted
+
+    public class LogIdBasedLogger {
+
+        private static final String LOG_MESSAGE_FORMAT = "[{0}] {1}"; // (2)
+
+        // omitted
+
+        private String createLogMessage(String id, String... args) {
+            return MessageFormat.format(LOG_MESSAGE_FORMAT, id, getMessage(id,
+                    args)); // (1)
+        }
+
+        // omitted
+
+    }
+
+
+.. tabularcolumns:: |p{0.10\linewidth}|p{0.90\linewidth}|
+.. list-table::
+   :header-rows: 1
+   :widths: 10 90
+
+   * - Sr.No.
+     - Description
+   * - | (1)
+     - | Add a process wherein a log message is created based on log message format.
+   * - | (2)
+     - | Define a format.
+       | Log ID replaces \ ``{0}``\ and log message replaces \ ``{1}``\ .
+
+
+Execution results are as below.
+
+.. code-block:: console
+
+  date:2016-05-30 16:32:33.239  thread:http-bio-8080-exec-4  X-Track:4f61314a51524ab3a41832b0ceae7119  level:DEBUG  logger:com.example.sample.app.welcome.HomeController   message:debug log
+  date:2016-05-30 16:32:33.239  thread:http-bio-8080-exec-4  X-Track:4f61314a51524ab3a41832b0ceae7119  level:INFO   logger:com.example.sample.app.welcome.HomeController   message:[i.ab.cd.1001] This message is Info-Level. replace_value_1
+  date:2016-05-30 16:32:33.239  thread:http-bio-8080-exec-4  X-Track:4f61314a51524ab3a41832b0ceae7119  level:WARN   logger:com.example.sample.app.welcome.HomeController   message:[w.ab.cd.2001] This message is Warn-Level. replace_value_2
+  date:2016-05-30 16:32:33.239  thread:http-bio-8080-exec-4  X-Track:4f61314a51524ab3a41832b0ceae7119  level:ERROR  logger:com.example.sample.app.welcome.HomeController   message:[e.ab.cd.3001] This message is Error-Level. replace_value_3
+  date:2016-05-30 17:34:18.590  thread:http-bio-8080-exec-3  X-Track:4f61314a51524ab3a41832b0ceae7119  level:TRACE  logger:com.example.sample.app.welcome.HomeController   message:[t.ab.cd.4001] This message is Trace-Level. replace_value_4
+  date:2016-05-30 16:32:33.239  thread:http-bio-8080-exec-4  X-Track:4f61314a51524ab3a41832b0ceae7119  level:INFO   logger:com.example.sample.app.welcome.HomeController   message:[i.ab.cd.1002] UNDEFINED-MESSAGE id:i.ab.cd.1002 arg:[replace_value_5]
+
+Integration to a unique format
+"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+
+| An implementation example wherein the log output by business logic and framework is integrated in a unique format ([{Exception code (message ID) or log ID}], {message or log message}).
+
+Define a format in the log which is output by business logic
+>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
+
+| An example wherein log output by business logic is output in the format mentioned earlier.
+| In this guideline, it is implemented by adding  a process to apply the format, to Logger wrapper class (\ ``LogIdBasedLogger`` \).
+
+.. code-block:: java
+
+    package com.example.sample.common.logger;
+
+    import java.text.MessageFormat; // (1)
+
+    // omitted
+
+    public class LogIdBasedLogger {
+
+        private static final String LOG_MESSAGE_FORMAT = "[{0}], {1}"; // (2)
+
+        // omitted
+
+        private String createLogMessage(String id, String... args) {
+            return MessageFormat.format(LOG_MESSAGE_FORMAT, id, getMessage(id,
+                    args)); // (1)
+        }
+
+        // omitted
+
+    }
+
+
+.. tabularcolumns:: |p{0.10\linewidth}|p{0.90\linewidth}|
+.. list-table::
+   :header-rows: 1
+   :widths: 10 90
+
+   * - Sr. No.
+     - Description
+   * - | (1)
+     - | Add a process to create log message based on log message format.
+   * - | (2)
+     - | Define a format.
+       | ID replaces \ ``{0}``\ and log message replaces \ ``{1}``\.
+
+
+Execution results are as below.
+
+.. code-block:: console
+
+  date:2016-05-30 16:32:33.239  thread:http-bio-8080-exec-4  X-Track:4f61314a51524ab3a41832b0ceae7119  level:DEBUG  logger:com.example.sample.app.welcome.HomeController   message:debug log
+  date:2016-05-30 16:32:33.239  thread:http-bio-8080-exec-4  X-Track:4f61314a51524ab3a41832b0ceae7119  level:INFO   logger:com.example.sample.app.welcome.HomeController   message:[i.ab.cd.1001], This message is Info-Level. replace_value_1
+  date:2016-05-30 16:32:33.239  thread:http-bio-8080-exec-4  X-Track:4f61314a51524ab3a41832b0ceae7119  level:WARN   logger:com.example.sample.app.welcome.HomeController   message:[w.ab.cd.2001], This message is Warn-Level. replace_value_2
+  date:2016-05-30 16:32:33.239  thread:http-bio-8080-exec-4  X-Track:4f61314a51524ab3a41832b0ceae7119  level:ERROR  logger:com.example.sample.app.welcome.HomeController   message:[e.ab.cd.3001], This message is Error-Level. replace_value_3
+  date:2016-05-30 17:34:18.590  thread:http-bio-8080-exec-3  X-Track:4f61314a51524ab3a41832b0ceae7119  level:TRACE  logger:com.example.sample.app.welcome.HomeController   message:[t.ab.cd.4001], This message is Trace-Level. replace_value_4
+  date:2016-05-30 16:32:33.239  thread:http-bio-8080-exec-4  X-Track:4f61314a51524ab3a41832b0ceae7119  level:INFO   logger:com.example.sample.app.welcome.HomeController   message:[i.ab.cd.1002], UNDEFINED-MESSAGE arg:[replace_value_5]
+
+
+
+Changing format of the log output by framework
+>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
+
+| An example wherein the log output by framework is output in format mentioned earlier.
+| Bean definition of \ ``ExceptionLogger``\ of \ ``applicationContext.xml``\ is changed to change the format of business error log and system  error log.
+| An example of how to define \ ``ExceptionLogger``\ is given below.
+
+- **applicationContext.xml**
+
+.. code-block:: xml
+
+    <!-- Exception Logger. -->
+    <bean id="exceptionLogger"
+        class="org.terasoluna.gfw.common.exception.ExceptionLogger">
+        <property name="exceptionCodeResolver" ref="exceptionCodeResolver" />
+        <property name="logMessageFormat" value="[{0}], {1}" />    <!-- (1) -->
+    </bean>
+
+
+.. tabularcolumns:: |p{0.10\linewidth}|p{0.90\linewidth}|
+.. list-table::
+   :header-rows: 1
+   :widths: 10 90
+
+   * - Sr. No.
+     - Description
+   * - | (1)
+     - | Define a format in \ ``logMessageFormat``\.
+       | Exception code (message ID) replaces \ ``{0}``\ and message replaces \ ``{1}``\.
+
+Execution results are as below..
+
+.. code-block:: console
+
+    date:2013-09-19 21:03:06   thread:tomcat-http--3   X-Track:c19eec546b054d54a13658f94292b24f    level:ERROR logger:o.t.gfw.common.exception.ExceptionLogger         message:[e.ad.od.9012], not found item entity. item code [10-123456].
+    ...
+    // stackTarace omitted
+
 
 Appendix
 --------------------------------------------------------------------------------
@@ -678,7 +1089,7 @@ The value added to MDC can be output in log by defining the output format as
 
 Execution results are as follows:
 
-.. code-block:: xml
+.. code-block:: console
 
     date:2013-11-08 17:45:48    thread:main mdcSample:sample    level:DEBUG     message:debug log
     date:2013-11-08 17:45:48    thread:main mdcSample:sample    level:INFO      message:info log

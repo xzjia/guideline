@@ -229,6 +229,12 @@ Change Log
         *  A method to handle Japanese calendar in Java8 and earlier versions is added (\ `guideline#1450 <https://github.com/terasolunaorg/guideline/issues/1450>`_\ )
 
     * -
+      - :doc:`../ArchitectureInDetail/GeneralFuncDetail/Logging`
+      - Description details added
+        
+        * Extension method to output log message with ID is described (\ `guideline#1928 <https://github.com/terasolunaorg/guideline/issues/1928>`_\ )
+
+    * -
       - :doc:`../ArchitectureInDetail/GeneralFuncDetail/StringProcessing`
       - Added new
 
