@@ -53,7 +53,6 @@ Change Log
       - Description details modified
 
         * Description related to OS command injection added (\ `guideline#1957 <https://github.com/terasolunaorg/guideline/issues/1957>`_\ )
-
     * -
       - :doc:`../ArchitectureInDetail/WebApplicationDetail/FileUpload`
       - Description details added
@@ -311,6 +310,13 @@ Change Log
       - Added new
 
         *  String processing added (\ `guideline#1451 <https://github.com/terasolunaorg/guideline/issues/1451>`_\ )
+        
+    * -
+      - :doc:`../ArchitectureInDetail/MessagingDetail/JMS`
+      - Added new
+
+        * JMS added (\ `guideline#1407 <https://github.com/terasolunaorg/guideline/issues/1407>`_\ )
+        
 
     * -
       - :doc:`../Security/index`
