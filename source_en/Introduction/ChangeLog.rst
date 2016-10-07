@@ -311,6 +311,13 @@ Change Log
       - Added new
 
         *  String processing added (\ `guideline#1451 <https://github.com/terasolunaorg/guideline/issues/1451>`_\ )
+        
+    * -
+      - :doc:`../ArchitectureInDetail/MessagingDetail/JMS`
+      - Added new
+
+        * JMS added (\ `guideline#1407 <https://github.com/terasolunaorg/guideline/issues/1407>`_\ )
+        
 
     * -
       - :doc:`../Security/index`
