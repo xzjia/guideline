@@ -2865,8 +2865,8 @@ Java SE 8とHibernate Validator 5.2+を組み合わせることで、
 
     public class SampleForm {
         @NotNull
-        @Valid
-        private List<@ExistInCodeListForTypeArgument(codeListId = "CL_ROLE") String> roles; // (1)
+        @Valid // (1)
+        private List<@ExistInCodeListForTypeArgument(codeListId = "CL_ROLE") String> roles; // (2)
 
         public List<String> getRoles() {
             return roles;
@@ -2886,6 +2886,8 @@ Java SE 8とHibernate Validator 5.2+を組み合わせることで、
      * - 項番
        - 説明
      * - | (1)
+       - | \ ``List``\の型宣言につけたアノテーションを有効にするために、\ ``javax.validation.Valid``\ アノテーションを付与する。
+     * - | (2)
        - | 入力チェックを行いたいプロパティに対して\ ``@ExistInCodeListForTypeArgument``\ アノテーションを設定する。
          | リスト内の型指定部にアノテーションを指定し、\ ``codeListId``\ にチェック元となるコードリストを指定する。
 
