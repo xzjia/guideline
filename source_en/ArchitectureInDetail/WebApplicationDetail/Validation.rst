@@ -4361,6 +4361,188 @@ With the help of this configuration, it can be specified in the controller wheth
 | Therefore it must be noted that, it becomes necessary to specify \ ``@NotNull``\  in case of mandatory check.
 
 
+.. _Validation_without_native2ascii:
+
+Reading messages which are not converted from Native to Ascii
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+A method to read Bean Validation message （\ ``ValidationMessage.properties``\ ） is introduced without converting the message from  Native to Ascii.
+
+When the Japanese message is to be handled directly without converting from  Native to Ascii, it can be easily implemented if it is linked with \ ``MessageSource``\  of Spring.
+
+
+If it is defined as below,, message read by \ ``MessageSource``\  function can be used in \ ``Hibernate Validator``\ .
+
+
+* Bean definition
+
+  \ ``*-domain.xml``\ 
+
+ .. code-block:: xml
+
+     <!-- (1) -->
+     <bean id="validator" class="org.springframework.validation.beanvalidation.LocalValidatorFactoryBean">
+         <property name="validationMessageSource">
+             <!-- (2) -->
+             <bean class="org.springframework.context.support.ResourceBundleMessageSource">
+                 <property name="basenames">
+                     <list>
+                         <value>ValidationMessages</value> <!-- (3) -->
+                     </list>
+                 </property>
+                 <property name="defaultEncoding" value="UTF-8" />
+             </bean>
+         </property>
+     </bean>
+
+     <!-- (4) -->
+     <bean class="org.springframework.validation.beanvalidation.MethodValidationPostProcessor">
+         <property name="validator" ref="validator" />
+     </bean>
+
+ \ ``spring-mvc.xml``\ 
+
+ .. code-block:: xml
+
+     <!-- (5) -->
+     <mvc:annotation-driven validator="validator">
+         <!-- ommited -->
+     </mvc:annotation-driven>
+
+     <!-- (6) -->
+     <bean class="org.springframework.validation.beanvalidation.MethodValidationPostProcessor">
+         <property name="validator" ref="validator" />
+     </bean>
+
+ .. tabularcolumns:: |p{0.10\linewidth}|p{0.90\linewidth}|
+ .. list-table::
+     :header-rows: 1
+     :widths: 10 90
+
+     * - Sr. No.
+       - Description
+     * - | (1)
+       - Define a Bean for \ ``LocalValidatorFactoryBean``\ .
+     * - | (2)
+       - Define \ ``MessageSource``\ . Here, \ ``ResourceBundleMessageSource``\  is used.
+     * - | (3)
+       - Specify a resource bundle to be read in \ ``ApplicationContext``\ .
+     * - | (4)
+       - | Specify a Bean defined by (1) in \ ``validator``\  property of \ ``MethodValidationPostProcessor``\  while using \ :ref:`MethodValidation`\ .
+         | When Method Validation is not used, the Bean definition is not required.
+     * - | (5)
+       - Specify a Bean defined in (1), in  \ ``validator``\ attribute of \ ``<mvc:annotation-driven>``\ element.
+     * - | (6)
+       - \ Same as (4).
+
+ .. note::
+
+     By using \ ``MessageSource``\ function,
+     property file is not necessarily restricted to be placed just under class path. Further, multiple property files can also be specified.
+     
+.. _Validation_os_command_injection:
+
+OS Command Injection Countermeasures
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+OS command injection, a type of security vulnerability and its countermeasures are explained here.
+
+What is OS command injection -
+""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+OS command injection is an issue which occurs when malicious commands are supplied to the user input string resulting in illegal manipulation of the computer,
+when command execution strings are assembled from user input strings in the application.
+
+.. tip::
+
+    For details, refer \ `Description page <https://www.owasp.org/index.php/OS_Command_Injection>`_\  of OWASP.
+
+In Java, OS command injection can occur when following are used as the commands to be executed when commands are executed
+using ``exec``\  method of \ ``ProcessBuilder``\ class  and \ ``Runtime``\  class.
+
+* \ ``/bin/sh``\  (in case of Unix system) or \ ``cmd.exe``\  (In case of Windows)
+* String input by user
+
+An example wherein OS command injection occurs when \ ``/bin/sh``\  is used, is shown below.
+
+.. code-block:: java
+
+  ProcessBuilder pb = new ProcessBuilder("/bin/sh", "-c", script); // (1)
+  Process p = pb.start();
+
+
+.. tabularcolumns:: |p{0.10\linewidth}|p{0.90\linewidth}|
+.. list-table::
+    :header-rows: 1
+    :widths: 10 90
+
+    * - Sr. No.
+      - Description
+    * - | (1)
+      - | For example, when "exec.sh ; cat /etc/passwd" is input in the \ ``script``\ , semicolon in the string is interpreted as a delimiter by \ ``/bin/sh``\  and "cat /etc/passwd" is executed.
+        | Hence, \ ``/etc/passwd``\  is likely to be output depending on how the standard output is handled.
+
+.. warning:: **How to use ScriptEngine and ScriptTemplateViewResolver**
+
+    Another language  (\ ``Ruby``\ or \ ``Python``\ etc) can be used on JVM , in \ ``ScriptEngine``\  added from  Java SE 6
+    or \ ``ScriptTemplateViewResolver``\  added from  Spring Framework 4.2.
+
+    When code of another language is to be executed using this function, care must be taken while using the function
+    since OS command injection is likely to occur during writing the code.
+
+Countermeasures
+""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+Running external processes should be avoided as much as possible in order to prevent occurrence of OS command injection. However, if it is necessary to execute the external process due to certain circumstances,
+it must be executed after implementing the countermeasures below.
+
+* Commands which use \ ``/bin/sh``\  (in case of Unix system) and \ ``cmd.exe``\  (in case of Windows) should not be executed as far as possible.
+* Check whether the characters entered by user are allowed by the application using the whitelist system
+
+The rules to check whether commands and arguments entered by the user are configured  by the specified string are shown below.
+
+.. code-block:: java
+
+    @Pattern(regexp = "batch0\\d\\.sh") // (1)
+    private String cmdStr;
+
+    @Pattern(regexp = "[\\w=_]+")  // (2)
+    private String arg;
+
+
+.. tabularcolumns:: |p{0.10\linewidth}|p{0.90\linewidth}|
+.. list-table::
+    :header-rows: 1
+    :widths: 10 90
+
+    * - Sr. No.
+      - Description
+    * - | (1)
+      - | Specify rule to allow only \ ``batch0X.sh``\ (X is a single byte numeral from 0 to 9).
+    * - | (2)
+      - | Specify rule to allow only the strings configured from  innocuous alphanumeric characters (\\w）、\ ``=``\ 、\ ``_``\) as arguments.
+
+.. note::
+
+    In this example, directory traversal is prevented by establishing a rule wherein the path is not included in the commands or arguments.
+      
+When \ ``@Pattern``\  is used, regular expressions specified in \ ``@Pattern``\  are output as error messages and
+are considered invalid as messages due to following points.
+
+* Significance of error is not clear, not user-friendly
+* logic for the countermeasures to the vulnerability is exposed to the user
+
+.. figure:: ./images_Validation/validations-os-command-injection.png
+  :width: 60%
+
+A valid message is defined in application-messages.properties to conceal the logic by clarifying the significance of error.
+For how to define a message, refer \ :ref:`Validation_message_in_application_messages`\.
+
+.. code-block:: properties
+
+  Pattern.cmdForm.cmdStr = permit command name: batch00.sh - batch09.sh
+  Pattern.cmdForm.arg = permit parameter characters and symbols: alphanumeric, =, _
+
+.. figure:: ./images_Validation/validations-os-command-injection2.png
+  :width: 60%
+
 .. raw:: latex
 
    \newpage
