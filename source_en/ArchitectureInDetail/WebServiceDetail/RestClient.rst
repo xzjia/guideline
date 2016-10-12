@@ -2126,7 +2126,6 @@ Since \ ``setCredentials``\  method of \ ``BasicCredentialsProvider``\  contains
         | \ ``BasicCredentialsProvider`` creates a Bean by using \ ``BasicCredentialsProviderFactoryBean``\ which implements \ ``FactoryBean``\.
         
 
-
 Configuration while using JSR-310 Date and Time API in JSON
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 

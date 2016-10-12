@@ -281,6 +281,12 @@ List of OSS being used in version 5.2.0.RELEASE.
       - 1.2.5
       -
       - \*1
+    * - MyBatis3
+      - org.mybatis
+      - mybatis-typehandlers-jsr310
+      - 1.0.1
+      -
+      - \*1*6
     * - JPA(Hibernate)
       - antlr
       - antlr
@@ -619,6 +625,9 @@ List of OSS being used in version 5.2.0.RELEASE.
    | (Library is not managed as dependencies in Spring IO platform)
 #. | Library versions that are applied in the Spring IO platform is a Beta or RC (Release Candidate)
    | (Library that explicitly specify the GA version at TERASOLUNA Server Framework for Java (5.x))
+#. | A library which considers API of Java SE 8 and further versions,as a prerequisite.
+   | Dependency relation to the library must be explicitly removed in case of versions earlier than Java SE 7
+
 
 .. _frameworkstack_common_library:
 
