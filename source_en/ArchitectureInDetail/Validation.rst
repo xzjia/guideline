@@ -3144,6 +3144,8 @@ An example of implementing, "whether the entered user name is already registered
 
 |
 
+.. _MethodValidation:
+
 Method Validation 
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
@@ -4361,7 +4363,6 @@ With the help of this configuration, it can be specified in the controller wheth
 | Therefore it must be noted that, it becomes necessary to specify \ ``@NotNull``\  in case of mandatory check.
 
 
-<<<<<<< HEAD:source_en/ArchitectureInDetail/Validation.rst
 .. _Validation_without_native2ascii:
 
 Reading messages which are not converted from Native to Ascii
