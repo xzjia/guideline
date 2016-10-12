@@ -61,6 +61,12 @@ Code examples with/without using Dozer are given below.
 
 How to use Dozer is explained below.
 
+ .. warning::
+
+    Classes added by JSR-310 Date and Time API cannot be used in default state due to generation of exceptions, and hence a custom converter must be created.
+
+|
+
 How to use
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
