@@ -10,6 +10,7 @@ Change Log
       - Modified locations
       - Modification details
 
+
     * - 2016-08-31
       - :doc:`../ArchitectureInDetail/WebApplicationDetail/ExceptionHandling`
       - Modifications corresponding to Spring Framework 4.2.7
@@ -23,6 +24,13 @@ Change Log
         * When API for application offered by \ ``TransactionTokenContext``\ is used,
           it impacts the behavior of internal framework like inability to retain \ ``TransactionToken``\ in the appropriate status and the like.
           Hence, corresponding API is deprecated. Description for how to use the corresponding function is deleted in accordance with the deprecation.
+
+    * - 
+      - :doc:`../ArchitectureInDetail/WebApplicationDetail/DoubleSubmitProtection`
+      - Description details added
+
+        * Description for specifications and how to use \ ``TransactionTokenType.CHECK``\ which is newly added in the type attribute of \ ``@TransactionTokenCheck``\  annotation added
+          (\ `guideline#2071 <https://github.com/terasolunaorg/guideline/issues/2071>`_\ )
 
     * - 2016-06-31
       - :doc:`../ArchitectureInDetail/GeneralFuncDetail/StringProcessing`
@@ -41,6 +49,14 @@ Change Log
         * Spring Security version updated in 4.0.4.RELEASE
 
         OSS version to be used along with Spring IO Platform version update is updated  
+
+    * -
+      - :doc:`../ArchitectureInDetail/GeneralFuncDetail/StringProcessing`
+      - Description details added
+
+        * Example to add dependency to terasoluna-gfw-string is added (\ `guideline#1699 <https://github.com/terasolunaorg/guideline/issues/1699>`_\ )
+        * Precautions for surrogate pair added to description of @Size annotation(\ `guideline#1874 <https://github.com/terasolunaorg/guideline/issues/1874>`_\ )
+        * Description added for corresponding UCS(Unicode)characters of JIS chinese characters \ ``U+2014``\(EM DASH)(\ `guideline#1914 <https://github.com/terasolunaorg/guideline/issues/1914>`_\ )
 
     * - 2016-08-31
       - :doc:`../ImplementationAtEachLayer/ApplicationLayer`
@@ -244,6 +260,12 @@ Change Log
         *  Description which recommends a pattern wherein \ ``JdbcTemplate``\  is specified in JdbcCodeList, is added (\ `guideline#501 <https://github.com/terasolunaorg/guideline/issues/501>`_\ )
 
     * -
+      - :doc:`../ArchitectureInDetail/WebApplicationDetail/HealthCheck`
+      - New
+
+        * Health check added (\ `guideline#1698 <https://github.com/terasolunaorg/guideline/issues/1698>`_\ )
+
+    * -
       - :doc:`../ArchitectureInDetail/WebServiceDetail/REST`
       - Description details modified
 
@@ -384,6 +406,13 @@ Change Log
     * -
       - :doc:`../Security/SecureLoginDemo`
       - Added new
+
+    * -
+      - :doc:`../Security/SecureLoginDemo`
+      - Description details added
+
+        * "Input check for security" added
+        * "Audit log output" added
 
         *  Typical implementation example of security requirements added (\ `guideline#1604 <https://github.com/terasolunaorg/guideline/issues/1604>`_\ )
 

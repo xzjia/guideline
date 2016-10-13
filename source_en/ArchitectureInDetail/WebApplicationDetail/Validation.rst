@@ -2008,6 +2008,67 @@ Error message as shown below is displayed when form is sent by entering differen
 
   When \ ``<form:password>``\  tag is used, data gets cleared at the time of redisplay.
 
+.. _Validation_how_to_cross-field_validation_for_multi_field_highlight:
+.. note::
+
+   Error information can be set for multiple fields for correlation check.
+   However, displaying error messages and applying style must always be performed in a set and only one part of the tasks cannot not be performed.
+
+   When you want to apply style to both the fields wherein correlation check error has occurred however you want to display only one error message,
+   it can be done by setting a null string in the error message.
+   An example is given below wherein style is applied to \ ``password``\  field and \ ``confirmPassword``\  field and error message is displayed only in \ ``password``\  field.
+
+     .. code-block:: java
+
+       package com.example.sample.app.validation;
+
+       import org.springframework.stereotype.Component;
+       import org.springframework.validation.Errors;
+       import org.springframework.validation.Validator;
+
+       @Component
+       public class PasswordEqualsValidator implements Validator {
+
+           @Override
+           public boolean supports(Class<?> clazz) {
+               return PasswordResetForm.class.isAssignableFrom(clazz);
+           }
+
+           @Override
+           public void validate(Object target, Errors errors) {
+
+               // omitted
+               if (!password.equals(confirmPassword)) {
+                   // register a field error for password
+                   errors.rejectValue("password",
+                          "PasswordEqualsValidator.passwordResetForm.password",
+                          "password and confirm password must be same.");
+
+                   // register a field error for confirmPassword
+                   errors.rejectValue("confirmPassword", // (1)
+                             "PasswordEqualsValidator.passwordResetForm.confirmPassword", // (2)
+                             ""); // (3)
+               }
+           }
+       }
+
+     .. tabularcolumns:: |p{0.10\linewidth}|p{0.90\linewidth}|
+     .. list-table::
+        :header-rows: 1
+        :widths: 10 90
+
+        * - Sr. No.
+          - Description
+        * - | (1)
+          - | Register error in \ ``confirmPassword``\ field.
+        * - | (2)
+          - | Specify code name of error message. Specify a null string in the corresponding error message at that time.
+            | For message definition, refer \ :ref:`Validation_message_in_application_messages`\.
+        * - | (3)
+          - | Set a default message to be used when error message could not be resolved in the code.
+            | A null string is set in the example above.
+
+
 .. note::
 
    When multiple forms are used in a single controller, model name should be specified in \ ``@InitBinder("xxx")``\  in order to limit the target of Validator.
@@ -2938,6 +2999,58 @@ Set constraint of assigning "confirm" as the prefix of confirmation field.
     \ ``ConstraintViolationBuilder.addNode``\  method had been used in Bean Validation 1.0; however, it is a deprecated API from Bean Validation 1.1.
 
     For deprecated API of Bean Validation, refer to \ `Bean Validation API Document (Deprecated API) <http://docs.jboss.org/hibernate/beanvalidation/spec/1.1/api/deprecated-list.html>`_\ .
+
+.. note::
+
+   As introduced in correlation item  check using Spring Validator, even in Bean Validation,
+   :ref:`Set error information for multiple fields for correlation check<Validation_how_to_cross-field_validation_for_multi_field_highlight>` can be performed.
+
+   An example is shown below wherein styles are applied to \ ``password``\ field and \ ``confirmPassword``\ field in Bean Validation and error message is displayed only for \ ``password``\ field.
+
+     .. code-block:: java
+
+       // omitted
+       public class ConfirmValidator implements ConstraintValidator<Confirm, Object> {
+           private String field;
+
+           private String confirmField;
+
+           private String message;
+
+           public void initialize(Confirm constraintAnnotation) {
+               // omitted
+           }
+
+           public boolean isValid(Object value, ConstraintValidatorContext context) {
+               // omitted
+               if (matched) {
+                   return true;
+               } else {
+                   context.disableDefaultConstraintViolation();
+
+                   //new ConstraintViolation to be generated for field
+                   context.buildConstraintViolationWithTemplate(message)
+                           .addPropertyNode(field).addConstraintViolation();
+
+                   //new ConstraintViolation to be generated for confirmField
+                   context.buildConstraintViolationWithTemplate("") // (1)
+                           .addPropertyNode(confirmField).addConstraintViolation();
+
+                   return false;
+               }
+           }
+
+       }
+
+     .. tabularcolumns:: |p{0.10\linewidth}|p{0.90\linewidth}|
+     .. list-table::
+        :header-rows: 1
+        :widths: 10 90
+
+        * - Sr. No.
+          - Description
+        * - | (1)
+          - | Register error of \ ``confirmPassword``\ field. A null string is set in error message at that time.
 
 
 Check below for the changes, if the "Reset password" is re-implemented using \ ``@Confirm``\  annotation.
