@@ -191,6 +191,11 @@ pom.xmlの設定
       - terasoluna-gfw-jodatime-dependenciesをdependenciesに追加する。
         terasoluna-gfw-jodatime-dependenciesには、Joda Time用のDate FactoryとJoda Time関連のライブラリへの依存関係が定義されている。
 
+.. note::
+
+    上記設定例では、依存ライブラリのバージョンは親プロジェクトで管理する前提である。
+    そのため、\ ``<version>``\ 要素は指定していない。
+
 .. tip:: **terasoluna-gfw-parentをParentプロジェクトとして使用しない場合の設定方法について**
 
     親プロジェクトとしてterasoluna-gfw-parentプロジェクトを指定していない場合は、バージョンの指定も個別に必要となる。

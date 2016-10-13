@@ -1740,7 +1740,12 @@ Commons FileUploadを使用する場合は以下の設定を行う。
      - | 説明
    * - | (1)
      - | \ ``commons-fileupload``\ への依存関係を追加する。
-       | バージョンはSpring IO Platformによって定義されているため、:file:`pom.xml`\で指定しなくてよい。
+
+.. note::
+
+   上記設定例では、依存ライブラリのバージョンは親プロジェクトで管理する前提である。
+   そのため、\ ``<version>``\ 要素は指定していない。
+   上記の依存ライブラリは\ `Spring IO Platform <http://platform.spring.io/platform/>`_\ によって定義されているため、pom.xmlでバージョンを指定しなくてもよい。
 
 .. warning::
 

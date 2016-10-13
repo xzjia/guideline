@@ -162,6 +162,7 @@ Spring FrameworkのMail連携用コンポーネントを利用する場合、以
 
     上記設定例では、依存ライブラリのバージョンは親プロジェクトで管理する前提である。
     そのため、\ ``<version>``\ 要素は指定していない。
+    上記の依存ライブラリは\ `Spring IO Platform <http://platform.spring.io/platform/>`_\ によって定義されているため、pom.xmlでバージョンを指定しなくてもよい。
 
 |
 
@@ -828,6 +829,13 @@ FreeMarkerを使用したメール本文の作成
           - 説明
         * - | (1)
           - | FreeMarkerのライブラリをdependenciesに追加する。
+
+    .. note::
+
+       上記設定例では、依存ライブラリのバージョンは親プロジェクトで管理する前提である。
+       そのため、\ ``<version>``\ 要素は指定していない。
+       上記の依存ライブラリは\ `Spring IO Platform <http://platform.spring.io/platform/>`_\ によって定義されているため、pom.xmlでバージョンを指定しなくてもよい。
+
 
 * \ ``freemarker.template.Configuration``\ を生成するためのFactoryBeanをBean定義する。
 

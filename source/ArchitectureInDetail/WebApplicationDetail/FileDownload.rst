@@ -147,7 +147,9 @@ PDFファイルのダウンロード
 
 \
     .. note::
-        itextのバージョンはSpring IO Platformにて定義されている。
+        上記設定例では、依存ライブラリのバージョンは親プロジェクトで管理する前提である。
+        そのため、\ ``<version>``\ 要素は指定していない。
+        itextは\ `Spring IO Platform <http://platform.spring.io/platform/>`_\ によって定義されているため、pom.xmlでバージョンを指定しなくてもよい。
 
 .. _viewresolver-label:
 
@@ -340,6 +342,7 @@ Excelファイルのダウンロード
     .. note::
         上記設定例では、依存ライブラリのバージョンは親プロジェクトで管理する前提である。
         そのため、\ ``<version>``\ 要素は指定していない。
+        上記の依存ライブラリは\ `Spring IO Platform <http://platform.spring.io/platform/>`_\ によって定義されているため、pom.xmlでバージョンを指定しなくてもよい。
 
         また、\ ``AbstractExcelView``\ はSpring Framework 4.2から@Deprecatedとなった。そのため、xlsファイルを使用したい場合も同様に\ ``AbstractXlsxView``\ の使用を推奨する。
         詳細は、\ `AbstractExcelViewのJavaDoc <https://docs.spring.io/spring/docs/4.2.7.RELEASE/javadoc-api/org/springframework/web/servlet/view/document/AbstractExcelView.html>`_\ を参照されたい。

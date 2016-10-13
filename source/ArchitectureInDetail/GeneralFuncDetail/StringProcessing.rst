@@ -208,6 +208,11 @@ How to use
        </dependency>
    </dependencies>
 
+.. note::
+
+    上記設定例では、依存ライブラリのバージョンは親プロジェクトで管理する前提である。
+    そのため、\ ``<version>``\ 要素は指定していない。
+
 全角文字列に変換
 ''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''
 
@@ -904,6 +909,9 @@ Bean Validationと連携した文字列チェック
 
 .. note::
 
+    上記設定例では、依存ライブラリのバージョンは親プロジェクトで管理する前提である。
+    そのため、\ ``<version>``\ 要素は指定していない。
+    
     \ ``JIS_X_0208_SpecialChars``\コードポイント集合クラスはJIS漢字(JIS X 0208)の01-02区に該当する特殊文字集合である。
     JIS漢字の全角ダッシュ(―)はEM DASHであり、対応するUCS(ISO/IEC 10646-1, JIS X 0221, Unicode)のコードポイントは、一般的に\ ``U+2014``\に相当する。
     しかし、Unicodeコンソーシアムが提供する変換表では、Unicodeで対応する文字がEM DASHでなく\ `HORINZONTAL BAR (U+2015) <http://www.unicode.org/Public/MAPPINGS/OBSOLETE/EASTASIA/JIS/JIS0208.TXT>`_\になっている。

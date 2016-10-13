@@ -328,7 +328,6 @@ How to use
 
 | \ ``RestTemplate``\ を使用するために\ ``pom.xml``\ に、Spring Frameworkのspring-webライブラリを追加する。
 | マルチプロジェクト構成の場合は、domainプロジェクトの\ ``pom.xml``\ に追加する。
-| バージョンは、Spring Framework にて管理されているため、ここでバージョンを定義する必要はない。
 
 .. code-block:: xml
 
@@ -341,6 +340,11 @@ How to use
         </dependency>
 
     </dependencies>
+
+.. note::
+    上記設定例では、依存ライブラリのバージョンは親プロジェクトで管理する前提である。
+    そのため、\ ``<version>``\ 要素は指定していない。
+    上記の依存ライブラリは\ `Spring IO Platform <http://platform.spring.io/platform/>`_\ によって定義されているため、pom.xmlでバージョンを指定しなくてもよい。
 
 .. tabularcolumns:: |p{0.10\linewidth}|p{0.90\linewidth}|
 .. list-table::
@@ -1198,7 +1202,6 @@ SSL自己署名証明書の使用
 
 \ ``HttpClient``\ および  \ ``HttpClientBuilder``\ を使用するためには、Apache HttpComponents HttpClient のライブラリが必要となる。
 以下を \ :file:`pom.xml`\ に追加し、Apache HttpComponents HttpClient を依存ライブラリに追加する。
-なお、Apache HttpComponents HttpClient のバージョンは、 Spring IO Platform にて管理されているため、ここでApache HttpComponents HttpClient のバージョンを定義する必要はない。
 
 * :file:`pom.xml`
 
@@ -1209,6 +1212,10 @@ SSL自己署名証明書の使用
         <artifactId>httpclient</artifactId>
     </dependency>
 
+.. note::
+    上記設定例では、依存ライブラリのバージョンは親プロジェクトで管理する前提である。
+    そのため、\ ``<version>``\ 要素は指定していない。
+    上記の依存ライブラリは\ `Spring IO Platform <http://platform.spring.io/platform/>`_\ によって定義されているため、pom.xmlでバージョンを指定しなくてもよい。
 
 **bean定義ファイル(applicationContext.xml)の定義例**
 
@@ -2001,7 +2008,11 @@ HTTP Proxyサーバの指定方法
       - 説明
     * - | (1)
       - | \ ``HttpComponentsClientHttpRequestFactory``\ 内で使用する\ ``Apache HTTP Client``\ を使用するために、\ ``Apache HttpComponents Client``\ を :file:`pom.xml` の依存ライブラリに追加する。
-        | なお、\ ``Apache HttpComponents Client``\ のバージョンは、 Spring IO Platform にて管理されているため、ここで\ ``Apache HttpComponents Client``\ のバージョンを定義する必要はない。
+
+.. note::
+    上記設定例では、依存ライブラリのバージョンは親プロジェクトで管理する前提である。
+    そのため、\ ``<version>``\ 要素は指定していない。
+    上記の依存ライブラリは\ `Spring IO Platform <http://platform.spring.io/platform/>`_\ によって定義されているため、pom.xmlでバージョンを指定しなくてもよい。
 
 
 **Bean定義ファイル**

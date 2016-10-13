@@ -131,6 +131,7 @@ Bean ValidationのAPI仕様クラス(\ ``javax.validation``\ パッケージの�
 
     上記設定例では、依存ライブラリのバージョンは親プロジェクトで管理する前提である。
     そのため、\ ``<version>``\ 要素は指定していない。
+    上記の依存ライブラリは\ `Spring IO Platform <http://platform.spring.io/platform/>`_\ によって定義されているため、pom.xmlでバージョンを指定しなくてもよい。
 
 
 .. _Validation_single_check:
@@ -4233,6 +4234,11 @@ terasoluna-gfw-validatorのチェックルール
             <artifactId>terasoluna-gfw-validator</artifactId>
         </dependency>
     </dependencies>
+
+.. note::
+
+    上記設定例では、依存ライブラリのバージョンは親プロジェクトで管理する前提である。
+    そのため、\ ``<version>``\ 要素は指定していない。
 
 次に、\ :ref:`Validation_message_in_validationmessages`\ で説明したように :file:`ValidationMessages.properties` に、アノテーションに対応する任意のメッセージ定義を追加する。
 

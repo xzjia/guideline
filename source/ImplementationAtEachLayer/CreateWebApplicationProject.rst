@@ -626,6 +626,12 @@ Maven Archetypeで作成したプロジェクトでは、インメモリデー�
         <scope>runtime</scope>
     </dependency>
 
+.. note::
+
+   上記設定例では、依存ライブラリのバージョンは親プロジェクトで管理する前提である。
+   そのため、\ ``<version>``\ 要素は指定していない。
+   上記の依存ライブラリは\ `Spring IO Platform <http://platform.spring.io/platform/>`_\ によって定義されているため、pom.xmlでバージョンを指定しなくてもよい。
+
 **[artifactId-infra.properties]**
 
 .. code-block:: properties
@@ -765,6 +771,10 @@ Maven Archetypeで作成したプロジェクトでは、インメモリデー�
         <!--             <artifactId>ojdbc7</artifactId> -->
         <!--             <scope>provided</scope> -->
         <!--         </dependency> -->
+
+    上記設定例では、依存ライブラリのバージョンは親プロジェクトで管理する前提である。
+    そのため、\ ``<version>``\ 要素は指定していない。
+    上記の依存ライブラリは\ `Spring IO Platform <http://platform.spring.io/platform/>`_\ によって定義されているため、pom.xmlでバージョンを指定しなくてもよい。
 
 |
 

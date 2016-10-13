@@ -5065,6 +5065,11 @@ or
     </dependency>
 
 .. note::
+    上記設定例では、依存ライブラリのバージョンは親プロジェクトで管理する前提である。
+    そのため、\ ``<version>``\ 要素は指定していない。
+    jackson-datatype-jodaは\ `Spring IO Platform <http://platform.spring.io/platform/>`_\ によって定義されているため、pom.xmlでバージョンを指定しなくてもよい。
+
+
 
     上記以外にも、
 
