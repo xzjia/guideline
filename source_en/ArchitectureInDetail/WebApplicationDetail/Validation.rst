@@ -2165,9 +2165,6 @@ This guideline classifies the definition as follows.
 
 When ValidationMessages.properties is not provided, \ :ref:`Default messages provided by Hibernate Validator<Validation_default_message_in_hibernate_validator>`\  is used.
 
-Japanese message can be handled directly without conversion from Native to Ascii by linking with \ ``MessageSource``\ .
-For details, refer \ :ref:`Validation_without_native2ascii`\ .
-
 
 .. _Validation_message_in_validationmessages:
 
@@ -2212,6 +2209,7 @@ It is explained below using the following form used at the beginning of \ :ref:`
     javax.validation.constraints.NotNull.message=is required.
     # (1)
     javax.validation.constraints.Size.message=size is not in the range {min} through {max}.
+    # (2)
     javax.validation.constraints.Min.message=cannot be less than {value}.
     javax.validation.constraints.Max.message=cannot be greater than {value}.
     org.hibernate.validator.constraints.Email.message=is an invalid e-mail address.
@@ -2225,6 +2223,8 @@ It is explained below using the following form used at the beginning of \ :ref:`
        - Description
      * - | (1)
        - | It is possible to embed the value of attributes specified in the annotation using \ ``{Attribute name}``\ .
+     * - | (2)
+       - | It is possible to embed the invalid value using \ ``{value}``\ .
 
 When the form is sent with input fields left blank after adding the above settings, changed error messages are displayed as shown below.
 
@@ -3571,16 +3571,6 @@ An example to show how to create an exception handling class is given below.
 
     Refer to ":ref:`application_layer_controller_advice`" for details of \ ``@ControllerAdvice``\  annotation.
 
-.. warning::
-
-    Error messages can be retrieved by using \ ``ConstraintViolation#getMessage``\  method, however since message supplement is not carried out using Spring function, field name cannot be included in \ ``{0}``\ for error messages.
-    
-    Alternatively, the field name can be fetched using \ ``ConstraintViolation#getPropertyPath``\  method.
-    
-    For message supplement using Spring function, refer Note of 、:ref:`Validation_message_in_validationmessages`.
-    
-    For details of \ ``ConstraintViolation``\, refer \ `Hibernate Validator reference <http://docs.jboss.org/hibernate/validator/5.2/reference/en-US/html_single/#section-constraint-violation-methods>`_\.
-    
 
 Appendix
 --------------------------------------------------------------------------------
@@ -3738,6 +3728,14 @@ Refer to Chapter 7 \ `Bean Validation specification <http://download.oracle.com/
      By specifying \ ``true``\  (to allow same value of specified threshold) to the default value of \ ``inclusive``\  attribute,
      compatibility with Bean Validation 1.0 is maintained.
 
+.. warning::
+
+     In \ ``@Size``\  annotation, characters represented by char type 2 (32 bits) called as surrogate pair are not considered.
+
+     When a string consisiting of a surrogate pair is excluded from the check, adequate care must be taken since number of characters that are counted are likely to be more than the actual number of characters.
+
+     For length of the string including surrogate pair, refer :ref:`StringProcessingHowToGetSurrogatePairStringLength`.
+
 
 .. _Validation_validator_list:
 
@@ -3877,7 +3875,7 @@ Here, how to specify input check rules which use annotation provided by common l
 terasoluna-gfw-common check rules
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 
-Annotation provided by \ `terasoluna-gfw-common <https://github.com/terasolunaorg/terasoluna-gfw/tree/5.2.0.RELEASE/terasoluna-gfw-common-libraries/terasoluna-gfw-common>`_\  (\ ``org.terasoluna.gfw.common.codelist.*``\ ) is shown below.
+Annotation provided by \ `terasoluna-gfw-common <https://github.com/terasolunaorg/terasoluna-gfw/tree/master/terasoluna-gfw-common>`_\  (\ ``org.terasoluna.gfw.common.codelist.*``\ ) is shown below.
 
 .. tabularcolumns:: |p{0.15\linewidth}|p{0.30\linewidth}|p{0.30\linewidth}|p{0.25\linewidth}|
 .. list-table::
@@ -3899,7 +3897,7 @@ Annotation provided by \ `terasoluna-gfw-common <https://github.com/terasolunaor
 terasoluna-gfw-codepoints check rules
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 
-Annotation (\ ``org.terasoluna.gfw.common.codepoints.*``\ ) offered by \ `terasoluna-gfw-codepoints <https://github.com/terasolunaorg/terasoluna-gfw/tree/5.2.0.RELEASE/terasoluna-gfw-common-libraries/terasoluna-gfw-codepoints>`_\  is shown below. Further, \ ``terasoluna-gfw-codepoints``\  can be used in 5.1.0.RELEASE and subsequent versions.
+Annotation (\ ``org.terasoluna.gfw.common.codepoints.*``\ ) offered by \ `terasoluna-gfw-codepoints <https://github.com/terasolunaorg/terasoluna-gfw/tree/master/terasoluna-gfw-codepoints>`_\  is shown below. Further, \ ``terasoluna-gfw-codepoints``\  can be used in 5.1.0.RELEASE and subsequent versions.
 
 .. tabularcolumns:: |p{0.15\linewidth}|p{0.30\linewidth}|p{0.30\linewidth}|p{0.25\linewidth}|
 .. list-table::
@@ -3920,7 +3918,7 @@ Annotation (\ ``org.terasoluna.gfw.common.codepoints.*``\ ) offered by \ `teraso
 terasoluna-gfw-validator check rules
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 
-Annotation (\ ``org.terasoluna.gfw.common.validator.constraints.*``\ ) offered by \ `terasoluna-gfw-validator <https://github.com/terasolunaorg/terasoluna-gfw/tree/5.2.0.RELEASE/terasoluna-gfw-common-libraries/terasoluna-gfw-validator>`_\  is shown below. Further, \ ``terasoluna-gfw-validator``\ can be used in 5.1.0.RELEASE and subsequent versions.
+Annotation (\ ``org.terasoluna.gfw.common.validator.constraints.*``\ ) offered by \ `terasoluna-gfw-validator <https://github.com/terasolunaorg/terasoluna-gfw/tree/master/terasoluna-gfw-validator>`_\  is shown below. Further, \ ``terasoluna-gfw-validator``\ can be used in 5.1.0.RELEASE and subsequent versions.
 
 .. tabularcolumns:: |p{0.15\linewidth}|p{0.30\linewidth}|p{0.30\linewidth}|p{0.25\linewidth}|
 .. list-table::
@@ -4444,6 +4442,7 @@ If it is defined as below,, message read by \ ``MessageSource``\  function can b
      By using \ ``MessageSource``\ function,
      property file is not necessarily restricted to be placed just under class path. Further, multiple property files can also be specified.
      
+
 .. _Validation_os_command_injection:
 
 OS Command Injection Countermeasures
