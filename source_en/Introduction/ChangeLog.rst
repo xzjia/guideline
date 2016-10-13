@@ -10,6 +10,14 @@ Change Log
       - Modified locations
       - Modification details
 
+    * - 2016-06-31
+      - :doc:`../ArchitectureInDetail/GeneralFuncDetail/StringProcessing`
+      - Description details added
+
+        * Example to add dependency to terasoluna-gfw-string is added (\ `guideline#1699 <https://github.com/terasolunaorg/guideline/issues/1699>`_\ )
+        * Precautions for surrogate pair added to description of @Size annotation(\ `guideline#1874 <https://github.com/terasolunaorg/guideline/issues/1874>`_\ )
+        * Description added for corresponding UCS(Unicode)characters of JIS chinese characters \ ``U+2014``\(EM DASH)(\ `guideline#1914 <https://github.com/terasolunaorg/guideline/issues/1914>`_\ )
+
     * - 2016-08-04
       - :doc:`../Overview/FrameworkStack`
       - OSS version to be used (Spring IO Platform version) updated
@@ -25,6 +33,12 @@ Change Log
       - Description details added
 
         * Added warning for the classes on JSR-310 Date and Time API, refer \ `@DateTimeFormat is not strict with JSR310 #1991 <https://github.com/terasolunaorg/guideline/issues/1991>`_\ .
+
+    * -
+      - :doc:`../ArchitectureInDetail/WebApplicationDetail/Validation`
+      - Description details modified
+
+        * Description related to OS command injection added (\ `guideline#1957 <https://github.com/terasolunaorg/guideline/issues/1957>`_\ )
 
     * - 2016-05-19
       - \-
@@ -166,16 +180,16 @@ Change Log
         *  Description of \ ``defaultLocale``\  of \ ``SessionLocalResolver``\  corrected (\ `guideline#686 <https://github.com/terasolunaorg/guideline/issues/686>`_\ )
 
     * -
+      - :doc:`../ArchitectureInDetail/WebApplicationDetail/FileUpload`
+      - Description details added
+
+        * Description for directory traversal attack added (\ `guideline#2010 <https://github.com/terasolunaorg/guideline/issues/2010>`_\ )
+
+    * -
       - :doc:`../ArchitectureInDetail/WebApplicationDetail/Codelist`
       - Description details added
 
         *  Description which recommends a pattern wherein \ ``JdbcTemplate``\  is specified in JdbcCodeList, is added (\ `guideline#501 <https://github.com/terasolunaorg/guideline/issues/501>`_\ )
-
-    * -
-      - :doc:`../ArchitectureInDetail/WebApplicationDetail/HealthCheck`
-      - New
-
-        * Health check added (\ `guideline#1698 <https://github.com/terasolunaorg/guideline/issues/1698>`_\ )
 
     * -
       - :doc:`../ArchitectureInDetail/WebServiceDetail/REST`
@@ -235,10 +249,23 @@ Change Log
         *  A method to handle Japanese calendar in Java8 and earlier versions is added (\ `guideline#1450 <https://github.com/terasolunaorg/guideline/issues/1450>`_\ )
 
     * -
+      - :doc:`../ArchitectureInDetail/GeneralFuncDetail/Logging`
+      - Description details added
+        
+        * Extension method to output log message with ID is described (\ `guideline#1928 <https://github.com/terasolunaorg/guideline/issues/1928>`_\ )
+
+    * -
       - :doc:`../ArchitectureInDetail/GeneralFuncDetail/StringProcessing`
       - Added new
 
         *  String processing added (\ `guideline#1451 <https://github.com/terasolunaorg/guideline/issues/1451>`_\ )
+        
+    * -
+      - :doc:`../ArchitectureInDetail/MessagingDetail/JMS`
+      - Added new
+
+        * JMS added (\ `guideline#1407 <https://github.com/terasolunaorg/guideline/issues/1407>`_\ )
+        
 
     * -
       - :doc:`../Security/index`
@@ -305,13 +332,6 @@ Change Log
     * -
       - :doc:`../Security/SecureLoginDemo`
       - Added new
-
-    * -
-      - :doc:`../Security/SecureLoginDemo`
-      - Description details added
-
-        * "Input check for security" added
-        * "Audit log output" added
 
         *  Typical implementation example of security requirements added (\ `guideline#1604 <https://github.com/terasolunaorg/guideline/issues/1604>`_\ )
 

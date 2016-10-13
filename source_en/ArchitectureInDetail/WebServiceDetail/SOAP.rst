@@ -143,6 +143,8 @@ Development of Web service using JAX-WS
 
 |
 
+.. _SOAPOverviewAboutRESTfulModuleStructure:
+
 Configuration of Web service module which uses JAX-WS
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 
