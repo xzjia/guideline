@@ -19,6 +19,7 @@ Database Access (Common)
     * | About handling of unique constraint errors and pessimistic exclusion errors when using JPA
       | For details, refer to \ :ref:`Overview - About exception handling <data-access-common_todo_exception>`\ .
 
+.. _data_access_overview-label:
 
 Overview
 --------------------------------------------------------------------------------
