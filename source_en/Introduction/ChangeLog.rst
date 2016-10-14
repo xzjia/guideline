@@ -9,6 +9,43 @@ Change Log
     * - Modified on
       - Modified locations
       - Modification details
+
+    * - 2016-08-31
+      - \-
+      - 1.0.5 RELEASE version published
+
+        * For details of update, refer \ `Issue list of 1.0.5 <https://github.com/terasolunaorg/guideline/issues?utf8=%E2%9C%93&q=label%3A5.2.0%20is%3Aissue%20is%3Aclosed%20>`_\.
+
+    * -
+      - General
+      - Correction of errors in the guideline (typos or simple description errors)
+
+        * For details of modification, refer \ `Issue list of 1.0.5 (improvement) <https://github.com/terasolunaorg/guideline/issues?utf8=%E2%9C%93&q=label%3A5.2.0%20label%3Aimprovement%20is%3Aclosed%20>`_\.
+
+        Update common library version to 1.0.5.
+
+        * For details of update, refer \ `Check Version  #2076 <https://github.com/terasolunaorg/guideline/issues/2076>`_\.
+
+    * -
+      - :doc:`../Overview/FrameworkStack`
+      - Description details added
+
+        Version of OSS used updated)
+
+        * GroupId "\ ``org.springframework``\" version updated from 3.2.14.RELEASE to 3.2.17.RELEASE
+
+    * -
+      - :doc:`../ArchitectureInDetail/WebApplicationDetail/FileUpload`
+      - Description details added
+
+        * \ `CVE-2016-3092 <https://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2016-3092>`_\ Precautions for (File Upload vulnerability) added (\ `guideline#1973 <https://github.com/terasolunaorg/guideline/issues/1973>`_\ )
+
+    * -
+      - :doc:`../Security/Authorization`
+      - Description details added
+
+        * How to handle \ `CVE-2016-5007 Spring Security / MVC Path Matching Inconsistency <https://pivotal.io/security/cve-2016-5007>`_\ added (\ `guideline#1976 <https://github.com/terasolunaorg/guideline/issues/1976>`_\ )
+
     * - 2015-07-31
       - \-
       - Released "1.0.3 RELEASE" version
