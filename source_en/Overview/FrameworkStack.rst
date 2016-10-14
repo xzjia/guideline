@@ -281,6 +281,12 @@ List of OSS being used in version 5.2.0.RELEASE.
       - 1.2.5
       -
       - \*1
+    * - MyBatis3
+      - org.mybatis
+      - mybatis-typehandlers-jsr310
+      - 1.0.1
+      -
+      - \*1*6
     * - JPA(Hibernate)
       - antlr
       - antlr
@@ -619,6 +625,9 @@ List of OSS being used in version 5.2.0.RELEASE.
    | (Library is not managed as dependencies in Spring IO platform)
 #. | Library versions that are applied in the Spring IO platform is a Beta or RC (Release Candidate)
    | (Library that explicitly specify the GA version at TERASOLUNA Server Framework for Java (5.x))
+#. | A library which considers API of Java SE 8 and further versions,as a prerequisite.
+   | Dependency relation to the library must be explicitly removed in case of versions earlier than Java SE 7
+
 
 .. _frameworkstack_common_library:
 
@@ -630,10 +639,10 @@ Building blocks of Common Library
 Basically, application development is possible using TERASOLUNA Server Framework for Java (5.x) without this library but "convenient to have" kind of existence.
 With the default settings, provided two blank projects, \ `Blank project of multi-project <https://github.com/terasolunaorg/terasoluna-gfw-web-multi-blank>`_\  and \ `Blank project of single-project <https://github.com/terasolunaorg/terasoluna-gfw-web-blank>`_\ , contains built-in Common Library as shown in the following listing. 
 
-.. tabularcolumns:: |p{0.05\linewidth}|p{0.30\linewidth}|p{0.45\linewidth}|p{0.20\linewidth}|
+.. tabularcolumns:: |p{0.05\linewidth}|p{0.15\linewidth}|p{0.40\linewidth}|p{0.20\linewidth}|p{0.10\linewidth}|p{0.10\linewidth}|
 .. list-table::
     :header-rows: 1
-    :widths: 5 30 45 15 14 15
+    :widths: 5 15 40 20 10 10
 
     * - No.
       - Project Name
@@ -642,93 +651,137 @@ With the default settings, provided two blank projects, \ `Blank project of mult
       - Blank project of multi-project built-in
       - Blank project of single-project built-in
     * - \ (1)
-      - terasoluna-gfw-common
-      - Provide general-purpose functionalities and dependency definitions irrespective of Web.
-      - Yes
-      - Yes
-      - Yes
+      - terasoluna-gfw-parent
+      - Provide recommended settings for dependent library management and build plug-in.
+      - No
+      - Yes*1
+      - Yes*1
     * - \ (2)
-      - terasoluna-gfw-string
-      - Provide function related to string processing. (Add from 5.1.0)
-      - Yes
+      - terasoluna-gfw-common-libraries
+      - Define structure of the project which includes Java source code, among the common libraries. It is not necessary to add to pom.xml as a dependency.
       - No
-      - No
+      - Yes*1
+      - Yes*1
     * - \ (3)
-      - terasoluna-gfw-codepoints
-      - Provide function to check whether the code point constituting target string is incorporated in the codepoint set.(Add from 5.1.0)
-      - Yes
+      - terasoluna-gfw-dependencies
+      - Define structure of the project which provides only dependency definition (other than terasoluna-gfw-parent), among the common libraries. It is not necessary to add pom.xml as a dependency.
       - No
-      - No
+      - L*1
+      - L*1
     * - \ (4)
-      - terasoluna-gfw-validator
-      - Provide by adding a constraint annotation of generic Bean validation. (Add from 5.1.0)
+      - terasoluna-gfw-common
+      - Provide a general purpose function that does not depend on Web. When this library is to be used, terasoluna-gfw-common-dependencies is added to pom.xml as a dependency.
       - Yes
-      - No
-      - No
+      - Yes*2
+      - Yes*2
     * - \ (5)
-      - terasoluna-gfw-jodatime
-      - Provide function that depends on Joda Time and dependency relation definition. (Add from 5.0.0)
-      - Yes
+      - terasoluna-gfw-common-dependencies
+      - Provide definition for dependency while using the function offered by terasoluna-gfw-common project.
+      - No
       - Yes
       - Yes
     * - \ (6)
-      - terasoluna-gfw-web
-      - Provide function to be used while creating a Web application and dependency relation definition. Function not dependent on View and dependency relation definition are consolidated.
+      - terasoluna-gfw-jodatime
+      - Provide a function that depends on Joda Time. When the library is to be used, terasoluna-gfw-jodatime-dependencies is added to pom.xml as a dependency. (add from 5.0.0)
       - Yes
-      - Yes
-      - Yes
+      - Yes*2
+      - Yes*2
     * - \ (7)
-      - terasoluna-gfw-web-jsp
-      - Provide function and dependency relation definition to be used while creating a Web application which adopts JSP in View.
-      - Yes
+      - terasoluna-gfw-jodatime-dependencies
+      - Provide dependency definition while using a function offered by terasoluna-gfw-jodatime project.
+      - No
       - Yes
       - Yes
     * - \ (8)
-      - terasoluna-gfw-mybatis3
-      - Provide dependency definitions for using MyBatis3.
-      - No
-      - Yes*1
-      - Yes*1
+      - terasoluna-gfw-web
+      - Provide a function used while creating a Web application. Functions that do not depend on View are consolidated. When the library is used, terasoluna-gfw-web-dependencies is added to pom.xml as a dependency.
+      - Yes
+      - Yes*2
+      - Yes*2
     * - \ (9)
-      - terasoluna-gfw-jpa
-      - Provide dependency definitions for using JPA.
+      - terasoluna-gfw-web-dependencies
+      - Provide dependency definition while using a function offered by terasoluna-gfw-web project.
       - No
-      - Yes*2
-      - Yes*2
+      - Yes
+      - Yes
     * - \ (10)
-      - terasoluna-gfw-security-core
-      - Provide dependency definitions for using Spring Security (other than Web).
-      - No
+      - terasoluna-gfw-web-jsp
+      - Provide a function used while creating a Web application which adopts JSP in View. When this library is used, terasoluna-gfw-web-jsp-dependencies is added to pom.xml as a dependency.
       - Yes
-      - Yes
+      - Yes*2
+      - Yes*2
     * - \ (11)
-      - terasoluna-gfw-security-web
-      - Provide dependency definitions for using Spring Security (related to Web) and extended classes of Spring Security.
-      - Yes
+      - terasoluna-gfw-web-jsp-dependencies
+      - Provide dependency definition while using a function offered by terasoluna-gfw-web-jsp project.
+      - No
       - Yes
       - Yes
     * - \ (12)
-      - terasoluna-gfw-recommended-dependencies
-      - Provide dependency definitions of recommended libraries that doesn't depends on web.
-      - No
+      - terasoluna-gfw-security-web
+      - Provide extended parts of Spring Security. When the library is used, terasoluna-gfw-security-web-dependencies is added to pom.xml as a dependency.
       - Yes
-      - Yes
+      - Yes*2
+      - Yes*2
     * - \ (13)
-      - terasoluna-gfw-recommended-web-dependencies
-      - Provide dependency definitions of recommended libraries that depends on web.
+      - terasoluna-gfw-security-web-dependencies
+      - Provide dependency definition while using Spring Security (Web related) and dependency definition while using a function offered by terasoluna-gfw-security-web project.
       - No
       - Yes
       - Yes
     * - \ (14)
-      - terasoluna-gfw-parent
-      - Provide dependency libraries management and recommended settings of build plugins.
+      - terasoluna-gfw-string
+      - Provide a function related to string processing. (added from 5.1.0)
+      - Yes
+      - No
+      - No
+    * - \ (15)
+      - terasoluna-gfw-codepoints
+      - Provide a function to check whether the code points that constitute the targeted string are included in the code point set. (added from 5.1.0)
+      - Yes
+      - No
+      - No
+    * - \ (16)
+      - terasoluna-gfw-validator
+      - Provide by adding a constraint annotation of general-purpose Bean Validation. (added from 5.1.0)
+      - Yes
+      - No
+      - No
+    * - \ (17)
+      - terasoluna-gfw-security-core-dependencies
+      - Provide a dependency definition (other than Web) while using Spring Security.
+      - No
+      - Yes
+      - Yes
+    * - \ (18)
+      - terasoluna-gfw-mybatis3-dependencies
+      - Provide a dependency definition while using MyBatis3.
       - No
       - Yes*3
       - Yes*3
+    * - \ (19)
+      - terasoluna-gfw-jpa-dependencies
+      - Provide a dependency definition while using JPA.
+      - No
+      - Yes*4
+      - Yes*4
+    * - \ (20)
+      - terasoluna-gfw-recommended-dependencies
+      - Provide a dependency definition for recommended libraries that do not depend on web.
+      - No
+      - Yes
+      - Yes
+    * - \ (21)
+      - terasoluna-gfw-recommended-web-dependencies
+      - Provide a dependency definition for web-dependent recommended libraries.
+      - No
+      - Yes
+      - Yes
 
+#. | Incorporated as \ ``<parent>``\  element of each project and not as a \ ``<dependency>``\ element.
+#. | Incorporated as a transition dependency from  \ ``<dependency>``\  element and not as a \ ``<dependency>``\ element.
 #. | With the default settings of Common Library, when MyBatis3 is used for data access.
 #. | With the default settings of Common Library, when JPA is used for data access.
-#. | terasoluna-gfw-parent is not built-in as a \ ``<dependency>``\ , but a \ ``<parent>``\ .
+
 
 The project which does not contain the Java source code, only defines library dependencies.
 
@@ -737,7 +790,14 @@ In addition, project dependencies are as follows:
 .. figure:: images_FrameworkStack/FrameworkStackProjectDependencies.png
     :width: 75%
 
+.. note::
 
+  Excluding exceptions, a project assigned with "dependencies" at the end of project name exists in common library.
+  (For example, terasoluna-gfw-common-dependencies etc corresponding to terasoluna-gfw-common)
+
+  In these projects, since a dependency definition for OSS library recommended for use is provided along with dependency definition for common library,
+  it is recommended to add it to pom.xml as a dependency, for the project assigned with "dependencies" while using a common library.
+  
 
 terasoluna-gfw-common
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
@@ -950,4 +1010,3 @@ terasoluna-gfw-security-web provide following components.
 .. raw:: latex
 
    \newpage
-

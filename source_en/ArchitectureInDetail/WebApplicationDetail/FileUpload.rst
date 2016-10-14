@@ -32,11 +32,10 @@ Overview
 
  .. warning::
  
-    If implementation of file upload of an application server to be used depends on implementation of Apache Commons FileUpload, security vulnerabilities reported in \ `CVE-2014-0050 <http://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2014-0050>`_\  may occur.
+    If implementation of file upload of an application server to be used depends on implementation of Apache Commons FileUpload, security vulnerabilities reported in \ `CVE-2014-0050 <http://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2014-0050>`_\  and `CVE-2016-3092 <https://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2016-3092>`_\  may occur.
     Hence ensure that there are no such vulnerabilities in the application server to be used.
     
     In case of using Tomcat, it is necessary to use version 7.0.52 or above for series 7.0, and version 8.0.3 or above for series 8.0.
-    A file upload function of Servlet 3.0 should be used since problems do not occur while using Tomcat 7/8 as an Application Server.
 
 Basic flow of upload process
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
@@ -1428,8 +1427,8 @@ Example for temporarily saving the uploaded file in a temporary directory, is sh
         return "article/uploadConfirm";
     }
     
-  .. tabularcolumns:: |p{0.10\linewidth}|p{0.90\linewidth}|
-  .. list-table::
+ .. tabularcolumns:: |p{0.10\linewidth}|p{0.90\linewidth}|
+ .. list-table::
    :header-rows: 1
    :widths: 10 90
 
@@ -1647,6 +1646,7 @@ Security issues related to file upload
 
 #. :ref:`file-upload_security_related_warning_points_dos`
 #. :ref:`file-upload_security_related_warning_points_server_scripting`
+#. :ref:`file-upload_security_related_warning_points_directory_traversal`
 
 Security measures are described below.
 
@@ -1678,6 +1678,27 @@ Measures to be taken against this attack are as follows:
 The attacks can be prevented by implementing either of the above measures; however it is always recommended to implement both the measures.
 
 |
+
+.. _file-upload_security_related_warning_points_directory_traversal:
+
+Directory traversal attack
+""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+| Directory traversal attack is an attack that accesses the files on the server that originally should not been accessed, by accessing the file system using inputs which include strings like "../" etc.
+| For example, in the web application wherein the file uploaded by the user is placed in the predetermined directory on the server, the file with the name "../../../../somewhere/attack" is uploaded according to implementation method and the file is placed in a directory other than predetermined directory.
+| In that case, the file on the server is likely to get tampered by the file uploaded by the attacker.
+| A risk of directory traversal is likely in the file download function as well, along with file upload function.
+| For example, a type of attack can be considered wherein the attacker would obtain the details of "/etc/passwd" by entering "../../../../etc/passwd", in case of Web application wherein file is downloaded in accordance with the file name entered by the user.
+
+Countermeasures for this attack are as below.
+
+* When the uploaded file is to be stored on the server, it should be stored by using a different name, and the original file name and input value from user should not be used. It should be stored in a format which is not used for actual file access such as storing the correspondence relation with the file name on the server outside DB, for the original file name.
+* When the file is to be accessed from  the server, a request should be sent using an identifier for request instead of using actual file name and then converted to the file name on the server side. For example, identifiers "id01" and "id02" are used for actual file names "file_A" and "file_B" wherein if the client requests for "id01", corresponding "file_A" on the server is accessed.
+
+.. tip::
+   
+   Another countermeasure can be taken into consideration wherein file path thus entered is normalised ( "./" or "../" etc, should be developed in a format which does not include strings with specific significance in the file system) and the access is given after checking whether the path matches (begins-with match) with the path already determined.
+   However, if input value encoding and the variation in the path format according to OS is taken into consideration, it is difficult to determine whether the normalization has been done appropriately.
+   Hence, it is preferable to avoid accessing the file system by using the input value from user.
 
 .. _file-upload_usage_commons_fileupload:
 
@@ -1718,17 +1739,18 @@ Perform the following settings when using Commons FileUpload.
      - | Description
    * - | (1)
      - | Add dependency to \ ``commons-fileupload``\ .
-       | No need to specify the version in :file:`pom.xml`\  as it is defined depending on Spring IO Platform.
+       | No need to specify the version in :file:`pom.xml`\ as it is defined depending on Spring IO Platform.
 
 .. warning::
 
     In case of using Apache Commons FileUpload,
-    security vulnerabilities reported in \ `CVE-2014-0050 <http://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2014-0050>`_\  are likely to occur.
+    security vulnerabilities reported in \ `CVE-2014-0050 <http://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2014-0050>`_\  and `CVE-2016-3092 <https://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2016-3092>`_\  are likely to occur.
     Confirm that there are no vulnerabilities in the version of Apache Commons FileUpload to be used.
 
-    When using Apache Commons FileUpload, version 1.3.1 or above should be used.
+    When using Apache Commons FileUpload, version 1.3.2 or above should be used.
 
-    Further, if a version stored in Spring IO Platform is used, the vulnerabilities reported in CVE-2014-0050 do not occur.
+    Note that, if a version managed by Spring IO Platform 2.0.6.RELEASE which is in conformance with TERASOLUNA Server Framework for Java version 5.2.0.RELEASE is used, vulnerabilities reported in CVE-2014-0050 and CVE-2016-3092 do not occur.
+    When Apache Commons FileUpload version is to be changed intentionally, a version wherein corresponding vulnerability has been addressed must be specified.
 
 |
 

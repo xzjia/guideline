@@ -143,6 +143,8 @@ Development of Web service using JAX-WS
 
 |
 
+.. _SOAPOverviewAboutRESTfulModuleStructure:
+
 Configuration of Web service module which uses JAX-WS
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 
@@ -1643,18 +1645,22 @@ Inject Web service created above by Service and run Web service.
 
 .. note:: **Fetch response information**
 
-    When the response information is to be fetched by the client for example retry, it can be fetched by casting in \ ``javax.xml.ws.BindingProvider``\  class as given below.
+    When the response information is to be fetched by the client for example retry, it can be fetched by casting in \ ``javax.xml.ws.BindingProvider``\ class as given below.
 
      .. code-block:: java
 
          BindingProvider provider = (BindingProvider) todoWebService;
          int status = (int) provider.getResponseContext().get(MessageContext.HTTP_RESPONSE_CODE);
 
-    However, in this instance, implementation of Web service is dependent on the proxy class. Therefore, \ ``javax.xml.ws.BindingProvider``\  must be implemented  in stab even when stab is used during testing.
-    It is recommended to keep the use of this function to minimum.
+    For details of \ ``BindingProvider``\, refer \ `The Java API for XML-Based Web Services(JAX-WS) 2.2 -4.2 javax.xml.ws.BindingProvider- <http://www.google.co.jp/url?sa=t&rct=j&q=&esrc=s&source=web&cd=1&cad=rja&uact=8&ved=0ahUKEwj1z_exk7TOAhUDnpQKHbk6AgwQFggfMAA&url=http%3A%2F%2Fdownload.oracle.com%2Fotn-pub%2Fjcp%2Fjaxws-2.2-mrel3-evalu-oth-JSpec%2Fjaxws-2_2-mrel3-spec.pdf&v6u=https%3A%2F%2Fs-v6exp1-ds.metric.gstatic.com%2Fgen_204%3Fip%3D163.135.151.80%26ts%3D1470739411479764%26auth%3Dk5tkj3erhgejiufbavruvdinx2iknps5%26rndm%3D0.9131593964234974&v6s=2&v6t=48530&usg=AFQjCNEfBm6Ji-bQy9GDL8l5crz9PZ188w&bvm=bv.129389765,d.dGo>`_\.
+    
+    However, when Apatch CXF library is included in the dependency relation of the client, it is not possible to fetch response information by the method given above at the time of communication error.
+    This is because Apatch CXF proxy is automatically used when Apatch CXF library is included in the dependency relation and Apache CXF proxy does not retain response information in response context at the time of communication error.
+    For error handling of Apache CXF, refer \ `Apache CXF Software Architecture Guide -Fault Handling- <http://cxf.apache.org/docs/cxf-architecture.html#CXFArchitecture-FaultHandling>`_\.
+
+    According to Web service and relay service which includes client of another Web service, if dependency relation of Apache CXF library is necessarily included in the client, it must be considered as a restricted item and adequate care must be taken.
 
 |
-
 
 Security measures
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
@@ -1906,15 +1912,17 @@ model project configuration is explained.
             <!-- == Begin TERASOLUNA == -->
             <dependency>
                 <groupId>org.terasoluna.gfw</groupId>
-                <artifactId>terasoluna-gfw-common</artifactId>
+                <artifactId>terasoluna-gfw-common-dependencies</artifactId>
             </dependency>
             <dependency>
                 <groupId>org.terasoluna.gfw</groupId>
-                <artifactId>terasoluna-gfw-jodatime</artifactId>
+                <artifactId>terasoluna-gfw-jodatime-dependencies</artifactId>
+                <type>pom</type>
             </dependency>
             <dependency>
                 <groupId>org.terasoluna.gfw</groupId>
-                <artifactId>terasoluna-gfw-security-core</artifactId>
+                <artifactId>terasoluna-gfw-security-core-dependencies</artifactId>
+                <type>pom</type>
             </dependency>
 
             <dependency>
@@ -1977,15 +1985,18 @@ webservice project configuration is explained.
             <!-- == Begin TERASOLUNA == -->
             <dependency>
                 <groupId>org.terasoluna.gfw</groupId>
-                <artifactId>terasoluna-gfw-common</artifactId>
+                <artifactId>terasoluna-gfw-common-dependencies</artifactId>
+                <type>pom</type>
             </dependency>
             <dependency>
                 <groupId>org.terasoluna.gfw</groupId>
-                <artifactId>terasoluna-gfw-jodatime</artifactId>
+                <artifactId>terasoluna-gfw-jodatime-dependencies</artifactId>
+                <type>pom</type>
             </dependency>
             <dependency>
                 <groupId>org.terasoluna.gfw</groupId>
-                <artifactId>terasoluna-gfw-security-core</artifactId>
+                <artifactId>terasoluna-gfw-security-core-dependencies</artifactId>
+                <type>pom</type>
             </dependency>
 
             <dependency>

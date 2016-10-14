@@ -48,6 +48,11 @@ Overview of File Download process is given below.
 | abstract class to download arbitrary files.
 | Define this class as a subclass to render files in formats other than PDF or Excel.
 
+.. tip::
+   
+    A countermeasure for directory traversal attack may become necessary while offering a file download function.
+    For directory traversal attack, refer \ :ref:`file-upload_security_related_warning_points_directory_traversal` \.
+
 |
 
 How to use

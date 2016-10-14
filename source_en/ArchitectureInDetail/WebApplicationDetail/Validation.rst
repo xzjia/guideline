@@ -2008,6 +2008,67 @@ Error message as shown below is displayed when form is sent by entering differen
 
   When \ ``<form:password>``\  tag is used, data gets cleared at the time of redisplay.
 
+.. _Validation_how_to_cross-field_validation_for_multi_field_highlight:
+.. note::
+
+   Error information can be set for multiple fields for correlation check.
+   However, displaying error messages and applying style must always be performed in a set and only one part of the tasks cannot not be performed.
+
+   When you want to apply style to both the fields wherein correlation check error has occurred however you want to display only one error message,
+   it can be done by setting a null string in the error message.
+   An example is given below wherein style is applied to \ ``password``\  field and \ ``confirmPassword``\  field and error message is displayed only in \ ``password``\  field.
+
+     .. code-block:: java
+
+       package com.example.sample.app.validation;
+
+       import org.springframework.stereotype.Component;
+       import org.springframework.validation.Errors;
+       import org.springframework.validation.Validator;
+
+       @Component
+       public class PasswordEqualsValidator implements Validator {
+
+           @Override
+           public boolean supports(Class<?> clazz) {
+               return PasswordResetForm.class.isAssignableFrom(clazz);
+           }
+
+           @Override
+           public void validate(Object target, Errors errors) {
+
+               // omitted
+               if (!password.equals(confirmPassword)) {
+                   // register a field error for password
+                   errors.rejectValue("password",
+                          "PasswordEqualsValidator.passwordResetForm.password",
+                          "password and confirm password must be same.");
+
+                   // register a field error for confirmPassword
+                   errors.rejectValue("confirmPassword", // (1)
+                             "PasswordEqualsValidator.passwordResetForm.confirmPassword", // (2)
+                             ""); // (3)
+               }
+           }
+       }
+
+     .. tabularcolumns:: |p{0.10\linewidth}|p{0.90\linewidth}|
+     .. list-table::
+        :header-rows: 1
+        :widths: 10 90
+
+        * - Sr. No.
+          - Description
+        * - | (1)
+          - | Register error in \ ``confirmPassword``\ field.
+        * - | (2)
+          - | Specify code name of error message. Specify a null string in the corresponding error message at that time.
+            | For message definition, refer \ :ref:`Validation_message_in_application_messages`\.
+        * - | (3)
+          - | Set a default message to be used when error message could not be resolved in the code.
+            | A null string is set in the example above.
+
+
 .. note::
 
    When multiple forms are used in a single controller, model name should be specified in \ ``@InitBinder("xxx")``\  in order to limit the target of Validator.
@@ -2939,6 +3000,58 @@ Set constraint of assigning "confirm" as the prefix of confirmation field.
 
     For deprecated API of Bean Validation, refer to \ `Bean Validation API Document (Deprecated API) <http://docs.jboss.org/hibernate/beanvalidation/spec/1.1/api/deprecated-list.html>`_\ .
 
+.. note::
+
+   As introduced in correlation item  check using Spring Validator, even in Bean Validation,
+   :ref:`Set error information for multiple fields for correlation check<Validation_how_to_cross-field_validation_for_multi_field_highlight>` can be performed.
+
+   An example is shown below wherein styles are applied to \ ``password``\ field and \ ``confirmPassword``\ field in Bean Validation and error message is displayed only for \ ``password``\ field.
+
+     .. code-block:: java
+
+       // omitted
+       public class ConfirmValidator implements ConstraintValidator<Confirm, Object> {
+           private String field;
+
+           private String confirmField;
+
+           private String message;
+
+           public void initialize(Confirm constraintAnnotation) {
+               // omitted
+           }
+
+           public boolean isValid(Object value, ConstraintValidatorContext context) {
+               // omitted
+               if (matched) {
+                   return true;
+               } else {
+                   context.disableDefaultConstraintViolation();
+
+                   //new ConstraintViolation to be generated for field
+                   context.buildConstraintViolationWithTemplate(message)
+                           .addPropertyNode(field).addConstraintViolation();
+
+                   //new ConstraintViolation to be generated for confirmField
+                   context.buildConstraintViolationWithTemplate("") // (1)
+                           .addPropertyNode(confirmField).addConstraintViolation();
+
+                   return false;
+               }
+           }
+
+       }
+
+     .. tabularcolumns:: |p{0.10\linewidth}|p{0.90\linewidth}|
+     .. list-table::
+        :header-rows: 1
+        :widths: 10 90
+
+        * - Sr. No.
+          - Description
+        * - | (1)
+          - | Register error of \ ``confirmPassword``\ field. A null string is set in error message at that time.
+
 
 Check below for the changes, if the "Reset password" is re-implemented using \ ``@Confirm``\  annotation.
 
@@ -3143,6 +3256,8 @@ An example of implementing, "whether the entered user name is already registered
        - | Return the result of business logic error check. Process should be delegated to service class. Logic must not be written directly in the \ ``isValid``\  method.
 
 |
+
+.. _MethodValidation:
 
 Method Validation 
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
@@ -3726,6 +3841,14 @@ Refer to Chapter 7 \ `Bean Validation specification <http://download.oracle.com/
      By specifying \ ``true``\  (to allow same value of specified threshold) to the default value of \ ``inclusive``\  attribute,
      compatibility with Bean Validation 1.0 is maintained.
 
+.. warning::
+
+     In \ ``@Size``\  annotation, characters represented by char type 2 (32 bits) called as surrogate pair are not considered.
+
+     When a string consisiting of a surrogate pair is excluded from the check, adequate care must be taken since number of characters that are counted are likely to be more than the actual number of characters.
+
+     For length of the string including surrogate pair, refer :ref:`StringProcessingHowToGetSurrogatePairStringLength`.
+
 
 .. _Validation_validator_list:
 
@@ -3865,7 +3988,7 @@ Here, how to specify input check rules which use annotation provided by common l
 terasoluna-gfw-common check rules
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 
-Annotation provided by \ `terasoluna-gfw-common <https://github.com/terasolunaorg/terasoluna-gfw/tree/5.2.0.RELEASE/terasoluna-gfw-common-libraries/terasoluna-gfw-common>`_\  (\ ``org.terasoluna.gfw.common.codelist.*``\ ) is shown below.
+Annotation provided by \ `terasoluna-gfw-common <https://github.com/terasolunaorg/terasoluna-gfw/tree/5.2.0.RELEASE/terasoluna-gfw-common>`_\  (\ ``org.terasoluna.gfw.common.codelist.*``\ ) is shown below.
 
 .. tabularcolumns:: |p{0.15\linewidth}|p{0.30\linewidth}|p{0.30\linewidth}|p{0.25\linewidth}|
 .. list-table::
@@ -3887,7 +4010,7 @@ Annotation provided by \ `terasoluna-gfw-common <https://github.com/terasolunaor
 terasoluna-gfw-codepoints check rules
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 
-Annotation (\ ``org.terasoluna.gfw.common.codepoints.*``\ ) offered by \ `terasoluna-gfw-codepoints <https://github.com/terasolunaorg/terasoluna-gfw/tree/5.2.0.RELEASE/terasoluna-gfw-common-libraries/terasoluna-gfw-codepoints>`_\  is shown below. Further, \ ``terasoluna-gfw-codepoints``\  can be used in 5.1.0.RELEASE and subsequent versions.
+Annotation (\ ``org.terasoluna.gfw.common.codepoints.*``\ ) offered by \ `terasoluna-gfw-codepoints <https://github.com/terasolunaorg/terasoluna-gfw/tree/release/5.2.0.RELEASE/terasoluna-gfw-common-libraries/terasoluna-gfw-codepoints>`_\  is shown below. Further, \ ``terasoluna-gfw-codepoints``\  can be used in 5.1.0.RELEASE and subsequent versions.
 
 .. tabularcolumns:: |p{0.15\linewidth}|p{0.30\linewidth}|p{0.30\linewidth}|p{0.25\linewidth}|
 .. list-table::
@@ -3908,7 +4031,7 @@ Annotation (\ ``org.terasoluna.gfw.common.codepoints.*``\ ) offered by \ `teraso
 terasoluna-gfw-validator check rules
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 
-Annotation (\ ``org.terasoluna.gfw.common.validator.constraints.*``\ ) offered by \ `terasoluna-gfw-validator <https://github.com/terasolunaorg/terasoluna-gfw/tree/5.2.0.RELEASE/terasoluna-gfw-common-libraries/terasoluna-gfw-validator>`_\  is shown below. Further, \ ``terasoluna-gfw-validator``\ can be used in 5.1.0.RELEASE and subsequent versions.
+Annotation (\ ``org.terasoluna.gfw.common.validator.constraints.*``\ ) offered by \ `terasoluna-gfw-validator <https://github.com/terasolunaorg/terasoluna-gfw/tree/release/5.2.0.RELEASE/terasoluna-gfw-common-libraries/terasoluna-gfw-validator>`_\  is shown below. Further, \ ``terasoluna-gfw-validator``\ can be used in 5.1.0.RELEASE and subsequent versions.
 
 .. tabularcolumns:: |p{0.15\linewidth}|p{0.30\linewidth}|p{0.30\linewidth}|p{0.25\linewidth}|
 .. list-table::
@@ -4352,6 +4475,189 @@ With the help of this configuration, it can be specified in the controller wheth
 | When this setting is made, all empty String values set to String fields of form object become \ ``null``\ .
 | Therefore it must be noted that, it becomes necessary to specify \ ``@NotNull``\  in case of mandatory check.
 
+
+.. _Validation_without_native2ascii:
+
+Reading messages which are not converted from Native to Ascii
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+A method to read Bean Validation message （\ ``ValidationMessage.properties``\ ） is introduced without converting the message from  Native to Ascii.
+
+When the Japanese message is to be handled directly without converting from  Native to Ascii, it can be easily implemented if it is linked with \ ``MessageSource``\  of Spring.
+
+
+If it is defined as below,, message read by \ ``MessageSource``\  function can be used in \ ``Hibernate Validator``\ .
+
+
+* Bean definition
+
+  \ ``*-domain.xml``\ 
+
+ .. code-block:: xml
+
+     <!-- (1) -->
+     <bean id="validator" class="org.springframework.validation.beanvalidation.LocalValidatorFactoryBean">
+         <property name="validationMessageSource">
+             <!-- (2) -->
+             <bean class="org.springframework.context.support.ResourceBundleMessageSource">
+                 <property name="basenames">
+                     <list>
+                         <value>ValidationMessages</value> <!-- (3) -->
+                     </list>
+                 </property>
+                 <property name="defaultEncoding" value="UTF-8" />
+             </bean>
+         </property>
+     </bean>
+
+     <!-- (4) -->
+     <bean class="org.springframework.validation.beanvalidation.MethodValidationPostProcessor">
+         <property name="validator" ref="validator" />
+     </bean>
+
+ \ ``spring-mvc.xml``\ 
+
+ .. code-block:: xml
+
+     <!-- (5) -->
+     <mvc:annotation-driven validator="validator">
+         <!-- ommited -->
+     </mvc:annotation-driven>
+
+     <!-- (6) -->
+     <bean class="org.springframework.validation.beanvalidation.MethodValidationPostProcessor">
+         <property name="validator" ref="validator" />
+     </bean>
+
+ .. tabularcolumns:: |p{0.10\linewidth}|p{0.90\linewidth}|
+ .. list-table::
+     :header-rows: 1
+     :widths: 10 90
+
+     * - Sr. No.
+       - Description
+     * - | (1)
+       - Define a Bean for \ ``LocalValidatorFactoryBean``\ .
+     * - | (2)
+       - Define \ ``MessageSource``\ . Here, \ ``ResourceBundleMessageSource``\  is used.
+     * - | (3)
+       - Specify a resource bundle to be read in \ ``ApplicationContext``\ .
+     * - | (4)
+       - | Specify a Bean defined by (1) in \ ``validator``\  property of \ ``MethodValidationPostProcessor``\  while using \ :ref:`MethodValidation`\ .
+         | When Method Validation is not used, the Bean definition is not required.
+     * - | (5)
+       - Specify a Bean defined in (1), in  \ ``validator``\ attribute of \ ``<mvc:annotation-driven>``\ element.
+     * - | (6)
+       - \ Same as (4).
+
+ .. note::
+
+     By using \ ``MessageSource``\ function,
+     property file is not necessarily restricted to be placed just under class path. Further, multiple property files can also be specified.
+     
+
+.. _Validation_os_command_injection:
+
+OS Command Injection Countermeasures
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+OS command injection, a type of security vulnerability and its countermeasures are explained here.
+
+What is OS command injection -
+""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+OS command injection is an issue which occurs when malicious commands are supplied to the user input string resulting in illegal manipulation of the computer,
+when command execution strings are assembled from user input strings in the application.
+
+.. tip::
+
+    For details, refer \ `Description page <https://www.owasp.org/index.php/OS_Command_Injection>`_\  of OWASP.
+
+In Java, OS command injection can occur when following are used as the commands to be executed when commands are executed
+using ``exec``\  method of \ ``ProcessBuilder``\ class  and \ ``Runtime``\  class.
+
+* \ ``/bin/sh``\  (in case of Unix system) or \ ``cmd.exe``\  (In case of Windows)
+* String input by user
+
+An example wherein OS command injection occurs when \ ``/bin/sh``\  is used, is shown below.
+
+.. code-block:: java
+
+  ProcessBuilder pb = new ProcessBuilder("/bin/sh", "-c", script); // (1)
+  Process p = pb.start();
+
+
+.. tabularcolumns:: |p{0.10\linewidth}|p{0.90\linewidth}|
+.. list-table::
+    :header-rows: 1
+    :widths: 10 90
+
+    * - Sr. No.
+      - Description
+    * - | (1)
+      - | For example, when "exec.sh ; cat /etc/passwd" is input in the \ ``script``\ , semicolon in the string is interpreted as a delimiter by \ ``/bin/sh``\  and "cat /etc/passwd" is executed.
+        | Hence, \ ``/etc/passwd``\  is likely to be output depending on how the standard output is handled.
+
+.. warning:: **How to use ScriptEngine and ScriptTemplateViewResolver**
+
+    Another language  (\ ``Ruby``\ or \ ``Python``\ etc) can be used on JVM , in \ ``ScriptEngine``\  added from  Java SE 6
+    or \ ``ScriptTemplateViewResolver``\  added from  Spring Framework 4.2.
+
+    When code of another language is to be executed using this function, care must be taken while using the function
+    since OS command injection is likely to occur during writing the code.
+
+Countermeasures
+""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+Running external processes should be avoided as much as possible in order to prevent occurrence of OS command injection. However, if it is necessary to execute the external process due to certain circumstances,
+it must be executed after implementing the countermeasures below.
+
+* Commands which use \ ``/bin/sh``\  (in case of Unix system) and \ ``cmd.exe``\  (in case of Windows) should not be executed as far as possible.
+* Check whether the characters entered by user are allowed by the application using the whitelist system
+
+The rules to check whether commands and arguments entered by the user are configured  by the specified string are shown below.
+
+.. code-block:: java
+
+    @Pattern(regexp = "batch0\\d\\.sh") // (1)
+    private String cmdStr;
+
+    @Pattern(regexp = "[\\w=_]+")  // (2)
+    private String arg;
+
+
+.. tabularcolumns:: |p{0.10\linewidth}|p{0.90\linewidth}|
+.. list-table::
+    :header-rows: 1
+    :widths: 10 90
+
+    * - Sr. No.
+      - Description
+    * - | (1)
+      - | Specify rule to allow only \ ``batch0X.sh``\ (X is a single byte numeral from 0 to 9).
+    * - | (2)
+      - | Specify rule to allow only the strings configured from  innocuous alphanumeric characters (\\w）、\ ``=``\ 、\ ``_``\) as arguments.
+
+.. note::
+
+    In this example, directory traversal is prevented by establishing a rule wherein the path is not included in the commands or arguments.
+      
+When \ ``@Pattern``\  is used, regular expressions specified in \ ``@Pattern``\  are output as error messages and
+are considered invalid as messages due to following points.
+
+* Significance of error is not clear, not user-friendly
+* logic for the countermeasures to the vulnerability is exposed to the user
+
+.. figure:: ./images_Validation/validations-os-command-injection.png
+  :width: 60%
+
+A valid message is defined in application-messages.properties to conceal the logic by clarifying the significance of error.
+For how to define a message, refer \ :ref:`Validation_message_in_application_messages`\.
+
+.. code-block:: properties
+
+  Pattern.cmdForm.cmdStr = permit command name: batch00.sh - batch09.sh
+  Pattern.cmdForm.arg = permit parameter characters and symbols: alphanumeric, =, _
+
+.. figure:: ./images_Validation/validations-os-command-injection2.png
+  :width: 60%
 
 .. raw:: latex
 

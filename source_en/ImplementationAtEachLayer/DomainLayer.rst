@@ -54,10 +54,10 @@ Flow of development of domain layer
     :width: 100%
     :align: center
 
- .. tabularcolumns:: |p{0.10\linewidth}|p{0.20\linewidth}|p{0.80\linewidth}|
+ .. tabularcolumns:: |p{0.10\linewidth}|p{0.20\linewidth}|p{0.70\linewidth}|
  .. list-table::
    :header-rows: 1
-   :widths: 10 20 80
+   :widths: 10 20 70
 
    * - Sr. No.
      - Team in-charge
@@ -1872,6 +1872,11 @@ Information required for "Declarative transaction management"
         org.postgresql.util.PSQLException: Cannot change transaction read-only property in the middle of a transaction.
             at org.postgresql.jdbc2.AbstractJdbc2Connection.setReadOnly(AbstractJdbc2Connection.java:741) ~[postgresql-9.3-1102-jdbc41.jar:na]
             ...
+
+ .. note:: **timeout attribute of @Transactional annotation**
+
+    Although \ ``@Transactional``\ annotation consists of \ ``timeout``\ attribute, value specified in \ ``timeout``\ attribute is ignored
+    in MyBatis3.3 and MyBatis-Spring 1.2 combination and is not used.
 
 
 Propagation of transaction

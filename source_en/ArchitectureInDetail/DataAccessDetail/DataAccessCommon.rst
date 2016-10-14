@@ -19,6 +19,7 @@ Database Access (Common)
     * | About handling of unique constraint errors and pessimistic exclusion errors when using JPA
       | For details, refer to \ :ref:`Overview - About exception handling <data-access-common_todo_exception>`\ .
 
+.. _data_access_overview-label:
 
 Overview
 --------------------------------------------------------------------------------
@@ -1157,10 +1158,10 @@ Classes provided by Spring Framework for converting to data access exception
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 Classes of Spring Framework which play a role in converting an exception to data access exception, are as follows:
 
- .. tabularcolumns:: |p{0.10\linewidth}|p{0.35\linewidth}|p{0.60\linewidth}|
+ .. tabularcolumns:: |p{0.10\linewidth}|p{0.30\linewidth}|p{0.60\linewidth}|
  .. list-table:: **Classes of Spring Framework for converting to data access exception**
     :header-rows: 1
-    :widths: 10 35 60
+    :widths: 10 30 60
 
     * - Sr. No.
       - Class name

@@ -1631,6 +1631,30 @@ Configuration image when building RESTful Web Service and client application as 
 
 |
 
+
+pom.xml configuration
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+Configuration of dependency relation is not required if terasoluna-gfw-common-dependencies is used.
+
+.. Warning:: **Configuration while using in Java SE 7 environment**
+
+   terasoluna-gfw-common-dependencies configure a dependency relation considering Java SE 8 as a prerequisite. Java SE 8 dependency library is excluded as shown below  while using in Java SE 7 environment.
+   For java SE 8 dependency library, refer "\ :ref:`frameworkstack_using_oss_version` \" of Architectural Overview.
+
+    .. code-block:: xml
+
+       <dependency>
+           <groupId>org.terasoluna.gfw</groupId>
+           <artifactId>terasoluna-gfw-common-dependencies</artifactId>
+           <exclusions>
+               <exclusion>
+                   <groupId>com.fasterxml.jackson.datatype</groupId>
+                   <artifactId>jackson-datatype-jsr310</artifactId>
+               </exclusion>
+           </exclusions>
+       </dependency>
+
+
 .. _RESTHowToUseApplicationSettings:
 
 Application settings
@@ -1743,7 +1767,7 @@ Settings for activating the Spring MVC components necessary for RESTful Web Serv
         | For the details of fetching a value from property file, refer to ":doc:`../GeneralFuncDetail/PropertyManagement`".
     * - | (2)
       - | Add the settings for handling the JSON date field format as extended ISO-8601 format.
-        | Also, when JSR-310 Date and Time API or Joda Time class is to be used as a property of JavaBean which represents a resource (Resource class), "\ :ref:`RESTAppendixUsingJSR310_JodaTime`\ " must be carried out.
+        | Also, when Joda Time class is to be used as a property of JavaBean which represents a resource (Resource class), "\ :ref:`RESTAppendixUsingJSR310_JodaTime`\ " must be carried out.
     * - | (3)
       - | Perform bean registration for the Spring MVC framework component necessary for providing RESTful Web Service.
         | JSON can be used as a resource format by performing these settings.
@@ -5017,17 +5041,11 @@ Appendix
 Configuration while using JSR-310 Date and Time API / Joda Time
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
-When JSR-310 Date and Time API or Joda Time class is to be used as a property of JavaBean which represents a resource (Resource class),
+When JSR-310 Date and Time API is to be used as a property of JavaBean which represents a resource (Resource class),
+it is not necessary to add a dependency relation since the dependency relation is defined in terasoluna-gfw-common-dependencies.
+On the contrary, when Joda Time class is to be used,
 an extension module provided by Jackson in \ ``pom.xml``\  is added to dependent library.
 
-**When JSR-310 Date and Time API class is used**
-
-.. code-block:: xml
-
-    <dependency>
-        <groupId>com.fasterxml.jackson.datatype</groupId>
-        <artifactId>jackson-datatype-jsr310</artifactId>
-    </dependency>
 
 **When Joda Time class is used**
 
@@ -5035,7 +5053,8 @@ an extension module provided by Jackson in \ ``pom.xml``\  is added to dependent
 
     <dependency>
         <groupId>org.terasoluna.gfw</groupId>
-        <artifactId>terasoluna-gfw-jodatime</artifactId>
+        <artifactId>terasoluna-gfw-jodatime-dependencies</artifactId>
+        <type>pom</type>
     </dependency>
 
 or
@@ -7110,8 +7129,8 @@ member-mapping.xml
 mybatis-config.xml
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 | MyBatis3 operations can be customized by adding a configuration values in MyBatis configuration file. MyBatis3 does not support Joda-time classes (org.joda.time.DateTime, org.joda.time.LocalDateTime, org.joda.time.LocalDate etc.).
-| Hence, when Joda-Time class is used in the field of Entity class, it is necessary to provide a TypeHandler for Joda-Time.
-| TypeHandler implementation for mapping the org.joda.time.DateTime with java.sql.Timestamp is done by referring [\ :ref:`DataAccessMyBatis3HowToExtendTypeHandlerJoda`\].
+| Hence, when Joda-Time class is used in the field of Entity class, it is necessary to provide a \ ``TypeHandler`` \  for Joda-Time.
+| \ ``TypeHandler`` \  implementation for mapping the org.joda.time.DateTime with java.sql.Timestamp is done by referring [\ :ref:`DataAccessMyBatis3HowToExtendTypeHandlerJoda`\].
 
 :file:`resources/META-INF/mybatis/mybatis-config.xml`
 
