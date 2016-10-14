@@ -11,55 +11,103 @@ Change Log
       - Modification details
 
     * - 2016-08-31
-      - :doc:`../ArchitectureInDetail/ExceptionHandling`
-      - Modifications corresponding to Spring Framework 4.2.7
-      
-        * Description details related to HTTP response header output modified (\ `guideline#1965 <https://github.com/terasolunaorg/guideline/issues/1965>`_\ )
+      - \-
+      - 5.1.1 RELEASE version published
+
+        * For details of update, refer \ `Issue list of 5.1.1 <https://github.com/terasolunaorg/guideline/issues?utf8=%E2%9C%93&q=label%3A5.2.0%20is%3Aissue%20is%3Aclosed%20>`_\.
 
     * -
-      - :doc:`../ArchitectureInDetail/DoubleSubmitProtection`
-      - "How to manage transaction token lifecycle in How To Extend programmatic" deleted.
+      - General
+      - Correction of errors in the guideline (typos or simple description errors)
 
-        * When API for application offered by \ ``TransactionTokenContext``\ is used,
-          it impacts the behavior of internal framework like inability to retain \ ``TransactionToken``\ in the appropriate status and the like.
-          Hence, corresponding API is deprecated. Description for how to use the corresponding function is deleted in accordance with the deprecation.
+        * For details of modifications, refer \ `Issue list of 5.1.1 (clerical error) <https://github.com/terasolunaorg/guideline/issues?utf8=%E2%9C%93&q=%20label%3A5.2.0%20is%3Aclosed%20label%3A%22clerical%20error%22%20>`_\.
 
-    * - 
-      - :doc:`../ArchitectureInDetail/DoubleSubmitProtection`
-      - Description details added
+        Description details modified
 
-        * Description for specifications and how to use \ ``TransactionTokenType.CHECK``\ which is newly added in the type attribute of \ ``@TransactionTokenCheck``\  annotation added
-          (\ `guideline#2071 <https://github.com/terasolunaorg/guideline/issues/2071>`_\ )
+        * For details of modification, refer \ `Issue list of 5.1.1 (improvement) <https://github.com/terasolunaorg/guideline/issues?utf8=%E2%9C%93&q=label%3A5.2.0%20label%3Aimprovement%20is%3Aclosed%20>`_\.
 
-    * - 2016-06-31
-      - :doc:`../ArchitectureInDetail/Utilities/StringProcessing`
-      - Description details added
+        Update common library version to 5.1.1.
 
-        * Example to add dependency to terasoluna-gfw-string is added (\ `guideline#1699 <https://github.com/terasolunaorg/guideline/issues/1699>`_\ )
-        * Precautions for surrogate pair added to description of @Size annotation(\ `guideline#1874 <https://github.com/terasolunaorg/guideline/issues/1874>`_\ )
-        * Description added for corresponding UCS(Unicode)characters of JIS chinese characters \ ``U+2014``\(EM DASH)(\ `guideline#1914 <https://github.com/terasolunaorg/guideline/issues/1914>`_\ )
+        * For details of update, refer \ `Check Version  #2076 <https://github.com/terasolunaorg/guideline/issues/2076>`_\.
 
-    * - 2016-08-04
+    * -
       - :doc:`../Overview/FrameworkStack`
-      - OSS version to be used (Spring IO Platform version) updated
+      - Description details added
 
-        * Spring IO Platform version updated in 2.0.6.RELEASE
-        * Spring Framework version updated in 4.2.7.RELEASE
-        * Spring Security version updated in 4.0.4.RELEASE
+        * Embedding status of common library standards of blank project added (\ `guideline#1700 <https://github.com/terasolunaorg/guideline/issues/1700>`_\ )
 
-        OSS version to be used along with Spring IO Platform version update is updated  
+        Version of OSS used (mybatis, mybatis-spring version) updated)
 
-    * - 2016-08-31
+        * mybatis version updated to 3.3.1
+        * mybatis-spring version updated to 1.2.5.
+
+    * -
+      - :doc:`../ImplementationAtEachLayer/DomainLayer`
+      - Description details added
+
+        * For MyBatis 3.3 + MyBatis-Spring 1.2, "value specified in timeout attribute of @Transactinal is not used" is added (\ `guideline#1777 <https://github.com/terasolunaorg/guideline/issues/1777>`_\ )
+
+    * -
       - :doc:`../ImplementationAtEachLayer/ApplicationLayer`
       - Description details added
 
-        * Added warning for the classes on JSR-310 Date and Time API, refer \ `@DateTimeFormat is not strict with JSR310 #1991 <https://github.com/terasolunaorg/guideline/issues/1991>`_\ .
+        * HttpSession should not be used as an argument for handler method (\ `guideline#1313 <https://github.com/terasolunaorg/guideline/issues/1313>`_\ )
+        * Precautions for using JSR-310 Date and Time API are described (\ `guideline#1991 <https://github.com/terasolunaorg/guideline/issues/1991>`_\ )
+
+    * -
+      - :doc:`../ArchitectureInDetail/DataAccessMyBatis3`
+      - Description details added
+
+        * "How to avoid tentative WARN log output" deleted (\ `guideline#1292 <https://github.com/terasolunaorg/guideline/issues/1292>`_\ )
+
+    * -
+      - :doc:`../ArchitectureInDetail/ExclusionControl`
+      - Description details added
+
+        *  warning message added to ExclusionControl (\ `guideline#1694 <https://github.com/terasolunaorg/guideline/issues/1694>`_\ )
 
     * -
       - :doc:`../ArchitectureInDetail/Validation`
       - Description details modified
 
-        * Description related to OS command injection added (\ `guideline#1957 <https://github.com/terasolunaorg/guideline/issues/1957>`_\ )
+        * A method to directly handle a message property file without conversion from  Native to Ascii is added (\ `guideline#994 <https://github.com/terasolunaorg/guideline/issues/994>`_\ )
+        * Description for cross-field validation added (\ `guideline#1561 <https://github.com/terasolunaorg/guideline/issues/1561>`_\ )
+        * @DateTimeFormat description added (\ `guideline#1873 <https://github.com/terasolunaorg/guideline/issues/1873>`_\ )
+        * Description for ValidationMessages.properties modified (\ `guideline#1948 <https://github.com/terasolunaorg/guideline/issues/1948>`_\ )
+        * Precautions for input check which use Method Validation added (\ `guideline#1998 <https://github.com/terasolunaorg/guideline/issues/1998>`_\ )
+
+    * -
+      - :doc:`../ArchitectureInDetail/DoubleSubmitProtection`
+      - Description details added
+      
+        * Description for specifications and implementation methods of \ ``TransactionTokenType.CHECK``\  which was newly added in type attribute of \ ``@TransactionTokenCheck``\  annotation
+          (\ `guideline#2071 <https://github.com/terasolunaorg/guideline/issues/2071>`_\ )
+
+        "How to manage transaction token life cycle in How To Extend programmatic" deleted.
+
+        * When API for application offered by \ ``TransactionTokenContext``\ is used,
+          it impacts the behaviour of internal framework like inability to maintain \ ``TransactionToken``\  in the appropriate state
+          Current API is deprecated. Description for how to use function in accordance with deprecation, deleted. 
+
+    * -
+      - :doc:`../ArchitectureInDetail/Internationalization`
+      - Description details modified
+
+        *   Position of request parameter (default parameter name) description modified (\ `guideline#1354 <https://github.com/terasolunaorg/guideline/issues/1354>`_\ )
+
+    * -
+      - :doc:`../ArchitectureInDetail/RestClient`
+      - Description details modified
+
+        * HTTP Proxy server configuration for RestClient added (\ `guideline#1856 <https://github.com/terasolunaorg/guideline/issues/1856>`_\ )
+
+    * -
+      - :doc:`../ArchitectureInDetail/SOAP`
+      - Description details added
+
+        * Added an option "Do not connect to SOAP server at the time of SOAP client start (\ `guideline#1871 <https://github.com/terasolunaorg/guideline/issues/1871>`_\ )
+        * Description for env project of SOAP client modified (\ `guideline#1901 <https://github.com/terasolunaorg/guideline/issues/1901>`_\ )
+        * How to fetch status code at the time of SOAP Web service exception occurrence added (\ `guideline#2007 <https://github.com/terasolunaorg/guideline/issues/2007>`_\ )
 
     * -
       - :doc:`../ArchitectureInDetail/FileUpload`
@@ -68,42 +116,30 @@ Change Log
         * Reminders for \ `CVE-2016-3092 <https://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2016-3092>`_\ (vulnerability of File Upload) added (\ `guideline#1973 <https://github.com/terasolunaorg/guideline/issues/1973>`_\ )
 
     * -
-      - :doc:`../Overview/FrameworkStack`
+      - :doc:`../ArchitectureInDetail/Utilities/StringProcessing`
       - Description details added
 
-        * mybatis-typehandlers-jsr310, jackson-datatype-jsr310 are added to OSS version to be used  (\ `guideline#1966 <https://github.com/terasolunaorg/guideline/issues/1966>`_\ )
+        * An example to add terasoluna-gfw-string to dependency is added (\ `guideline#1699 <https://github.com/terasolunaorg/guideline/issues/1699>`_\ )
+        * Precautions for surrogate pair added to description of @Size annotation (\ `guideline#1874 <https://github.com/terasolunaorg/guideline/issues/1874>`_\ )
+        * Description for JIS characters \ ``U+2014``\(EM DASH)  UCS(Unicode) characters added (\ `guideline#1914 <https://github.com/terasolunaorg/guideline/issues/1914>`_\ )
 
     * -
-      - :doc:`../ArchitectureInDetail/DataAccessMyBatis3`
+      - :doc:`../Security/Authentication`
+      - Modifications for Spring Security 4.0.4
+
+        * Code example modified to include modification of specifications of authentication-failure-url in Spring 4.0.4 and Note deleted (\ `guideline#1963 <https://github.com/terasolunaorg/guideline/issues/1963>`_\ )
+
+    * -
+      - :doc:`../Security/Authorization`
       - Description details added
 
-        * Configuration method for using JSR-310 Date and Time API in Mybatis3.3 is described  (\ `guideline#1966 <https://github.com/terasolunaorg/guideline/issues/1966>`_\ )
-        * Precautions for using MyBatis in Java SE 7 environment are described (\ `guideline#1966 <https://github.com/terasolunaorg/guideline/issues/1966>`_\ )
+        * How to handle \ `CVE-2016-5007 Spring Security / MVC Path Matching Inconsistency <https://pivotal.io/security/cve-2016-5007>`_\ added (\ `guideline#1976 <https://github.com/terasolunaorg/guideline/issues/1976>`_\ )
 
     * -
-      - :doc:`../ArchitectureInDetail/REST`
-      - Description details changed and added
-
-        * Description of configuration while using JSR-310 Date and Time API / Joda Time is changed (\ `guideline#1966 <https://github.com/terasolunaorg/guideline/issues/1966>`_\ )
-        * Precautions for using Jackson in Java SE 7 environment are described (\ `guideline#1966 <https://github.com/terasolunaorg/guideline/issues/1966>`_\ )
-
-    * -
-      - :doc:`../ArchitectureInDetail/RestClient`
-      - Description details modified
-
-        * Configuration while using JSR-310 Date and Time API in JSON is described (\ `guideline#1966 <https://github.com/terasolunaorg/guideline/issues/1966>`_\ )
-
-    * -
-      - :doc:`../ArchitectureInDetail/Utilities/Dozer`
+      - :doc:`../Appendix/ReferenceBooks`
       - Description details added
 
-        * Precautions while using JSR-310 Date and Time API are described (\ `guideline#1966 <https://github.com/terasolunaorg/guideline/issues/1966>`_\ )
-
-    * - 2016-05-19
-      - \-
-      - Optimize the order of chapters and sections
-      
-        * For details of modification, refer \ `Optimize the order of chapters and sections #1683 <https://github.com/terasolunaorg/guideline/issues/1683>`_\ .
+        * uSpring thorough introduction" added as a a reference material (\ `guideline#2043 <https://github.com/terasolunaorg/guideline/issues/2043>`_\ )
 
     * - 2016-02-24
       - \-
