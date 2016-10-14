@@ -761,10 +761,17 @@ The attributes that can be specified in ``@TransactionTokenCheck``\  annotation 
        | Transaction token is validated.
        | When the requested token value and the token value stored on the server match, the token value of transaction token is updated.
        |
-     - IN
-     - | type = TransactionTokenType.BEGIN
+       | **CHECK**
+       | Transaction token is validated.
+       | Even when the requested token value and the token value stored on the server match,the token value of transaction token is not updated.
+       | For used cases, refer "\ :ref:`usecase_of_transaction_token_type_CHECK`\".
        |
-       | type = TransactionTokenType.IN
+     - IN
+     - | \ ``type = TransactionTokenType.BEGIN``\ 
+       |
+       | \ ``type = TransactionTokenType.IN``\ 
+       |
+       | \ ``type = TransactionTokenType.CHECK``\
        |
 
  .. note::
@@ -877,6 +884,9 @@ The lifecycle (Generate, Update, Discard) control of transaction token is perfor
        |
        | [3]
        | When exceptions such as system error occur, the transaction token specified in the request parameter is discarded and the transaction is terminated.
+   * - | (4)
+     - | Token inherited
+     - | Token on the server is inherited within the termination of the process for the method which specifies \ ``TransactionTokenType.CHECK``\  in type attribute of \ ``@TransactionTokenCheck``\  annotation and the transaction is continued.
 
  .. note::
  
@@ -1305,6 +1315,97 @@ When multiple usecases are to be implemented in one Controller
     Allocating a NameSpace for each usecase enables transaction token check for each usecase.
 
 
+.. _usecase_of_transaction_token_type_CHECK:
+
+When a process which does not update screen for file downloading process is included in the use case
+"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+For the use cases which include process wherein screen is not returned to the client during file downloading process,
+when the TransactionTokenType is not configured appropriately, care must be taken since the transaction token error is likely to occur even during normal operations.
+
+An example wherein the transaction token error occurs during a normal operation due to specification of inappropriate TransactionTokenType is shown below.
+
+ .. figure:: ./images/transaction-token-file-donwload-ng.png
+   :alt: transaction token file download ng
+   :width: 100%
+
+ .. tabularcolumns:: |p{0.10\linewidth}|p{0.90\linewidth}|
+ .. list-table::
+   :header-rows: 1
+   :widths: 10 90
+
+   * - Sr. No.
+     - Description
+   * - | (1)
+     - | The client sends a request.
+   * - | (2)
+     - | Server creates a token (token001) and retains it on the server.
+   * - | (3)
+     - | Server delivers the token thus created (token001) to the client.
+   * - | (4)
+     - | Client sends a file downloading request including the token (token001).
+   * - | (5)
+     - | Server checks whether the token retained on the server (token001) and the token sent by the client (token001) are identical.
+       | **Since the value is same, the request is determined as a legitimate request.**
+   * - | (6)
+     - | Since \ ``IN``\  is configured in \ ``TransactionTokenType``\, server generates a token (token002) to be used in the next request and updates the value which is retained on the server.
+       | At this point, the token (token001) is discarded.
+   * - | (7)
+     - | Server returns the requested file.
+       | **Since the updated token is not returned to the client, token on the screen (token001) and token of the server (token002) do not match at this point.**
+   * - | (8)
+     - | Client sends a request including a token (token001).
+   * - | (9)
+     - | Server checks whether the token retained on the server (token001) and the token sent by the client (token002) are identical.
+       | **Since the value is not the same, the request is determined as an illegitimate request.**
+
+
+As shown above, when the transaction token is applied for the transition from screen wherein file downloading process is performed (screen2) to next screen (screen3),
+token mismatch occurs during normal operation if \ ``IN``\  is used in \ ``TransactionTokenType``\  of file downloading process.
+For these cases, \ ``CHECK``\  is used in the \ ``TransactionTokenType``\.
+
+ .. figure:: ./images/transaction-token-file-donwload-ok.png
+   :alt: transaction token file download ok
+   :width: 100%
+
+ .. tabularcolumns:: |p{0.10\linewidth}|p{0.90\linewidth}|
+ .. list-table::
+   :header-rows: 1
+   :widths: 10 90
+
+   * - Sr. No.
+     - Description
+   * - | (1)
+     - | Client sends a file download request including a token (token001).
+   * - | (2)
+     - | Server checks whether the token retained on the server (token001) and the token sent by client (token001) are identical.
+       | **Since the value is same, the request is determined as a legitimate request.**
+   * - | (3)
+     - | Since \ ``CHECK``\ is configured in \ ``TransactionTokenType``\, the token retained on the server is not updated.
+   * - | (4)
+     - | Server sends the requested file.
+   * - | (5)
+     - | Client sends a request including the token (token001).
+   * - | (6)
+     - | Server checks whether the token retained on the server (token001) and the token sent by client (token001) are identical.
+       | **Since the value is same, the request is determined as a legitimate request.**
+   * - | (7)
+     - | Server generates a token to be used in the next request (token002) and updates the value retained on the server.
+       | The token (token001) is discarded at this point.
+   * - | (8)
+     - | Server delivers the updated token (token002) to the client.
+
+.. warning::
+
+   A method wherein \ ``@TransactionTokenCheck``\  is not assigned to file downloading method of \ ``Controller``\  can also be used as a method wherein the token on the server is not updated.
+   However, the method should be selected considering that when the \ ``@TransactionTokenCheck``\  is not assigned, the token is not returned
+   to the client.
+   
+   For example, if a method wherein \ ``@TransactionTokenCheck``\  is not assigned is selected when either the screen or file are likely to be returned during the process results
+   such as displaying an error message on the screen when a reexecutable error occurs during file downloading process,
+   the token of the screen when the error message is returned to the screen is lost and
+   the transaction token error occurs as a result during a normal operation.
+
+
 Typical example of using transaction token check
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 
@@ -1433,39 +1534,6 @@ The maximum limit of transaction tokens that can be stored for each NameSpace is
 
 How to extend
 --------------------------------------------------------------------------------
-
-How to manage the lifecycle of transaction tokens using a program
-^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
-
-It is possible to receive \ ``org.terasoluna.gfw.web.token.transaction.TransactionTokenContext``\  as an argument for handler method of Controller and manage the lifecycle of transaction tokens programmatically by adding the settings give below.
-
-- :file:`spring-mvc.xml`
-
- .. code-block:: xml
-    :emphasize-lines: 3-5
-
-    <mvc:annotation-driven>
-      <mvc:argument-resolvers>
-        <!-- (1) -->
-        <bean
-          class="org.terasoluna.gfw.web.token.transaction.TransactionTokenContextHandlerMethodArgumentResolver" />
-      </mvc:argument-resolvers>
-    </mvc:annotation-driven>
-
- .. tabularcolumns:: |p{0.10\linewidth}|p{0.90\linewidth}|
- .. list-table::
-   :header-rows: 1
-   :widths: 10 90
-
-   * - Sr. No.
-     - Description
-   * - | (1)
-     - | In \ ``<mvc:argument-resolvers>``\  element, set the class (\ ``TransactionTokenContextHandlerMethodArgumentResolver``\ ) which passes the object (\ ``TransactionTokenContext``\ ) managing the lifecycle of transaction tokens programmatically, as an argument for methods of Controller.
-       | When it is not necessary to manage the lifecycle of transaction tokens using a program, this setting is not required.
-
- .. note::
- 
-    This setting is not required as the transaction tokens that can no longer be used are automatically discarded when the tokens that can be stored in a NameSpace exceeds the maximum limit.
 
 .. _doubleSubmit_how_to_extend_change_max_count:
 

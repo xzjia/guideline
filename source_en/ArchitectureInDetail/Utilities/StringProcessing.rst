@@ -17,7 +17,7 @@ Overview
 | determination of a string consisting of only half width katakana.
 
 | Also, note that although in Java, all the strings are represented in Unicode
-| the special characters like 𠮷 are represented in unicode by char type 2 (32 bits) which is referred to as surrogate pair.
+| the special characters like 吉 are represented in unicode by char type 2 (32 bits) which is referred to as surrogate pair.
 | Even while handling these characters, an implementation which takes into account various types of characters are necessary to prevent occurrence of unexpected behavior.
 
 | The guideline assumes a case wherein Japanese language is processed, and
@@ -68,6 +68,7 @@ Padding, Suppress
 Processing of a string considered as a surrogate pair
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 
+.. _StringProcessingHowToGetSurrogatePairStringLength:
 
 Fetching string length
 ''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''
@@ -80,7 +81,7 @@ Fetching string length
 
 .. code-block:: java
 
-   String str = "𠮷田太郎";
+   String str = "吉田太郎";
    int len = str.length(); // => 5
 
 |
@@ -91,7 +92,7 @@ Fetching string length
 
 .. code-block:: java
 
-   String str = "𠮷田太郎";
+   String str = "吉田太郎";
    int lenOfChar = str.length(); // => 5
    int lenOfCodePoint = str.codePointCount(0, lenOfChar); // => 4
 
@@ -119,29 +120,29 @@ Fetch string in the specified range
 
 .. code-block:: java
 
-   String str = "𠮷田 太郎";
+   String str = "吉田太郎";
    int startIndex = 0;
    int endIndex = 2;
    
    String subStr = str.substring(startIndex, endIndex);
 
-   System.out.println(subStr); // => "𠮷"
+   System.out.println(subStr); // => "吉田"
 
-| In the example above, when you try to fetch "𠮷田" by taking out 2 characters from 0th character (beginning), only "𠮷" could be fetched since the surrogate pair is represented by 32 bits (char type 2).
+| In the example above, when you try to fetch "吉田" by taking out 2 characters from 0th character (beginning), only "吉" could be fetched since the surrogate pair is represented by 32 bits (char type 2).
 | In such a case, ``String#substring`` method must be used by searching start and end positions considering the surrogate pair, by using ``String#offsetByCodePoints``.
 |
 | An example wherein 2 characters are taken from the beginning (surname part) is shown below.
 
 .. code-block:: java
 
-   String str = "𠮷田 太郎";
+   String str = "吉田太郎";
    int startIndex = 0;
    int endIndex = 2;
 
    int startIndexSurrogate = str.offsetByCodePoints(0, startIndex); // => 0
    int endIndexSurrogate = str.offsetByCodePoints(0, endIndex); // => 3
 
-   String subStrSurrogate = str.substring(startIndexSurrogate, endIndexSurrogate); // => "𠮷田"
+   String subStrSurrogate = str.substring(startIndexSurrogate, endIndexSurrogate); // => "吉田"
 
 |
 
@@ -153,9 +154,9 @@ String split
 
 .. code-block:: java
 
-   String str = "𠮷田 太郎";
+   String str = "吉田太郎";
    
-   str.split(" "); // => {"𠮷田", "太郎"}
+   str.split(" "); // => {"吉田", "太郎"}
 
 |
 
@@ -174,6 +175,8 @@ String split
         // Java SE 8 => {A, B, C}
 
 
+.. _StringProcessingHowToUseFullHalfConverter:
+
 Full width, half width string conversion
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 
@@ -189,6 +192,21 @@ For default pair definition, refer `DefaultFullHalf source <https://github.com/t
     When change requirements are not met in the default pair definition provided by common library, \ ``FullHalfConverter``\  object registering a unique pair definition should be created.
     For basic methods for creation, refer :ref:`StringOperationsHowToUseCustomFullHalfConverter` .
 
+
+
+How to apply common library
+''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''
+
+| It is necessary to add following common library as dependency library in case of :ref:`StringProcessingHowToUseFullHalfConverter` is used.
+
+.. code-block:: xml
+
+   <dependencies>
+       <dependency>
+           <groupId>org.terasoluna.gfw</groupId>
+           <artifactId>terasoluna-gfw-string</artifactId>
+       </dependency>
+   </dependencies>
 
 Conversion to full width string
 ''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''
@@ -360,7 +378,7 @@ Creating FullHalfConverter class for which a unique full width and half width ch
 
     For the values that can be specified in the argument of \ ``FullHalfPairsBuilder#pair``\  method,
     refer `FullHalfPair constructor JavaDoc <https://github.com/terasolunaorg/terasoluna-gfw/blob/5.1.1.RELEASE/terasoluna-gfw-string/src/main/java/org/terasoluna/gfw/common/fullhalf/FullHalfPair.java>`_
-    
+
 
 |
 
@@ -399,6 +417,10 @@ Here, how to implement a character type check by using a code point set function
 * :ref:`StringProcessingHowToUseCodePointsValidator`
 * :ref:`StringProcessingHowToUseCodePointsClassCreation`
 
+
+How to apply common library
+''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''
+| It is necessary to add :ref:`StringProcessingHowToUseCodePointsClasses` as dependency library in case of :ref:`StringProcessingHowToUseCodePoints` is used.
 
 .. _StringProcessingHowToUseCodePointsConstruction:
 
@@ -879,7 +901,12 @@ artifact information to be incorporated while using are given below.
                <artifactId>terasoluna-gfw-codepoints-jisx0213kanji</artifactId>
            </dependency>
 
-|
+.. note::
+
+    \ ``JIS_X_0208_SpecialChars``\ codepoint set class is a special character set corresponding to JIS chinese characters (JIS X 0208)-section 01-02.
+    Double byte dash (-) of JIS chinese characters is EM DASH and the corresponding UCS(ISO/IEC 10646-1, JIS X 0221, Unicode) codepoints usually correspond to \ ``U+2014``\ .
+    However, in the conversion table offered by Unicode consortium , characters supported by Unicode are \ `HORINZONTAL BAR (U+2015) <http://www.unicode.org/Public/MAPPINGS/OBSOLETE/EASTASIA/JIS/JIS0208.TXT>`_\  instead of EM DASH..
+    Since general conversion rules that are being used and Unicode conversion table vary, problems may occur during actual use if codepoint set is defined as per Unicode conversion table. Therefore, codepoint set is defined in 、\ ``JIS_X_0208_SpecialChars``\  codepoint set class by converting HORINZONTAL BAR (\ ``U+2015``\ ) to EM DASH (\ ``U+2014``\ ).
 
 .. raw:: latex
 

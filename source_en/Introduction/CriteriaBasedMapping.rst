@@ -28,13 +28,18 @@ links to explanation of functionalities related to security have been given
    * - A1
      - `Injection <https://www.owasp.org/index.php/Top_10_2013-A1-Injection>`_ XXE(XML External Entity) Injection
      - * \ :doc:`../ArchitectureInDetail/Ajax`\ 
+   * - A1  
+     - `Injection <https://www.owasp.org/index.php/Top_10_2013-A1-Injection>`_ Email Header Injection  
+     - * \ :ref:`email-header-injection`\  
    * - A2
      - `Broken Authentication and Session Management <https://www.owasp.org/index.php/Top_10_2013-A2-Broken_Authentication_and_Session_Management>`_
-     - * \ :doc:`../Security/Authentication`\ 
+     - * \ :doc:`../Security/SessionManagement`\ 
+       * \ :doc:`../Security/Authentication`\ 
      
    * - A3
      - `Cross-Site Scripting (XSS) <https://www.owasp.org/index.php/Top_10_2013-A3-Cross-Site_Scripting_(XSS)>`_
-     - * \ :doc:`../Security/XSS`\ 
+     - * \ :doc:`../Security/XSS`\  
+       * \ :doc:`../Security/LinkageWithBrowser`\ 
    * - A4
      - `Insecure Direct Object References <https://www.owasp.org/index.php/Top_10_2013-A4-Insecure_Direct_Object_References>`_
      - No mention in particular
@@ -45,7 +50,8 @@ links to explanation of functionalities related to security have been given
    * - A6
      - `Sensitive Data Exposure <https://www.owasp.org/index.php/Top_10_2013-A6-Sensitive_Data_Exposure>`_
      - * \ :doc:`../ArchitectureInDetail/PropertyManagement`\ 
-       * \ :ref:`SpringSecurityAuthenticationPasswordHashing`\  (Mention about password hash only)
+       * \ :doc:`../Security/Encryption`\ 
+       * \ :ref:`SpringSecurityAuthenticationPasswordHashing`\ 
    * - A7
      - `Missing Function Level Access Control <https://www.owasp.org/index.php/Top_10_2013-A7-Missing_Function_Level_Access_Control>`_
      - * \ :doc:`../Security/Authorization`\ 
@@ -57,7 +63,7 @@ links to explanation of functionalities related to security have been given
      - No mention in particular
    * - A10
      - `Unvalidated Redirects and Forwards <https://www.owasp.org/index.php/Top_10_2013-A10-Unvalidated_Redirects_and_Forwards>`_
-     - * \ :doc:`../Security/Authentication`\ (Mention about Open Redirect Vulnerability measures)
+     - No mention in particular 
 
 
 .. raw:: latex

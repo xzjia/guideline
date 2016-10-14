@@ -638,6 +638,20 @@ An example of error message is shown when the following CSS class is applied.
            <form:button name="confirm">Confirm</form:button>
        </form:form>
 
+Date and time format check
+""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+| In case of performing the date and time format check, it is recommend the use of \ ``@DateTimeFormat`` \ annotation offered by Spring rather than the use of Bean Validation mechanism.
+| About how to use the \ ``@DateTimeFormat`` \ annotation, refer \ :ref:`ApplicationLayer-DateTimeFormat`\.
+| It is also possible to check the date and time format using \ ``@Pattern`` \ annotation of the Bean Validation.
+| However, it is necessary to write the date and time format in regular expressions while using \ ``@Pattern`` \ annotation. If you want to check the date and time that does not exist, the description is complicated.
+| Therefore \ ``@DateTimeFormat`` \ annotation is more simpler than the \ ``@Pattern`` \ annotation.
+
+
+| Since \ ``@DateTimeFormat`` \ annotation is one of the type conversion mechanism provided by Spring, instead of the error messages of Bean Validation, the error message of the type mismatch exception (\ ``TypeMismatchException``\ ) has been displayed on screen at the time of input error.
+| In order to avoid the actual exception message gets displayed on the screen, it is necessary to configure the error message in the \ **property file** \ which will be displayed at the time of type mismatch is occurred.
+| For more detail, refer \ :ref:`Validation_type_mismatch`\ .
+
+
 Single item check of nested Bean
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 The method to validate nested Bean using Bean Validation is explained below.
@@ -1994,6 +2008,67 @@ Error message as shown below is displayed when form is sent by entering differen
 
   When \ ``<form:password>``\  tag is used, data gets cleared at the time of redisplay.
 
+.. _Validation_how_to_cross-field_validation_for_multi_field_highlight:
+.. note::
+
+   Error information can be set for multiple fields for correlation check.
+   However, displaying error messages and applying style must always be performed in a set and only one part of the tasks cannot not be performed.
+
+   When you want to apply style to both the fields wherein correlation check error has occurred however you want to display only one error message,
+   it can be done by setting a null string in the error message.
+   An example is given below wherein style is applied to \ ``password``\  field and \ ``confirmPassword``\  field and error message is displayed only in \ ``password``\  field.
+
+     .. code-block:: java
+
+       package com.example.sample.app.validation;
+
+       import org.springframework.stereotype.Component;
+       import org.springframework.validation.Errors;
+       import org.springframework.validation.Validator;
+
+       @Component
+       public class PasswordEqualsValidator implements Validator {
+
+           @Override
+           public boolean supports(Class<?> clazz) {
+               return PasswordResetForm.class.isAssignableFrom(clazz);
+           }
+
+           @Override
+           public void validate(Object target, Errors errors) {
+
+               // omitted
+               if (!password.equals(confirmPassword)) {
+                   // register a field error for password
+                   errors.rejectValue("password",
+                          "PasswordEqualsValidator.passwordResetForm.password",
+                          "password and confirm password must be same.");
+
+                   // register a field error for confirmPassword
+                   errors.rejectValue("confirmPassword", // (1)
+                             "PasswordEqualsValidator.passwordResetForm.confirmPassword", // (2)
+                             ""); // (3)
+               }
+           }
+       }
+
+     .. tabularcolumns:: |p{0.10\linewidth}|p{0.90\linewidth}|
+     .. list-table::
+        :header-rows: 1
+        :widths: 10 90
+
+        * - Sr. No.
+          - Description
+        * - | (1)
+          - | Register error in \ ``confirmPassword``\ field.
+        * - | (2)
+          - | Specify code name of error message. Specify a null string in the corresponding error message at that time.
+            | For message definition, refer \ :ref:`Validation_message_in_application_messages`\.
+        * - | (3)
+          - | Set a default message to be used when error message could not be resolved in the code.
+            | A null string is set in the example above.
+
+
 .. note::
 
    When multiple forms are used in a single controller, model name should be specified in \ ``@InitBinder("xxx")``\  in order to limit the target of Validator.
@@ -2925,6 +3000,58 @@ Set constraint of assigning "confirm" as the prefix of confirmation field.
 
     For deprecated API of Bean Validation, refer to \ `Bean Validation API Document (Deprecated API) <http://docs.jboss.org/hibernate/beanvalidation/spec/1.1/api/deprecated-list.html>`_\ .
 
+.. note::
+
+   As introduced in correlation item  check using Spring Validator, even in Bean Validation,
+   :ref:`Set error information for multiple fields for correlation check<Validation_how_to_cross-field_validation_for_multi_field_highlight>` can be performed.
+
+   An example is shown below wherein styles are applied to \ ``password``\ field and \ ``confirmPassword``\ field in Bean Validation and error message is displayed only for \ ``password``\ field.
+
+     .. code-block:: java
+
+       // omitted
+       public class ConfirmValidator implements ConstraintValidator<Confirm, Object> {
+           private String field;
+
+           private String confirmField;
+
+           private String message;
+
+           public void initialize(Confirm constraintAnnotation) {
+               // omitted
+           }
+
+           public boolean isValid(Object value, ConstraintValidatorContext context) {
+               // omitted
+               if (matched) {
+                   return true;
+               } else {
+                   context.disableDefaultConstraintViolation();
+
+                   //new ConstraintViolation to be generated for field
+                   context.buildConstraintViolationWithTemplate(message)
+                           .addPropertyNode(field).addConstraintViolation();
+
+                   //new ConstraintViolation to be generated for confirmField
+                   context.buildConstraintViolationWithTemplate("") // (1)
+                           .addPropertyNode(confirmField).addConstraintViolation();
+
+                   return false;
+               }
+           }
+
+       }
+
+     .. tabularcolumns:: |p{0.10\linewidth}|p{0.90\linewidth}|
+     .. list-table::
+        :header-rows: 1
+        :widths: 10 90
+
+        * - Sr. No.
+          - Description
+        * - | (1)
+          - | Register error of \ ``confirmPassword``\ field. A null string is set in error message at that time.
+
 
 Check below for the changes, if the "Reset password" is re-implemented using \ ``@Confirm``\  annotation.
 
@@ -3129,6 +3256,8 @@ An example of implementing, "whether the entered user name is already registered
        - | Return the result of business logic error check. Process should be delegated to service class. Logic must not be written directly in the \ ``isValid``\  method.
 
 |
+
+.. _MethodValidation:
 
 Method Validation 
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
@@ -3712,6 +3841,14 @@ Refer to Chapter 7 \ `Bean Validation specification <http://download.oracle.com/
      By specifying \ ``true``\  (to allow same value of specified threshold) to the default value of \ ``inclusive``\  attribute,
      compatibility with Bean Validation 1.0 is maintained.
 
+.. warning::
+
+     In \ ``@Size``\  annotation, characters represented by char type 2 (32 bits) called as surrogate pair are not considered.
+
+     When a string consisiting of a surrogate pair is excluded from the check, adequate care must be taken since number of characters that are counted are likely to be more than the actual number of characters.
+
+     For length of the string including surrogate pair, refer :ref:`StringProcessingHowToGetSurrogatePairStringLength`.
+
 
 .. _Validation_validator_list:
 
@@ -4212,6 +4349,7 @@ Use annotation created above instead of annotation implemented in \ :ref:`Valida
     * - | (3)
       - | Similarly assign \ ``@NotNull``\  annotation in \ ``confirmPassword``\  field as well.
 
+.. _Validation_type_mismatch:
 
 Type mismatch
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
@@ -4337,6 +4475,86 @@ With the help of this configuration, it can be specified in the controller wheth
 | When this setting is made, all empty String values set to String fields of form object become \ ``null``\ .
 | Therefore it must be noted that, it becomes necessary to specify \ ``@NotNull``\  in case of mandatory check.
 
+
+.. _Validation_without_native2ascii:
+
+Reading messages which are not converted from Native to Ascii
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+A method to read Bean Validation message （\ ``ValidationMessage.properties``\ ） is introduced without converting the message from  Native to Ascii.
+
+When the Japanese message is to be handled directly without converting from  Native to Ascii, it can be easily implemented if it is linked with \ ``MessageSource``\  of Spring.
+
+
+If it is defined as below,, message read by \ ``MessageSource``\  function can be used in \ ``Hibernate Validator``\ .
+
+
+* Bean definition
+
+  \ ``*-domain.xml``\ 
+
+ .. code-block:: xml
+
+     <!-- (1) -->
+     <bean id="validator" class="org.springframework.validation.beanvalidation.LocalValidatorFactoryBean">
+         <property name="validationMessageSource">
+             <!-- (2) -->
+             <bean class="org.springframework.context.support.ResourceBundleMessageSource">
+                 <property name="basenames">
+                     <list>
+                         <value>ValidationMessages</value> <!-- (3) -->
+                     </list>
+                 </property>
+                 <property name="defaultEncoding" value="UTF-8" />
+             </bean>
+         </property>
+     </bean>
+
+     <!-- (4) -->
+     <bean class="org.springframework.validation.beanvalidation.MethodValidationPostProcessor">
+         <property name="validator" ref="validator" />
+     </bean>
+
+ \ ``spring-mvc.xml``\ 
+
+ .. code-block:: xml
+
+     <!-- (5) -->
+     <mvc:annotation-driven validator="validator">
+         <!-- ommited -->
+     </mvc:annotation-driven>
+
+     <!-- (6) -->
+     <bean class="org.springframework.validation.beanvalidation.MethodValidationPostProcessor">
+         <property name="validator" ref="validator" />
+     </bean>
+
+ .. tabularcolumns:: |p{0.10\linewidth}|p{0.90\linewidth}|
+ .. list-table::
+     :header-rows: 1
+     :widths: 10 90
+
+     * - Sr. No.
+       - Description
+     * - | (1)
+       - Define a Bean for \ ``LocalValidatorFactoryBean``\ .
+     * - | (2)
+       - Define \ ``MessageSource``\ . Here, \ ``ResourceBundleMessageSource``\  is used.
+     * - | (3)
+       - Specify a resource bundle to be read in \ ``ApplicationContext``\ .
+     * - | (4)
+       - | Specify a Bean defined by (1) in \ ``validator``\  property of \ ``MethodValidationPostProcessor``\  while using \ :ref:`MethodValidation`\ .
+         | When Method Validation is not used, the Bean definition is not required.
+     * - | (5)
+       - Specify a Bean defined in (1), in  \ ``validator``\ attribute of \ ``<mvc:annotation-driven>``\ element.
+     * - | (6)
+       - \ Same as (4).
+
+ .. note::
+
+     By using \ ``MessageSource``\ function,
+     property file is not necessarily restricted to be placed just under class path. Further, multiple property files can also be specified.
+     
 
 .. raw:: latex
 
