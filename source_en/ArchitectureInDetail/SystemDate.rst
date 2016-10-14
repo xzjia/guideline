@@ -155,10 +155,10 @@ Use \ ``org.terasoluna.gfw.common.date.JdbcFixedDateFactory``\ . For details, re
         <property name="currentTimestampQuery" value="SELECT now FROM system_date" />  <!-- (3) -->
     </bean>
 
-.. tabularcolumns:: |p{0.10\linewidth}|p{1.00\linewidth}|
+.. tabularcolumns:: |p{0.10\linewidth}|p{0.90\linewidth}|
 .. list-table::
    :header-rows: 1
-   :widths: 10 100
+   :widths: 10 90
 
    * - Sr. No.
      - Description
@@ -387,10 +387,10 @@ Once the value fetched at booting is cached, table is not accessed for each requ
     <property name="useCache" value="true" /> <!-- (1) -->
   </bean>
 
-.. tabularcolumns:: |p{0.10\linewidth}|p{1.00\linewidth}|
+.. tabularcolumns:: |p{0.10\linewidth}|p{0.90\linewidth}|
 .. list-table::
    :header-rows: 1
-   :widths: 10 100
+   :widths: 10 90
 
    * - Sr. No.
      - Description
@@ -624,10 +624,10 @@ The example below illustrates a Service class which is implemented with the spec
         // omitted
     }
 
-.. tabularcolumns:: |p{0.10\linewidth}|p{1.00\linewidth}|
+.. tabularcolumns:: |p{0.10\linewidth}|p{0.90\linewidth}|
 .. list-table::
    :header-rows: 1
-   :widths: 10 100
+   :widths: 10 90
 
    * - Sr. No.
      - Description
