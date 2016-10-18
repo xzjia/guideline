@@ -487,7 +487,7 @@ Before starting the development of Todo application, verify the project operatio
 Since the implementation of the Controller and JSP for displaying the top page are provided in the blank project,
 it is possible to check the operation by displaying the top page.
 
-The following implementation has been done in the Controller(\ :file:`src/main/java/todo/app/welcome/HomeController.java`\ ),
+The following implementation has been done in the Controller(\ :file:`src/main/java/todo/app/welcome/HelloController.java`\ ),
 provided in the blank project.
 
 .. code-block:: java
@@ -511,11 +511,11 @@ provided in the blank project.
      */
     // (1)
     @Controller
-    public class HomeController {
+    public class HelloController {
 
         // (2)
         private static final Logger logger = LoggerFactory
-                .getLogger(HomeController.class);
+                .getLogger(HelloController.class);
 
         /**
          * Simply selects the home view to render by returning its name.
@@ -623,7 +623,7 @@ Verify that todo is included in [Configured] and click [Finish] to start the ser
 |
 
 When started, log shown as below will be output.
-For \ ``"/"`` \ path, it is understood that hello method of \ ``todo.app.welcome.HomeController`` \ is mapped.
+For \ ``"/"`` \ path, it is understood that hello method of \ ``todo.app.welcome.HelloController`` \ is mapped.
 
 
 .. code-block:: console
@@ -631,7 +631,7 @@ For \ ``"/"`` \ path, it is understood that hello method of \ ``todo.app.welcome
 
     date:2016-02-17 11:25:30	thread:localhost-startStop-1	X-Track:	level:INFO 	logger:o.springframework.web.servlet.DispatcherServlet 	message:FrameworkServlet 'appServlet': initialization started
     date:2016-02-17 11:25:31	thread:localhost-startStop-1	X-Track:	level:DEBUG	logger:o.t.gfw.web.codelist.CodeListInterceptor        	message:registered codeList : []
-    date:2016-02-17 11:25:31	thread:localhost-startStop-1	X-Track:	level:INFO 	logger:o.s.w.s.m.m.a.RequestMappingHandlerMapping      	message:Mapped "{[/],methods=[GET || POST],params=[],headers=[],consumes=[],produces=[],custom=[]}" onto public java.lang.String todo.app.welcome.HomeController.home(java.util.Locale,org.springframework.ui.Model)
+    date:2016-02-17 11:25:31	thread:localhost-startStop-1	X-Track:	level:INFO 	logger:o.s.w.s.m.m.a.RequestMappingHandlerMapping      	message:Mapped "{[/],methods=[GET || POST],params=[],headers=[],consumes=[],produces=[],custom=[]}" onto public java.lang.String todo.app.welcome.HelloController.home(java.util.Locale,org.springframework.ui.Model)
     date:2016-02-17 11:25:31	thread:localhost-startStop-1	X-Track:	level:INFO 	logger:o.s.w.s.m.m.a.RequestMappingHandlerAdapter      	message:Looking for @ControllerAdvice: WebApplicationContext for namespace 'appServlet-servlet': startup date [Wed Feb 17 11:25:30 JST 2016]; parent: Root WebApplicationContext
     date:2016-02-17 11:25:32	thread:localhost-startStop-1	X-Track:	level:INFO 	logger:o.s.w.s.m.m.a.RequestMappingHandlerAdapter      	message:Looking for @ControllerAdvice: WebApplicationContext for namespace 'appServlet-servlet': startup date [Wed Feb 17 11:25:30 JST 2016]; parent: Root WebApplicationContext
     date:2016-02-17 11:25:32	thread:localhost-startStop-1	X-Track:	level:INFO 	logger:o.s.web.servlet.handler.SimpleUrlHandlerMapping 	message:Mapped URL path [/**] onto handler 'org.springframework.web.servlet.resource.DefaultServletHttpRequestHandler#0'
@@ -656,10 +656,10 @@ are the log output.
 .. code-block:: console
    :emphasize-lines: 1-4
 
-    date:2016-02-17 11:25:35	thread:tomcat-http--11	X-Track:b49b630274974bffbcd9e8d13261f6a7	level:TRACE	logger:o.t.gfw.web.logging.TraceLoggingInterceptor     	message:[START CONTROLLER] HomeController.home(Locale,Model)
-    date:2016-02-17 11:25:35	thread:tomcat-http--11	X-Track:b49b630274974bffbcd9e8d13261f6a7	level:INFO 	logger:todo.app.welcome.HomeController                 	message:Welcome home! The client locale is ja_JP.
-    date:2016-02-17 11:25:35	thread:tomcat-http--11	X-Track:b49b630274974bffbcd9e8d13261f6a7	level:TRACE	logger:o.t.gfw.web.logging.TraceLoggingInterceptor     	message:[END CONTROLLER  ] HomeController.home(Locale,Model)-> view=welcome/home, model={serverTime=2016/02/17 11:25:35 JST}
-    date:2016-02-17 11:25:35	thread:tomcat-http--11	X-Track:b49b630274974bffbcd9e8d13261f6a7	level:TRACE	logger:o.t.gfw.web.logging.TraceLoggingInterceptor     	message:[HANDLING TIME   ] HomeController.home(Locale,Model)-> 97,346,576 ns
+    date:2016-02-17 11:25:35	thread:tomcat-http--11	X-Track:b49b630274974bffbcd9e8d13261f6a7	level:TRACE	logger:o.t.gfw.web.logging.TraceLoggingInterceptor     	message:[START CONTROLLER] HelloController.home(Locale,Model)
+    date:2016-02-17 11:25:35	thread:tomcat-http--11	X-Track:b49b630274974bffbcd9e8d13261f6a7	level:INFO 	logger:todo.app.welcome.HelloController                 	message:Welcome home! The client locale is ja_JP.
+    date:2016-02-17 11:25:35	thread:tomcat-http--11	X-Track:b49b630274974bffbcd9e8d13261f6a7	level:TRACE	logger:o.t.gfw.web.logging.TraceLoggingInterceptor     	message:[END CONTROLLER  ] HelloController.home(Locale,Model)-> view=welcome/home, model={serverTime=2016/02/17 11:25:35 JST}
+    date:2016-02-17 11:25:35	thread:tomcat-http--11	X-Track:b49b630274974bffbcd9e8d13261f6a7	level:TRACE	logger:o.t.gfw.web.logging.TraceLoggingInterceptor     	message:[HANDLING TIME   ] HelloController.home(Locale,Model)-> 97,346,576 ns
 
 .. note::
  
@@ -3434,8 +3434,8 @@ Following settings are done in created blank project \ :file:`src/main/webapp/WE
     <!-- (4) -->
     <%@ taglib uri="http://www.springframework.org/security/tags" prefix="sec"%>
     <!-- (5) -->
-    <%@ taglib uri="http://terasoluna.org/functions" prefix="f"%>
     <%@ taglib uri="http://terasoluna.org/tags" prefix="t"%>
+    <%@ taglib uri="http://terasoluna.org/functions" prefix="f"%>
 
 .. tabularcolumns:: |p{0.10\linewidth}|p{0.90\linewidth}|
 .. list-table::
@@ -3886,7 +3886,7 @@ Following settings are done in created blank project \ :file:`src/main/resources
 
     # (1)
     database=H2
-    database.url=jdbc:h2:mem:todo;DB_CLOSE_DELAY=-1;
+    database.url=jdbc:h2:mem:todo;DB_CLOSE_DELAY=-1
     database.username=sa
     database.password=
     database.driverClassName=org.h2.Driver

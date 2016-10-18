@@ -291,7 +291,7 @@ Spring MVCの設定方法を理解するために、生成されたSpring MVCの
 
 |
 
-次に、Welcomeページを表示するためのController (\ ``com.example.helloworld.app.welcome.HomeController``\ ) について、簡単に説明する。
+次に、Welcomeページを表示するためのController (\ ``com.example.helloworld.app.welcome.HelloController``\ ) について、簡単に説明する。
 
 .. code-block:: java
    :emphasize-lines: 17,26,36,38
@@ -313,10 +313,10 @@ Spring MVCの設定方法を理解するために、生成されたSpring MVCの
      * Handles requests for the application home page.
      */
     @Controller // (4)
-    public class HomeController {
+    public class HelloController {
 
         private static final Logger logger = LoggerFactory
-                .getLogger(HomeController.class);
+                .getLogger(HelloController.class);
 
         /**
          * Simply selects the home view to render by returning its name.

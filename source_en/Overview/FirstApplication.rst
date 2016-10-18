@@ -289,7 +289,7 @@ To understand the configuration of Spring MVC, the generated Spring MVC configur
 
 |
 
-Next, Controller (\ ``com.example.helloworld.app.welcome.HomeController``\ ) for displaying the Welcome page is described briefly.
+Next, Controller (\ ``com.example.helloworld.app.welcome.HelloController``\ ) for displaying the Welcome page is described briefly.
 
 .. code-block:: java
    :emphasize-lines: 17,26,36,38
@@ -311,10 +311,10 @@ Next, Controller (\ ``com.example.helloworld.app.welcome.HomeController``\ ) for
      * Handles requests for the application home page.
      */
     @Controller // (4)
-    public class HomeController {
+    public class HelloController {
 
         private static final Logger logger = LoggerFactory
-                .getLogger(HomeController.class);
+                .getLogger(HelloController.class);
 
         /**
          * Simply selects the home view to render by returning its name.
