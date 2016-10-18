@@ -486,7 +486,7 @@ Todoアプリケーションの開発を始める前に、プロジェクトの�
 ブランクプロジェクトでは、トップページを表示するためのControllerとJSPの実装が用意されているため、
 トップページを表示する事で動作確認を行う事ができる。
 
-ブランクプロジェクトから提供されているController(\ :file:`src/main/java/todo/app/welcome/HomeController.java`\ )は、
+ブランクプロジェクトから提供されているController(\ :file:`src/main/java/todo/app/welcome/HelloController.java`\ )は、
 以下のような実装となっている。
 
 .. code-block:: java
@@ -510,11 +510,11 @@ Todoアプリケーションの開発を始める前に、プロジェクトの�
      */
     // (1)
     @Controller
-    public class HomeController {
+    public class HelloController {
 
         // (2)
         private static final Logger logger = LoggerFactory
-                .getLogger(HomeController.class);
+                .getLogger(HelloController.class);
 
         /**
          * Simply selects the home view to render by returning its name.
@@ -622,7 +622,7 @@ todoが「Configured」に含まれていることを確認して「Finish」を
 |
 
 起動すると以下のようなログが出力される。
-\ ``"/"``\ というパスに対して\ ``todo.app.welcome.HomeController``\ のhelloメソッドがマッピングされていることが分かる。
+\ ``"/"``\ というパスに対して\ ``todo.app.welcome.HelloController``\ のhelloメソッドがマッピングされていることが分かる。
 
 
 .. code-block:: console
@@ -630,7 +630,7 @@ todoが「Configured」に含まれていることを確認して「Finish」を
 
     date:2015-01-16 21:32:05	thread:localhost-startStop-1	X-Track:	level:INFO 	logger:o.springframework.web.servlet.DispatcherServlet 	message:FrameworkServlet 'appServlet': initialization started
     date:2015-01-16 21:32:07	thread:localhost-startStop-1	X-Track:	level:DEBUG	logger:o.t.gfw.web.codelist.CodeListInterceptor        	message:registered codeList : []
-    date:2015-01-16 21:32:07	thread:localhost-startStop-1	X-Track:	level:INFO 	logger:o.s.w.s.m.m.a.RequestMappingHandlerMapping      	message:Mapped "{[/],methods=[GET || POST],params=[],headers=[],consumes=[],produces=[],custom=[]}" onto public java.lang.String todo.app.welcome.HomeController.home(java.util.Locale,org.springframework.ui.Model)
+    date:2015-01-16 21:32:07	thread:localhost-startStop-1	X-Track:	level:INFO 	logger:o.s.w.s.m.m.a.RequestMappingHandlerMapping      	message:Mapped "{[/],methods=[GET || POST],params=[],headers=[],consumes=[],produces=[],custom=[]}" onto public java.lang.String todo.app.welcome.HelloController.home(java.util.Locale,org.springframework.ui.Model)
     date:2015-01-16 21:32:11	thread:localhost-startStop-1	X-Track:	level:INFO 	logger:o.s.w.s.m.m.a.RequestMappingHandlerAdapter      	message:Looking for @ControllerAdvice: WebApplicationContext for namespace 'appServlet-servlet': startup date [Fri Jan 16 21:32:05 JST 2015]; parent: Root WebApplicationContext
     date:2015-01-16 21:32:12	thread:localhost-startStop-1	X-Track:	level:INFO 	logger:o.s.w.s.m.m.a.RequestMappingHandlerAdapter      	message:Looking for @ControllerAdvice: WebApplicationContext for namespace 'appServlet-servlet': startup date [Fri Jan 16 21:32:05 JST 2015]; parent: Root WebApplicationContext
     date:2015-01-16 21:32:12	thread:localhost-startStop-1	X-Track:	level:INFO 	logger:o.s.web.servlet.handler.SimpleUrlHandlerMapping 	message:Mapped URL path [/**] onto handler 'org.springframework.web.servlet.resource.DefaultServletHttpRequestHandler#0'
@@ -655,11 +655,11 @@ todoが「Configured」に含まれていることを確認して「Finish」を
 .. code-block:: console
    :emphasize-lines: 1-2,4-5
 
-    date:2015-01-16 21:36:36	thread:tomcat-http--11	X-Track:2c4902f4fe5a477b8ad8aefb10973c04	level:TRACE	logger:o.t.gfw.web.logging.TraceLoggingInterceptor     	message:[START CONTROLLER] HomeController.home(Locale,Model)
-    date:2015-01-16 21:36:36	thread:tomcat-http--11	X-Track:2c4902f4fe5a477b8ad8aefb10973c04	level:INFO 	logger:todo.app.welcome.HomeController                 	message:Welcome home! The client locale is en_US.
+    date:2015-01-16 21:36:36	thread:tomcat-http--11	X-Track:2c4902f4fe5a477b8ad8aefb10973c04	level:TRACE	logger:o.t.gfw.web.logging.TraceLoggingInterceptor     	message:[START CONTROLLER] HelloController.home(Locale,Model)
+    date:2015-01-16 21:36:36	thread:tomcat-http--11	X-Track:2c4902f4fe5a477b8ad8aefb10973c04	level:INFO 	logger:todo.app.welcome.HelloController                 	message:Welcome home! The client locale is en_US.
     date:2015-01-16 21:36:36	thread:tomcat-http--11	X-Track:2c4902f4fe5a477b8ad8aefb10973c04	level:DEBUG	logger:o.t.gfw.web.codelist.CodeListInterceptor        	message:locale for I18nCodelist is 'en_US'.
-    date:2015-01-16 21:36:36	thread:tomcat-http--11	X-Track:2c4902f4fe5a477b8ad8aefb10973c04	level:TRACE	logger:o.t.gfw.web.logging.TraceLoggingInterceptor     	message:[END CONTROLLER  ] HomeController.home(Locale,Model)-> view=welcome/home, model={serverTime=January 16, 2015 9:36:36 PM JST}
-    date:2015-01-16 21:36:36	thread:tomcat-http--11	X-Track:2c4902f4fe5a477b8ad8aefb10973c04	level:TRACE	logger:o.t.gfw.web.logging.TraceLoggingInterceptor     	message:[HANDLING TIME   ] HomeController.home(Locale,Model)-> 983,574 ns
+    date:2015-01-16 21:36:36	thread:tomcat-http--11	X-Track:2c4902f4fe5a477b8ad8aefb10973c04	level:TRACE	logger:o.t.gfw.web.logging.TraceLoggingInterceptor     	message:[END CONTROLLER  ] HelloController.home(Locale,Model)-> view=welcome/home, model={serverTime=January 16, 2015 9:36:36 PM JST}
+    date:2015-01-16 21:36:36	thread:tomcat-http--11	X-Track:2c4902f4fe5a477b8ad8aefb10973c04	level:TRACE	logger:o.t.gfw.web.logging.TraceLoggingInterceptor     	message:[HANDLING TIME   ] HelloController.home(Locale,Model)-> 983,574 ns
 
 .. note::
  
@@ -3193,7 +3193,7 @@ web.xml
 作成したブランクプロジェクトの\ :file:`src/main/webapp/WEB-INF/web.xml`\ は、以下のような設定となっている。
 
 .. code-block:: xml
-    :emphasize-lines: 2, 6, 22, 78, 95, 106, 120
+    :emphasize-lines: 2, 6, 22, 77, 94, 105, 119
 
 
     <?xml version="1.0" encoding="UTF-8"?>
@@ -3271,7 +3271,6 @@ web.xml
             <filter-name>springSecurityFilterChain</filter-name>
             <url-pattern>/*</url-pattern>
         </filter-mapping>
-
 
         <!-- (4) -->
         <servlet>
@@ -3412,8 +3411,8 @@ web.xml
     <!-- (4) -->
     <%@ taglib uri="http://www.springframework.org/security/tags" prefix="sec"%>
     <!-- (5) -->
-    <%@ taglib uri="http://terasoluna.org/functions" prefix="f"%>
     <%@ taglib uri="http://terasoluna.org/tags" prefix="t"%>
+    <%@ taglib uri="http://terasoluna.org/functions" prefix="f"%>
 
 .. tabularcolumns:: |p{0.10\linewidth}|p{0.90\linewidth}|
 .. list-table::
@@ -3863,7 +3862,7 @@ O/R Mapperに依存しないブランクプロジェクトを作成した際は�
 
     # (1)
     database=H2
-    database.url=jdbc:h2:mem:todo;DB_CLOSE_DELAY=-1;
+    database.url=jdbc:h2:mem:todo;DB_CLOSE_DELAY=-1
     database.username=sa
     database.password=
     database.driverClassName=org.h2.Driver
@@ -4085,7 +4084,8 @@ spring-mvc.xml
             class="org.terasoluna.gfw.web.mvc.support.CompositeRequestDataValueProcessor">
             <constructor-arg>
                 <util:list>
-                    <bean class="org.springframework.security.web.servlet.support.csrf.CsrfRequestDataValueProcessor" />
+                    <bean
+                        class="org.springframework.security.web.servlet.support.csrf.CsrfRequestDataValueProcessor" />
                     <bean
                         class="org.terasoluna.gfw.web.token.transaction.TransactionTokenRequestDataValueProcessor" />
                 </util:list>
@@ -4234,10 +4234,9 @@ spring-security.xml
             <sec:custom-filter ref="userIdMDCPutFilter" after="ANONYMOUS_FILTER"/>
             <sec:session-management />
         </sec:http>
-
         <sec:authentication-manager></sec:authentication-manager>
 
-        <!-- Change View for CSRF or AccessDenied -->
+        <!-- CSRF Protection -->
         <bean id="accessDeniedHandler"
             class="org.springframework.security.web.access.DelegatingAccessDeniedHandler">
             <constructor-arg index="0">

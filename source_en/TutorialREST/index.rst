@@ -758,10 +758,9 @@ Definition of Spring Security for REST API
             <sec:custom-filter ref="userIdMDCPutFilter" after="ANONYMOUS_FILTER"/>
             <sec:session-management />
         </sec:http>
-
         <sec:authentication-manager></sec:authentication-manager>
 
-        <!-- Change View for CSRF or AccessDenied -->
+        <!-- CSRF Protection -->
         <bean id="accessDeniedHandler"
             class="org.springframework.security.web.access.DelegatingAccessDeniedHandler">
             <constructor-arg index="0">

@@ -624,7 +624,7 @@ Following are URL patterns to be handled by the application created in this tuto
 | ``src/main/resources/META-INF/spring/spring-security.xml``
 
 .. code-block:: xml
-    :emphasize-lines: 22-23,27-28,32-33,41-43,44-45
+    :emphasize-lines: 22-23,27-28,32-33,40-42,43-44
 
     <?xml version="1.0" encoding="UTF-8"?>
     <beans xmlns="http://www.springframework.org/schema/beans"
@@ -662,7 +662,6 @@ Following are URL patterns to be handled by the application created in this tuto
             <sec:intercept-url pattern="/**" access="isAuthenticated()" />
 
         </sec:http>
-
         <sec:authentication-manager>
             <!-- com.example.security.domain.service.userdetails.SampleUserDetailsService
               is scanned by component scan with @Service -->
@@ -674,7 +673,7 @@ Following are URL patterns to be handled by the application created in this tuto
             </sec:authentication-provider>
         </sec:authentication-manager>
 
-        <!-- Change View for CSRF or AccessDenied -->
+        <!-- CSRF Protection -->
         <bean id="accessDeniedHandler"
             class="org.springframework.security.web.access.DelegatingAccessDeniedHandler">
             <constructor-arg index="0">
@@ -856,8 +855,8 @@ Creating login page
     <%@ taglib uri="http://www.springframework.org/tags" prefix="spring"%>
     <%@ taglib uri="http://www.springframework.org/tags/form" prefix="form"%>
     <%@ taglib uri="http://www.springframework.org/security/tags" prefix="sec"%>
-    <%@ taglib uri="http://terasoluna.org/functions" prefix="f"%>
     <%@ taglib uri="http://terasoluna.org/tags" prefix="t"%>
+    <%@ taglib uri="http://terasoluna.org/functions" prefix="f"%>
 
 .. tabularcolumns:: |p{0.10\linewidth}|p{0.90\linewidth}|
 .. list-table::
@@ -1129,7 +1128,7 @@ Perform definitions related to Spring Security in \ ``spring-security.xml``\ .
 \ ``src/main/resources/META-INF/spring/spring-security.xml``\ of the blank project which has been created has following settings.
 
 .. code-block:: xml
-    :emphasize-lines: 9,12,20,22,24,26,30,33,66
+    :emphasize-lines: 9,12,20,22,24,26,29,32,65
 
     <?xml version="1.0" encoding="UTF-8"?>
     <beans xmlns="http://www.springframework.org/schema/beans"
@@ -1159,12 +1158,11 @@ Perform definitions related to Spring Security in \ ``spring-security.xml``\ .
             <!-- (6) -->
             <sec:session-management />
         </sec:http>
-
         <!-- (7) -->
         <sec:authentication-manager></sec:authentication-manager>
 
         <!-- (4) -->
-        <!-- Change View for CSRF or AccessDenied -->
+        <!-- CSRF Protection -->
         <bean id="accessDeniedHandler"
             class="org.springframework.security.web.access.DelegatingAccessDeniedHandler">
             <constructor-arg index="0">
@@ -1255,7 +1253,7 @@ Perform settings to link Spring Security and Spring MVC in \ ``spring-mvc.xml``\
 Description of settings not related to Spring Security is omitted.
 
 .. code-block:: xml
-    :emphasize-lines: 19-21,78-79
+    :emphasize-lines: 19-21,78-80
 
     <?xml version="1.0" encoding="UTF-8"?>
     <beans xmlns="http://www.springframework.org/schema/beans"
@@ -1335,7 +1333,8 @@ Description of settings not related to Spring Security is omitted.
             <constructor-arg>
                 <util:list>
                     <!-- (2) -->
-                    <bean class="org.springframework.security.web.servlet.support.csrf.CsrfRequestDataValueProcessor" />
+                    <bean
+                        class="org.springframework.security.web.servlet.support.csrf.CsrfRequestDataValueProcessor" />
                     <bean
                         class="org.terasoluna.gfw.web.token.transaction.TransactionTokenRequestDataValueProcessor" />
                 </util:list>
