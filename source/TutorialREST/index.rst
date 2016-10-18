@@ -639,35 +639,36 @@ spring-mvc-rest.xmlの作成
 * :file:`src/main/resources/META-INF/spring/spring-mvc-rest.xml`
 
  .. code-block:: xml
-    :emphasize-lines: 14, 19, 32, 45
+    :emphasize-lines: 17, 33, 40, 70
 
     <?xml version="1.0" encoding="UTF-8"?>
     <beans xmlns="http://www.springframework.org/schema/beans"
-           xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:mvc="http://www.springframework.org/schema/mvc"
-           xmlns:context="http://www.springframework.org/schema/context"
-           xmlns:aop="http://www.springframework.org/schema/aop"
-           xsi:schemaLocation="http://www.springframework.org/schema/mvc http://www.springframework.org/schema/mvc/spring-mvc.xsd
-        http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd
-        http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context.xsd
+        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:context="http://www.springframework.org/schema/context"
+        xmlns:mvc="http://www.springframework.org/schema/mvc" xmlns:util="http://www.springframework.org/schema/util"
+        xmlns:aop="http://www.springframework.org/schema/aop"
+        xsi:schemaLocation="http://www.springframework.org/schema/mvc http://www.springframework.org/schema/mvc/spring-mvc.xsd
+            http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd
+            http://www.springframework.org/schema/util http://www.springframework.org/schema/util/spring-util.xsd
+            http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context.xsd
             http://www.springframework.org/schema/aop http://www.springframework.org/schema/aop/spring-aop.xsd">
     
         <context:property-placeholder
-                location="classpath*:/META-INF/spring/*.properties"/>
-    
-        <!-- (1) -->
-        <context:component-scan base-package="todo.api"/>
+            location="classpath*:/META-INF/spring/*.properties" />
 
         <mvc:annotation-driven>
             <mvc:message-converters>
                 <!-- (2) -->
                 <bean
-                        class="org.springframework.http.converter.json.MappingJacksonHttpMessageConverter">
+                    class="org.springframework.http.converter.json.MappingJacksonHttpMessageConverter">
                     <property name="objectMapper" ref="objectMapper"/>
                 </bean>
             </mvc:message-converters>
             <mvc:argument-resolvers>
-                <bean class="org.springframework.data.web.PageableHandlerMethodArgumentResolver"></bean>
+                <bean
+                    class="org.springframework.data.web.PageableHandlerMethodArgumentResolver" />
             </mvc:argument-resolvers>
+            <!-- workarround to CVE-2016-5007. -->
+            <mvc:path-matching path-matcher="pathMatcher" />
         </mvc:annotation-driven>
     
         <bean id="objectMapper" class="org.codehaus.jackson.map.ObjectMapper">
@@ -676,27 +677,95 @@ spring-mvc-rest.xmlの作成
                 <bean class="org.codehaus.jackson.map.util.StdDateFormat"/>
             </property>
         </bean>
-    
+
+        <mvc:default-servlet-handler />
+
+        <!-- (1) -->
+        <context:component-scan base-package="todo.api"/>
+
+        <mvc:resources mapping="/resources/**"
+            location="/resources/,classpath:META-INF/resources/"
+            cache-period="#{60 * 60}" />
+
         <mvc:interceptors>
             <mvc:interceptor>
-                <mvc:mapping path="/**"/>
-                <mvc:exclude-mapping path="/resources/**"/>
-                <mvc:exclude-mapping path="/**/*.html"/>
+                <mvc:mapping path="/**" />
+                <mvc:exclude-mapping path="/resources/**" />
+                <mvc:exclude-mapping path="/**/*.html" />
                 <bean
-                        class="org.terasoluna.gfw.web.logging.TraceLoggingInterceptor"/>
+                    class="org.terasoluna.gfw.web.logging.TraceLoggingInterceptor" />
+            </mvc:interceptor>
+            <mvc:interceptor>
+                <mvc:mapping path="/**" />
+                <mvc:exclude-mapping path="/resources/**" />
+                <mvc:exclude-mapping path="/**/*.html" />
+                <bean
+                    class="org.terasoluna.gfw.web.token.transaction.TransactionTokenInterceptor" />
+            </mvc:interceptor>
+            <mvc:interceptor>
+                <mvc:mapping path="/**" />
+                <mvc:exclude-mapping path="/resources/**" />
+                <mvc:exclude-mapping path="/**/*.html" />
+                <bean class="org.terasoluna.gfw.web.codelist.CodeListInterceptor">
+                    <property name="codeListIdPattern" value="CL_.+" />
+                </bean>
             </mvc:interceptor>
             <!-- (4) -->
             <!--  REMOVE THIS LINE IF YOU USE JPA
             <mvc:interceptor>
-                <mvc:mapping path="/**"/>
-                <mvc:exclude-mapping path="/resources/**"/>
-                <mvc:exclude-mapping path="/**/*.html"/>
+                <mvc:mapping path="/**" />
+                <mvc:exclude-mapping path="/resources/**" />
+                <mvc:exclude-mapping path="/**/*.html" />
                 <bean
-                        class="org.springframework.orm.jpa.support.OpenEntityManagerInViewInterceptor"/>
+                    class="org.springframework.orm.jpa.support.OpenEntityManagerInViewInterceptor" />
             </mvc:interceptor>
                   REMOVE THIS LINE IF YOU USE JPA  -->
         </mvc:interceptors>
         
+        <!-- Settings View Resolver. -->
+        <bean id="viewResolver"
+            class="org.springframework.web.servlet.view.InternalResourceViewResolver">
+            <property name="prefix" value="/WEB-INF/views/" />
+            <property name="suffix" value=".jsp" />
+        </bean>
+
+        <bean id="requestDataValueProcessor"
+            class="org.terasoluna.gfw.web.mvc.support.CompositeRequestDataValueProcessor">
+            <constructor-arg>
+                <util:list>
+                    <bean
+                        class="org.springframework.security.web.servlet.support.csrf.CsrfRequestDataValueProcessor" factory-method="create" />
+                    <bean
+                        class="org.terasoluna.gfw.web.token.transaction.TransactionTokenRequestDataValueProcessor" />
+                </util:list>
+            </constructor-arg>
+        </bean>
+
+        <!-- Setting Exception Handling. -->
+        <!-- Exception Resolver. -->
+        <bean class="org.terasoluna.gfw.web.exception.SystemExceptionResolver">
+            <property name="exceptionCodeResolver" ref="exceptionCodeResolver" />
+            <!-- Setting and Customization by project. -->
+            <property name="order" value="3" />
+            <property name="exceptionMappings">
+                <map>
+                    <entry key="ResourceNotFoundException" value="common/error/resourceNotFoundError" />
+                    <entry key="BusinessException" value="common/error/businessError" />
+                    <entry key="InvalidTransactionTokenException" value="common/error/transactionTokenError" />
+                    <entry key=".DataAccessException" value="common/error/dataAccessError" />
+                </map>
+            </property>
+            <property name="statusCodes">
+                <map>
+                    <entry key="common/error/resourceNotFoundError" value="404" />
+                    <entry key="common/error/businessError" value="409" />
+                    <entry key="common/error/transactionTokenError" value="409" />
+                    <entry key="common/error/dataAccessError" value="500" />
+                </map>
+            </property>
+            <property name="defaultErrorView" value="common/error/systemError" />
+            <property name="defaultStatusCode" value="500" />
+        </bean>
         <!-- Setting AOP. -->
         <bean id="handlerExceptionResolverLoggingInterceptor"
             class="org.terasoluna.gfw.web.exception.HandlerExceptionResolverLoggingInterceptor">
@@ -706,6 +775,12 @@ spring-mvc-rest.xmlの作成
             <aop:advisor advice-ref="handlerExceptionResolverLoggingInterceptor"
                 pointcut="execution(* org.springframework.web.servlet.HandlerExceptionResolver.resolveException(..))" />
         </aop:config>
+
+        <!-- Setting PathMatcher. -->
+        <bean id="pathMatcher" class="org.springframework.util.AntPathMatcher">
+            <property name="trimTokens" value="false" />
+        </bean>
+
     </beans>
 
  .. tabularcolumns:: |p{0.10\linewidth}|p{0.90\linewidth}|
@@ -803,7 +878,6 @@ REST API用のSpring Securityの定義追加
     
         <!-- Put UserID into MDC -->
         <bean id="userIdMDCPutFilter" class="org.terasoluna.gfw.security.web.logging.UserIdMDCPutFilter">
-            <property name="removeValue" value="true" />
         </bean>
     
     </beans>
@@ -1741,7 +1815,7 @@ DELETE Todoの実装
  ハイライトした部分のメッセージ定義を追加する。
 
  .. code-block:: properties
-    :emphasize-lines: 11-16
+    :emphasize-lines: 28-33
 
     e.xx.fw.5001 = Resource not found.
     
@@ -1753,6 +1827,23 @@ DELETE Todoの実装
     e.xx.fw.9001 = System error occurred!
     e.xx.fw.9002 = Data Access error!
     
+    # typemismatch
+    typeMismatch="{0}" is invalid.
+    typeMismatch.int="{0}" must be an integer.
+    typeMismatch.double="{0}" must be a double.
+    typeMismatch.float="{0}" must be a float.
+    typeMismatch.long="{0}" must be a long.
+    typeMismatch.short="{0}" must be a short.
+    typeMismatch.boolean="{0}" must be a boolean.
+    typeMismatch.java.lang.Integer="{0}" must be an integer.
+    typeMismatch.java.lang.Double="{0}" must be a double.
+    typeMismatch.java.lang.Float="{0}" must be a float.
+    typeMismatch.java.lang.Long="{0}" must be a long.
+    typeMismatch.java.lang.Short="{0}" must be a short.
+    typeMismatch.java.lang.Boolean="{0}" is not a boolean.
+    typeMismatch.java.util.Date="{0}" is not a date.
+    typeMismatch.java.lang.Enum="{0}" is not a valid value.
+
     E001 = [E001] The count of un-finished Todo must not be over {0}.
     E002 = [E002] The requested Todo is already finished. (id={0})
     E400 = [E400] The requested Todo contains invalid values.

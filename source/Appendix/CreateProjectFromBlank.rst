@@ -174,8 +174,8 @@ Blankプロジェクトからの新規プロジェクトを作成する方法を
       <dependency>
           <groupId>com.h2database</groupId>
           <artifactId>h2</artifactId>
-          <version>1.3.172</version>
-          <scope>compile</scope>
+          <version>${com.h2database.version}</version>
+          <scope>runtime</scope>
       </dependency>
 
 .. raw:: latex

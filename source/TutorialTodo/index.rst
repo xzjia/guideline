@@ -377,8 +377,8 @@ Mavenの設定
         <dependency>
             <groupId>com.h2database</groupId>
             <artifactId>h2</artifactId>
-            <version>1.3.172</version>
-            <scope>compile</scope>
+            <version>${com.h2database.version}</version>
+            <scope>runtime</scope>
         </dependency>
 
 |
@@ -437,7 +437,7 @@ web.xmlの確認
 作成したブランクプロジェクトの\ :file:`src/main/webapp/WEB-INF/web.xml`\は、以下のような設定となっている。
 
  .. code-block:: xml
-    :emphasize-lines: 2, 6, 22, 78, 95, 106, 120 
+    :emphasize-lines: 2, 6, 22, 77, 94, 105, 119
 
     <?xml version="1.0" encoding="UTF-8"?>
     <!-- (1) -->
@@ -652,8 +652,8 @@ web.xmlの確認
     <!-- (4) -->
     <%@ taglib uri="http://www.springframework.org/security/tags" prefix="sec"%>
     <!-- (5) -->
-    <%@ taglib uri="http://terasoluna.org/functions" prefix="f"%>
     <%@ taglib uri="http://terasoluna.org/tags" prefix="t"%>
+    <%@ taglib uri="http://terasoluna.org/functions" prefix="f"%>
 
  .. tabularcolumns:: |p{0.10\linewidth}|p{0.80\linewidth}|
  .. list-table::
@@ -818,18 +818,24 @@ todo-domain.xmlの確認
 | なお、チュートリアルで使用しないコンポーネントについての説明は割愛する。
 
  .. code-block:: xml
-    :emphasize-lines: 9-10, 12-13
+    :emphasize-lines: 14-15, 18-19
 
     <?xml version="1.0" encoding="UTF-8"?>
     <beans xmlns="http://www.springframework.org/schema/beans"
-        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:context="http://www.springframework.org/schema/context"
+        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xmlns:context="http://www.springframework.org/schema/context"
         xmlns:aop="http://www.springframework.org/schema/aop"
-        xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd
-            http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context.xsd
-            http://www.springframework.org/schema/aop http://www.springframework.org/schema/aop/spring-aop.xsd">
+        xmlns:tx="http://www.springframework.org/schema/tx"
+        xsi:schemaLocation="http://www.springframework.org/schema/aop http://www.springframework.org/schema/aop/spring-aop.xsd
+            http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd
+            http://www.springframework.org/schema/tx http://www.springframework.org/schema/tx/spring-tx.xsd
+            http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context.xsd">
+
+        <tx:annotation-driven/>
 
         <!-- (1) -->
         <import resource="classpath:META-INF/spring/todo-infra.xml" />
+        <import resource="classpath*:META-INF/spring/**/*-codelist.xml" />
 
         <!-- (2) -->
         <context:component-scan base-package="todo.domain" />
@@ -1083,7 +1089,7 @@ O/R Mapperに依存しないブランクプロジェクトを作成した際は�
 
     # (1)
     database=H2
-    database.url=jdbc:h2:mem:todo;DB_CLOSE_DELAY=-1;
+    database.url=jdbc:h2:mem:todo;DB_CLOSE_DELAY=-1
     database.username=sa
     database.password=
     database.driverClassName=org.h2.Driver
@@ -1125,12 +1131,15 @@ todo-env.xmlの確認
 作成したブランクプロジェクトの\ ``src/main/resources/META-INF/spring/todo-env.xml``\は、以下のような設定となっている。
 
  .. code-block:: xml
-    :emphasize-lines: 8-10, 22-25, 27-31
+    :emphasize-lines: 11-13, 25-28, 36-40
 
     <?xml version="1.0" encoding="UTF-8"?>
     <beans xmlns="http://www.springframework.org/schema/beans"
-        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-        xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd">
+        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:jee="http://www.springframework.org/schema/jee"
+        xmlns:jdbc="http://www.springframework.org/schema/jdbc"
+        xsi:schemaLocation="http://www.springframework.org/schema/jdbc http://www.springframework.org/schema/jdbc/spring-jdbc.xsd
+            http://www.springframework.org/schema/jee http://www.springframework.org/schema/jee/spring-jee.xsd
+            http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd">
 
         <bean id="dateFactory" class="org.terasoluna.gfw.common.date.DefaultDateFactory" />
 
@@ -1152,6 +1161,12 @@ todo-env.xmlの確認
         <bean id="dataSource" class="net.sf.log4jdbc.Log4jdbcProxyDataSource">
             <constructor-arg index="0" ref="realDataSource" />
         </bean>
+
+        <jdbc:initialize-database data-source="dataSource"
+            ignore-failures="ALL">
+            <jdbc:script location="classpath:/database/${database}-schema.sql" />
+            <jdbc:script location="classpath:/database/${database}-dataload.sql" />
+        </jdbc:initialize-database>
 
         <!-- (3) -->
         <bean id="transactionManager"
@@ -1219,7 +1234,7 @@ spring-mvc.xmlの確認
 | なお、チュートリアルで使用しないコンポーネントについての説明は割愛する。
 
  .. code-block:: xml
-    :emphasize-lines: 12-14, 16-22, 26-27, 29-32, 35-42, 61-67
+    :emphasize-lines: 12-14, 16-21, 28-29, 31-34, 37-44, 71-77
 
     <?xml version="1.0" encoding="UTF-8"?>
     <beans xmlns="http://www.springframework.org/schema/beans"
@@ -1242,6 +1257,8 @@ spring-mvc.xmlの確認
                 <bean
                     class="org.springframework.data.web.PageableHandlerMethodArgumentResolver" />
             </mvc:argument-resolvers>
+            <!-- workarround to CVE-2016-5007. -->
+            <mvc:path-matching path-matcher="pathMatcher" />
         </mvc:annotation-driven>
 
         <mvc:default-servlet-handler />
@@ -1270,6 +1287,14 @@ spring-mvc.xmlの確認
                 <bean
                     class="org.terasoluna.gfw.web.token.transaction.TransactionTokenInterceptor" />
             </mvc:interceptor>
+            <mvc:interceptor>
+                <mvc:mapping path="/**" />
+                <mvc:exclude-mapping path="/resources/**" />
+                <mvc:exclude-mapping path="/**/*.html" />
+                <bean class="org.terasoluna.gfw.web.codelist.CodeListInterceptor">
+                    <property name="codeListIdPattern" value="CL_.+" />
+                </bean>
+            </mvc:interceptor>
             <!--  REMOVE THIS LINE IF YOU USE JPA
             <mvc:interceptor>
                 <mvc:mapping path="/**" />
@@ -1281,7 +1306,7 @@ spring-mvc.xmlの確認
                 REMOVE THIS LINE IF YOU USE JPA  -->
         </mvc:interceptors>
 
-        <!-- (7) -->
+        <!-- (6) -->
         <!-- Settings View Resolver. -->
         <bean id="viewResolver"
             class="org.springframework.web.servlet.view.InternalResourceViewResolver">
@@ -1293,7 +1318,8 @@ spring-mvc.xmlの確認
             class="org.terasoluna.gfw.web.mvc.support.CompositeRequestDataValueProcessor">
             <constructor-arg>
                 <util:list>
-                    <bean class="org.springframework.security.web.servlet.support.csrf.CsrfRequestDataValueProcessor" factory-method="create" />
+                    <bean
+                        class="org.springframework.security.web.servlet.support.csrf.CsrfRequestDataValueProcessor" factory-method="create" />
                     <bean
                         class="org.terasoluna.gfw.web.token.transaction.TransactionTokenRequestDataValueProcessor" />
                 </util:list>
@@ -1334,6 +1360,11 @@ spring-mvc.xmlの確認
             <aop:advisor advice-ref="handlerExceptionResolverLoggingInterceptor"
                 pointcut="execution(* org.springframework.web.servlet.HandlerExceptionResolver.resolveException(..))" />
         </aop:config>
+
+        <!-- Setting PathMatcher. -->
+        <bean id="pathMatcher" class="org.springframework.util.AntPathMatcher">
+            <property name="trimTokens" value="false" />
+        </bean>
 
     </beans>
 
@@ -1405,7 +1436,7 @@ logback.xmlの確認
  .. code-block:: xml
     :emphasize-lines: 4-9, 36-39, 45-48
 
-    <!DOCTYPE logback>
+    <?xml version="1.0" encoding="UTF-8"?>
     <configuration>
     
         <!-- (1) -->
@@ -1447,7 +1478,7 @@ logback.xmlの確認
     
         <!-- TERASOLUNA -->
         <logger name="org.terasoluna.gfw">
-            <level value="debug" />
+            <level value="info" />
         </logger>
         <!-- (3) -->
         <logger name="org.terasoluna.gfw.web.logging.TraceLoggingInterceptor">
@@ -1484,7 +1515,12 @@ logback.xmlの確認
         <logger name="jdbc.sqltiming">
             <level value="debug" />
         </logger>
-    
+
+        <!-- only for development -->
+        <logger name="jdbc.resultsettable">
+            <level value="debug" />
+        </logger>
+
         <root level="warn">
             <appender-ref ref="STDOUT" />
             <appender-ref ref="APPLICATION_LOG_FILE" />
@@ -1537,7 +1573,7 @@ Todoアプリケーションの開発を始める前に、ブランクプロジ�
 ブランクプロジェクトでは、トップページを表示するためのControllerとJSPの実装が用意されているため、
 トップページを表示する事で動作確認を行う事ができる。
 
-ブランクプロジェクトから提供されているController(\ :file:`src/main/java/todo/app/welcome/HomeController.java`\)は、
+ブランクプロジェクトから提供されているController(\ :file:`src/main/java/todo/app/welcome/HelloControllerr.java`\)は、
 以下のような実装となっている。
 
  .. code-block:: java
@@ -1561,11 +1597,11 @@ Todoアプリケーションの開発を始める前に、ブランクプロジ�
      */
     // (1)
     @Controller
-    public class HomeController {
+    public class HelloControllerr {
 
         // (2)
         private static final Logger logger = LoggerFactory
-                .getLogger(HomeController.class);
+                .getLogger(HelloControllerr.class);
 
         /**
          * Simply selects the home view to render by returning its name.
@@ -1677,14 +1713,14 @@ todoが「Configured」に含まれていることを確認して「Finish」を
 
 
 起動すると以下のようなログが出力される。
-”/”というパスに対して ``todo.app.welcome.HomeController`` のhelloメソッドがマッピングされていることが分かる。
+”/”というパスに対して ``todo.app.welcome.HelloControllerr`` のhelloメソッドがマッピングされていることが分かる。
 
 
  .. code-block:: text
    :emphasize-lines: 2
 
     date:2014-08-25 12:35:34    thread:localhost-startStop-1    X-Track:    level:INFO  logger:o.springframework.web.servlet.DispatcherServlet  message:FrameworkServlet 'appServlet': initialization started
-    date:2014-08-25 12:35:35    thread:localhost-startStop-1    X-Track:    level:INFO  logger:o.s.w.s.m.m.a.RequestMappingHandlerMapping       message:Mapped "{[/],methods=[GET || POST],params=[],headers=[],consumes=[],produces=[],custom=[]}" onto public java.lang.String todo.app.welcome.HomeController.home(java.util.Locale,org.springframework.ui.Model)
+    date:2014-08-25 12:35:35    thread:localhost-startStop-1    X-Track:    level:INFO  logger:o.s.w.s.m.m.a.RequestMappingHandlerMapping       message:Mapped "{[/],methods=[GET || POST],params=[],headers=[],consumes=[],produces=[],custom=[]}" onto public java.lang.String todo.app.welcome.HelloControllerr.home(java.util.Locale,org.springframework.ui.Model)
     date:2014-08-25 12:35:36    thread:localhost-startStop-1    X-Track:    level:INFO  logger:o.s.web.servlet.handler.SimpleUrlHandlerMapping  message:Mapped URL path [/**] onto handler 'org.springframework.web.servlet.resource.DefaultServletHttpRequestHandler#0'
     date:2014-08-25 12:35:36    thread:localhost-startStop-1    X-Track:    level:INFO  logger:o.s.web.servlet.handler.SimpleUrlHandlerMapping  message:Mapped URL path [/resources/**] onto handler 'org.springframework.web.servlet.resource.ResourceHttpRequestHandler#0'
     date:2014-08-25 12:35:36    thread:localhost-startStop-1    X-Track:    level:INFO  logger:o.springframework.web.servlet.DispatcherServlet  message:FrameworkServlet 'appServlet': initialization completed in 1862 ms
@@ -1704,10 +1740,10 @@ todoが「Configured」に含まれていることを確認して「Finish」を
  .. code-block:: text
 
 
-    date:2014-08-25 12:35:41    thread:tomcat-http--3   X-Track:94bc5651406e4333a4b47b2276707b5c    level:TRACE logger:o.t.gfw.web.logging.TraceLoggingInterceptor      message:[START CONTROLLER] HomeController.home(Locale,Model)
-    date:2014-08-25 12:35:41    thread:tomcat-http--3   X-Track:94bc5651406e4333a4b47b2276707b5c    level:INFO  logger:todo.app.welcome.HomeController                  message:Welcome home! The client locale is en.
-    date:2014-08-25 12:35:41    thread:tomcat-http--3   X-Track:94bc5651406e4333a4b47b2276707b5c    level:TRACE logger:o.t.gfw.web.logging.TraceLoggingInterceptor      message:[END CONTROLLER  ] HomeController.home(Locale,Model)-> view=welcome/home, model={serverTime=August 25, 2014 12:35:41 PM UTC}
-    date:2014-08-25 12:35:41    thread:tomcat-http--3   X-Track:94bc5651406e4333a4b47b2276707b5c    level:TRACE logger:o.t.gfw.web.logging.TraceLoggingInterceptor      message:[HANDLING TIME   ] HomeController.home(Locale,Model)-> 41,090,439 ns
+    date:2014-08-25 12:35:41    thread:tomcat-http--3   X-Track:94bc5651406e4333a4b47b2276707b5c    level:TRACE logger:o.t.gfw.web.logging.TraceLoggingInterceptor      message:[START CONTROLLER] HelloControllerr.home(Locale,Model)
+    date:2014-08-25 12:35:41    thread:tomcat-http--3   X-Track:94bc5651406e4333a4b47b2276707b5c    level:INFO  logger:todo.app.welcome.HelloControllerr                  message:Welcome home! The client locale is en.
+    date:2014-08-25 12:35:41    thread:tomcat-http--3   X-Track:94bc5651406e4333a4b47b2276707b5c    level:TRACE logger:o.t.gfw.web.logging.TraceLoggingInterceptor      message:[END CONTROLLER  ] HelloControllerr.home(Locale,Model)-> view=welcome/home, model={serverTime=August 25, 2014 12:35:41 PM UTC}
+    date:2014-08-25 12:35:41    thread:tomcat-http--3   X-Track:94bc5651406e4333a4b47b2276707b5c    level:TRACE logger:o.t.gfw.web.logging.TraceLoggingInterceptor      message:[HANDLING TIME   ] HelloControllerr.home(Locale,Model)-> 41,090,439 ns
 
  .. note::
  

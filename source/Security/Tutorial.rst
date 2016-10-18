@@ -533,7 +533,7 @@ blankプロジェクトからの差分のみ説明する。
 * src/main/resources/META-INF/spring/spring-security.xml
 
   .. code-block:: xml
-     :emphasize-lines: 11-19,32-35
+     :emphasize-lines: 11-19,28-31
   
       <?xml version="1.0" encoding="UTF-8"?>
       <beans xmlns="http://www.springframework.org/schema/beans"
@@ -542,8 +542,8 @@ blankプロジェクトからの差分のみ説明する。
           xsi:schemaLocation="http://www.springframework.org/schema/security http://www.springframework.org/schema/security/spring-security.xsd
               http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd
               http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context.xsd">
-  
-          <sec:http pattern="/resources/**" security="none" />
+
+          <sec:http pattern="/resources/**" security="none"/>
           <sec:http auto-config="true" use-expressions="true">
               <sec:form-login login-page="/login.jsp"
                   authentication-failure-url="/login.jsp?error=true"
@@ -554,15 +554,11 @@ blankプロジェクトからの差分のみ説明する。
               <sec:intercept-url pattern="/login.jsp"
                   access="permitAll" /><!-- (3) -->
               <sec:intercept-url pattern="/**" access="isAuthenticated()" /><!-- (4) -->
-  
-              <sec:custom-filter ref="csrfFilter" before="LOGOUT_FILTER" />
-              <sec:custom-filter ref="userIdMDCPutFilter"
-                  after="ANONYMOUS_FILTER" />
-              <sec:session-management
-                  session-authentication-strategy-ref="sessionAuthenticationStrategy" />
+
+              <sec:custom-filter ref="csrfFilter" before="LOGOUT_FILTER"/>
+              <sec:custom-filter ref="userIdMDCPutFilter" after="ANONYMOUS_FILTER"/>
+              <sec:session-management session-authentication-strategy-ref="sessionAuthenticationStrategy" />
           </sec:http>
-  
-  
           <sec:authentication-manager>
               <!-- com.example.security.domain.service.userdetails.SampleUserDetails 
                   is scaned by component scan with @Service -->
@@ -581,8 +577,7 @@ blankプロジェクトからの差分のみ説明する。
               <property name="accessDeniedHandler">
                   <bean
                       class="org.springframework.security.web.access.AccessDeniedHandlerImpl">
-                      <property name="errorPage"
-                          value="/WEB-INF/views/common/error/csrfTokenError.jsp" />
+                      <property name="errorPage" value="/WEB-INF/views/common/error/csrfTokenError.jsp" />
                   </bean>
               </property>
           </bean>
@@ -603,9 +598,7 @@ blankプロジェクトからの差分のみ説明する。
           </bean>
   
           <!-- Put UserID into MDC -->
-          <bean id="userIdMDCPutFilter"
-              class="org.terasoluna.gfw.security.web.logging.UserIdMDCPutFilter">
-              <property name="removeValue" value="true" />
+          <bean id="userIdMDCPutFilter" class="org.terasoluna.gfw.security.web.logging.UserIdMDCPutFilter">
           </bean>
   
       </beans>
@@ -643,12 +636,14 @@ blankプロジェクトからの差分のみ説明する。
   SQLスクリプトの設定を追加する。
   
   .. code-block:: xml
-     :emphasize-lines: 3-4,31-35
+     :emphasize-lines: 4-5,29-33
   
       <?xml version="1.0" encoding="UTF-8"?>
       <beans xmlns="http://www.springframework.org/schema/beans"
-          xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:jdbc="http://www.springframework.org/schema/jdbc"
+          xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:jee="http://www.springframework.org/schema/jee"
+          xmlns:jdbc="http://www.springframework.org/schema/jdbc"
           xsi:schemaLocation="http://www.springframework.org/schema/jdbc http://www.springframework.org/schema/jdbc/spring-jdbc.xsd
+              http://www.springframework.org/schema/jee http://www.springframework.org/schema/jee/spring-jee.xsd
               http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd">
   
           <bean id="dateFactory" class="org.terasoluna.gfw.common.date.DefaultDateFactory" />
@@ -665,21 +660,28 @@ blankプロジェクトからの差分のみ説明する。
               <property name="minIdle" value="${cp.minIdle}" />
               <property name="maxWait" value="${cp.maxWait}" />
           </bean>
-  
+
+
           <bean id="dataSource" class="net.sf.log4jdbc.Log4jdbcProxyDataSource">
               <constructor-arg index="0" ref="realDataSource" />
           </bean>
-  
-          <bean id="transactionManager"
-              class="org.springframework.jdbc.datasource.DataSourceTransactionManager">
-              <property name="dataSource" ref="dataSource" />
-          </bean>
-  
+
           <jdbc:initialize-database data-source="dataSource"
               ignore-failures="ALL"><!-- (1) -->
               <jdbc:script location="classpath:/database/${database}-schema.sql" /><!-- (2) -->
               <jdbc:script location="classpath:/database/${database}-dataload.sql" /><!-- (3) -->
           </jdbc:initialize-database>
+
+          <!--  REMOVE THIS LINE IF YOU USE JPA
+          <bean id="transactionManager"
+              class="org.springframework.orm.jpa.JpaTransactionManager">
+              <property name="entityManagerFactory" ref="entityManagerFactory" />
+          </bean>
+                REMOVE THIS LINE IF YOU USE JPA  -->
+          <bean id="transactionManager"
+              class="org.springframework.jdbc.datasource.DataSourceTransactionManager">
+              <property name="dataSource" ref="dataSource" />
+          </bean>
       </beans>
   
   
