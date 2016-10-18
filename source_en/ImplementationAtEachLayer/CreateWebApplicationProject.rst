@@ -259,7 +259,7 @@ The actual settings contents indicated below.
         <modelVersion>4.0.0</modelVersion>
         <groupId>com.example.todo</groupId>
         <artifactId>todo</artifactId>
-        <version>5.3.0-SNAPSHOT</version>
+        <version>5.2.1-SNAPSHOT</version>
         <packaging>pom</packaging>
         <modules>
             <module>todo-env</module>
@@ -271,7 +271,7 @@ The actual settings contents indicated below.
         <parent>
             <groupId>org.terasoluna.gfw</groupId>
             <artifactId>terasoluna-gfw-parent</artifactId>
-            <version>5.3.0-SNAPSHOT</version>
+            <version>5.2.1-SNAPSHOT</version>
             <relativePath />
         </parent>
 

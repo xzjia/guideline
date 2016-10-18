@@ -263,7 +263,7 @@ Maven Archetypeで作成したプロジェクトのPOMファイルでは、
         <modelVersion>4.0.0</modelVersion>
         <groupId>com.example.todo</groupId>
         <artifactId>todo</artifactId>
-        <version>5.3.0-SNAPSHOT</version>
+        <version>5.2.1-SNAPSHOT</version>
         <packaging>pom</packaging>
         <modules>
             <module>todo-env</module>
@@ -275,7 +275,7 @@ Maven Archetypeで作成したプロジェクトのPOMファイルでは、
         <parent>
             <groupId>org.terasoluna.gfw</groupId>
             <artifactId>terasoluna-gfw-parent</artifactId>
-            <version>5.3.0-SNAPSHOT</version>
+            <version>5.2.1-SNAPSHOT</version>
             <relativePath />
         </parent>
 
