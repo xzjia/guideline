@@ -1743,9 +1743,8 @@ Commons FileUploadを使用する場合は以下の設定を行う。
 
 .. note::
 
-   上記設定例では、依存ライブラリのバージョンは親プロジェクトで管理する前提である。
-   そのため、\ ``<version>``\ 要素は指定していない。
-   上記の依存ライブラリは\ `Spring IO Platform <http://platform.spring.io/platform/>`_\ によって定義されているため、pom.xmlでバージョンを指定しなくてもよい。
+   上記設定例は、依存ライブラリのバージョンを親プロジェクトである terasoluna-gfw-parent で管理する前提であるため、pom.xmlでのバージョンの指定は不要である。
+   また、上記の依存ライブラリは\ `Spring IO Platform <http://platform.spring.io/platform/>`_\ でも定義済みであるため、pom.xmlでのバージョンの指定は不要である。
 
 .. warning::
 

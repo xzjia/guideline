@@ -449,24 +449,7 @@ pom.xmlの設定
 
  .. note::
 
-    上記設定例では、依存ライブラリのバージョンは親プロジェクトで管理する前提である。
-    そのため、\ ``<version>``\ 要素は指定していない。
-
- .. tip:: **terasoluna-gfw-parentをParentプロジェクトとして使用しない場合の設定方法について**
- 
-    親プロジェクトとしてterasoluna-gfw-parentプロジェクトを指定していない場合は、バージョンの指定も個別に必要となる。
-
-     .. code-block:: xml
-        :emphasize-lines: 4
- 
-        <dependency>
-            <groupId>org.terasoluna.gfw</groupId>
-            <artifactId>terasoluna-gfw-mybatis3-dependencies</artifactId>
-            <version>5.2.0.RELEASE</version>
-            <type>pom</type>
-        </dependency>
-        
-    上記例では5.2.0.RELEASEを指定しているが、実際に指定するバージョンは、プロジェクトで利用するバージョンを指定すること。
+    上記設定例は、依存ライブラリのバージョンを親プロジェクトである terasoluna-gfw-parent で管理する前提であるため、pom.xmlでのバージョンの指定は不要である。
 
  .. Warning:: **Java SE 7環境にて使用する場合の設定**
 
