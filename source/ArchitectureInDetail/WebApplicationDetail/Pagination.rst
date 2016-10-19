@@ -151,6 +151,23 @@ Spring Dataより提供されているページ検索用の機能は、以下の
 
 |
 
+.. _constraints_at_the_time_of_pagination_use:
+
+ページ検索用のリクエストパラメータや検索条件の引継ぎについて
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+| 共通ライブラリから提供しているJSPタグライブラリ( \ ``<t:pagination>`` \ )のパラメータに :ref:`ページ検索用のリクエストパラメータ <pagination_overview_pagesearch_requestparameter>` や検索条件を設定することで生成されるURL「以下、Page Link URL」を利用することでページ検索用のリクエストパラメータや検索条件を引き継ぐごとができる。処理フローについては、「:ref:`pagination-overview_flow`」を参照されたい。
+| ただし、Page Link URLを用いた方法には以下の制約はある。
+
+  * | ページングを行っている一覧画面から詳細画面などの別画面に遷移後、また元の一覧画面に遷移した際に検索条件などを保持していないため、同じ一覧画面を表示することができない。
+  * | センシティブな情報が検索条件に含まれる場合、「URLに検索条件が表示される」、「ログにアクセス時のURLと共に検索条件も出力される」、「インターネットを中継する第三者に見られる」などの可能性がある。
+  * | 検索項目が非常に多い場合、ブラウザ等によるURLの最大文字数制約により正しく情報をを引き継げない可能性がある。たとえば\ `Internet Explorerは2,083文字以上のURLに対応していない <https://support.microsoft.com/ja-jp/kb/208427>`_\ 。
+
+| 上記の制約を解決する手段として「:ref:`pagination_take_over_session`」方法を紹介する。 
+| ただし、セッションを用いた方法にはメリットとデメリットがあり、アプリケーションおよびシステム要件を考慮して、使用有無を判断すること。
+| セッション利用時のメリットとデメリットについては、「\ :doc:`SessionManagement`\のセッションの利用について」 を参照されたい。
+
+|
+
 .. _pagination_overview_paginationlink:
 
 ページネーションリンクの表示について
@@ -580,6 +597,8 @@ JSPタグライブラリのパラメータに値を指定することで、デ�
 
 |
 
+.. _pagination-overview_flow:
+
 ページネーション機能使用時の処理フロー
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 Spring Dataより提供されているページネーション機能と、共通ライブラリから提供してるJSPタグライブラリを利用した際の処理フローは、以下の通り。
@@ -635,43 +654,7 @@ Spring Dataより提供されているページネーション機能と、共通
 
 |
 
-.. _constraints_at_the_time_of_pagination_use:
-
-ページ検索用のリクエストパラメータや検索条件を引継ぎぐ方法について
-^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
-| 共通ライブラリから提供しているJSPタグライブラリで扱われる :ref:`ページ検索用のリクエストパラメータ <pagination_overview_pagesearch_requestparameter>` や検索条件を引継ぐ方法について説明する。
-| URLを用いた方法に比べてセッションを用いた方法は、アプリケーション全体に関わるデメリットもあるため、アプリケーションおよびシステム要件を考慮して、使用有無を決めること。
-
-URLを利用して引継ぐ方法
-""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
-| 共通ライブラリから提供しているページネーション用のJSPタグライブラリ( \ ``<t:pagination>`` \ )を使ってページ検索用のリクエストパラメータや検索条件を含めむクエリ文字列を生成することができる。
-| ただし、URLを用いた方法で実現した場合の制約は以下の通りである。
-
-  * | ページングを行っている一覧画面から派生している詳細画面などの別画面に遷移後、また元の一覧画面に遷移した際に検索条件などを保持していないため、同じ一覧画面を表示することができない。
-  * | センシティブな情報が検索条件に含まれる場合、「URLに検索条件が表示される」、「ログにアクセス時のURLと共に検索条件も出力される」、「インターネットを中継する第三者に見られる」などの可能性がある。
-  * | 検索項目が非常に多い場合、ブラウザ等によるURLの最大文字数制約により正しく情報をを引き継げない可能性がある。たとえば\ `Internet Explorerは2,083文字以上のURLに対応していない <https://support.microsoft.com/ja-jp/kb/208427>`_\ 。
-
-
-.. note:: **URLを用いた場合の制約を解決する手段について**
-
-    上記のURLを用いた方で実現した場合の制約については、包括的な解決法で説明する。
-    また、解決法でセッションにデータを用いるが、まずはセッションを使わない方針で検討すること。
-
-|
-
-セッションを利用して引継ぐ方法
-""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
-| ページ検索用のリクエストパラメータや検索条件をセッションに格納することで、複数の画面(複数のリクエスト)をまたがって、情報を持回ることができる。
-| ただし、セッションを用いた方法で実現した場合の制約は以下の通りである。
-| 具体的な実装例については、「:ref:`pagination_take_over_session`」 を参照されたい。
-
-  * | 同一処理の画面を、複数のウインドウやタブで立ち上げた場合、互いの操作がセッション上に格納しているデータに干渉しあうため、データの整合性を保つことができなくなる。
-    | そして、データの整合性を保つための制御は、共通ライブラリから提供しているトランザクショントークンチェックを使用することで実現する事ができるが、アプリケーションのユーザビリティを低下させてしまう。
-  * | セッションは、通常アプリケーションサーバ上のメモリとして管理されるため、セッションに格納するデータの量に比例して、メモリの使用量も増大する。
-  * | 処理で扱うデータをセッションに格納すると、APサーバのスケーラビリティを低下させる要因となる。
-
-|
-
+.. _pagination_how_to_use:
 
 How to use
 --------------------------------------------------------------------------------
@@ -1724,107 +1707,171 @@ How to extend
 
 .. _pagination_take_over_session:
 
-セッションで検索条件やソート条件などを引き継ぐ
-^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
-| これまで紹介したURLを利用して引き継ぐ方法だと、:ref:`constraints_at_the_time_of_pagination_use` に記載された制約がある。
-| その解決法して、検索条件、ソート条件、ページネーションに関連する情報をセッションへ格納して画面間で持ち回る方法で課題を解決することができるが、セッション方式の制約を踏まえてどちらの方式を採用するか設計する必要がある。
-| セッション管理の詳細については、\ :doc:`SessionManagement`\ を参照されたい。
-| セッション方式の実現方法を紹介するため、以下の要件を示す。
+セッションでページ検索用のリクエストパラメータや検索条件を引き継ぐ
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+| セッションでページ検索用のリクエストパラメータや検索条件を引き継ぐ実装の説明を行う。
+| 処理のフローは、以下の通りである。
 
-  * 検索結果一覧画面から詳細画面などの別画面に遷移し、また検索結果一覧画面の当該ページへ戻る
-  * 検索結果の1ページ当たりの件数は固定
-  * セッション格納する情報は検索条件（\ ``word`` \）、ソート条件（\ ``sort`` \）、ページネーション情報（\ ``page`` \ 、 \ ``size`` \）
-  * 検索条件とソート条件がURLに記載されるのを回避するため、検索条件を送信する際はpost通信を使用する
+ .. figure:: ./images/pagination-how_to_extend_session.png
+   :alt: pagination_to_session
+   :width: 100%
+   :align: center
+
+ .. tabularcolumns:: |p{0.10\linewidth}|p{0.90\linewidth}|
+ .. list-table::
+    :header-rows: 1
+    :widths: 10 90
+
+    * - 項番
+      - 説明
+    * - | (1)
+      - | Article Search画面のフォームセッションオブジェクトを削除し、初期化処理を行う。
+    * - | (2)
+      - | フォームセッションオブジェクトの検索条件（\ ``word`` \）、ソート条件（\ ``sort`` \）とデフォルトのページ検索用のリクエストパラメータ（\ ``page`` \ 、 \ ``size`` \）で検索処理を行い、
+        | 検索結果を表示する。
+    * - | (3)
+      - | フォームセッションオブジェクトに格納されている（\ ``word`` \ 、\ ``sort`` \ 、\ ``page`` \ 、\ ``size`` \）でページ検索処理を行い、ページ検索結果を表示する。
+    * - | (4)
+      - | Article詳細画面に遷移する。
+    * - | (5)
+      - | フォームセッションオブジェクトに格納されている（\ ``word`` \ 、\ ``sort`` \ 、\ ``page`` \ 、\ ``size`` \）で検索処理を行い、検索結果を表示する。
+
+
+- 画面
+
+ .. figure:: ./images/pagination-how_to_extend_session_form.png
+   :alt: pagination_to_session_form
+   :width: 100%
+   :align: center
 
 - From
 
  .. code-block:: java
 
+        // (1)
         public class ArticleSearchCriteriaForm  implements Serializable {
 
-            // ...
+            // omitted
 
-            private int page;
+            private int page; // (2)
 
-            private int size;
+            private int size; // (3)
 
-            private String word;
+            private String word; // (4)
 
-            private String sort;
+            private String sort; // (5)
 
-            // ...
+            // omitted setter and getter
 
         }
+
+ .. tabularcolumns:: |p{0.10\linewidth}|p{0.90\linewidth}|
+ .. list-table::
+    :header-rows: 1
+    :widths: 10 90
+
+    * - 項番
+      - 説明
+    * - | (1)
+      - | セッションに格納するフォームオブジェクト。検索条件（\ ``word`` \）、ソート条件（\ ``sort`` \）とページ検索用のリクエストパラメータ（\ ``page`` \ 、 \ ``size`` \）を格納する。
+    * - | (2)
+      - | ページ検索用のリクエストパラメータ（\ ``page`` \ ）。ページリンクを押下した際にフォームセッションオブジェクトに格納する。
+        | プロパティ名を変更した場合はページ検索用のリクエストパラメータ（\ ``page`` \ ）が格納されないので変更しないこと。
+    * - | (3)
+      - | ページ検索用のリクエストパラメータ（\ ``size`` \ ）。ページリンクを押下した際にフォームセッションオブジェクトに格納される。
+        | プロパティ名を変更した場合はページ検索用のリクエストパラメータ（\ ``size`` \ ）が格納されないので変更しないこと。
+    * - | (4)
+      - | 検索条件（\ ``word`` \）。検索ボタン押下した際にフォームセッションオブジェクトに格納される。
+    * - | (5)
+      - | 検索条件（\ ``sort`` \）。検索ボタン押下した際にフォームセッションオブジェクトに格納される。
 
 - Controller
 
  .. code-block:: java
 
+        import javax.inject.Inject;
+
+        import jp.co.ntt.fw.spring.functionaltest.domain.model.Article;
+        import jp.co.ntt.fw.spring.functionaltest.domain.repository.pgnt.ArticleSearchCriteria;
+        import jp.co.ntt.fw.spring.functionaltest.domain.service.pgnt.ArticleService;
+
+        import org.dozer.Mapper;
+        import org.springframework.data.domain.Page;
+        import org.springframework.data.domain.PageRequest;
+        import org.springframework.data.domain.Pageable;
+        import org.springframework.data.domain.Sort;
+        import org.springframework.data.domain.Sort.Direction;
+        import org.springframework.data.web.PageableDefault;
+        import org.springframework.stereotype.Controller;
+        import org.springframework.ui.Model;
+        import org.springframework.web.bind.annotation.ModelAttribute;
+        import org.springframework.web.bind.annotation.PathVariable;
+        import org.springframework.web.bind.annotation.RequestMapping;
+        import org.springframework.web.bind.annotation.RequestMethod;
+        import org.springframework.web.bind.annotation.SessionAttributes;
+        import org.springframework.web.bind.support.SessionStatus;
+
         @Controller
         @RequestMapping("article")
-        @SessionAttributes(value = {"articleSearchCriteriaForm"}) // (1)
-        public class PaginationInSessionController {
+        @SessionAttributes(value = "articleSearchCriteriaForm") // (1)
+        public class ArticleSearchForSessionController {
 
-            // ...
+            // omitted
 
-            @ModelAttribute("articleSearchCriteriaForm") // (2)
+            @ModelAttribute(value = "articleSearchCriteriaForm") // (2)
             public ArticleSearchCriteriaForm setUpForm() {
                 return new ArticleSearchCriteriaForm();
             }
 
-            // ...
+            @RequestMapping(value = "init", method = RequestMethod.GET) //(3)
+            public String initializeCreateArticleSearchCriteriaForm(
+                    SessionStatus sessionStatus) {
+                sessionStatus.setComplete();
+                return "redirect:/article/create";
+            }
 
-            @RequestMapping("list")
+            @RequestMapping(value = "create", method = RequestMethod.GET)
+            public String createArticleSearch() {
+                return "article/list";
+            }
+
+            @RequestMapping(value = "list", method = RequestMethod.POST)  // (4)
             public String list(ArticleSearchCriteriaForm form,
-                BindingResult result,
-                @PageableDefault(size = 50) Pageable pageable, // (3)
-                Model model) {
+                    @PageableDefault(size = 50) Pageable pageable, // (5)
+                    Model model) {
 
                 ArticleSearchCriteria criteria = beanMapper.map(form,
                         ArticleSearchCriteria.class);
+                Page<Article> page = articleService.getArticles(criteria, pageable);
 
-                Page<Article> page = articleService.searchArticle(criteria, pageable); // (4)
+                form.setPage(pageable.getPageNumber());  // (6)
+                form.setSize(pageable.getPageSize());
+                model.addAttribute("page", page);
+
+                return "article/list";
+            }
+
+            @RequestMapping(value="list", method = RequestMethod.GET) // (7)
+            public String page(ArticleSearchCriteriaForm form,
+                BindingResult result,
+                Model model) {
+
+                String[] sortinfo = form.getSort().split(",");
+                String properties = sortinfo[0];
+                Direction direction = Direction.valueOf(sortinfo[1]);
+                Sort sort = new Sort(direction, properties);
+                
+                Pageable pageable = new PageRequest(form.getPage(), form.getSize(), sort); //(8)
+                ArticleSearchCriteria criteria = beanMapper.map(form,
+                        ArticleSearchCriteria.class);
+                Page<Article> page = articleService.searchArticle(criteria, pageable); 
 
                 model.addAttribute("page", page);
 
                 return "article/list";
             }
 
-            // ...
-
-            @RequestMapping(value = "list", params = "back")
-            public String list_back(ArticleSearchCriteriaForm form,
-                BindingResult result,
-                @PageableDefault(size = 50) Pageable pageable,
-                Model model) {
-
-                String[] sort = form.getSort().split(",");
-                String properties = sort[0];
-                Direction direction = Direction.valueOf(str[1]);
-
-                int page = 0;
-                if (form.getPage() != 0) {
-                    page = form.getPage();
-                }
-
-                int size = 50;
-                if (form.getSize() != 0) {
-                    size = form.getSize();
-                }
-
-                pageable = new Pageable(page, size, direction, properties);
-
-                ArticleSearchCriteria criteria = beanMapper.map(form,
-                        ArticleSearchCriteria.class);
-
-                Page<Article> page = articleService.searchArticle(criteria, pageable); // (4)
-
-                model.addAttribute("page", page);
-
-                return "article/list";
-            }
-
-            // ...
+            // omitted
 
         }
 
@@ -1840,20 +1887,20 @@ How to extend
     * - | (2)
       - | \ ``@ModelAttribute``\アノテーションを使用して、\ ``value``\属性で指定した\ ``"articleSearchCriteriaForm"``\ のオブジェクトをセッションに格納する。
     * - | (3)
-      - | \ ``size`` \ は固定なので、\ ``@PageableDefault``\アノテーションを仕様して\ ``pageable`` \の初期値として定義する。
+      - | \ ``@SessionAttributes``\を用いてセッションに格納したフォームオブジェクトを削除する。
+        | 画面操作の途中でブラウザやタブを閉じた場合、セッションに格納されているフォームオブジェクトに入力途中の情報が残るため、初期表示時に削除しないと、不具合を引き起こす原因になりうる。
     * - | (4)
-      - | 検索条件をフォームやセッションから取得し使用する。ページ情報については、以下のように画面遷移元に応じて切り替える処理を記述する。
-
-        *  検索ボタン押下によるpost通信の画面遷移の場合
-           \ ``size`` \ を\ ``pageable`` \で取得する。
-           \ ``word`` \ はフォームオブジェクトから取得する。
-
-        *  ページネーションリンク押下によるget通信の画面遷移の場合
-           \ ``page`` \ と \ ``size`` \ は\ ``pageable`` \で取得する。
-           \ ``word`` \ と \ ``sort`` \ はセッションから取得する。
-
-        *  別画面（詳細画面など）から遷移元に戻る（URLクエリパラメータに\ ``back`` \が付けている）画面遷移の場合
-           \ ``page`` \ と \ ``size`` \ 、 \ ``word`` \ 、 \ ``sort`` \ はセッションから取得し、\  page  \ と \  size  \ 、\  sort  \で pageable を上書きする。
+      - | 以下のURLを用いた制約を解決するため、検索ボタン押下した際はPOSTで送信にする。
+　　　　| * センシティブな情報が検索条件に含まれる場合、「URLに検索条件が表示される」、「ログにアクセス時のURLと共に検索条件も出力される」、「インターネットを中継する第三者に見られる」などの可能性がある。
+        | * 検索項目が非常に多い場合、ブラウザ等によるURLの最大文字数制約により正しく情報をを引き継げない可能性がある。
+    * - | (5)
+      - | \ ``@PageableDefault``\アノテーションを使用して\ ``Pageable`` \の初期値を定義する。本実装例では \ ``size`` \ を50で設定する。
+    * - | (6)
+      - | \ ``Pageable`` \の初期値をフォームセッションオブジェクトに格納する。
+    * - | (7)
+      - | ページリンクを押下した際はGETで送信する。
+    * - | (8)
+      - | フォームセッションオブジェクトに格納されている \ ``sort`` \ 、\ ``page`` \ 、\ ``size`` \ でPageableオブジェクトを生成する。
 
 - JSP
 
@@ -1872,7 +1919,7 @@ How to extend
           </form:form>
         </div>
 
-        <%-- ... --%>
+        <%-- omitted --%>
 
         <%-- (2) --%>
         <t:pagination page="${page}"
