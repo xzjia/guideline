@@ -148,7 +148,7 @@ PDFファイルのダウンロード
 \
     .. note::
         上記設定例は、依存ライブラリのバージョンを親プロジェクトである terasoluna-gfw-parent で管理する前提であるため、pom.xmlでのバージョンの指定は不要である。
-        また、itextは\ `Spring IO Platform <http://platform.spring.io/platform/>`_\ でも定義済みであるため、pom.xmlでのバージョンの指定は不要である。
+        上記のitextはterasoluna-gfw-parentが利用している\ `Spring IO Platform <http://platform.spring.io/platform/>`_\ で定義済みである。
 
 .. _viewresolver-label:
 
@@ -340,7 +340,7 @@ Excelファイルのダウンロード
 \
     .. note::
         上記設定例は、依存ライブラリのバージョンを親プロジェクトである terasoluna-gfw-parent で管理する前提であるため、pom.xmlでのバージョンの指定は不要である。
-        また、上記の依存ライブラリは\ `Spring IO Platform <http://platform.spring.io/platform/>`_\ でも定義済みであるため、pom.xmlでのバージョンの指定は不要である。
+        上記の依存ライブラリはterasoluna-gfw-parentが利用している\ `Spring IO Platform <http://platform.spring.io/platform/>`_\ で定義済みである。
 
         また、\ ``AbstractExcelView``\ はSpring Framework 4.2から@Deprecatedとなった。そのため、xlsファイルを使用したい場合も同様に\ ``AbstractXlsxView``\ の使用を推奨する。
         詳細は、\ `AbstractExcelViewのJavaDoc <https://docs.spring.io/spring/docs/4.2.7.RELEASE/javadoc-api/org/springframework/web/servlet/view/document/AbstractExcelView.html>`_\ を参照されたい。
