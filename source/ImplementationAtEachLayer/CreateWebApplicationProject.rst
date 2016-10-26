@@ -776,7 +776,6 @@ Maven Archetypeで作成したプロジェクトでは、インメモリデー�
     .. note:: 
 
         上記設定例は、依存ライブラリのバージョンを親プロジェクトである terasoluna-gfw-parent で管理する前提であるため、pom.xmlでのバージョンの指定は不要である。
-        上記の依存ライブラリはterasoluna-gfw-parentが利用している\ `Spring IO Platform <http://platform.spring.io/platform/>`_\ で定義済みである。
 
 |
 
