@@ -385,31 +385,32 @@ Spring Securityのコンポーネントをbean定義するため、以下のよ�
 
     <?xml version="1.0" encoding="UTF-8"?>
     <beans xmlns="http://www.springframework.org/schema/beans"
-           xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-           xmlns:sec="http://www.springframework.org/schema/security"
-           xsi:schemaLocation="
-            http://www.springframework.org/schema/beans
-            http://www.springframework.org/schema/beans/spring-beans.xsd
-            http://www.springframework.org/schema/security
-            http://www.springframework.org/schema/security/spring-security.xsd
-           "> <!-- (1) -->
+        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xmlns:sec="http://www.springframework.org/schema/security"
+        xsi:schemaLocation="
+            http://www.springframework.org/schema/security http://www.springframework.org/schema/security/spring-security.xsd
+            http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd
+        "> <!-- (1) -->
 
-        <sec:http> <!-- (2) -->
-            <sec:form-login /> <!-- (3) -->
-            <sec:logout /> <!-- (4) -->
-            <sec:access-denied-handler ref="accessDeniedHandler"/> <!-- (5) -->
-            <sec:custom-filter ref="userIdMDCPutFilter" after="ANONYMOUS_FILTER"/> <!-- (6) -->
-            <sec:session-management /> <!-- (7) -->
+        <sec:http pattern="/resources/**" security="none"/> <!-- (2) (3) -->
+        <sec:http> <!-- (4) -->
+            <sec:form-login /> <!-- (5) -->
+            <sec:logout /> <!-- (6) -->
+            <sec:access-denied-handler ref="accessDeniedHandler"/> <!-- (7) -->
+            <sec:custom-filter ref="userIdMDCPutFilter" after="ANONYMOUS_FILTER"/> <!-- (8) -->
+            <sec:session-management /> <!-- (9) -->
         </sec:http>
 
-        <sec:authentication-manager /> <!-- (8) -->
+        <sec:authentication-manager /> <!-- (10) -->
 
-        <bean id="accessDeniedHandler" class="org.springframework.security.web.access.DelegatingAccessDeniedHandler"> <!-- (9) -->
+        <!-- CSRF Protection -->
+        <bean id="accessDeniedHandler"
+            class="org.springframework.security.web.access.DelegatingAccessDeniedHandler"> <!-- (11) -->
             <!-- omitted -->
         </bean>
 
-        <bean id="userIdMDCPutFilter" class="org.terasoluna.gfw.security.web.logging.UserIdMDCPutFilter">  <!-- (10) -->
-            <!-- omitted -->
+        <!-- Put UserID into MDC -->
+        <bean id="userIdMDCPutFilter" class="org.terasoluna.gfw.security.web.logging.UserIdMDCPutFilter">  <!-- (12) -->
         </bean>
 
     </beans>
@@ -427,35 +428,39 @@ Spring Securityのコンポーネントをbean定義するため、以下のよ�
         上記例では、\ ``sec``\ という名前を割り当てている。
         XMLネームスペースを使用すると、Spring Securityのコンポーネントのbean定義を簡単に行うことができる。
     * - \ (2)
+      - セキュリティ対策が不要なリソースのパス(cssファイルやimageファイルにアクセスするためのパスなど)に対しては、
+        \ ``<sec:http>``\ タグを使用して、Spring Securityのセキュリティ機能(Security Filter)が適用されないように制御することができる。
+
+        \ ``pattern``\ 属性にセキュリティ機能を適用しないパスのパターンを指定する。
+    * - \ (3)
+      - \ ``security``\ 属性に\ ``none``\ を指定する。
+
+        \ ``none``\ を指定すると、Spring Securityのセキュリティ機能(Security Filter)が適用されない。
+    * - \ (4)
       - \ ``<sec:http>``\ タグを定義する。
         \ ``<sec:http>``\ タグを定義すると、Spring Securityを利用するために必要となるコンポーネントのbean定義が自動的に行われる。
-    * - \ (3)
+    * - \ (5)
       - \ ``<sec:form-login>``\ タグを定義し、フォーム認証を使用したログインに関する設定行う。
         \ 詳細は :ref:`form-login` を参照されたい
-    * - \ (4)
+    * - \ (6)
       - \ ``<sec:logout>``\ タグ を定義し、ログアウトに関する設定を行う。
         \ 詳細は :ref:`SpringSecurityAuthenticationLogout` を参照されたい。
-    * - \ (5)
+    * - \ (7)
       - \ ``<sec:access-denied-handler>``\ タグを定義し、アクセスエラー時の制御を行うための設定を定義する。
         \ 詳細は :ref:`SpringSecurityAuthorizationAccessDeniedHandler` 、 :ref:`SpringSecurityAuthorizationOnError` を参照されたい。
-    * - \ (6)
+    * - \ (8)
       - ログ出力するユーザ情報をMDCに格納するための共通ライブラリのフィルタを定義する。
-    * - \ (7)
+    * - \ (9)
       - \ ``<sec:session-management>``\ タグ を定義し、セッション管理に関する設定を行う。
         \ 詳細は :ref:`SpringSecuritySessionManagement` を参照されたい
-    * - \ (8)
+    * - \ (10)
       - \ ``<sec:authentication-manager>``\ タグを定義して、認証機能用のコンポーネントをbean定義する。
         このタグを定義しておかないとサーバ起動時にエラーが発生する。
-    * - \ (9)
+    * - \ (11)
       - \ アクセスエラー時のエラーハンドリングを行うコンポーネントをbean定義する。
-    * - \ (10)
+    * - \ (12)
       - \ ログ出力するユーザ情報をMDCにする共通ライブラリのコンポーネントをbean定義する。
 
-
-.. note:: **静的リソースへのアクセス**
-
-    JSPでCSS等の静的リソースを使用している場合は、それらを格納するフォルダにアクセス権を付与する必要がある。
-    詳細は、:ref:`SpringSecurityNotApply` を参照されたい。 
 
 |
 
@@ -531,36 +536,6 @@ Spring Securityのコンポーネントをbean定義するため、以下のよ�
         上記例では、すべてのリクエストに対してSpring Securityを適用する。
 
 |
-
-.. _SpringSecurityNotApply:
-
-セキュリティ対策を適用しないため設定
-^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
-
-セキュリティ対策が不要なリソースのパス(cssファイルやimageファイルにアクセスするためのパスなど)に対しては、
-\ ``<sec:http>``\ タグを使用して、Spring Securityのセキュリティ機能(Security Filter)が適用されないように制御することができる。
-
-* xxx-web/src/main/resources/META-INF/spring/spring-security.xmlの定義例
-
-.. code-block:: xml
-  
-    <sec:http pattern="/resources/**" security="none"/>  <!-- (1) (2) -->
-    <sec:http>
-        <!-- omitted -->
-    </sec:http>
-  
-.. tabularcolumns:: |p{0.10\linewidth}|p{0.90\linewidth}|
-.. list-table::
-    :header-rows: 1
-    :widths: 10 90
-  
-    * - 項番
-      - 説明
-    * - | (1)
-      - | \ ``pattern``\ 属性にセキュリティ機能を適用しないパスのパターンを指定する。
-    * - | (2)
-      - | \ ``security``\ 属性に\ ``none``\ を指定する。
-        | \ ``none``\ を指定すると、Spring Securityのセキュリティ機能(Security Filter)が適用されない。
 
 .. raw:: latex
 

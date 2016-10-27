@@ -562,8 +562,8 @@ Maven Archetypeで作成したプロジェクトには、インメモリデー�
 
     <jdbc:initialize-database data-source="dataSource"
         ignore-failures="ALL">
-        <jdbc:script location="classpath:/database/${database}-schema.sql" />
-        <jdbc:script location="classpath:/database/${database}-dataload.sql" />
+        <jdbc:script location="classpath:/database/${database}-schema.sql" encoding="UTF-8" />
+        <jdbc:script location="classpath:/database/${database}-dataload.sql" encoding="UTF-8" />
     </jdbc:initialize-database>
 
 .. code-block:: console
@@ -748,7 +748,7 @@ Maven Archetypeで作成したプロジェクトでは、インメモリデー�
 
             <!-- ... -->
 
-            <postgresql.version>9.3-1102-jdbc41</postgresql.version>
+            <postgresql.version>9.4-1206-jdbc41</postgresql.version>
             <ojdbc.version>12.1.0.2</ojdbc.version>
 
     * ``artifactId/artifactId-domain/pom.xml``
@@ -758,8 +758,8 @@ Maven Archetypeで作成したプロジェクトでは、インメモリデー�
                      <dependency>
                          <groupId>org.postgresql</groupId>
                          <artifactId>postgresql</artifactId>
-                         <scope>provided</scope> -->
-                     </dependency> -->
+                         <scope>provided</scope>
+                     </dependency>
         <!--         <dependency> -->
         <!--             <groupId>com.oracle</groupId> -->
         <!--             <artifactId>ojdbc7</artifactId> -->

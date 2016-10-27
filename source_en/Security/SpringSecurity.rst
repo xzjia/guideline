@@ -385,31 +385,32 @@ XML file is created as below to define a bean for the component of Spring Securi
 
     <?xml version="1.0" encoding="UTF-8"?>
     <beans xmlns="http://www.springframework.org/schema/beans"
-           xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-           xmlns:sec="http://www.springframework.org/schema/security"
-           xsi:schemaLocation="
-            http://www.springframework.org/schema/beans
-            http://www.springframework.org/schema/beans/spring-beans.xsd
-            http://www.springframework.org/schema/security
-            http://www.springframework.org/schema/security/spring-security.xsd
-           "> <!-- (1) -->
+        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xmlns:sec="http://www.springframework.org/schema/security"
+        xsi:schemaLocation="
+            http://www.springframework.org/schema/security http://www.springframework.org/schema/security/spring-security.xsd
+            http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd
+        "> <!-- (1) -->
 
-        <sec:http> <!-- (2) -->
-            <sec:form-login /> <!-- (3) -->
-            <sec:logout /> <!-- (4) -->
-            <sec:access-denied-handler ref="accessDeniedHandler"/> <!-- (5) -->
-            <sec:custom-filter ref="userIdMDCPutFilter" after="ANONYMOUS_FILTER"/> <!-- (6) -->
-            <sec:session-management /> <!-- (7) -->
+        <sec:http pattern="/resources/**" security="none"/> <!-- (2) (3) -->
+        <sec:http> <!-- (4) -->
+            <sec:form-login /> <!-- (5) -->
+            <sec:logout /> <!-- (6) -->
+            <sec:access-denied-handler ref="accessDeniedHandler"/> <!-- (7) -->
+            <sec:custom-filter ref="userIdMDCPutFilter" after="ANONYMOUS_FILTER"/> <!-- (8) -->
+            <sec:session-management /> <!-- (9) -->
         </sec:http>
 
-        <sec:authentication-manager /> <!-- (8) -->
+        <sec:authentication-manager /> <!-- (10) -->
 
-        <bean id="accessDeniedHandler" class="org.springframework.security.web.access.DelegatingAccessDeniedHandler"> <!-- (9) -->
+        <!-- CSRF Protection -->
+        <bean id="accessDeniedHandler"
+            class="org.springframework.security.web.access.DelegatingAccessDeniedHandler"> <!-- (11) -->
             <!-- omitted -->
         </bean>
 
-        <bean id="userIdMDCPutFilter" class="org.terasoluna.gfw.security.web.logging.UserIdMDCPutFilter">  <!-- (10) -->
-            <!-- omitted -->
+        <!-- Put UserID into MDC -->
+        <bean id="userIdMDCPutFilter" class="org.terasoluna.gfw.security.web.logging.UserIdMDCPutFilter">  <!-- (12) -->
         </bean>
 
     </beans>
@@ -427,35 +428,38 @@ XML file is created as below to define a bean for the component of Spring Securi
         A name \ ``sec``\  is assigned in the above example.
         A bean for component of Spring Security can be defined easily if XML namespace is used.
     * - \ (2)
+      - The resource path (like the path to access css file or image file) for which the security countermeasures are not required,
+        can be controlled using \ ``<sec:http>``\  tag so that the security function (Security Filter) of Spring Security is not applied.
+
+        Specify the pattern of the path where the security function is not applied in \ ``pattern``\  attribute.
+    * - \ (3)
+      - Specify \ ``none``\  in \ ``security``\  attribute.
+
+        The security function (Security Filter) of Spring Security is not applied if \ ``none``\  is specified.
+    * - \ (4)
       - Define \ ``<sec:http>``\  tag.
         A bean for the component required to use Spring Security is automatically defined if \ ``<sec:http>``\  tag is defined.
-    * - \ (3)
+    * - \ (5)
       - Define \ ``<sec:form-login>``\  tag and perform settings related to login where form authentication is used.
         Refer \ :ref:`form-login` for details
-    * - \ (4)
+    * - \ (6)
       - Define \ ``<sec:logout>``\  tag and perform settings related to logout.
         Refer \ :ref:`SpringSecurityAuthenticationLogout` for details.
-    * - \ (5)
+    * - \ (7)
       - Define \ ``<sec:access-denied-handler>``\  tag and define settings to control at the time of access error.
         Refer \ :ref:`SpringSecurityAuthorizationAccessDeniedHandler` and :ref:`SpringSecurityAuthorizationOnError` for details.
-    * - \ (6)
+    * - \ (8)
       - Define a filter for common library to store the user information to be output in a log, in MDC.
-    * - \ (7)
+    * - \ (9)
       - Define \ ``<sec:session-management>``\  tag and perform settings related to session management.
         \ Refer :ref:`SpringSecuritySessionManagement` for details
-    * - \ (8)
+    * - \ (10)
       - Define \ ``<sec:authentication-manager>``\  tag and define a bean for component for authentication function.
         Error occurs at the time of starting a server if this tag is not defined.
-    * - \ (9)
+    * - \ (11)
       - \ Define a bean for the component that handles access error.
-    * - \ (10)
+    * - \ (12)
       - \ Define a bean for the component of common library to store the user information to be output in a log in MDC.
-
-
-.. note:: **Access to static resources**
-
-    When the static resources like CSS are used in JSF, the access rights must be assigned to the folder where they are stored.
-    Refer :ref:`SpringSecurityNotApply` for details.
 
 |
 
@@ -532,35 +536,6 @@ Finally, the servlet filter class (\ ``FilterChainProxy``\ ) provided by Spring 
 
 |
 
-.. _SpringSecurityNotApply:
-
-Settings not to apply security countermeasures
-^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
-
-The resource path (like the path to access css file or image file) for which the security countermeasures are not required,
-can be controlled using \ ``<sec:http>``\  tag so that the security function (Security Filter) of Spring Security is not applied.
-
-* Definition example of xxx-web/src/main/resources/META-INF/spring/spring-security.xml
-
-.. code-block:: xml
-  
-    <sec:http pattern="/resources/**" security="none"/>  <!-- (1) (2) -->
-    <sec:http>
-        <!-- omitted -->
-    </sec:http>
-  
-.. tabularcolumns:: |p{0.10\linewidth}|p{0.90\linewidth}|
-.. list-table::
-    :header-rows: 1
-    :widths: 10 90
-  
-    * - Sr. No.
-      - Description
-    * - | (1)
-      - | Specify the pattern of the path where the security function is not applied in \ ``pattern``\  attribute.
-    * - | (2)
-      - | Specify \ ``none``\  in \ ``security``\  attribute.
-        | The security function (Security Filter) of Spring Security is not applied if \ ``none``\  is specified.
 
 .. raw:: latex
 

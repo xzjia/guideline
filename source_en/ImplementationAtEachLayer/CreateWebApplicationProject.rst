@@ -558,8 +558,8 @@ Therefore, these could be unnecessary settings while having regular application 
 
     <jdbc:initialize-database data-source="dataSource"
         ignore-failures="ALL">
-        <jdbc:script location="classpath:/database/${database}-schema.sql" />
-        <jdbc:script location="classpath:/database/${database}-dataload.sql" />
+        <jdbc:script location="classpath:/database/${database}-schema.sql" encoding="UTF-8" />
+        <jdbc:script location="classpath:/database/${database}-dataload.sql" encoding="UTF-8" />
     </jdbc:initialize-database>
 
 .. code-block:: console
@@ -744,7 +744,7 @@ Customization method and customization targeted files are indicated below.
 
             <!-- ... -->
 
-            <postgresql.version>9.3-1102-jdbc41</postgresql.version>
+            <postgresql.version>9.4-1206-jdbc41</postgresql.version>
             <ojdbc.version>12.1.0.2</ojdbc.version>
 
     * ``artifactId/artifactId-domain/pom.xml``
@@ -754,8 +754,8 @@ Customization method and customization targeted files are indicated below.
                      <dependency>
                          <groupId>org.postgresql</groupId>
                          <artifactId>postgresql</artifactId>
-                         <scope>provided</scope> -->
-                     </dependency> -->
+                         <scope>provided</scope>
+                     </dependency>
         <!--         <dependency> -->
         <!--             <groupId>com.oracle</groupId> -->
         <!--             <artifactId>ojdbc7</artifactId> -->
